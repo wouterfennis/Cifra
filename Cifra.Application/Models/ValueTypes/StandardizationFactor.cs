@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cifra.Application.Models
+namespace Cifra.Application.Models.ValueTypes
 {
     public class StandardizationFactor : ValueObject
     {

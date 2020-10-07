@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Cifra.Application.Models
+namespace Cifra.Application.Models.ValueTypes
 {
     public class QuestionScore : ValueObject
     {

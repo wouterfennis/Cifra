@@ -1,12 +1,12 @@
-﻿namespace Cifra.Application
+﻿namespace Cifra.Application.Models.Test.Requests
 {
-    public class CreateTestModel
+    public class CreateTestRequest
     {
         public string Name { get; }
         public byte StandardizationFactor { get; }
         public byte MinimumGrade { get; }
 
-        public CreateTestModel(string name, byte standardizationsFactor, byte minimumGrade)
+        public CreateTestRequest(string name, byte standardizationsFactor, byte minimumGrade)
         {
             Name = name;
             StandardizationFactor = standardizationsFactor;

@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models
+﻿namespace Cifra.Application.Validation
 {
     public class ValidationMessage
     {
