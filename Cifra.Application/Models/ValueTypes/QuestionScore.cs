@@ -14,10 +14,7 @@ namespace Cifra.Application.Models.ValueTypes
 
         private void Validate(byte value)
         {
-            if(value == 0)
-            {
-                throw new ArgumentException(nameof(value));
-            }
+            // TODO: Complete validation
         }
 
         /// <summary>

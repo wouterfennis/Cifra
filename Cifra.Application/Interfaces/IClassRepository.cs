@@ -17,7 +17,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Create a class 
         /// </summary>
-        ValidationMessage Create(Class @class);
+        Guid Create(Class @class);
 
         /// <summary>
         /// Updates a class

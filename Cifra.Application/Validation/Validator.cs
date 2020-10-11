@@ -6,16 +6,16 @@ using System.Text;
 
 namespace Cifra.Application.Validation
 {
-    public class TestValidator : IValidator<CreateTestRequest>
+    public class Validator<T> : IValidator<T>
     {
-        private readonly IEnumerable<IValidationRule<CreateTestRequest>> validationRules;
+        private readonly IEnumerable<IValidationRule<T>> validationRules;
 
-        public TestValidator(IEnumerable<IValidationRule<CreateTestRequest>> validationRules)
+        public Validator(IEnumerable<IValidationRule<T>> validationRules)
         {
             this.validationRules = validationRules;
         }
 
-        public IEnumerable<ValidationMessage> ValidateRules(CreateTestRequest model)
+        public IEnumerable<ValidationMessage> ValidateRules(T model)
         {
             var validationMessages = new List<ValidationMessage>();
 
