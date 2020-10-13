@@ -1,12 +1,16 @@
 ﻿using Cifra.Application.Models.Test.Requests;
+using System;
 
 namespace Cifra.Application.Validation.QuestionModelValidationRules
 {
-    public class NameMustBeFilled : IValidationRule<AddQuestionRequest>
+    public class NamesMustBeFilled : IValidationRule<AddQuestionRequest>
     {
         private const string Message = "Not all names are valid";
+
         public ValidationMessage Validate(AddQuestionRequest model)
         {
+            NullChecks(model);
+
             foreach (string name in model.Names)
             {
                 if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
@@ -15,6 +19,19 @@ namespace Cifra.Application.Validation.QuestionModelValidationRules
                 }
             }
             return null;
+        }
+
+        private void NullChecks(AddQuestionRequest model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (model.Names == null)
+            {
+                throw new ArgumentNullException(nameof(model.Names));
+            }
         }
     }
 }

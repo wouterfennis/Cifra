@@ -11,11 +11,21 @@ namespace Cifra.Application.Validation.TestModelValidationRules
         private const string Message = "Name is required";
         public ValidationMessage Validate(CreateTestRequest model)
         {
+            NullChecks(model);
+
             if (string.IsNullOrEmpty(model.Name) || string.IsNullOrWhiteSpace(model.Name))
             {
                 return new ValidationMessage(nameof(model.Name), Message);
             }
             return null;
+        }
+
+        private void NullChecks(CreateTestRequest model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
         }
     }
 }

@@ -22,9 +22,4 @@
     <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validation\TestModelValidationRules\" />
-    <Folder Include="Validation\StudentModelValidationRules\" />
-  </ItemGroup>
-
 </Project>
