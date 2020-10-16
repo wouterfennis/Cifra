@@ -17,7 +17,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Create a test 
         /// </summary>
-        ValidationMessage Create(Test test);
+        Guid Create(Test test);
 
         /// <summary>
         /// Updates a test

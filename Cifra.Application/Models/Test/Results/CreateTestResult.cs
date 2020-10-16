@@ -6,13 +6,13 @@ namespace Cifra.Application.Models.Test.Results
 {
     public class CreateTestResult
     {
-        public Test Test { get; }
+        public Guid TestId { get; }
 
         public IEnumerable<ValidationMessage> ValidationMessages { get; }
 
-        public CreateTestResult(Test test)
+        public CreateTestResult(Guid testId)
         {
-            Test = test;
+            TestId = testId;
             ValidationMessages = new List<ValidationMessage>();
         }
 

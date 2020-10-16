@@ -1,10 +1,7 @@
-﻿using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
@@ -39,7 +36,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
             Action action = () => Grade.CreateFromByte(input);
 
             action.Should().Throw<ArgumentException>()
-                .WithMessage("The value for a Grade is not within 0 and 10");
+                .WithMessage($"The value: {input} is not within 0 and 10");
         }
 
         [TestMethod]

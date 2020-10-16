@@ -1,6 +1,5 @@
 ﻿using Cifra.Application.Extensions;
 using Cifra.Application.Interfaces;
-using Cifra.Application.Models;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
@@ -35,15 +34,10 @@ namespace Cifra.Application
                 return new CreateTestResult(validationMessages);
             }
 
-            var test = new Models.Test.Test(Name.CreateFromString(model.Name), StandardizationFactor.CreateFromByte(model.StandardizationFactor), Grade.CreateFromByte(model.MinimumGrade));
-            ValidationMessage result = _testRepository.Create(test);
+            var test = new Test(Name.CreateFromString(model.Name), StandardizationFactor.CreateFromByte(model.StandardizationFactor), Grade.CreateFromByte(model.MinimumGrade));
+            Guid testId = _testRepository.Create(test);
 
-            if(result != null)
-            {
-                return new CreateTestResult(result);
-            }
-
-            return new CreateTestResult(test);
+            return new CreateTestResult(testId);
         }
 
         public AddQuestionResult AddQuestion(AddQuestionRequest model)

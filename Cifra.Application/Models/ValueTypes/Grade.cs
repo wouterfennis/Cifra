@@ -18,7 +18,7 @@ namespace Cifra.Application.Models.ValueTypes
         {
             if (value < _minimalValue || value > _maximalValue)
             {
-                throw new ArgumentException($"The value for a Grade is not within {_minimalValue} and {_maximalValue}");
+                throw new ArgumentException($"The value: {value} is not within {_minimalValue} and {_maximalValue}");
             }
         }
 

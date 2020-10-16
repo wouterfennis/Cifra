@@ -6,8 +6,9 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Cifra.Application.Models.Class.Results;
+using Cifra.Application.Models.Class;
+using System.Linq;
 
 namespace Cifra.Application.UnitTests
 {
@@ -31,13 +32,127 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
+        public void CreateClass_WithValidRequest_CreatesClass()
+        {
+            var input = _fixture.Create<CreateClassRequest>();
+            var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
+            var expectedClassId = _fixture.Create<Guid>();
+            _classValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(validationMessages);
+
+            _classRepository
+                .Setup(x => x.Create(It.Is<Class>(x => x.Name.Value == input.Name)))
+                .Returns(expectedClassId);
+
+            CreateClassResult result = _sut.CreateClass(input);
+
+            result.ClassId.Should().Be(expectedClassId);
+            result.ValidationMessages.Should().BeEmpty();
+        }
+
+        [TestMethod]
         public void CreateClass_WithValidationMessages_ReturnsValidationMessages()
         {
-            CreateClassRequest input = null;
+            var input = _fixture.Create<CreateClassRequest>();
+            var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
+            _classValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(expectedValidationMessages);
 
-            Action action = () => _sut.CreateClass(input);
+            CreateClassResult result = _sut.CreateClass(input);
 
-            action.Should().Throw<ArgumentNullException>();
+            result.Should().NotBeNull();
+            result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
+        }
+
+        [TestMethod]
+        public void CreateClass_WithValidationMessages_DoesNotCreateClass()
+        {
+            var input = _fixture.Create<CreateClassRequest>();
+            var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
+            _classValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(expectedValidationMessages);
+
+            CreateClassResult result = _sut.CreateClass(input);
+
+            _classRepository.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void AddStudent_WithValidationMessages_ReturnsValidationMessages()
+        {
+            var input = _fixture.Create<AddStudentRequest>();
+            var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
+            _studentValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(expectedValidationMessages);
+
+            AddStudentResult result = _sut.AddStudent(input);
+
+            result.Should().NotBeNull();
+            result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
+        }
+
+        [TestMethod]
+        public void AddStudent_WithValidationMessages_DoesNotAddStudent()
+        {
+            var input = _fixture.Create<AddStudentRequest>();
+            var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
+            _studentValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(expectedValidationMessages);
+
+            AddStudentResult result = _sut.AddStudent(input);
+
+            _classRepository.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void AddStudent_ClassDoesNotExists_ReturnsValidationMessage()
+        {
+            var input = _fixture.Create<AddStudentRequest>();
+            var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
+            _studentValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(expectedValidationMessages);
+
+            _classRepository
+                .Setup(x => x.Get(input.ClassId))
+                .Returns((Class)null);
+
+            AddStudentResult result = _sut.AddStudent(input);
+
+            result.ValidationMessages.Should().ContainSingle();
+            ValidationMessage validationMessage = result.ValidationMessages.Single();
+            validationMessage.Field.Should().Be("ClassId");
+            validationMessage.Message.Should().Be("No class was found");
+        }
+
+        [TestMethod]
+        public void AddStudent_UpdateFails_ReturnsValidationMessage()
+        {
+            var input = _fixture.Create<AddStudentRequest>();
+            var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
+            _studentValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(studentValidationMessages);
+
+            var expectedClass = _fixture.Create<Class>();
+            _classRepository
+                .Setup(x => x.Get(input.ClassId))
+                .Returns(expectedClass);
+
+            var classValidationMessage = _fixture.Create<ValidationMessage>();
+            _classRepository
+                .Setup(x => x.Update(expectedClass))
+                .Returns(classValidationMessage);
+
+            AddStudentResult result = _sut.AddStudent(input);
+
+            result.ValidationMessages.Should().ContainSingle();
+            result.ValidationMessages.Should().Contain(classValidationMessage);
         }
     }
 }
