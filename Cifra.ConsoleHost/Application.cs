@@ -28,17 +28,25 @@ namespace Cifra.ConsoleHost
 
         private async Task MenuFlowAsync()
         {
-            Functionality functionality = AskForFunctionality();
+            Area area = AskForArea();
 
-            if (functionality == Functionality.CreateClass)
+            switch (area)
             {
-                var classId = await CreateClassFlowAsync();
-                Console.WriteLine("Adding students to the class");
-                await AddStudentsFlowAsync(classId);
-            }
-            else if (functionality == Functionality.CreateTest)
-            {
-                CreateTestFlow();
+                case Area.Class:
+                    var classId = await CreateClassFlowAsync();
+                    Console.WriteLine("Adding students to the class");
+                    await AddStudentsFlowAsync(classId);
+                    break;
+                case Area.Test:
+                    CreateTestFlow();
+                    break;
+                case Area.Spreadsheet:
+                    break;
+                case Area.Quit:
+                    break;
+                case Area.Unknown:
+                default:
+                    throw new ArgumentException($"Area: {area} is unknown");
             }
         }
 
@@ -126,39 +134,37 @@ namespace Cifra.ConsoleHost
             throw new NotImplementedException();
         }
 
-        private Functionality AskForFunctionality()
+        private Area AskForArea()
         {
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("Create a new class, type C");
-            Console.WriteLine("Create a new test, type T");
-            Console.Write("Choice: ");
-            string functionality = Console.ReadLine();
-            bool isValidOption = ValidateOption(functionality);
-            if (!isValidOption)
+            Console.WriteLine("Create/update classes, type C");
+            Console.WriteLine("Create/update tests, type T");
+            Console.WriteLine("Create new spreadsheet, type S");
+            Console.WriteLine("To Quit, type Q");
+            string input = Console.ReadLine();
+            Area area = MapToArea(input);
+            if (area == Area.Unknown)
             {
                 Console.WriteLine("Invalid choice!");
-                AskForFunctionality();
+                AskForArea();
             }
-            return MapToFunctionality(functionality);
+            return area;
         }
 
-        private bool ValidateOption(string functionality)
+        private Area MapToArea(string functionality)
         {
-            if (functionality == "C" || functionality == "T")
+            switch (functionality.ToUpperInvariant())
             {
-                return true;
-            }
-            return false;
-        }
-
-        private Functionality MapToFunctionality(string functionality)
-        {
-            switch (functionality)
-            {
-                case "C": return Functionality.CreateClass;
-                case "T": return Functionality.CreateClass;
+                case "C":
+                    return Area.Class;
+                case "T":
+                    return Area.Test;
+                case "S":
+                    return Area.Spreadsheet;
+                case "Q":
+                    return Area.Quit;
                 default:
-                    throw new NotSupportedException($"Functionality: {functionality} is not supported");
+                    return Area.Unknown;
             }
         }
     }

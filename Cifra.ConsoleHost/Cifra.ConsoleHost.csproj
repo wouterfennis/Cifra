@@ -26,4 +26,9 @@
     <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Spreadsheet\" />
+    <Folder Include="Areas\Test\" />
+  </ItemGroup>
+
 </Project>
