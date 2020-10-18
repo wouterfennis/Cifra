@@ -1,7 +1,6 @@
 ﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Test;
 using Cifra.Application.Validation;
+using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.Mapping;
 using Newtonsoft.Json;
 using System;
@@ -21,11 +20,11 @@ namespace Cifra.FileSystem
             _classRepositoryLocation = fileLocationProvider.GetClassRepositoryLocation();
         }
 
-        public async Task CreateAsync(Class newClass)
+        public async Task CreateAsync(Application.Models.Class.Class newClass)
         {
-            newClass.MapToFileEntity();
+            var classEntity = newClass.MapToFileEntity();
             List<Class> classes = await RetrieveOrCreateClassesAsync();
-            classes.Add(newClass);
+            classes.Add(classEntity);
             await SaveChangesAsync(classes);
         }
 
@@ -46,13 +45,14 @@ namespace Cifra.FileSystem
             return classes;
         }
 
-        public async Task<Class> GetAsync(Guid id)
+        public async Task<Application.Models.Class.Class> GetAsync(Guid id)
         {
             var classes = await RetrieveOrCreateClassesAsync();
-            return classes.SingleOrDefault(x => x.Id == id);
+            var classEntity = classes.SingleOrDefault(x => x.Id == id);
+            return classEntity.MapToModel();
         }
 
-        public async Task<ValidationMessage> UpdateAsync(Class @class)
+        public async Task<ValidationMessage> UpdateAsync(Application.Models.Class.Class @class)
         {
             var classes = await RetrieveOrCreateClassesAsync();
             var index = classes.FindIndex(x => x.Id == @class.Id);
@@ -61,7 +61,8 @@ namespace Cifra.FileSystem
             {
                 return new ValidationMessage(nameof(@class), "The class was not found");
             }
-            classes[index] = @class;
+            var classEntity = @class.MapToFileEntity();
+            classes[index] = classEntity;
             await SaveChangesAsync(classes);
             
             return null;

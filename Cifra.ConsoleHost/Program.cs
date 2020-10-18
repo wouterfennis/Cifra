@@ -4,6 +4,9 @@ using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
+using Cifra.Application.Validation.QuestionModelValidationRules;
+using Cifra.Application.Validation.StudentModelValidationRules;
+using Cifra.Application.Validation.TestModelValidationRules;
 using Cifra.FileSystem;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +34,12 @@ namespace Cifra.ConsoleHost
                 .AddTransient<IValidator<AddStudentRequest>, Validator<AddStudentRequest>>()
                 .AddTransient<IValidator<CreateTestRequest>, Validator<CreateTestRequest>>()
                 .AddTransient<IValidator<AddQuestionRequest>, Validator<AddQuestionRequest>>()
-                .AddTransient<IFileLocationProvider>(x =>
+                .AddTransient<IValidationRule<AddQuestionRequest>, NamesMustBeFilled>()
+                .AddTransient<IValidationRule<AddQuestionRequest>, TestIdMustBeFilled>()
+                .AddTransient<IValidationRule<AddStudentRequest>, Cifra.Application.Validation.StudentModelValidationRules.NameMustBeFilled>()
+                .AddTransient<IValidationRule<CreateTestRequest>, Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>()
+                .AddTransient<IValidationRule<CreateClassRequest>, Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>()
+               .AddTransient<IFileLocationProvider>(x =>
                     new FileLocationProvider(FilePath.CreateFromString(classRepositoryLocation), FilePath.CreateFromString(testRepositoryLocation))
                     )
                 .AddTransient<ITestRepository, TestRepository>()

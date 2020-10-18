@@ -33,7 +33,8 @@ namespace Cifra.ConsoleHost
             if (functionality == Functionality.CreateClass)
             {
                 var classId = await CreateClassFlowAsync();
-                AddStudentsFlow(classId);
+                Console.WriteLine("Adding students to the class");
+                await AddStudentsFlowAsync(classId);
             }
             else if (functionality == Functionality.CreateTest)
             {
@@ -50,25 +51,24 @@ namespace Cifra.ConsoleHost
                 Name = className
             };
             var createClassResponse = await _classController.CreateClassAsync(createClassRequest);
+            var classId = createClassResponse.ClassId;
             if (createClassResponse.ValidationMessages.Count() > 0)
             {
                 PrintValidationMessages(createClassResponse.ValidationMessages);
-                CreateClassFlowAsync();
+                classId = await CreateClassFlowAsync();
             }
-            return createClassResponse.ClassId;
+            return classId;
         }
 
-        private void AddStudentsFlow(Guid classId)
+        private async Task AddStudentsFlowAsync(Guid classId)
         {
-            Console.WriteLine("Adding students to the class");
-
-            AddStudentFlowAsync(classId);
-            Console.Write("Add another student?");
+            await AddStudentFlowAsync(classId);
+            Console.WriteLine("Add another student?");
             bool addAnotherStudent = AskForBool();
 
             if (addAnotherStudent)
             {
-                AddStudentFlowAsync(classId);
+                await AddStudentsFlowAsync(classId);
             }
         }
 
@@ -86,20 +86,21 @@ namespace Cifra.ConsoleHost
             if (addStudentResponse.ValidationMessages.Count() > 0)
             {
                 PrintValidationMessages(addStudentResponse.ValidationMessages);
-                AddStudentFlowAsync(classId);
+                await AddStudentFlowAsync(classId);
             }
         }
 
         private bool AskForBool()
         {
-            const char Yes = 'Y';
-            const char No = 'N';
+            const string Yes = "Y";
+            const string No = "N";
             Console.WriteLine($"Type {Yes} or {No}");
-            ConsoleKeyInfo choice = Console.ReadKey();
-            if (char.ToUpperInvariant(choice.KeyChar) == 'Y')
+            string input = Console.ReadLine();
+            if (input.ToUpperInvariant() == Yes)
             {
                 return true;
-            } else if (char.ToUpperInvariant(choice.KeyChar) == 'N')
+            }
+            else if (input.ToUpperInvariant() == No)
             {
                 return false;
             }
@@ -113,7 +114,10 @@ namespace Cifra.ConsoleHost
         {
             foreach (ValidationMessage validationMessage in validationMessages)
             {
-                Console.WriteLine("{validationMessage.Field} {validationMessage.Message}");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Some of the input was not valid:");
+                Console.WriteLine($"{validationMessage.Message} on the following field: {validationMessage.Field} ");
+                Console.ResetColor();
             }
         }
 
