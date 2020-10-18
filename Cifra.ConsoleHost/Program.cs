@@ -13,19 +13,10 @@ namespace Cifra.ConsoleHost
 {
     internal class Program
     {
-        private ClassController _classController;
-        private TestController _testController;
-
-        public Program()
-        {
-            var compositionRoot = CompositionRoot();
-            _classController = CompositionRoot().GetService<ClassController>();
-            _testController = CompositionRoot().GetService<TestController>();
-        }
-
         internal static void Main(string[] args)
         {
-
+            var application = CompositionRoot().GetService<Application>();
+            application.Start();
         }
 
         private static IServiceProvider CompositionRoot()
@@ -35,14 +26,17 @@ namespace Cifra.ConsoleHost
             string testRepositoryLocation = configuration["TestRepository"];
             ServiceProvider serviceProvider = new ServiceCollection()
                 .AddTransient<IValidator<CreateClassRequest>, Validator<CreateClassRequest>>()
+                .AddTransient<IValidator<AddStudentRequest>, Validator<AddStudentRequest>>()
                 .AddTransient<IValidator<CreateTestRequest>, Validator<CreateTestRequest>>()
+                .AddTransient<IValidator<AddQuestionRequest>, Validator<AddQuestionRequest>>()
                 .AddTransient<IFileLocationProvider>(x =>
                     new FileLocationProvider(FilePath.CreateFromString(classRepositoryLocation), FilePath.CreateFromString(testRepositoryLocation))
                     )
                 .AddTransient<ITestRepository, TestRepository>()
-                .AddTransient<ITestRepository, ClassRepository>()
+                .AddTransient<IClassRepository, ClassRepository>()
                 .AddScoped<ClassController>()
                 .AddScoped<TestController>()
+                .AddScoped<Application>()
                 .BuildServiceProvider();
 
             return serviceProvider;

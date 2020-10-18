@@ -1,28 +1,29 @@
 ﻿using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Validation;
 using System;
 
 namespace Cifra.FileSystem
 {
-    public class ClassRepository : ITestRepository
+    public class ClassRepository : IClassRepository
     {
         public ClassRepository(IFileLocationProvider fileLocationProvider)
         {
 
         }
 
-        public Guid Create(Test test)
+        public Guid Create(Class @class)
         {
             throw new NotImplementedException();
         }
 
-        public Test Get(Guid id)
+        public Class Get(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public ValidationMessage Update(Test test)
+        public ValidationMessage Update(Class @class)
         {
             throw new NotImplementedException();
         }
