@@ -8,15 +8,17 @@ using Cifra.FileSystem;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost
 {
     internal class Program
     {
-        internal static void Main(string[] args)
+        internal static async Task Main(string[] args)
         {
+            Console.WriteLine("Test");
             var application = CompositionRoot().GetService<Application>();
-            application.Start();
+            await application.StartAsync();
         }
 
         private static IServiceProvider CompositionRoot()

@@ -30,7 +30,7 @@ namespace Cifra.Application.Models.Class
         {
             Id = id;
             Name = className;
-            Students = students ?? throw new ArgumentNullException(nameof(Student));
+            Students = students ?? throw new ArgumentNullException(nameof(students));
         }
 
         /// <summary>

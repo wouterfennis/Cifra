@@ -1,6 +1,6 @@
 ﻿using Cifra.Application.Models.ValueTypes;
 
-namespace Cifra.Application.Models
+namespace Cifra.Application.Models.Class
 {
     /// <summary>
     /// The Student entity

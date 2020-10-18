@@ -1,6 +1,7 @@
 ﻿using Cifra.Application.Models.Class;
 using Cifra.Application.Validation;
 using System;
+using System.Threading.Tasks;
 
 namespace Cifra.Application.Interfaces
 {
@@ -12,16 +13,16 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a class
         /// </summary>
-        Class Get(Guid id);
+        Task<Class> GetAsync(Guid id);
 
         /// <summary>
         /// Create a class 
         /// </summary>
-        Guid Create(Class @class);
+        Task CreateAsync(Class @class);
 
         /// <summary>
         /// Updates a class
         /// </summary>
-        ValidationMessage Update(Class @class);
+        Task<ValidationMessage> UpdateAsync(Class @class);
     }
 }

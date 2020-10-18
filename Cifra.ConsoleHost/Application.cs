@@ -4,8 +4,8 @@ using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost
 {
@@ -20,19 +20,19 @@ namespace Cifra.ConsoleHost
             _testController = testController;
         }
 
-        public void Start()
+        public async Task StartAsync()
         {
             Console.WriteLine("Welcome to Cifra");
-            MenuFlow();
+            await MenuFlowAsync();
         }
 
-        private void MenuFlow()
+        private async Task MenuFlowAsync()
         {
             Functionality functionality = AskForFunctionality();
 
             if (functionality == Functionality.CreateClass)
             {
-                var classId = CreateClassFlow();
+                var classId = await CreateClassFlowAsync();
                 AddStudentsFlow(classId);
             }
             else if (functionality == Functionality.CreateTest)
@@ -41,7 +41,7 @@ namespace Cifra.ConsoleHost
             }
         }
 
-        private Guid CreateClassFlow()
+        private async Task<Guid> CreateClassFlowAsync()
         {
             Console.WriteLine("What is the name of the class?");
             var className = Console.ReadLine();
@@ -49,11 +49,11 @@ namespace Cifra.ConsoleHost
             {
                 Name = className
             };
-            var createClassResponse = _classController.CreateClass(createClassRequest);
+            var createClassResponse = await _classController.CreateClassAsync(createClassRequest);
             if (createClassResponse.ValidationMessages.Count() > 0)
             {
                 PrintValidationMessages(createClassResponse.ValidationMessages);
-                CreateClassFlow();
+                CreateClassFlowAsync();
             }
             return createClassResponse.ClassId;
         }
@@ -62,17 +62,17 @@ namespace Cifra.ConsoleHost
         {
             Console.WriteLine("Adding students to the class");
 
-            AddStudentFlow(classId);
+            AddStudentFlowAsync(classId);
             Console.Write("Add another student?");
             bool addAnotherStudent = AskForBool();
 
             if (addAnotherStudent)
             {
-                AddStudentFlow(classId);
+                AddStudentFlowAsync(classId);
             }
         }
 
-        private void AddStudentFlow(Guid classId)
+        private async Task AddStudentFlowAsync(Guid classId)
         {
             Console.WriteLine("Type the full name of the student");
             var fullName = Console.ReadLine();
@@ -81,12 +81,12 @@ namespace Cifra.ConsoleHost
                 ClassId = classId,
                 FullName = fullName
             };
-            AddStudentResult addStudentResponse = _classController.AddStudent(model);
+            AddStudentResult addStudentResponse = await _classController.AddStudentAsync(model);
 
             if (addStudentResponse.ValidationMessages.Count() > 0)
             {
                 PrintValidationMessages(addStudentResponse.ValidationMessages);
-                AddStudentFlow(classId);
+                AddStudentFlowAsync(classId);
             }
         }
 

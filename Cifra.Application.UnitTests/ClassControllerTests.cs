@@ -9,6 +9,7 @@ using System;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.Class;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests
 {
@@ -32,27 +33,25 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public void CreateClass_WithValidRequest_CreatesClass()
+        public async Task CreateClass_WithValidRequest_CreatesClassAsync()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
-            var expectedClassId = _fixture.Create<Guid>();
             _classValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(validationMessages);
 
-            _classRepository
-                .Setup(x => x.Create(It.Is<Class>(x => x.Name.Value == input.Name)))
-                .Returns(expectedClassId);
+            CreateClassResult result = await _sut.CreateClassAsync(input);
 
-            CreateClassResult result = _sut.CreateClass(input);
-
-            result.ClassId.Should().Be(expectedClassId);
+            result.ClassId.Should().NotBeEmpty();
             result.ValidationMessages.Should().BeEmpty();
+
+            _classRepository
+               .Verify(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == input.Name)));
         }
 
         [TestMethod]
-        public void CreateClass_WithValidationMessages_ReturnsValidationMessages()
+        public async Task CreateClass_WithValidationMessages_ReturnsValidationMessagesAsync()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -60,14 +59,14 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateClassResult result = _sut.CreateClass(input);
+            CreateClassResult result = await _sut.CreateClassAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
         }
 
         [TestMethod]
-        public void CreateClass_WithValidationMessages_DoesNotCreateClass()
+        public async Task CreateClass_WithValidationMessages_DoesNotCreateClassAsync()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -75,13 +74,13 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateClassResult result = _sut.CreateClass(input);
+            CreateClassResult result = await _sut.CreateClassAsync(input);
 
             _classRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
-        public void AddStudent_WithValidationMessages_ReturnsValidationMessages()
+        public async Task AddStudent_WithValidationMessages_ReturnsValidationMessagesAsync()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -89,14 +88,14 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddStudentResult result = _sut.AddStudent(input);
+            AddStudentResult result = await _sut.AddStudentAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
         }
 
         [TestMethod]
-        public void AddStudent_WithValidationMessages_DoesNotAddStudent()
+        public async Task AddStudent_WithValidationMessages_DoesNotAddStudentAsync()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -104,13 +103,13 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddStudentResult result = _sut.AddStudent(input);
+            AddStudentResult result = await _sut.AddStudentAsync(input);
 
             _classRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
-        public void AddStudent_ClassDoesNotExists_ReturnsValidationMessage()
+        public async Task AddStudent_ClassDoesNotExists_ReturnsValidationMessageAsync()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -119,10 +118,11 @@ namespace Cifra.Application.UnitTests
                 .Returns(expectedValidationMessages);
 
             _classRepository
-                .Setup(x => x.Get(input.ClassId))
-                .Returns((Class)null);
+                .Setup(x => x.GetAsync(input.ClassId))
+                .ReturnsAsync((Class)null);
 
-            AddStudentResult result = _sut.AddStudent(input);
+
+            AddStudentResult result = await _sut.AddStudentAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             ValidationMessage validationMessage = result.ValidationMessages.Single();
@@ -131,7 +131,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public void AddStudent_UpdateFails_ReturnsValidationMessage()
+        public async Task AddStudent_UpdateFails_ReturnsValidationMessageAsync()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -141,15 +141,15 @@ namespace Cifra.Application.UnitTests
 
             var expectedClass = _fixture.Create<Class>();
             _classRepository
-                .Setup(x => x.Get(input.ClassId))
-                .Returns(expectedClass);
+                .Setup(x => x.GetAsync(input.ClassId))
+                .ReturnsAsync(expectedClass);
 
             var classValidationMessage = _fixture.Create<ValidationMessage>();
             _classRepository
-                .Setup(x => x.Update(expectedClass))
-                .Returns(classValidationMessage);
+                .Setup(x => x.UpdateAsync(expectedClass))
+                .ReturnsAsync(classValidationMessage);
 
-            AddStudentResult result = _sut.AddStudent(input);
+            AddStudentResult result = await _sut.AddStudentAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             result.ValidationMessages.Should().Contain(classValidationMessage);

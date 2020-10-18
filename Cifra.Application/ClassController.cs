@@ -8,6 +8,7 @@ using Cifra.Application.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
@@ -26,7 +27,7 @@ namespace Cifra.Application
             _studentValidator = studentValidator;
         }
 
-        public CreateClassResult CreateClass(CreateClassRequest model)
+        public async Task<CreateClassResult> CreateClassAsync(CreateClassRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
             if (validationMessages.Count() > 0)
@@ -35,12 +36,12 @@ namespace Cifra.Application
             }
 
             var @class = new Class(Name.CreateFromString(model.Name));
-            Guid classId = _classRepository.Create(@class);
+            await _classRepository.CreateAsync(@class);
 
-            return new CreateClassResult(classId);
+            return new CreateClassResult(@class.Id);
         }
 
-        public AddStudentResult AddStudent(AddStudentRequest model)
+        public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);
             if (validationMessages.Count() > 0)
@@ -48,7 +49,7 @@ namespace Cifra.Application
                 return new AddStudentResult(validationMessages);
             }
 
-            var @class = _classRepository.Get(model.ClassId);
+            var @class = await _classRepository.GetAsync(model.ClassId);
             if (@class == null)
             {
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
@@ -57,7 +58,7 @@ namespace Cifra.Application
             var student = new Student(Name.CreateFromString(model.FullName));
 
             @class.AddStudent(student);
-            ValidationMessage result = _classRepository.Update(@class);
+            ValidationMessage result = await _classRepository.UpdateAsync(@class);
 
             if (result != null)
             {
