@@ -1,6 +1,6 @@
 ﻿namespace Cifra.ConsoleHost
 {
-    internal enum Area
+    internal enum AreaMenuOption
     {
         Unknown,
         Class,

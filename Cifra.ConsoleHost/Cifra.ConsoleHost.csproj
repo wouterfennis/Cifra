@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
@@ -24,11 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
     <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Spreadsheet\" />
-    <Folder Include="Areas\Test\" />
   </ItemGroup>
 
 </Project>
