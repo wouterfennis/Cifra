@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cifra.ConsoleHost.Areas.Class
+namespace Cifra.ConsoleHost.Areas.Test
 {
-    internal class EditClassFlow : IFlow
+    internal class DeleteTestFlow : IFlow
     {
         public Task StartAsync()
         {

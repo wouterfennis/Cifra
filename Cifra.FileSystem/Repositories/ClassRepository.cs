@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cifra.FileSystem
+namespace Cifra.FileSystem.Repositories
 {
     public class ClassRepository : IClassRepository
     {
@@ -28,23 +28,6 @@ namespace Cifra.FileSystem
             await SaveChangesAsync(classes);
         }
 
-        private async Task<List<Class>> RetrieveOrCreateClassesAsync()
-        {
-            var location = _classRepositoryLocation.ToFileInfo();
-            List<Class> classes = null;
-            if (!location.Exists)
-            {
-                classes = new List<Class>();
-            } else
-            {
-                using (var reader = new StreamReader(location.OpenRead()))
-                {
-                    classes = JsonConvert.DeserializeObject<List<Class>>(await reader.ReadToEndAsync());
-                }
-            }
-            return classes;
-        }
-
         public async Task<Application.Models.Class.Class> GetAsync(Guid id)
         {
             var classes = await RetrieveOrCreateClassesAsync();
@@ -57,15 +40,39 @@ namespace Cifra.FileSystem
             var classes = await RetrieveOrCreateClassesAsync();
             var index = classes.FindIndex(x => x.Id == @class.Id);
 
-            if(index == -1)
+            if (index == -1)
             {
                 return new ValidationMessage(nameof(@class), "The class was not found");
             }
             var classEntity = @class.MapToFileEntity();
             classes[index] = classEntity;
             await SaveChangesAsync(classes);
-            
+
             return null;
+        }
+
+        public async Task<IEnumerable<Application.Models.Class.Class>> GetAllAsync()
+        {
+            var classes = await RetrieveOrCreateClassesAsync();
+            return classes.Select(x => x.MapToModel());
+        }
+
+        private async Task<List<Class>> RetrieveOrCreateClassesAsync()
+        {
+            var location = _classRepositoryLocation.ToFileInfo();
+            List<Class> classes = null;
+            if (!location.Exists)
+            {
+                classes = new List<Class>();
+            }
+            else
+            {
+                using (var reader = new StreamReader(location.OpenRead()))
+                {
+                    classes = JsonConvert.DeserializeObject<List<Class>>(await reader.ReadToEndAsync());
+                }
+            }
+            return classes;
         }
 
         private async Task SaveChangesAsync(IEnumerable<Class> classes)

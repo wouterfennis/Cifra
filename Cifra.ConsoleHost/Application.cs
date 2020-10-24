@@ -1,13 +1,7 @@
-﻿using Cifra.Application;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Validation;
+﻿using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
 using Cifra.ConsoleHost.Areas.Test;
-using Cifra.ConsoleHost.Functionalities.Class;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost

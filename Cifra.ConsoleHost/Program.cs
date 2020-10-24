@@ -9,6 +9,7 @@ using Cifra.Application.Validation.QuestionModelValidationRules;
 using Cifra.Application.Validation.StudentModelValidationRules;
 using Cifra.Application.Validation.TestModelValidationRules;
 using Cifra.FileSystem;
+using Cifra.FileSystem.Repositories;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +20,10 @@ namespace Cifra.ConsoleHost
     {
         internal static async Task Main(string[] args)
         {
-            Console.WriteLine("Test");
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("This is a test version. Not ready for actual use");
+            Console.ResetColor();
             var application = CompositionRoot().Resolve<Application>();
             await application.StartAsync();
         }

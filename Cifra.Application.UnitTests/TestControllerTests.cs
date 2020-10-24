@@ -1,18 +1,15 @@
 ﻿using AutoFixture;
 using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Class;
 using System.Linq;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.Test.Results;
 using Cifra.Application.Models.ValueTypes;
+using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests
 {
@@ -36,27 +33,25 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public void CreateTest_WithValidRequest_CreatesClass()
+        public async Task CreateTest_WithValidRequest_CreatesClass()
         {
             CreateTestRequest input = CreateDefaultTestRequest();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
-            var expectedTestId = _fixture.Create<Guid>();
             _testValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(validationMessages);
 
-            _testRepository
-                .Setup(x => x.Create(It.Is<Test>(x => x.Name.Value == input.Name)))
-                .Returns(expectedTestId);
+            CreateTestResult result = await _sut.CreateTestAsync(input);
 
-            CreateTestResult result = _sut.CreateTest(input);
-
-            result.TestId.Should().Be(expectedTestId);
+            result.TestId.Should().NotBeEmpty();
             result.ValidationMessages.Should().BeEmpty();
+
+            _testRepository
+                .Verify(x => x.CreateAsync(It.Is<Test>(x => x.Name.Value == input.Name)));
         }
 
         [TestMethod]
-        public void CreateTest_WithValidationMessages_ReturnsValidationMessages()
+        public async Task CreateTest_WithValidationMessages_ReturnsValidationMessages()
         {
             var input = CreateDefaultTestRequest();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -64,14 +59,14 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateTestResult result = _sut.CreateTest(input);
+            CreateTestResult result = await _sut.CreateTestAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
         }
 
         [TestMethod]
-        public void CreateTest_WithValidationMessages_DoesNotCreateClass()
+        public async Task CreateTest_WithValidationMessages_DoesNotCreateClass()
         {
             var input = CreateDefaultTestRequest();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -79,13 +74,13 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateTestResult result = _sut.CreateTest(input);
+            CreateTestResult result = await _sut.CreateTestAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
-        public void AddQuestion_WithValidationMessages_ReturnsValidationMessages()
+        public async Task AddQuestion_WithValidationMessages_ReturnsValidationMessages()
         {
             var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -93,14 +88,14 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddQuestionResult result = _sut.AddQuestion(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
         }
 
         [TestMethod]
-        public void AddQuestion_WithValidationMessages_DoesNotAddStudent()
+        public async Task AddQuestion_WithValidationMessages_DoesNotAddStudent()
         {
             var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -108,13 +103,13 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddQuestionResult result = _sut.AddQuestion(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
-        public void AddQuestion_ClassDoesNotExists_ReturnsValidationMessage()
+        public async Task AddQuestion_ClassDoesNotExists_ReturnsValidationMessage()
         {
             var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -123,10 +118,10 @@ namespace Cifra.Application.UnitTests
                 .Returns(expectedValidationMessages);
 
             _testRepository
-                .Setup(x => x.Get(input.TestId))
-                .Returns((Test)null);
+                .Setup(x => x.GetAsync(input.TestId))
+                .ReturnsAsync((Test)null);
 
-            AddQuestionResult result = _sut.AddQuestion(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             ValidationMessage validationMessage = result.ValidationMessages.Single();
@@ -135,7 +130,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public void AddQuestion_UpdateFails_ReturnsValidationMessage()
+        public async Task AddQuestion_UpdateFails_ReturnsValidationMessage()
         {
             var input = _fixture.Create<AddQuestionRequest>();
             var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -145,15 +140,40 @@ namespace Cifra.Application.UnitTests
 
             Test expectedClass = CreateDefaultTest();
             _testRepository
-                .Setup(x => x.Get(input.TestId))
-                .Returns(expectedClass);
+                .Setup(x => x.GetAsync(input.TestId))
+                .ReturnsAsync(expectedClass);
 
             var testValidationMessage = _fixture.Create<ValidationMessage>();
             _testRepository
-                .Setup(x => x.Update(expectedClass))
-                .Returns(testValidationMessage);
+                .Setup(x => x.UpdateAsync(expectedClass))
+                .ReturnsAsync(testValidationMessage);
 
-            AddQuestionResult result = _sut.AddQuestion(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+
+            result.ValidationMessages.Should().ContainSingle();
+            result.ValidationMessages.Should().Contain(testValidationMessage);
+        }
+
+        [TestMethod]
+        public async Task GetAllTests_TestsAvailable_ReturnsTests()
+        {
+            var input = _fixture.Create<AddQuestionRequest>();
+            var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
+            _questionValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(studentValidationMessages);
+
+            Test expectedClass = CreateDefaultTest();
+            _testRepository
+                .Setup(x => x.GetAsync(input.TestId))
+                .ReturnsAsync(expectedClass);
+
+            var testValidationMessage = _fixture.Create<ValidationMessage>();
+            _testRepository
+                .Setup(x => x.UpdateAsync(expectedClass))
+                .ReturnsAsync(testValidationMessage);
+
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             result.ValidationMessages.Should().Contain(testValidationMessage);

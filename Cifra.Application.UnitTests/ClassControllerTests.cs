@@ -33,7 +33,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task CreateClass_WithValidRequest_CreatesClassAsync()
+        public async Task CreateClass_WithValidRequest_CreatesClass()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -51,7 +51,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task CreateClass_WithValidationMessages_ReturnsValidationMessagesAsync()
+        public async Task CreateClass_WithValidationMessages_ReturnsValidationMessages()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -66,7 +66,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task CreateClass_WithValidationMessages_DoesNotCreateClassAsync()
+        public async Task CreateClass_WithValidationMessages_DoesNotCreateClass()
         {
             var input = _fixture.Create<CreateClassRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -80,7 +80,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task AddStudent_WithValidationMessages_ReturnsValidationMessagesAsync()
+        public async Task AddStudent_WithValidationMessages_ReturnsValidationMessages()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -95,7 +95,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task AddStudent_WithValidationMessages_DoesNotAddStudentAsync()
+        public async Task AddStudent_WithValidationMessages_DoesNotAddStudent()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
@@ -109,7 +109,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task AddStudent_ClassDoesNotExists_ReturnsValidationMessageAsync()
+        public async Task AddStudent_ClassDoesNotExists_ReturnsValidationMessage()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -131,7 +131,7 @@ namespace Cifra.Application.UnitTests
         }
 
         [TestMethod]
-        public async Task AddStudent_UpdateFails_ReturnsValidationMessageAsync()
+        public async Task AddStudent_UpdateFails_ReturnsValidationMessage()
         {
             var input = _fixture.Create<AddStudentRequest>();
             var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);

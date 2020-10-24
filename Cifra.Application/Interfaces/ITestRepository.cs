@@ -1,6 +1,8 @@
 ﻿using Cifra.Application.Models.Test;
 using Cifra.Application.Validation;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cifra.Application.Interfaces
 {
@@ -12,16 +14,21 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a test
         /// </summary>
-        Test Get(Guid id);
+        Task<Test> GetAsync(Guid id);
 
         /// <summary>
         /// Create a test 
         /// </summary>
-        Guid Create(Test test);
+        Task CreateAsync(Test test);
 
         /// <summary>
         /// Updates a test
         /// </summary>
-        ValidationMessage Update(Test test);
+        Task<ValidationMessage> UpdateAsync(Test test);
+
+        /// <summary>
+        /// Get all tests
+        /// </summary>
+        Task<IEnumerable<Test>> GetAllAsync();
     }
 }

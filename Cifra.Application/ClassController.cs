@@ -41,6 +41,12 @@ namespace Cifra.Application
             return new CreateClassResult(@class.Id);
         }
 
+        public async Task<GetAllClassesResult> GetClassesAsync()
+        {
+            var classes = await _classRepository.GetAllAsync();
+            return new GetAllClassesResult(classes);
+        }
+
         public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);

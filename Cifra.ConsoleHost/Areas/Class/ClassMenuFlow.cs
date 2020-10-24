@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cifra.ConsoleHost.Functionalities.Class
+namespace Cifra.ConsoleHost.Areas.Class
 {
     internal class ClassMenuFlow : IFlow
     {

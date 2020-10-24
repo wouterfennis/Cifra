@@ -1,10 +1,7 @@
 ﻿using Autofac;
+using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
 using Cifra.ConsoleHost.Areas.Test;
-using Cifra.ConsoleHost.Functionalities.Class;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.ConsoleHost
 {
@@ -17,7 +14,11 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<EditClassFlow>();
             builder.RegisterType<DeleteClassFlow>();
             builder.RegisterType<SpreadsheetMenuFlow>();
+            builder.RegisterType<CreateSpreadsheetFlow>();
             builder.RegisterType<TestMenuFlow>();
+            builder.RegisterType<CreateTestFlow>();
+            builder.RegisterType<EditTestFlow>();
+            builder.RegisterType<DeleteTestFlow>();
         }
     }
 }

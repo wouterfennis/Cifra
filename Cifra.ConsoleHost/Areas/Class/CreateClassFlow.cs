@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cifra.ConsoleHost.Functionalities.Class
+namespace Cifra.ConsoleHost.Areas.Class
 {
     internal class CreateClassFlow : IFlow
     {
@@ -47,8 +47,7 @@ namespace Cifra.ConsoleHost.Functionalities.Class
         private async Task AddStudentsFlowAsync(Guid classId)
         {
             await AddStudentFlowAsync(classId);
-            Console.WriteLine("Add another student?");
-            bool addAnotherStudent = SharedConsoleFlows.AskForBool();
+            bool addAnotherStudent = SharedConsoleFlows.AskForBool("Add another student?");
 
             if (addAnotherStudent)
             {

@@ -8,6 +8,7 @@ using Cifra.Application.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
@@ -26,7 +27,7 @@ namespace Cifra.Application
             _questionValidator = questionValidator;
         }
 
-        public CreateTestResult CreateTest(CreateTestRequest model)
+        public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _testValidator.ValidateRules(model);
             if (validationMessages.Count() > 0)
@@ -35,12 +36,12 @@ namespace Cifra.Application
             }
 
             var test = new Test(Name.CreateFromString(model.Name), StandardizationFactor.CreateFromByte(model.StandardizationFactor), Grade.CreateFromByte(model.MinimumGrade));
-            Guid testId = _testRepository.Create(test);
+             await _testRepository.CreateAsync(test);
 
-            return new CreateTestResult(testId);
+            return new CreateTestResult(test.Id);
         }
 
-        public AddQuestionResult AddQuestion(AddQuestionRequest model)
+        public async Task<AddQuestionResult> AddQuestionAsync(AddQuestionRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _questionValidator.ValidateRules(model);
             if (validationMessages.Count() > 0)
@@ -48,7 +49,7 @@ namespace Cifra.Application
                 return new AddQuestionResult(validationMessages);
             }
 
-            var test = _testRepository.Get(model.TestId);
+            var test = await _testRepository.GetAsync(model.TestId);
             if(test == null)
             {
                 return new AddQuestionResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
@@ -58,7 +59,7 @@ namespace Cifra.Application
             var question = new Question(names, QuestionScore.CreateFromByte(model.MaximalScore));
 
             test.AddQuestion(question);
-            ValidationMessage result = _testRepository.Update(test);
+            ValidationMessage result = await _testRepository.UpdateAsync(test);
 
             if (result != null)
             {
@@ -66,6 +67,12 @@ namespace Cifra.Application
             }
 
             return new AddQuestionResult();
+        }
+
+        public async Task<GetAllTestsResult> GetTestsAsync()
+        {
+            var tests = await _testRepository.GetAllAsync();
+            return new GetAllTestsResult(tests);
         }
     }
 }

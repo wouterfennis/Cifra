@@ -1,6 +1,7 @@
 ﻿using Cifra.Application.Models.Class;
 using Cifra.Application.Validation;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Cifra.Application.Interfaces
@@ -24,5 +25,10 @@ namespace Cifra.Application.Interfaces
         /// Updates a class
         /// </summary>
         Task<ValidationMessage> UpdateAsync(Class @class);
+
+        /// <summary>
+        /// Get all classes
+        /// </summary>
+        Task<IEnumerable<Class>> GetAllAsync();
     }
 }
