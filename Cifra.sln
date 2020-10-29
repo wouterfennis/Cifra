@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application.UnitTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem", "Cifra.FileSystem\Cifra.FileSystem.csproj", "{8468699C-C2AA-4325-B68D-9C88801C2FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorksheetWriter.Abstractions", "WorksheetWriter.Abstractions\WorksheetWriter.Abstractions.csproj", "{EF8D0CBC-EFF3-482A-80B7-1825A0B91D85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetWriter.Abstractions", "WorksheetWriter.Abstractions\SpreadsheetWriter.Abstractions.csproj", "{EF8D0CBC-EFF3-482A-80B7-1825A0B91D85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorksheetWriter.EPPlus", "WorksheetWriter.EPPlus\WorksheetWriter.EPPlus.csproj", "{3639FAC1-1BAB-45EB-A96B-7182512BB695}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetWriter.EPPlus", "WorksheetWriter.EPPlus\SpreadsheetWriter.EPPlus.csproj", "{3639FAC1-1BAB-45EB-A96B-7182512BB695}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

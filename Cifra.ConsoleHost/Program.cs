@@ -10,6 +10,7 @@ using Cifra.Application.Validation.StudentModelValidationRules;
 using Cifra.Application.Validation.TestModelValidationRules;
 using Cifra.FileSystem;
 using Cifra.FileSystem.Repositories;
+using Cifra.FileSystem.Spreadsheet;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -31,14 +32,16 @@ namespace Cifra.ConsoleHost
         private static IContainer CompositionRoot()
         {
             IConfigurationSection configuration = SetupAppsettings();
-            string classRepositoryLocation = configuration["ClassRepository"];
-            string testRepositoryLocation = configuration["TestRepository"];
+            string classRepositoryPath = configuration["ClassRepository"];
+            string testRepositoryPath = configuration["TestRepository"];
+            string spreadsheetDirectoryPath = configuration["SpreadsheetDirectory"];
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
             builder.RegisterType<ClassController>();
             builder.RegisterType<TestController>();
             builder.RegisterType<TestRepository>().AsImplementedInterfaces();
             builder.RegisterType<ClassRepository>().AsImplementedInterfaces();
+            builder.RegisterType<TestResultsSpreadsheetFactory>().AsImplementedInterfaces();
 
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
             builder.RegisterType<Validator<AddStudentRequest>>().As<IValidator<AddStudentRequest>>();
@@ -46,16 +49,18 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Validator<AddQuestionRequest>>().As<IValidator<AddQuestionRequest>>();
             builder.RegisterType<NamesMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
             builder.RegisterType<TestIdMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
+            
             builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.NameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
             builder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestRequest>>();
             builder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassRequest>>();
             var fileLocationProvider = new FileLocationProvider(
-                Path.CreateFromString(classRepositoryLocation),
-                Path.CreateFromString(testRepositoryLocation)
+                Path.CreateFromString(classRepositoryPath),
+                Path.CreateFromString(testRepositoryPath),
+                Path.CreateFromString(spreadsheetDirectoryPath)
                 );
             builder.RegisterInstance(fileLocationProvider).AsImplementedInterfaces();
 
-            builder.RegisterModule<FileSystemModule>();
+            builder.RegisterModule<AreaModule>();
 
             return builder.Build();
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpreadsheetWriter.EPPlus
+namespace Cifra.Application.Models.Spreadsheet
 {
     public class Metadata
     {

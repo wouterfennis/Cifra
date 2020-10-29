@@ -21,9 +21,9 @@ namespace SpreadsheetWriter.EPPlus
             _excelPackage.Workbook.Properties.Created = metadata.Created;
         }
 
-        public ExcelSpreadsheetWriter CreateSpreadsheetWriter(Name name)
+        public ExcelSpreadsheetWriter CreateSpreadsheetWriter(string name)
         {
-            ExcelWorksheet worksheet = _excelPackage.Workbook.Worksheets.Add(name.Value);
+            ExcelWorksheet worksheet = _excelPackage.Workbook.Worksheets.Add(name);
             return new ExcelSpreadsheetWriter(worksheet);
         }
 

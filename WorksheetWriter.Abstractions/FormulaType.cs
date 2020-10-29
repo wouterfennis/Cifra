@@ -1,4 +1,4 @@
-﻿namespace WorksheetWriter.Abstractions
+﻿namespace SpreadsheetWriter.Abstractions
 {
     /// <summary>
     /// The types of formulas supported

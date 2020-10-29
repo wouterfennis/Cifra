@@ -6,6 +6,6 @@
 
         IFileInfoWrapper GetTestRepositoryPath();
 
-        IFileInfoWrapper GetSpreadsheetDirectoryPath();
+        IDirectoryInfoWrapper GetSpreadsheetDirectoryPath();
     }
 }

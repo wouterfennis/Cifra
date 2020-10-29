@@ -5,7 +5,7 @@ using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost
 {
-    public class FileSystemModule : Module
+    public class AreaModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

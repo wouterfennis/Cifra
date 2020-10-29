@@ -1,9 +1,9 @@
 ﻿using OfficeOpenXml;
 using System.Drawing;
 
-namespace Bankreader.FileSystem.Excel.Extensions
+namespace SpreadsheetWriter.EPPlus.Extensions
 {
-    public static class ExcelRangeExtensions
+    internal static class ExcelRangeExtensions
     {
         public static void SetBackgroundColor(this ExcelRange excelRange, Color color)
         {

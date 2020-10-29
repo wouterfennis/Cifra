@@ -1,16 +1,9 @@
 ﻿using Cifra.Application;
-using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Requests;
-using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.ValueTypes;
-using Cifra.ConsoleHost.Areas;
-using Cifra.FileSystem;
+using Cifra.Application.Models.Spreadsheet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Test
@@ -19,12 +12,15 @@ namespace Cifra.ConsoleHost.Areas.Test
     {
         private readonly ClassController _classController;
         private readonly TestController _testController;
+        private readonly ITestResultsSpreadsheetFactory spreadsheetFactory;
 
         public CreateSpreadsheetFlow(ClassController classController,
-            TestController testController)
+            TestController testController,
+            ITestResultsSpreadsheetFactory spreadsheetFactory)
         {
             _classController = classController;
             _testController = testController;
+            this.spreadsheetFactory = spreadsheetFactory;
         }
 
         public async Task StartAsync()
@@ -33,9 +29,9 @@ namespace Cifra.ConsoleHost.Areas.Test
             Cifra.Application.Models.Test.Test chosenTest = await AskForTestAsync();
             string fileName = SharedConsoleFlows.AskForString("What should be the name of the spreadsheet?");
 
-            BuildSpreadsheet(chosenClass, chosenTest);
+            BuildSpreadsheetAsync(chosenClass, chosenTest, fileName);
 
-            Console.WriteLine("No implementation yet! Try again in next version");
+            //Console.WriteLine("No implementation yet! Try again in next version");
         }
 
         private async Task<Cifra.Application.Models.Class.Class> AskForClassAsync()
@@ -78,9 +74,18 @@ namespace Cifra.ConsoleHost.Areas.Test
             return chosenTest;
         }
 
-        private void BuildSpreadsheet(Cifra.Application.Models.Class.Class chosenClass, Cifra.Application.Models.Test.Test chosenTest)
+        private async Task BuildSpreadsheetAsync(Cifra.Application.Models.Class.Class chosenClass, Cifra.Application.Models.Test.Test chosenTest, string fileName)
         {
-            throw new NotImplementedException();
+            var metadata = new Metadata
+            {
+                Title = fileName,
+                Subject = fileName,
+                Author = "Todo",
+                Created = DateTime.Now,
+                FileName = fileName
+            };
+
+            await spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);
         }
     }
 }

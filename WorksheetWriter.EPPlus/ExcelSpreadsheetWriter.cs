@@ -1,9 +1,9 @@
 ﻿using OfficeOpenXml;
+using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.EPPlus.Extensions;
 using System.Drawing;
-using WorksheetWriter.Abstractions;
-using WorksheetWriter.EPPlus.Extensions;
 
-namespace WorksheetWriter.EPPlus
+namespace SpreadsheetWriter.EPPlus
 {
     public class ExcelSpreadsheetWriter : ISpreadsheetWriter
     {

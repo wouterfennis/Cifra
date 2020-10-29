@@ -1,9 +1,9 @@
 ﻿using OfficeOpenXml;
 using System.Drawing;
 
-namespace WorksheetWriter.EPPlus.Extensions
+namespace SpreadsheetWriter.EPPlus.Extensions
 {
-    public static class ExcelWorksheetExtensions
+    internal static class ExcelWorksheetExtensions
     {
         public static ExcelRange GetCell(this ExcelWorksheet excelWorksheet, Point point)
         {
