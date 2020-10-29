@@ -50,8 +50,8 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestRequest>>();
             builder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassRequest>>();
             var fileLocationProvider = new FileLocationProvider(
-                FilePath.CreateFromString(classRepositoryLocation),
-                FilePath.CreateFromString(testRepositoryLocation)
+                Path.CreateFromString(classRepositoryLocation),
+                Path.CreateFromString(testRepositoryLocation)
                 );
             builder.RegisterInstance(fileLocationProvider).AsImplementedInterfaces();
 

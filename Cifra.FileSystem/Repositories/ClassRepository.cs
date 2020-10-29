@@ -17,7 +17,7 @@ namespace Cifra.FileSystem.Repositories
 
         public ClassRepository(IFileLocationProvider fileLocationProvider)
         {
-            _classRepositoryLocation = fileLocationProvider.GetClassRepositoryLocation();
+            _classRepositoryLocation = fileLocationProvider.GetClassRepositoryPath();
         }
 
         public async Task CreateAsync(Application.Models.Class.Class newClass)

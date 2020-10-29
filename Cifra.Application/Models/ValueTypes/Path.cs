@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Cifra.Application.Models.ValueTypes
 {
-    public class FilePath : ValueObject
+    public class Path : ValueObject
     {
-        private FilePath(string value)
+        private Path(string value)
         {
             Validate(value);
             Value = value;
@@ -23,9 +23,9 @@ namespace Cifra.Application.Models.ValueTypes
         public string Value { get; }
 
         /// <summary>
-        /// Creates a FilePath from a string
+        /// Creates a Path from a string
         /// </summary>
-        public static FilePath CreateFromString(string value) => new FilePath(value);
+        public static Path CreateFromString(string value) => new Path(value);
 
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }

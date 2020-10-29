@@ -5,6 +5,7 @@ using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.ConsoleHost.Areas;
+using Cifra.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Cifra.ConsoleHost.Areas.Test
         private readonly ClassController _classController;
         private readonly TestController _testController;
 
-        public CreateSpreadsheetFlow(ClassController classController, TestController testController)
+        public CreateSpreadsheetFlow(ClassController classController,
+            TestController testController)
         {
             _classController = classController;
             _testController = testController;
@@ -27,8 +29,11 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         public async Task StartAsync()
         {
-            var chosenClass = await AskForClassAsync();
-            var chosenTest = await AskForTestAsync();
+            Cifra.Application.Models.Class.Class chosenClass = await AskForClassAsync();
+            Cifra.Application.Models.Test.Test chosenTest = await AskForTestAsync();
+            string fileName = SharedConsoleFlows.AskForString("What should be the name of the spreadsheet?");
+
+            BuildSpreadsheet(chosenClass, chosenTest);
 
             Console.WriteLine("No implementation yet! Try again in next version");
         }
@@ -73,69 +78,9 @@ namespace Cifra.ConsoleHost.Areas.Test
             return chosenTest;
         }
 
-        private async Task<Guid> CreateTestFlowAsync()
+        private void BuildSpreadsheet(Cifra.Application.Models.Class.Class chosenClass, Cifra.Application.Models.Test.Test chosenTest)
         {
-            var testName = SharedConsoleFlows.AskForString("What is the name of the test?");
-            var minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
-            var standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
-
-            var createTestRequest = new CreateTestRequest()
-            {
-                Name = testName,
-                MinimumGrade = minimumGrade,
-                StandardizationFactor = standardizationFactor
-            };
-            var createTestResponse = await _testController.CreateTestAsync(createTestRequest);
-            var classId = createTestResponse.TestId;
-            if (createTestResponse.ValidationMessages.Count() > 0)
-            {
-                SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
-                classId = await CreateTestFlowAsync();
-            }
-            return classId;
-        }
-
-        private async Task AddQuestionsFlowAsync(Guid classId)
-        {
-            await AddQuestionFlowAsync(classId);
-            bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question?");
-
-            if (addAnotherQuestion)
-            {
-                await AddQuestionsFlowAsync(classId);
-            }
-        }
-
-        private async Task AddQuestionFlowAsync(Guid testId)
-        {
-            IEnumerable<string> names = CollectQuestionNames();
-            var maximalScore = SharedConsoleFlows.AskForByte("What is the maximal score of the question?");
-            var model = new AddQuestionRequest
-            {
-                TestId = testId,
-                Names = names,
-                MaximalScore = maximalScore
-            };
-            AddQuestionResult addQuestionResponse = await _testController.AddQuestionAsync(model);
-
-            if (addQuestionResponse.ValidationMessages.Count() > 0)
-            {
-                SharedConsoleFlows.PrintValidationMessages(addQuestionResponse.ValidationMessages);
-                await AddQuestionFlowAsync(testId);
-            }
-        }
-
-        private IEnumerable<string> CollectQuestionNames()
-        {
-            var names = new List<string>();
-            var name = SharedConsoleFlows.AskForString("Type an name for the question");
-            names.Add(name);
-            var addAnotherName = SharedConsoleFlows.AskForBool("Add an additional name to the question?");
-            if (addAnotherName)
-            {
-                names.AddRange(CollectQuestionNames());
-            }
-            return names;
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,8 +2,10 @@
 {
     public interface IFileLocationProvider
     {
-        IFileInfoWrapper GetClassRepositoryLocation();
+        IFileInfoWrapper GetClassRepositoryPath();
 
-        IFileInfoWrapper GetTestRepositoryLocation();
+        IFileInfoWrapper GetTestRepositoryPath();
+
+        IFileInfoWrapper GetSpreadsheetDirectoryPath();
     }
 }

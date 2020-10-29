@@ -1,30 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-    <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
+		<ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -5,9 +5,9 @@ namespace Cifra.FileSystem
 {
     public class FileInfoWrapper : IFileInfoWrapper
     {
-        private readonly FilePath _filePath;
+        private readonly Application.Models.ValueTypes.Path _filePath;
 
-        public FileInfoWrapper(FilePath filePath)
+        public FileInfoWrapper(Application.Models.ValueTypes.Path filePath)
         {
             _filePath = filePath;
         }

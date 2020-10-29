@@ -17,7 +17,7 @@ namespace Cifra.FileSystem.Repositories
 
         public TestRepository(IFileLocationProvider fileLocationProvider)
         {
-            _testRepositoryLocation = fileLocationProvider.GetTestRepositoryLocation();
+            _testRepositoryLocation = fileLocationProvider.GetTestRepositoryPath();
         }
 
         public async Task CreateAsync(Test newTest)
