@@ -79,5 +79,31 @@ namespace Cifra.Application.UnitTests.Models.Test
 
             action.Should().Throw<ArgumentNullException>();
         }
+
+        [TestMethod]
+        public void GetGetQuestionNamesPerQuestion_WithMultipleQuestions_ReturnsLargestNumber()
+        {
+            int expectedResult = 3;
+            var questions = new List<Question>()
+            {
+                new Question(_fixture.CreateMany<Name>(expectedResult),
+                QuestionScore.CreateFromByte(_fixture.Create<byte>())),
+                new Question(_fixture.CreateMany<Name>(2),
+                QuestionScore.CreateFromByte(_fixture.Create<byte>())),
+                new Question(_fixture.CreateMany<Name>(1),
+                QuestionScore.CreateFromByte(_fixture.Create<byte>()))
+            };
+
+            var sut = new Application.Models.Test.Test(
+                        _fixture.Create<Guid>(),
+                        Name.CreateFromString(_fixture.Create<string>()),
+                        StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
+                        Grade.CreateFromByte(5),
+                        questions);
+
+            int result = sut.GetMaximalQuestionNamesPerQuestion();
+
+            result.Should().Be(expectedResult);
+        }
     }
 }

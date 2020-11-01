@@ -29,9 +29,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             Cifra.Application.Models.Test.Test chosenTest = await AskForTestAsync();
             string fileName = SharedConsoleFlows.AskForString("What should be the name of the spreadsheet?");
 
-            BuildSpreadsheetAsync(chosenClass, chosenTest, fileName);
-
-            //Console.WriteLine("No implementation yet! Try again in next version");
+            await BuildSpreadsheetAsync(chosenClass, chosenTest, fileName);
         }
 
         private async Task<Cifra.Application.Models.Class.Class> AskForClassAsync()

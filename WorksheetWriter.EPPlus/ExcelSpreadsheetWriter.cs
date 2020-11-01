@@ -30,9 +30,27 @@ namespace SpreadsheetWriter.EPPlus
             return this;
         }
 
+        public ISpreadsheetWriter MoveDownTimes(int times)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                MoveDown();
+            }
+            return this;
+        }
+
         public ISpreadsheetWriter MoveUp()
         {
             CurrentPosition = new Point(CurrentPosition.X, CurrentPosition.Y - 1);
+            return this;
+        }
+
+        public ISpreadsheetWriter MoveUpTimes(int times)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                MoveUp();
+            }
             return this;
         }
 
@@ -42,9 +60,27 @@ namespace SpreadsheetWriter.EPPlus
             return this;
         }
 
+        public ISpreadsheetWriter MoveLeftTimes(int times)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                MoveLeft();
+            }
+            return this;
+        }
+
         public ISpreadsheetWriter MoveRight()
         {
             CurrentPosition = new Point(CurrentPosition.X + 1, CurrentPosition.Y);
+            return this;
+        }
+
+        public ISpreadsheetWriter MoveRightTimes(int times)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                MoveRight();
+            }
             return this;
         }
 
@@ -62,7 +98,6 @@ namespace SpreadsheetWriter.EPPlus
 
         public ISpreadsheetWriter Write(decimal value)
         {
-            CurrentCell.ConvertToEuro();
             CurrentCell.SetBackgroundColor(_currentBackgroundColor);
             CurrentCell.SetFontColor(_currentFontColor);
             CurrentCell.Value = value;

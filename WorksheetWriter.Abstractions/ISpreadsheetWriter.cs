@@ -9,11 +9,19 @@ namespace SpreadsheetWriter.Abstractions
 
         ISpreadsheetWriter MoveUp();
 
+        ISpreadsheetWriter MoveUpTimes(int times);
+
         ISpreadsheetWriter MoveDown();
+
+        ISpreadsheetWriter MoveDownTimes(int times);
 
         ISpreadsheetWriter MoveLeft();
 
+        ISpreadsheetWriter MoveLeftTimes(int times);
+
         ISpreadsheetWriter MoveRight();
+
+        ISpreadsheetWriter MoveRightTimes(int times);
 
         ISpreadsheetWriter NewLine();
 

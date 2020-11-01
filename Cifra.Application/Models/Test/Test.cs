@@ -1,6 +1,7 @@
 ﻿using Cifra.Application.Models.ValueTypes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cifra.Application.Models.Test
 {
@@ -41,6 +42,14 @@ namespace Cifra.Application.Models.Test
             Questions = questions ?? throw new ArgumentNullException(nameof(questions));
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+        }
+
+        /// <summary>
+        /// Gets the maximal number of question names present of all questions
+        /// </summary>
+        public int GetMaximalQuestionNamesPerQuestion()
+        {
+            return Questions.Max(x => x.QuestionNames.Count());
         }
 
         /// <summary>
