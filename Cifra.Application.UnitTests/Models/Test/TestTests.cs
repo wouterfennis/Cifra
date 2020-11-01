@@ -81,7 +81,7 @@ namespace Cifra.Application.UnitTests.Models.Test
         }
 
         [TestMethod]
-        public void GetGetQuestionNamesPerQuestion_WithMultipleQuestions_ReturnsLargestNumber()
+        public void GetMaximumQuestionNamesPerQuestion_WithMultipleQuestions_ReturnsLargestNumber()
         {
             int expectedResult = 3;
             var questions = new List<Question>()
@@ -101,9 +101,69 @@ namespace Cifra.Application.UnitTests.Models.Test
                         Grade.CreateFromByte(5),
                         questions);
 
-            int result = sut.GetMaximalQuestionNamesPerQuestion();
+            int result = sut.GetMaximumQuestionNamesPerQuestion();
 
             result.Should().Be(expectedResult);
+        }
+
+        [TestMethod]
+        public void GetMaximumQuestionNamesPerQuestion_WithNoQuestions_ReturnsLargestNumber()
+        {
+            var questions = new List<Question>();
+
+            var sut = new Application.Models.Test.Test(
+                        _fixture.Create<Guid>(),
+                        Name.CreateFromString(_fixture.Create<string>()),
+                        StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
+                        Grade.CreateFromByte(5),
+                        questions);
+
+            int result = sut.GetMaximumQuestionNamesPerQuestion();
+
+            result.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void GetMaximumPoints_WithMultipleQuestions_ReturnsTheSumOfAllQuestions()
+        {
+            int expectedResult = 6;
+            var questions = new List<Question>()
+            {
+                new Question(_fixture.CreateMany<Name>(),
+                QuestionScore.CreateFromByte(2)),
+                new Question(_fixture.CreateMany<Name>(),
+                QuestionScore.CreateFromByte(3)),
+                new Question(_fixture.CreateMany<Name>(),
+                QuestionScore.CreateFromByte(1))
+            };
+
+            var sut = new Application.Models.Test.Test(
+                        _fixture.Create<Guid>(),
+                        Name.CreateFromString(_fixture.Create<string>()),
+                        StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
+                        Grade.CreateFromByte(5),
+                        questions);
+
+            decimal result = sut.GetMaximumPoints();
+
+            result.Should().Be(expectedResult);
+        }
+
+        [TestMethod]
+        public void GetMaximumPoints_WithNoQuestions_ReturnsLargestNumber()
+        {
+            var questions = new List<Question>();
+
+            var sut = new Application.Models.Test.Test(
+                        _fixture.Create<Guid>(),
+                        Name.CreateFromString(_fixture.Create<string>()),
+                        StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
+                        Grade.CreateFromByte(5),
+                        questions);
+
+            decimal result = sut.GetMaximumPoints();
+
+            result.Should().Be(0);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Cifra.Application.Models.Test
             Grade minimumGrade, 
             List<Question> questions)
         {
-            this.Id = id;
+            Id = id;
             Name = testName;
             Questions = questions ?? throw new ArgumentNullException(nameof(questions));
             StandardizationFactor = standardizationFactor;
@@ -45,11 +45,23 @@ namespace Cifra.Application.Models.Test
         }
 
         /// <summary>
-        /// Gets the maximal number of question names present of all questions
+        /// Gets the maximum points that can be achieved in this test
         /// </summary>
-        public int GetMaximalQuestionNamesPerQuestion()
+        public decimal GetMaximumPoints()
         {
-            return Questions.Max(x => x.QuestionNames.Count());
+            return Questions.Sum(x => x.MaximalScore.Value);
+        }
+
+        /// <summary>
+        /// Gets the maximum number of question names present of all questions
+        /// </summary>
+        public int GetMaximumQuestionNamesPerQuestion()
+        {
+            if (Questions.Any())
+            {
+                return Questions.Max(x => x.QuestionNames.Count());
+            }
+            return 0;
         }
 
         /// <summary>

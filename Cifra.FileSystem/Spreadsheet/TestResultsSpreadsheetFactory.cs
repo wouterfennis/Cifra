@@ -2,6 +2,7 @@
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
+using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.EPPlus;
 using System.Drawing;
@@ -26,18 +27,37 @@ namespace Cifra.FileSystem.Spreadsheet
             var fileBuilder = new ExcelFileBuilder(newFile);
 
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
-            int questionNamesColumns = test.GetMaximalQuestionNamesPerQuestion();
+            int questionNamesColumns = test.GetMaximumQuestionNamesPerQuestion();
 
             spreadsheetWriter
                 .Write(test.Name.Value)
                 .MoveRightTimes(2)
                 .Write(metadata.Created.ToString())
                 .NewLine()
+                .Write("Maximale punten")
+                .MoveRight()
+                .Write(test.GetMaximumPoints());
+            var maximumPointsCell = spreadsheetWriter.CurrentCell;
+            spreadsheetWriter
+                .NewLine()
+                .Write("Normering")
+                .MoveRight()
+                .Write(test.StandardizationFactor.Value);
+            var standardizationfactorCell = spreadsheetWriter.CurrentCell;
+            spreadsheetWriter
+                .NewLine()
+                .Write("Minimale cijfer")
+                .MoveRight()
+                .Write(test.MinimumGrade.Value);
+            var miniumGradeCell = spreadsheetWriter.CurrentCell;
+            spreadsheetWriter
+                .NewLine()
                 .MoveRightTimes(questionNamesColumns)
                 .Write("Naam");
             var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
 
             spreadsheetWriter
+                .NewLine()
                 .NewLine()
                 .Write("Opgave")
                 .MoveRightTimes(questionNamesColumns)
@@ -60,10 +80,15 @@ namespace Cifra.FileSystem.Spreadsheet
                 .MoveRight();
             var maximumPointsColumnTop = new Point(questionNamesColumnTopLeft.X + questionNamesColumns, questionNamesColumnTopLeft.Y);
             var maximumPointsColumnBottom = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
-            spreadsheetWriter.PlaceFormula(maximumPointsColumnTop, maximumPointsColumnBottom, FormulaType.SUM)
+            spreadsheetWriter.PlaceStandardFormula(maximumPointsColumnTop, maximumPointsColumnBottom, FormulaType.SUM);
+            var gradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+            spreadsheetWriter
                 .NewLine()
-                .Write("Cijfer");
-            // Build grade formula here
+                .Write("Cijfer")
+                .MoveRight()
+                .PlaceCustomFormula(gradeFormula);
+
+            var gradeRowStart = spreadsheetWriter.CurrentPosition;
 
             spreadsheetWriter.CurrentPosition = studentNamesRowStartpoint;
             foreach (Student student in @class.Students)
@@ -77,15 +102,55 @@ namespace Cifra.FileSystem.Spreadsheet
 
                 spreadsheetWriter.CurrentPosition = scoredPointsColumnEnd;
                 spreadsheetWriter.MoveDown()
-                    .PlaceFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
+                    .PlaceStandardFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
+                IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+                spreadsheetWriter.MoveDown()
+                    .PlaceCustomFormula(studentGradeFormula);
 
                 spreadsheetWriter.CurrentPosition = studentColumnTop;
                 spreadsheetWriter.MoveRight();
             }
+            var studentNamesRowEndPoint = new Point(spreadsheetWriter.CurrentPosition.X - 1, spreadsheetWriter.CurrentPosition.Y);
+
+            var pointsRowAverageStart = new Point(maximumPointsColumnBottom.X + 1, maximumPointsColumnBottom.Y + 1);
+            var pointsRowAverageEnd = new Point(studentNamesRowEndPoint.X, maximumPointsColumnBottom.Y + 1);
+            spreadsheetWriter.CurrentPosition = gradeRowStart;
+            spreadsheetWriter
+                .NewLine()
+                .NewLine()
+                .Write("Gemiddeld aantal punten")
+                .MoveRight()
+                .PlaceStandardFormula(pointsRowAverageStart, pointsRowAverageEnd, FormulaType.AVERAGE)
+                .NewLine();
+
+            var gradeRowAverageStart = new Point(gradeRowStart.X + 1, gradeRowStart.Y);
+            var gradeRowAverageEnd = new Point(studentNamesRowEndPoint.X, gradeRowStart.Y);
+            spreadsheetWriter.Write("Gemiddeld cijfer")
+                .MoveRight()
+                .PlaceStandardFormula(gradeRowAverageStart, gradeRowAverageEnd, FormulaType.AVERAGE);
 
             fileBuilder.FillMetadata(metadata.MapToLibraryModel());
 
             await fileBuilder.SaveAsync();
+        }
+
+        private IFormulaBuilder BuildGradeFormula(ExcelRange achievedPoints,
+            ExcelRange maximumPoints,
+            ExcelRange standardizationFactor,
+            ExcelRange minimumGrade)
+        {
+            var builder = new FormulaBuilder();
+            builder.AddEqualsSign()
+                .AddOpenParenthesis()
+                .AddCellAddress(achievedPoints.Address)
+                .AddDivideSign()
+                .AddCellAddress(maximumPoints.Address)
+                .AddClosedParenthesis()
+                .AddMultiplySign()
+                .AddCellAddress(standardizationFactor.Address)
+                .AddSumSign()
+                .AddCellAddress(minimumGrade.Address);
+            return builder;
         }
     }
 }

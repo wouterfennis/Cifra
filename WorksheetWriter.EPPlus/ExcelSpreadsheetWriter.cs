@@ -117,15 +117,22 @@ namespace SpreadsheetWriter.EPPlus
             return this;
         }
 
-        public ISpreadsheetWriter PlaceFormula(Point startPosition, Point endPosition, FormulaType formulaType)
+        public ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)
         {
             var startCell = _excelWorksheet.GetCell(startPosition);
             var endCell = _excelWorksheet.GetCell(endPosition);
             var resultCell = _excelWorksheet.GetCell(CurrentPosition);
 
-            Write(0);
             var formula = $"={formulaType}({startCell.Address}:{endCell.Address})";
             resultCell.Formula = formula;
+            return this;
+        }
+
+        public ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder)
+        {
+            var resultCell = _excelWorksheet.GetCell(CurrentPosition);
+
+            resultCell.Formula = formulaBuilder.Build();
             return this;
         }
     }

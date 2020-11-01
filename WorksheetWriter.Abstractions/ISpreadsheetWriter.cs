@@ -33,6 +33,8 @@ namespace SpreadsheetWriter.Abstractions
 
         ISpreadsheetWriter Write(string value);
 
-        ISpreadsheetWriter PlaceFormula(Point startPosition, Point endPosition, FormulaType formulaType);
+        ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType);
+
+        ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder customFormula);
     }
 }
