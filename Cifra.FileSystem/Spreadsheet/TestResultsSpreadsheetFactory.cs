@@ -31,9 +31,14 @@ namespace Cifra.FileSystem.Spreadsheet
 
             spreadsheetWriter
                 .Write(test.Name.Value)
-                .MoveRightTimes(2)
+                .NewLine()
+                .Write("Gemaakt op:")
+                .MoveRight()
                 .Write(metadata.Created.ToString())
                 .NewLine()
+                .NewLine()
+                .SetBackgroundColor(Color.LightGray)
+                .Write("Configuratie")
                 .Write("Maximale punten")
                 .MoveRight()
                 .Write(test.GetMaximumPoints());
@@ -48,16 +53,17 @@ namespace Cifra.FileSystem.Spreadsheet
                 .NewLine()
                 .Write("Minimale cijfer")
                 .MoveRight()
-                .Write(test.MinimumGrade.Value);
+                .Write(test.MinimumGrade.Value)
+                .SetBackgroundColor(Color.White);
             var miniumGradeCell = spreadsheetWriter.CurrentCell;
             spreadsheetWriter
+                .NewLine()
                 .NewLine()
                 .MoveRightTimes(questionNamesColumns)
                 .Write("Naam");
             var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
 
             spreadsheetWriter
-                .NewLine()
                 .NewLine()
                 .Write("Opgave")
                 .MoveRightTimes(questionNamesColumns)

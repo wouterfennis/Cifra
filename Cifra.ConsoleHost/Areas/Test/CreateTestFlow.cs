@@ -85,7 +85,7 @@ namespace Cifra.ConsoleHost.Areas.Test
         private IEnumerable<string> CollectQuestionNames()
         {
             var names = new List<string>();
-            var name = SharedConsoleFlows.AskForString("Type an name for the question");
+            var name = SharedConsoleFlows.AskForString("Type a name for the question");
             names.Add(name);
             var addAnotherName = SharedConsoleFlows.AskForBool("Add an additional name to the question?");
             if (addAnotherName)

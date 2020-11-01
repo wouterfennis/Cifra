@@ -10,6 +10,7 @@ namespace SpreadsheetWriter.EPPlus
         private readonly ExcelWorksheet _excelWorksheet;
         private Color _currentBackgroundColor;
         private Color _currentFontColor;
+        private int _currentTextRotation;
         private readonly int DefaultXPosition = 1;
         private readonly int DefaultYPosition = 1;
 
@@ -96,17 +97,21 @@ namespace SpreadsheetWriter.EPPlus
             return this;
         }
 
+        public ISpreadsheetWriter SetTextRotation(int rotation)
+        {
+            _currentTextRotation = rotation;
+            return this;
+        }
+
         public ISpreadsheetWriter Write(decimal value)
         {
-            CurrentCell.SetBackgroundColor(_currentBackgroundColor);
-            CurrentCell.SetFontColor(_currentFontColor);
             CurrentCell.Value = value;
             return this;
         }
 
         public ISpreadsheetWriter Write(string value)
         {
-            CurrentCell.SetBackgroundColor(_currentBackgroundColor);
+            ApplyCellStyling();
             CurrentCell.Value = value;
             return this;
         }
@@ -134,6 +139,13 @@ namespace SpreadsheetWriter.EPPlus
 
             resultCell.Formula = formulaBuilder.Build();
             return this;
+        }
+
+        private void ApplyCellStyling()
+        {
+            CurrentCell.SetBackgroundColor(_currentBackgroundColor);
+            CurrentCell.SetFontColor(_currentFontColor);
+            CurrentCell.Style.TextRotation = _currentTextRotation;
         }
     }
 }
