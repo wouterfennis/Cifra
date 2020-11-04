@@ -7,7 +7,7 @@ namespace Cifra.Application.Models.Class
     /// <summary>
     /// The Class entity
     /// </summary>
-    public class Class
+    public sealed class Class
     {
         public Guid Id { get; }
         public Name Name { get; }

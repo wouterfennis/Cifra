@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.ValueTypes
 {
-    public class Grade : ValueObject
+    public sealed class Grade : ValueObject
     {
         private readonly byte _minimalValue = 0;
         private readonly byte _maximalValue = 10;

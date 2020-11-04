@@ -2,7 +2,7 @@
 
 namespace Cifra.Application.Models.Class.Results
 {
-    public class GetAllClassesResult
+    public sealed class GetAllClassesResult
     {
         public IEnumerable<Class> Classes { get; }
 

@@ -2,7 +2,7 @@
 
 namespace Cifra.Application.Models.Test.Results
 {
-    public class GetAllTestsResult
+    public sealed class GetAllTestsResult
     {
         public IEnumerable<Test> Tests { get; }
 

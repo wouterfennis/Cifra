@@ -8,22 +8,22 @@ namespace Cifra.Application.Models.Test
     /// <summary>
     /// The Test entity
     /// </summary>
-    public class Test
+    public sealed class Test
     {
         public Guid Id { get; }
         public Name Name { get; }
-        public List<Question> Questions { get; }
+        public List<Assignment> Assignments { get; }
         public StandardizationFactor StandardizationFactor { get; }
         public Grade MinimumGrade { get; }
 
         /// <summary>
-        /// Constructor for a new test
+        /// Constructor for a new Test
         /// </summary>
         public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade)
         {
             Id = Guid.NewGuid();
             Name = testName;
-            Questions = new List<Question>();
+            Assignments = new List<Assignment>();
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
         }
@@ -31,15 +31,15 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// Constructor for existing tests
         /// </summary>
-        public Test(Guid id, 
-            Name testName, 
+        public Test(Guid id,
+            Name testName,
             StandardizationFactor standardizationFactor,
-            Grade minimumGrade, 
-            List<Question> questions)
+            Grade minimumGrade,
+            List<Assignment> assignments)
         {
             Id = id;
             Name = testName;
-            Questions = questions ?? throw new ArgumentNullException(nameof(questions));
+            Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
         }
@@ -49,31 +49,39 @@ namespace Cifra.Application.Models.Test
         /// </summary>
         public decimal GetMaximumPoints()
         {
-            return Questions.Sum(x => x.MaximalScore.Value);
+            return Assignments.Sum(x => x.GetMaximumPoints());
         }
 
         /// <summary>
-        /// Gets the maximum number of question names present of all questions
+        /// Gets the maximum number of question names present of all assignments
         /// </summary>
-        public int GetMaximumQuestionNamesPerQuestion()
+        public int GetMaximumQuestionNamesPerAssignment()
         {
-            if (Questions.Any())
+            if (Assignments.Any())
             {
-                return Questions.Max(x => x.QuestionNames.Count());
+                return Assignments.Max(x => x.GetMaximumQuestionNamesPerQuestion());
             }
             return 0;
         }
 
         /// <summary>
-        /// Adds a question to the test
+        /// Adds a assignment to the test
         /// </summary>
-        public void AddQuestion(Question question)
+        public void AddAssignment(Assignment assignment)
         {
-            if(question == null)
+            if (assignment == null)
             {
-                throw new ArgumentNullException(nameof(question));
+                throw new ArgumentNullException(nameof(assignment));
             }
-            Questions.Add(question);
+            Assignments.Add(assignment);
+        }
+
+        /// <summary>
+        /// Gets the assignment
+        /// </summary>
+        public Assignment GetAssignment(Guid assignmentId)
+        {
+            return Assignments.SingleOrDefault(x => x.Id == assignmentId);
         }
     }
 }

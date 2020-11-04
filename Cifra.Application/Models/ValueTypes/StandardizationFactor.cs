@@ -2,7 +2,7 @@
 
 namespace Cifra.Application.Models.ValueTypes
 {
-    public class StandardizationFactor : ValueObject
+    public sealed class StandardizationFactor : ValueObject
     {
         private StandardizationFactor(byte value)
         {

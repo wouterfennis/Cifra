@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Cifra.Application.UnitTests.Models.Test
 {
@@ -47,51 +46,58 @@ namespace Cifra.Application.UnitTests.Models.Test
         }
 
         [TestMethod]
-        public void AddQuestion_WithQuestion_AddsQuestionToTest()
+        public void AddAssignment_WithAssignment_AddsAssignmentToTest()
         {
-            var sut = new Application.Models.Test.Test(
+            Application.Models.Test.Test sut = CreateDefaultTest();
+
+            var expectedAssignment = new Assignment(_fixture.Create<Name>(), _fixture.CreateMany<Question>(0).ToList());
+
+            sut.AddAssignment(expectedAssignment);
+
+            sut.Assignments.Should().ContainSingle();
+            sut.Assignments.Single().Should().Be(expectedAssignment);
+        }
+
+        private Application.Models.Test.Test CreateDefaultTest()
+        {
+            return new Application.Models.Test.Test(
                 _fixture.Create<Guid>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
                 Grade.CreateFromByte(5),
-                _fixture.CreateMany<Question>(0).ToList());
-
-            var expectedQuestion = new Question(_fixture.CreateMany<Name>(0).ToList(),
-                QuestionScore.CreateFromByte(_fixture.Create<byte>()));
-
-            sut.AddQuestion(expectedQuestion);
-
-            sut.Questions.Should().ContainSingle();
-            sut.Questions.Single().Should().Be(expectedQuestion);
+                _fixture.CreateMany<Assignment>(0).ToList());
         }
 
         [TestMethod]
         public void AddQuestion_WithQuestionNull_ThrowsException()
         {
-            var sut = new Application.Models.Test.Test(
-                _fixture.Create<Guid>(),
-                Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
-                Grade.CreateFromByte(5),
-                _fixture.CreateMany<Question>(0).ToList());
+            var sut = CreateDefaultTest();
 
-            Action action = () => sut.AddQuestion(null);
+            Action action = () => sut.AddAssignment(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [TestMethod]
-        public void GetMaximumQuestionNamesPerQuestion_WithMultipleQuestions_ReturnsLargestNumber()
+        public void GetMaximumQuestionNamesPerAssignment_WithMultipleAssignments_ReturnsLargestNumber()
         {
             int expectedResult = 3;
-            var questions = new List<Question>()
+            var questionWithOneName = new Question(_fixture.CreateMany<Name>(1), QuestionScore.CreateFromByte(_fixture.Create<byte>()));
+            var questionWithTwoNames = new Question(_fixture.CreateMany<Name>(2), QuestionScore.CreateFromByte(_fixture.Create<byte>()));
+            var questionWithThreeNames = new Question(_fixture.CreateMany<Name>(3), QuestionScore.CreateFromByte(_fixture.Create<byte>()));
+
+            var smallestAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            smallestAssignment.AddQuestion(questionWithOneName);
+            var mediumAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            mediumAssignment.AddQuestion(questionWithTwoNames);
+            var largestAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            largestAssignment.AddQuestion(questionWithThreeNames);
+
+            var assignments = new List<Assignment>()
             {
-                new Question(_fixture.CreateMany<Name>(expectedResult),
-                QuestionScore.CreateFromByte(_fixture.Create<byte>())),
-                new Question(_fixture.CreateMany<Name>(2),
-                QuestionScore.CreateFromByte(_fixture.Create<byte>())),
-                new Question(_fixture.CreateMany<Name>(1),
-                QuestionScore.CreateFromByte(_fixture.Create<byte>()))
+                smallestAssignment,
+                mediumAssignment,
+                largestAssignment
             };
 
             var sut = new Application.Models.Test.Test(
@@ -99,42 +105,42 @@ namespace Cifra.Application.UnitTests.Models.Test
                         Name.CreateFromString(_fixture.Create<string>()),
                         StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
                         Grade.CreateFromByte(5),
-                        questions);
+                        assignments);
 
-            int result = sut.GetMaximumQuestionNamesPerQuestion();
+            int result = sut.GetMaximumQuestionNamesPerAssignment();
 
             result.Should().Be(expectedResult);
         }
 
         [TestMethod]
-        public void GetMaximumQuestionNamesPerQuestion_WithNoQuestions_ReturnsLargestNumber()
+        public void GetMaximumQuestionNamesPerAssignment_WithNoAssignments_ReturnsZero()
         {
-            var questions = new List<Question>();
+            var assignments = new List<Assignment>();
 
             var sut = new Application.Models.Test.Test(
                         _fixture.Create<Guid>(),
                         Name.CreateFromString(_fixture.Create<string>()),
                         StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
                         Grade.CreateFromByte(5),
-                        questions);
+                        assignments);
 
-            int result = sut.GetMaximumQuestionNamesPerQuestion();
+            int result = sut.GetMaximumQuestionNamesPerAssignment();
 
             result.Should().Be(0);
         }
 
         [TestMethod]
-        public void GetMaximumPoints_WithMultipleQuestions_ReturnsTheSumOfAllQuestions()
+        public void GetMaximumPoints_WithMultipleAssignments_ReturnsTheSumOfAllQuestions()
         {
             int expectedResult = 6;
-            var questions = new List<Question>()
+            var assignments = new List<Assignment>
             {
-                new Question(_fixture.CreateMany<Name>(),
-                QuestionScore.CreateFromByte(2)),
-                new Question(_fixture.CreateMany<Name>(),
-                QuestionScore.CreateFromByte(3)),
-                new Question(_fixture.CreateMany<Name>(),
-                QuestionScore.CreateFromByte(1))
+                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
+                _fixture.CreateMany<Question>(1).ToList()),
+                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
+                _fixture.CreateMany<Question>(2).ToList()),
+                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
+                _fixture.CreateMany<Question>(3).ToList())
             };
 
             var sut = new Application.Models.Test.Test(
@@ -142,7 +148,7 @@ namespace Cifra.Application.UnitTests.Models.Test
                         Name.CreateFromString(_fixture.Create<string>()),
                         StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
                         Grade.CreateFromByte(5),
-                        questions);
+                        assignments);
 
             decimal result = sut.GetMaximumPoints();
 
@@ -150,16 +156,16 @@ namespace Cifra.Application.UnitTests.Models.Test
         }
 
         [TestMethod]
-        public void GetMaximumPoints_WithNoQuestions_ReturnsLargestNumber()
+        public void GetMaximumPoints_WithNoAssignments_ReturnsZero()
         {
-            var questions = new List<Question>();
+            var assignments = new List<Assignment>();
 
             var sut = new Application.Models.Test.Test(
                         _fixture.Create<Guid>(),
                         Name.CreateFromString(_fixture.Create<string>()),
                         StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
                         Grade.CreateFromByte(5),
-                        questions);
+                        assignments);
 
             decimal result = sut.GetMaximumPoints();
 

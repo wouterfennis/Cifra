@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cifra.FileSystem.FileEntity
 {
-    internal class Class
+    internal sealed class Class
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Test.Results
 {
-    public class CreateTestResult
+    public sealed class CreateTestResult
     {
         public Guid TestId { get; }
 

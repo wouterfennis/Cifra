@@ -28,8 +28,9 @@ namespace Cifra.Application.UnitTests
             _fixture = new Fixture();
             _testRepository = new Mock<ITestRepository>();
             _testValidator = new Mock<IValidator<CreateTestRequest>>();
+            _assignmentValidator = new Mock<IValidator<AddAssignmentRequest>>();
             _questionValidator = new Mock<IValidator<AddQuestionRequest>>();
-            _sut = new TestController(_testRepository.Object, _testValidator.Object, _questionValidator.Object);
+            _sut = new TestController(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object, _questionValidator.Object);
         }
 
         [TestMethod]
@@ -88,7 +89,7 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+            AddQuestionResult result = await _sut.AddAssignmentAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
@@ -103,7 +104,7 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+            AddQuestionResult result = await _sut.AddAssignmentAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }
@@ -121,7 +122,7 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.GetAsync(input.TestId))
                 .ReturnsAsync((Test)null);
 
-            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+            AddQuestionResult result = await _sut.AddAssignmentAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             ValidationMessage validationMessage = result.ValidationMessages.Single();
@@ -148,7 +149,7 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.UpdateAsync(expectedClass))
                 .ReturnsAsync(testValidationMessage);
 
-            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+            AddQuestionResult result = await _sut.AddAssignmentAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             result.ValidationMessages.Should().Contain(testValidationMessage);
@@ -173,7 +174,7 @@ namespace Cifra.Application.UnitTests
                 .Setup(x => x.UpdateAsync(expectedClass))
                 .ReturnsAsync(testValidationMessage);
 
-            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+            AddQuestionResult result = await _sut.AddAssignmentAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             result.ValidationMessages.Should().Contain(testValidationMessage);

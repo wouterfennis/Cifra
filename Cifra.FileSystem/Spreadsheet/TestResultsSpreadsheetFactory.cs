@@ -27,7 +27,7 @@ namespace Cifra.FileSystem.Spreadsheet
             var fileBuilder = new ExcelFileBuilder(newFile);
 
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
-            int questionNamesColumns = test.GetMaximumQuestionNamesPerQuestion();
+            int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
 
             spreadsheetWriter
                 .Write(test.Name.Value)

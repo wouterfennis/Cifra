@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cifra.Application.Models.ValueTypes
 {
-    public class Path : ValueObject
+    public sealed class Path : ValueObject
     {
         private Path(string value)
         {

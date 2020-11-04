@@ -2,7 +2,7 @@
 
 namespace Cifra.Application.Models.Spreadsheet
 {
-    public class Metadata
+    public sealed class Metadata
     {
         public string Author { get; set; }
         public string Title { get; set; }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Class.Results
 {
-    public class AddStudentResult
+    public sealed class AddStudentResult
     {
         public IEnumerable<ValidationMessage> ValidationMessages { get; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Class.Results
 {
-    public class CreateClassResult
+    public sealed class CreateClassResult
     {
         public Guid ClassId { get; }
 

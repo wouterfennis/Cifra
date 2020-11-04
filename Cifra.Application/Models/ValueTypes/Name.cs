@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.ValueTypes
 {
-    public class Name : ValueObject
+    public sealed class Name : ValueObject
     {
         private Name(string value)
         {

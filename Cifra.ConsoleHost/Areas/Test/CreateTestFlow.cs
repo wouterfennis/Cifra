@@ -25,9 +25,9 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         public async Task StartAsync()
         {
-            var classId = await CreateTestFlowAsync();
+            var testId = await CreateTestFlowAsync();
             Console.WriteLine("Adding questions to the test");
-            await AddQuestionsFlowAsync(classId);
+            await AddAssignmentsFlowAsync(testId);
         }
 
         private async Task<Guid> CreateTestFlowAsync()
@@ -52,24 +52,51 @@ namespace Cifra.ConsoleHost.Areas.Test
             return classId;
         }
 
-        private async Task AddQuestionsFlowAsync(Guid classId)
+        private async Task AddAssignmentsFlowAsync(Guid testId)
         {
-            await AddQuestionFlowAsync(classId);
+            await AddAssignmentFlowAsync(testId);
+            bool addAnotherAssignment = SharedConsoleFlows.AskForBool("Add another assignment?");
+
+            if (addAnotherAssignment)
+            {
+                await AddAssignmentsFlowAsync(testId);
+            }
+        }
+
+        private async Task AddAssignmentFlowAsync(Guid testId)
+        {
+            var addAssignmentRequest = new AddAssignmentRequest();
+            var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
+
+            if (addAssignmentResult.ValidationMessages.Count() > 0)
+            {
+                SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
+                await AddAssignmentFlowAsync(testId);
+            } else
+            {
+                await AddQuestionsFlowAsync(testId, addAssignmentResult.AssignmentId.Value);
+            }
+        }
+
+        private async Task AddQuestionsFlowAsync(Guid testId, Guid assignmentId)
+        {
+            await AddQuestionFlowAsync(testId, assignmentId);
             bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question?");
 
             if (addAnotherQuestion)
             {
-                await AddQuestionsFlowAsync(classId);
+                await AddQuestionsFlowAsync(testId, assignmentId);
             }
         }
 
-        private async Task AddQuestionFlowAsync(Guid testId)
+        private async Task AddQuestionFlowAsync(Guid testId, Guid assignmentId)
         {
             IEnumerable<string> names = CollectQuestionNames();
             var maximalScore = SharedConsoleFlows.AskForByte("What is the maximal score of the question?");
             var model = new AddQuestionRequest
             {
                 TestId = testId,
+                AssignmentId = assignmentId,
                 Names = names,
                 MaximalScore = maximalScore
             };
@@ -78,7 +105,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             if (addQuestionResponse.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(addQuestionResponse.ValidationMessages);
-                await AddQuestionFlowAsync(testId);
+                await AddQuestionFlowAsync(testId, assignmentId);
             }
         }
 

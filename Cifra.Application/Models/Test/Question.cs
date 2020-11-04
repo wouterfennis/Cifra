@@ -7,7 +7,7 @@ namespace Cifra.Application.Models.Test
     /// <summary>
     /// The Question entity
     /// </summary>
-    public class Question
+    public sealed class Question
     {
         public IEnumerable<Name> QuestionNames { get; }
 

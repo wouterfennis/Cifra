@@ -5,7 +5,7 @@ namespace Cifra.Application.Models.Class
     /// <summary>
     /// The Student entity
     /// </summary>
-    public class Student
+    public sealed class Student
     {
         public Name FullName { get; }
 
