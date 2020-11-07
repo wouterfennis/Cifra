@@ -26,7 +26,7 @@ namespace Cifra.ConsoleHost.Areas.Test
         public async Task StartAsync()
         {
             var testId = await CreateTestFlowAsync();
-            Console.WriteLine("Adding questions to the test");
+            Console.WriteLine("Adding assignments to the test");
             await AddAssignmentsFlowAsync(testId);
         }
 
@@ -43,13 +43,13 @@ namespace Cifra.ConsoleHost.Areas.Test
                 StandardizationFactor = standardizationFactor
             };
             var createTestResponse = await _testController.CreateTestAsync(createTestRequest);
-            var classId = createTestResponse.TestId;
+            var testId = createTestResponse.TestId;
             if (createTestResponse.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
-                classId = await CreateTestFlowAsync();
+                testId = await CreateTestFlowAsync();
             }
-            return classId;
+            return testId;
         }
 
         private async Task AddAssignmentsFlowAsync(Guid testId)
@@ -65,7 +65,9 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task AddAssignmentFlowAsync(Guid testId)
         {
-            var addAssignmentRequest = new AddAssignmentRequest();
+            var addAssignmentRequest = new AddAssignmentRequest { 
+                TestId = testId
+            };
             var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
             if (addAssignmentResult.ValidationMessages.Count() > 0)
@@ -81,7 +83,7 @@ namespace Cifra.ConsoleHost.Areas.Test
         private async Task AddQuestionsFlowAsync(Guid testId, Guid assignmentId)
         {
             await AddQuestionFlowAsync(testId, assignmentId);
-            bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question?");
+            bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question to this assignment?");
 
             if (addAnotherQuestion)
             {
@@ -98,7 +100,7 @@ namespace Cifra.ConsoleHost.Areas.Test
                 TestId = testId,
                 AssignmentId = assignmentId,
                 Names = names,
-                MaximalScore = maximalScore
+                MaximumScore = maximalScore
             };
             AddQuestionResult addQuestionResponse = await _testController.AddQuestionAsync(model);
 

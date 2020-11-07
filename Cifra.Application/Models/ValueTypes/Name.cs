@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.ValueTypes
 {
+    /// <summary>
+    /// The name type
+    /// </summary>
     public sealed class Name : ValueObject
     {
         private Name(string value)

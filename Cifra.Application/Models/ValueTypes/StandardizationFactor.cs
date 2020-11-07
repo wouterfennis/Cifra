@@ -2,6 +2,9 @@
 
 namespace Cifra.Application.Models.ValueTypes
 {
+    /// <summary>
+    /// The standardization factor type
+    /// </summary>
     public sealed class StandardizationFactor : ValueObject
     {
         private StandardizationFactor(byte value)

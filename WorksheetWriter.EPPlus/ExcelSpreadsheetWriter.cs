@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.EPPlus.Extensions;
 using System.Drawing;
@@ -7,12 +8,15 @@ namespace SpreadsheetWriter.EPPlus
 {
     public class ExcelSpreadsheetWriter : ISpreadsheetWriter
     {
+        private readonly Color DefaultBackgroundColor = Color.White;
+        private readonly Color DefaultFontColor = Color.Black;
+        private readonly int DefaultTextRotation = 0;
+        private readonly int DefaultXPosition = 1;
+        private readonly int DefaultYPosition = 1;
         private readonly ExcelWorksheet _excelWorksheet;
         private Color _currentBackgroundColor;
         private Color _currentFontColor;
         private int _currentTextRotation;
-        private readonly int DefaultXPosition = 1;
-        private readonly int DefaultYPosition = 1;
 
         public Point CurrentPosition { get; set; }
 
@@ -130,6 +134,14 @@ namespace SpreadsheetWriter.EPPlus
 
             var formula = $"={formulaType}({startCell.Address}:{endCell.Address})";
             resultCell.Formula = formula;
+            return this;
+        }
+
+        public ISpreadsheetWriter ResetStyling()
+        {
+            _currentBackgroundColor = DefaultBackgroundColor;
+            _currentFontColor = DefaultFontColor;
+            _currentTextRotation = DefaultTextRotation;
             return this;
         }
 

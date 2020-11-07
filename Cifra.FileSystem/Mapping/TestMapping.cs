@@ -19,8 +19,19 @@ namespace Cifra.FileSystem.Mapping
                 Name = input.Name.Value,
                 MinimumGrade = input.MinimumGrade.Value,
                 StandardizationFactor = input.StandardizationFactor.Value,
-                Questions = input.Questions.MapToFileEntity()
+                Assignments = input.Assignments.MapToFileEntity()
             };
+        }
+
+        public static IEnumerable<FileEntity.Assignment> MapToFileEntity(this IEnumerable<Application.Models.Test.Assignment> input)
+        {
+            ValidateNullInput(input);
+
+            return input.Select(x => new FileEntity.Assignment
+            {
+                Id = x.Id,
+                Questions = x.Questions.MapToFileEntity()
+            });
         }
 
         public static IEnumerable<FileEntity.Question> MapToFileEntity(this IEnumerable<Application.Models.Test.Question> input)
@@ -29,7 +40,7 @@ namespace Cifra.FileSystem.Mapping
 
             return input.Select(x => new FileEntity.Question
             {
-                MaximalScore = x.MaximalScore.Value,
+                MaximalScore = x.MaximumScore.Value,
                 QuestionNames = x.QuestionNames.Select(n => n.Value)
             });
         }
@@ -38,7 +49,15 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return new Application.Models.Test.Test(input.Id, Name.CreateFromString(input.Name), StandardizationFactor.CreateFromByte(input.StandardizationFactor), Grade.CreateFromByte(input.MinimumGrade), input.Questions.MapToModel());
+            return new Application.Models.Test.Test(input.Id, Name.CreateFromString(input.Name), StandardizationFactor.CreateFromByte(input.StandardizationFactor), Grade.CreateFromByte(input.MinimumGrade), input.Assignments.MapToModel());
+        }
+
+        public static List<Application.Models.Test.Assignment> MapToModel(this IEnumerable<FileEntity.Assignment> input)
+        {
+            ValidateNullInput(input);
+            return input.Select(x => new Application.Models.Test.Assignment(
+                x.Id,
+                x.Questions.MapToModel())).ToList();
         }
 
         public static List<Application.Models.Test.Question> MapToModel(this IEnumerable<FileEntity.Question> input)

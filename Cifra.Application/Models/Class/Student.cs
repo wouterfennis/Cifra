@@ -7,6 +7,9 @@ namespace Cifra.Application.Models.Class
     /// </summary>
     public sealed class Student
     {
+        /// <summary>
+        /// The Full Name of the student
+        /// </summary>
         public Name FullName { get; }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Cifra.Application
                 return new AddAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
             }
 
-            var assignment = new Assignment(Name.CreateFromString(model.Name));
+            var assignment = new Assignment();
 
             test.AddAssignment(assignment);
             ValidationMessage result = await _testRepository.UpdateAsync(test);
@@ -93,7 +93,7 @@ namespace Cifra.Application
             }
 
             var names = model.Names.ToNames();
-            var question = new Question(names, QuestionScore.CreateFromByte(model.MaximalScore));
+            var question = new Question(names, QuestionScore.CreateFromByte(model.MaximumScore));
 
             assignment.AddQuestion(question);
             ValidationMessage result = await _testRepository.UpdateAsync(test);

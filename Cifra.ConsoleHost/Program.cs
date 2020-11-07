@@ -46,6 +46,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
             builder.RegisterType<Validator<AddStudentRequest>>().As<IValidator<AddStudentRequest>>();
             builder.RegisterType<Validator<CreateTestRequest>>().As<IValidator<CreateTestRequest>>();
+            builder.RegisterType<Validator<AddAssignmentRequest>>().As<IValidator<AddAssignmentRequest>>();
             builder.RegisterType<Validator<AddQuestionRequest>>().As<IValidator<AddQuestionRequest>>();
             builder.RegisterType<NamesMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
             builder.RegisterType<TestIdMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();

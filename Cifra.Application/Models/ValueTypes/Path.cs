@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Cifra.Application.Models.ValueTypes
 {
+    /// <summary>
+    /// The path type
+    /// </summary>
     public sealed class Path : ValueObject
     {
         private Path(string value)

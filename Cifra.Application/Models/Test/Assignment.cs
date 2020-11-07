@@ -1,5 +1,4 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,25 +10,23 @@ namespace Cifra.Application.Models.Test
     public sealed class Assignment
     {
         public Guid  Id { get; }
-        public Name Name { get; }
         public List<Question> Questions { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public Assignment(Name name, List<Question> questions)
+        public Assignment(Guid id, List<Question> questions)
         {
-            Name = name;
+            Id = id;
             Questions = questions;
         }
 
         /// <summary>
         /// Constructor for a new Assignment
         /// </summary>
-        public Assignment(Name name)
+        public Assignment()
         {
             Id = Guid.NewGuid();
-            Name = name;
             Questions = new List<Question>();
         }
 
@@ -38,7 +35,7 @@ namespace Cifra.Application.Models.Test
         /// </summary>
         public decimal GetMaximumPoints()
         {
-            return Questions.Sum(x => x.MaximalScore.Value);
+            return Questions.Sum(x => x.MaximumScore.Value);
         }
 
         /// <summary>

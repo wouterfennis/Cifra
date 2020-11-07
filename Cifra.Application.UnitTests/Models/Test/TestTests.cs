@@ -50,7 +50,7 @@ namespace Cifra.Application.UnitTests.Models.Test
         {
             Application.Models.Test.Test sut = CreateDefaultTest();
 
-            var expectedAssignment = new Assignment(_fixture.Create<Name>(), _fixture.CreateMany<Question>(0).ToList());
+            var expectedAssignment = new Assignment();
 
             sut.AddAssignment(expectedAssignment);
 
@@ -86,11 +86,11 @@ namespace Cifra.Application.UnitTests.Models.Test
             var questionWithTwoNames = new Question(_fixture.CreateMany<Name>(2), QuestionScore.CreateFromByte(_fixture.Create<byte>()));
             var questionWithThreeNames = new Question(_fixture.CreateMany<Name>(3), QuestionScore.CreateFromByte(_fixture.Create<byte>()));
 
-            var smallestAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            var smallestAssignment = new Assignment();
             smallestAssignment.AddQuestion(questionWithOneName);
-            var mediumAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            var mediumAssignment = new Assignment();
             mediumAssignment.AddQuestion(questionWithTwoNames);
-            var largestAssignment = new Assignment(Name.CreateFromString(_fixture.Create<string>()));
+            var largestAssignment = new Assignment();
             largestAssignment.AddQuestion(questionWithThreeNames);
 
             var assignments = new List<Assignment>()
@@ -133,14 +133,12 @@ namespace Cifra.Application.UnitTests.Models.Test
         public void GetMaximumPoints_WithMultipleAssignments_ReturnsTheSumOfAllQuestions()
         {
             int expectedResult = 6;
+            var question = new Question(new List<Name>(), QuestionScore.CreateFromByte(2));
             var assignments = new List<Assignment>
             {
-                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
-                _fixture.CreateMany<Question>(1).ToList()),
-                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
-                _fixture.CreateMany<Question>(2).ToList()),
-                new Assignment(Name.CreateFromString(_fixture.Create<string>()),
-                _fixture.CreateMany<Question>(3).ToList())
+                new Assignment(Guid.NewGuid(), new List<Question> { question}),
+                new Assignment(Guid.NewGuid(),new List<Question> { question}),
+                new Assignment(Guid.NewGuid(),new List<Question> { question})
             };
 
             var sut = new Application.Models.Test.Test(

@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace Cifra.Application.Models.ValueTypes
 {
+    /// <summary>
+    /// The question score type
+    /// </summary>
     public sealed class QuestionScore : ValueObject
     {
         private QuestionScore(byte value)

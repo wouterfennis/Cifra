@@ -1,6 +1,7 @@
 ﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
+using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Mapping;
 using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
@@ -14,6 +15,7 @@ namespace Cifra.FileSystem.Spreadsheet
     public class TestResultsSpreadsheetFactory : ITestResultsSpreadsheetFactory
     {
         private readonly IDirectoryInfoWrapper _spreadsheetDirectory;
+        private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
 
         public TestResultsSpreadsheetFactory(IFileLocationProvider locationProvider)
         {
@@ -71,17 +73,26 @@ namespace Cifra.FileSystem.Spreadsheet
                 .NewLine();
             var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
 
-            foreach (Question question in test.Questions)
+            bool switchColor = false;
+            foreach (Assignment assignment in test.Assignments)
             {
-                foreach (var questionName in question.QuestionNames)
+                var color = switchColor ? _tableAssignmentRowColor : Color.White;
+                spreadsheetWriter.SetBackgroundColor(color);
+                foreach (Question question in assignment.Questions)
                 {
-                    spreadsheetWriter.Write(questionName.Value)
-                        .MoveRight();
+                    foreach (Name questionName in question.QuestionNames)
+                    {
+                        spreadsheetWriter
+                            .Write(questionName.Value)
+                            .MoveRight();
+                    }
+                    spreadsheetWriter
+                        .Write(question.MaximumScore.Value)
+                        .NewLine();
                 }
-                spreadsheetWriter.Write(question.MaximalScore.Value)
-                    .NewLine();
+                switchColor = !switchColor;
             }
-
+            spreadsheetWriter.ResetStyling();
             spreadsheetWriter.Write("Totaal:")
                 .MoveRight();
             var maximumPointsColumnTop = new Point(questionNamesColumnTopLeft.X + questionNamesColumns, questionNamesColumnTopLeft.Y);
@@ -101,7 +112,9 @@ namespace Cifra.FileSystem.Spreadsheet
             {
                 Point studentColumnTop = spreadsheetWriter.CurrentPosition;
                 spreadsheetWriter
-                    .Write(student.FullName.Value);
+                    .SetTextRotation(30)
+                    .Write(student.FullName.Value)
+                    .ResetStyling();
 
                 var scoredPointsColumnStart = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnTop.Y);
                 var scoredPointsColumnEnd = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnBottom.Y);

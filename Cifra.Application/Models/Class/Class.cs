@@ -9,14 +9,25 @@ namespace Cifra.Application.Models.Class
     /// </summary>
     public sealed class Class
     {
+        /// <summary>
+        /// The Id of the Class
+        /// </summary>
         public Guid Id { get; }
+
+        /// <summary>
+        /// The Name of the Class
+        /// </summary>
         public Name Name { get; }
+
+        /// <summary>
+        /// The Students of the Class
+        /// </summary>
         public List<Student> Students { get; }
 
         /// <summary>
         /// Constructor for a new class
         /// </summary>
-        public Class(Name className)
+        internal Class(Name className)
         {
             Id = Guid.NewGuid();
             Name = className;
@@ -36,7 +47,7 @@ namespace Cifra.Application.Models.Class
         /// <summary>
         /// Adds a student to the class
         /// </summary>
-        public void AddStudent(Student student)
+        internal void AddStudent(Student student)
         {
             if (student == null)
             {

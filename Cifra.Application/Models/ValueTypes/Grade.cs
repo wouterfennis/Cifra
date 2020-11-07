@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Cifra.Application.Models.ValueTypes
 {
+    /// <summary>
+    /// The grade type
+    /// </summary>
     public sealed class Grade : ValueObject
     {
         private readonly byte _minimalValue = 0;

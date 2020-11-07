@@ -10,10 +10,29 @@ namespace Cifra.Application.Models.Test
     /// </summary>
     public sealed class Test
     {
+        /// <summary>
+        /// The Id
+        /// </summary>
         public Guid Id { get; }
+
+        /// <summary>
+        /// The Name
+        /// </summary>
         public Name Name { get; }
+
+        /// <summary>
+        /// The Assignments
+        /// </summary>
         public List<Assignment> Assignments { get; }
+
+        /// <summary>
+        /// The Standardization Factor
+        /// </summary>
         public StandardizationFactor StandardizationFactor { get; }
+
+        /// <summary>
+        /// The Minimum Grade
+        /// </summary>
         public Grade MinimumGrade { get; }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace Cifra.ConsoleHost
             Console.WriteLine("What would you like to do? Type the number");
             Console.WriteLine($"[{(int)AreaMenuOption.Class}] - Open the Class menu");
             Console.WriteLine($"[{(int)AreaMenuOption.Test}] - Open the Test menu");
-            Console.WriteLine($"[{(int)AreaMenuOption.Spreadsheet}] - Build a new spreadsheet");
+            Console.WriteLine($"[{(int)AreaMenuOption.Spreadsheet}] - Open the spreadsheet menu");
             Console.WriteLine($"[{(int)AreaMenuOption.Quit}] - Quit application");
             var option = Console.ReadLine();
             await RedirectToArea(option);

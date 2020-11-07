@@ -9,9 +9,15 @@ namespace Cifra.Application.Models.Test
     /// </summary>
     public sealed class Question
     {
+        /// <summary>
+        /// The names of the Question
+        /// </summary>
         public IEnumerable<Name> QuestionNames { get; }
 
-        public QuestionScore MaximalScore { get; }
+        /// <summary>
+        /// The maximum score
+        /// </summary>
+        public QuestionScore MaximumScore { get; }
 
         /// <summary>
         /// Ctor
@@ -19,7 +25,7 @@ namespace Cifra.Application.Models.Test
         public Question(IEnumerable<Name> questionNames, QuestionScore maximalScore)
         {
             QuestionNames = questionNames ?? throw new ArgumentNullException(nameof(questionNames));
-            MaximalScore = maximalScore;
+            MaximumScore = maximalScore;
         }
     }
 }
