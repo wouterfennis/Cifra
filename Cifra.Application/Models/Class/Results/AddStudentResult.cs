@@ -1,5 +1,6 @@
 ﻿
 using Cifra.Application.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Class.Results
@@ -27,7 +28,7 @@ namespace Cifra.Application.Models.Class.Results
         /// </summary>
         internal AddStudentResult(IEnumerable<ValidationMessage> validationMessages)
         {
-            ValidationMessages = validationMessages;
+            ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
 
         /// <summary>
@@ -35,6 +36,10 @@ namespace Cifra.Application.Models.Class.Results
         /// </summary>
         internal AddStudentResult(ValidationMessage validationMessage)
         {
+            if (validationMessage == null)
+            {
+                throw new ArgumentNullException(nameof(validationMessage));
+            }
             ValidationMessages = new List<ValidationMessage> { validationMessage };
         }
     }

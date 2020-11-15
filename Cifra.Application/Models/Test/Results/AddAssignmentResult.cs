@@ -39,7 +39,7 @@ namespace Cifra.Application.Models.Test.Results
         /// </summary>
         public AddAssignmentResult(IEnumerable<ValidationMessage> validationMessages)
         {
-            ValidationMessages = validationMessages;
+            ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
 
         /// <summary>
@@ -47,6 +47,10 @@ namespace Cifra.Application.Models.Test.Results
         /// </summary>
         public AddAssignmentResult(ValidationMessage validationMessage)
         {
+            if (validationMessage == null)
+            {
+                throw new ArgumentNullException(nameof(validationMessage));
+            }
             ValidationMessages = new List<ValidationMessage> { validationMessage };
         }
     }

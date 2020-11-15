@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Class.Results
 {
@@ -17,7 +18,7 @@ namespace Cifra.Application.Models.Class.Results
         /// </summary>
         internal GetAllClassesResult(IEnumerable<Class> classes)
         {
-            Classes = classes;
+            Classes = classes ?? throw new ArgumentNullException(nameof(classes));
         }
     }
 }

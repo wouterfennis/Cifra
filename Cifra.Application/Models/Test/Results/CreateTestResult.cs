@@ -41,6 +41,10 @@ namespace Cifra.Application.Models.Test.Results
         /// </summary>
         public CreateTestResult(ValidationMessage validationMessage)
         {
+            if (validationMessage == null)
+            {
+                throw new ArgumentNullException(nameof(validationMessage));
+            }
             ValidationMessages = new List<ValidationMessage> { validationMessage };
         }
     }
