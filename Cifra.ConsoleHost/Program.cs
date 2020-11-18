@@ -69,7 +69,8 @@ namespace Cifra.ConsoleHost
         private static IConfigurationSection SetupAppsettings()
         {
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", true, true)
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("./appsettings.json", false, true)
                 .Build();
 
             return configuration.GetSection("Appsettings");
