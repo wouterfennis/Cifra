@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
-    internal class CreateClassFlow : IFlow
+    internal class CreateClassManuallyFlow : IFlow
     {
         private readonly ClassController _classController;
 
-        public CreateClassFlow(ClassController classController)
+        public CreateClassManuallyFlow(ClassController classController)
         {
             _classController = classController;
         }
@@ -57,12 +57,15 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         private async Task AddStudentFlowAsync(Guid classId)
         {
-            Console.WriteLine("Type the full name of the student");
-            var fullName = Console.ReadLine();
+            var firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
+            var infix = SharedConsoleFlows.AskForString("What is the infix of the student?");
+            var lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
             var model = new AddStudentRequest
             {
                 ClassId = classId,
-                FullName = fullName
+                FirstName = firstName,
+                Infix = infix,
+                LastName = lastName
             };
             AddStudentResult addStudentResponse = await _classController.AddStudentAsync(model);
 

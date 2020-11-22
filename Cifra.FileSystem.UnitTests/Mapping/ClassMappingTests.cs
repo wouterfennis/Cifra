@@ -4,8 +4,6 @@ using Cifra.FileSystem.Mapping;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.FileSystem.UnitTests.Mapping
 {
@@ -49,10 +47,11 @@ namespace Cifra.FileSystem.UnitTests.Mapping
             FileEntity.Class result = input.MapToFileEntity();
 
             result.Students.Should().HaveCount(input.Students.Count);
-
             foreach (var inputStudent in input.Students)
             {
-                result.Students.Should().Contain(x => x.FullName == inputStudent.FullName.Value);
+                result.Students.Should().Contain(x => x.FirstName == inputStudent.FirstName.Value &&
+                x.Infix == inputStudent.Infix.Value &&
+                x.LastName == inputStudent.LastName.Value);
             }
         }
     }

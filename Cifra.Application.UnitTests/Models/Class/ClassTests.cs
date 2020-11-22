@@ -46,7 +46,7 @@ namespace Cifra.Application.UnitTests.Models.Class
                 _fixture.Create<Guid>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 _fixture.CreateMany<Student>(0).ToList());
-            var expectedStudent = new Student(Name.CreateFromString(_fixture.Create<string>()));
+            var expectedStudent = _fixture.Create<Student>();
 
             sut.AddStudent(expectedStudent);
 

@@ -9,10 +9,12 @@ namespace Cifra.ConsoleHost.Areas.Class
     {
         Unknown = 0,
 
-        CreateClass = 1,
+        CreateClassManually = 1,
 
-        EditClass = 2,
+        CreateClassFromMagister = 2,
 
-        DeleteClass = 3,
+        EditClass = 3,
+
+        DeleteClass = 4,
     }
 }

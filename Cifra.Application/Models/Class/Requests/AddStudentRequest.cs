@@ -13,8 +13,18 @@ namespace Cifra.Application.Models.Class.Requests
         public Guid ClassId { get; set; }
 
         /// <summary>
-        /// The fullname of the student
+        /// The first name of the student
         /// </summary>
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// The infix of the student
+        /// </summary>
+        public string Infix { get; set; }
+
+        /// <summary>
+        /// The last name of the student
+        /// </summary>
+        public string LastName { get; set; }
     }
 }

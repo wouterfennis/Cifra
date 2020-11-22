@@ -113,7 +113,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 Point studentColumnTop = spreadsheetWriter.CurrentPosition;
                 spreadsheetWriter
                     .SetTextRotation(30)
-                    .Write(student.FullName.Value)
+                    .Write(student.FirstName.Value)
+                    .Write(student.Infix.Value) // TODO: spacing
+                    .Write(student.LastName.Value)
                     .ResetStyling();
 
                 var scoredPointsColumnStart = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnTop.Y);

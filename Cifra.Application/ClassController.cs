@@ -61,7 +61,9 @@ namespace Cifra.Application
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
             }
 
-            var student = new Student(Name.CreateFromString(model.FullName));
+            var student = new Student(Name.CreateFromString(model.FirstName), 
+                Name.CreateFromString(model.Infix), 
+                Name.CreateFromString(model.LastName));
 
             @class.AddStudent(student);
             ValidationMessage result = await _classRepository.UpdateAsync(@class);

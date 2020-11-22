@@ -8,16 +8,28 @@ namespace Cifra.Application.Models.Class
     public sealed class Student
     {
         /// <summary>
-        /// The Full Name of the student
+        /// The first name of the student
         /// </summary>
-        public Name FullName { get; }
+        public Name FirstName { get; }
+
+        /// <summary>
+        /// The infix of the student
+        /// </summary>
+        public Name Infix { get; }
+
+        /// <summary>
+        /// The last name of the student
+        /// </summary>
+        public Name LastName { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public Student(Name fullName)
+        public Student(Name firstName, Name infix, Name lastName)
         {
-            FullName = fullName;
+            FirstName = firstName;
+            Infix = infix;
+            LastName = lastName;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Cifra.ConsoleHost
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ClassMenuFlow>();
-            builder.RegisterType<CreateClassFlow>();
+            builder.RegisterType<CreateClassManuallyFlow>();
             builder.RegisterType<EditClassFlow>();
             builder.RegisterType<DeleteClassFlow>();
             builder.RegisterType<SpreadsheetMenuFlow>();

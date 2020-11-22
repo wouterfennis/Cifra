@@ -3,16 +3,16 @@ using System;
 
 namespace Cifra.Application.Validation.StudentModelValidationRules
 {
-    public class NameMustBeFilled : IValidationRule<AddStudentRequest>
+    public class LastNameMustBeFilled : IValidationRule<AddStudentRequest>
     {
-        private const string Message = "Name is required";
+        private const string Message = "Last name is required";
         public ValidationMessage Validate(AddStudentRequest model)
         {
             NullChecks(model);
 
-            if (string.IsNullOrEmpty(model.FullName) || string.IsNullOrWhiteSpace(model.FullName))
+            if (string.IsNullOrEmpty(model.LastName) || string.IsNullOrWhiteSpace(model.LastName))
             {
-                return new ValidationMessage(nameof(model.FullName), Message);
+                return new ValidationMessage(nameof(model.LastName), Message);
             }
             return null;
         }

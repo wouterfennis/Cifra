@@ -35,6 +35,7 @@ namespace Cifra.ConsoleHost
             string classRepositoryPath = configuration["ClassRepository"];
             string testRepositoryPath = configuration["TestRepository"];
             string spreadsheetDirectoryPath = configuration["SpreadsheetDirectory"];
+            string magisterDirectoryPath = configuration["MagisterDirectory"];
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
             builder.RegisterType<ClassController>();
@@ -51,13 +52,15 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<NamesMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
             builder.RegisterType<TestIdMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
             
-            builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.NameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
+            builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.FirstNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
+            builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.LastNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
             builder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestRequest>>();
             builder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassRequest>>();
             var fileLocationProvider = new FileLocationProvider(
                 Path.CreateFromString(classRepositoryPath),
                 Path.CreateFromString(testRepositoryPath),
-                Path.CreateFromString(spreadsheetDirectoryPath)
+                Path.CreateFromString(spreadsheetDirectoryPath),
+                Path.CreateFromString(magisterDirectoryPath)
                 );
             builder.RegisterInstance(fileLocationProvider).AsImplementedInterfaces();
 

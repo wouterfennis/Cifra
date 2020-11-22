@@ -10,13 +10,15 @@ namespace Cifra.ConsoleHost.Areas.Class
 {
     internal class ClassMenuFlow : IFlow
     {
-        private readonly CreateClassFlow _createClassFlow;
+        private readonly CreateClassManuallyFlow _createClassManuallyFlow;
+        private readonly CreateClassFromMagisterFlow _createClassFromMagisterFlow;
         private readonly EditClassFlow _editClassFlow;
         private readonly DeleteClassFlow _deleteClassFlow;
 
-        public ClassMenuFlow(CreateClassFlow createClassFlow, EditClassFlow editClassFlow, DeleteClassFlow deleteClassFlow)
+        public ClassMenuFlow(CreateClassManuallyFlow createClassManuallyFlow, CreateClassFromMagisterFlow createClassFromMagisterFlow, EditClassFlow editClassFlow, DeleteClassFlow deleteClassFlow)
         {
-            _createClassFlow = createClassFlow;
+            _createClassManuallyFlow = createClassManuallyFlow;
+            _createClassFromMagisterFlow = createClassFromMagisterFlow;
             _editClassFlow = editClassFlow;
             _deleteClassFlow = deleteClassFlow;
         }
@@ -24,7 +26,8 @@ namespace Cifra.ConsoleHost.Areas.Class
         public async Task StartAsync()
         {
             Console.WriteLine("What would you like to do? Type the number");
-            Console.WriteLine($"[{(int)ClassMenuOption.CreateClass}] - Create a new class");
+            Console.WriteLine($"[{(int)ClassMenuOption.CreateClassManually}] - Create a new class manually");
+            Console.WriteLine($"[{(int)ClassMenuOption.CreateClassFromMagister}] - Create a new class from magister");
             Console.WriteLine($"[{(int)ClassMenuOption.EditClass}] - Edit a class");
             Console.WriteLine($"[{(int)ClassMenuOption.DeleteClass}] - Delete a class");
             var option = Console.ReadLine();
@@ -40,8 +43,11 @@ namespace Cifra.ConsoleHost.Areas.Class
             }
             switch (result)
             {
-                case (int)ClassMenuOption.CreateClass:
-                    await _createClassFlow.StartAsync();
+                case (int)ClassMenuOption.CreateClassManually:
+                    await _createClassManuallyFlow.StartAsync();
+                    break;
+                case (int)ClassMenuOption.CreateClassFromMagister:
+                    await _createClassFromMagisterFlow.StartAsync();
                     break;
                 case (int)ClassMenuOption.EditClass:
                     await _editClassFlow.StartAsync();

@@ -1,5 +1,6 @@
 ﻿using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.FileEntity;
+using Cifra.FileSystem.FileEntity.Csv;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,12 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return input.Select(x => new Student { FullName = x.FullName.Value });
+            return input.Select(x => new Student
+            {
+                FirstName = x.FirstName.Value,
+                Infix = x.Infix.Value,
+                LastName = x.LastName.Value
+            });
         }
 
         public static Application.Models.Class.Class MapToModel(this Class input)
@@ -38,8 +44,22 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
             return input.Select(x => new Application.Models.Class.Student(
-                Name.CreateFromString(x.FullName)))
+                Name.CreateFromString(x.FirstName),
+                Name.CreateFromString(x.Infix),
+                Name.CreateFromString(x.LastName)))
                 .ToList();
+        }
+
+        public static List<Student> MapToStudents(this IEnumerable<MagisterRecord> input)
+        {
+            ValidateNullInput(input);
+            return input.Select(x => new Student
+            {
+                FirstName = x.Roepnaam,
+                Infix = x.Tussenvoegsel,
+                LastName = x.Achternaam
+            })
+            .ToList();
         }
 
         private static void ValidateNullInput(object input)
