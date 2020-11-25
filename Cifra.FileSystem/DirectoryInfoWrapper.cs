@@ -1,5 +1,5 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 
 namespace Cifra.FileSystem
 {
@@ -17,6 +17,14 @@ namespace Cifra.FileSystem
         public DirectoryInfo ToDirectoryInfo()
         {
             return new DirectoryInfo(_directoryPath.Value);
+        }
+
+        public IFileInfoWrapper[] GetFiles()
+        {
+            return ToDirectoryInfo()
+                .GetFiles()
+                .Select(x => new FileInfoWrapper(Application.Models.ValueTypes.Path.CreateFromString(x.FullName)))
+                .ToArray();
         }
     }
 }

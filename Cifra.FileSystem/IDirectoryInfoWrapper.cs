@@ -7,5 +7,6 @@ namespace Cifra.FileSystem
         string FullName { get; }
 
         DirectoryInfo ToDirectoryInfo();
+        IFileInfoWrapper[] GetFiles();
     }
 }

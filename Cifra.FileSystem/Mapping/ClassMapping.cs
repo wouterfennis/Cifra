@@ -1,4 +1,5 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Application.Models.Class.Magister;
+using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.FileEntity.Csv;
 using System;
@@ -50,10 +51,10 @@ namespace Cifra.FileSystem.Mapping
                 .ToList();
         }
 
-        public static List<Student> MapToStudents(this IEnumerable<MagisterRecord> input)
+        public static List<MagisterStudent> MapToMagisterStudents(this IEnumerable<MagisterRecord> input)
         {
             ValidateNullInput(input);
-            return input.Select(x => new Student
+            return input.Select(x => new MagisterStudent
             {
                 FirstName = x.Roepnaam,
                 Infix = x.Tussenvoegsel,

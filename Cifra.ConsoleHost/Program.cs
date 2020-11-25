@@ -45,6 +45,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<TestResultsSpreadsheetFactory>().AsImplementedInterfaces();
 
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
+            builder.RegisterType<Validator<CreateMagisterClassRequest>>().As<IValidator<CreateMagisterClassRequest>>();
             builder.RegisterType<Validator<AddStudentRequest>>().As<IValidator<AddStudentRequest>>();
             builder.RegisterType<Validator<CreateTestRequest>>().As<IValidator<CreateTestRequest>>();
             builder.RegisterType<Validator<AddAssignmentRequest>>().As<IValidator<AddAssignmentRequest>>();
@@ -56,6 +57,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.LastNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
             builder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestRequest>>();
             builder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassRequest>>();
+            builder.RegisterType<Cifra.Application.Validation.MagisterClassModelValidationRules.FileLocationMustBeFilled>().As<IValidationRule<CreateMagisterClassRequest>>();
             var fileLocationProvider = new FileLocationProvider(
                 Path.CreateFromString(classRepositoryPath),
                 Path.CreateFromString(testRepositoryPath),

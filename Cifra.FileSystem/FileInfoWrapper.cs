@@ -7,6 +7,10 @@ namespace Cifra.FileSystem
     {
         private readonly Application.Models.ValueTypes.Path _filePath;
 
+        public string Name { get => ToFileInfo().Name; }
+
+        public string FullName { get => ToFileInfo().FullName; }
+
         public FileInfoWrapper(Application.Models.ValueTypes.Path filePath)
         {
             _filePath = filePath;

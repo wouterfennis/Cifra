@@ -19,7 +19,6 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         private Fixture _fixture;
         private Mock<IClassRepository> _classRepository;
         private Mock<IValidator<CreateClassRequest>> _classValidator;
-        private Mock<IValidator<AddStudentRequest>> _studentValidator;
         private ClassController _sut;
 
         [TestInitialize]
@@ -27,9 +26,15 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         {
             _fixture = new Fixture();
             _classRepository = new Mock<IClassRepository>();
+            var magisterFileReader = new Mock<IMagisterFileReader>();
             _classValidator = new Mock<IValidator<CreateClassRequest>>();
-            _studentValidator = new Mock<IValidator<AddStudentRequest>>();
-            _sut = new ClassController(_classRepository.Object, _classValidator.Object, _studentValidator.Object);
+            var magisterClassValidator = new Mock<IValidator<CreateMagisterClassRequest>>();
+            var studentValidator = new Mock<IValidator<AddStudentRequest>>();
+            _sut = new ClassController(_classRepository.Object, 
+                magisterFileReader.Object,
+                _classValidator.Object,
+                magisterClassValidator.Object,
+                studentValidator.Object);
         }
 
         [TestMethod]
