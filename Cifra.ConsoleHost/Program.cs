@@ -40,10 +40,6 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Application>();
             builder.RegisterType<ClassController>();
             builder.RegisterType<TestController>();
-            builder.RegisterType<TestRepository>().AsImplementedInterfaces();
-            builder.RegisterType<ClassRepository>().AsImplementedInterfaces();
-            builder.RegisterType<TestResultsSpreadsheetFactory>().AsImplementedInterfaces();
-            builder.RegisterType<IFileInfoWrapperFactory>().AsImplementedInterfaces();
 
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
             builder.RegisterType<Validator<CreateMagisterClassRequest>>().As<IValidator<CreateMagisterClassRequest>>();
@@ -68,6 +64,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterInstance(fileLocationProvider).AsImplementedInterfaces();
 
             builder.RegisterModule<AreaModule>();
+            builder.RegisterModule<FileSystemModule>();
 
             return builder.Build();
         }

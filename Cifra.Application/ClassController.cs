@@ -60,7 +60,7 @@ namespace Cifra.Application
             foreach (var magisterStudent in magisterClass.Students)
             {
                 var student = new Student(Name.CreateFromString(magisterStudent.FirstName),
-                    Name.CreateFromString(magisterStudent.Infix),
+                    Infix.CreateFromString(magisterStudent.Infix),
                     Name.CreateFromString(magisterStudent.LastName));
                 @class.AddStudent(student);
             }
@@ -90,7 +90,7 @@ namespace Cifra.Application
             }
 
             var student = new Student(Name.CreateFromString(model.FirstName),
-                Name.CreateFromString(model.Infix),
+                Infix.CreateFromString(model.Infix),
                 Name.CreateFromString(model.LastName));
 
             @class.AddStudent(student);

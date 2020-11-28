@@ -4,7 +4,7 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>Cifra.pfx</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>Cifra.ConsoleHost.pfx</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<ItemGroup>

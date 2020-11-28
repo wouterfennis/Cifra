@@ -15,7 +15,7 @@ namespace Cifra.Application.Models.Class
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public Name Infix { get; }
+        public Infix Infix { get; }
 
         /// <summary>
         /// The last name of the student
@@ -25,7 +25,7 @@ namespace Cifra.Application.Models.Class
         /// <summary>
         /// Ctor
         /// </summary>
-        public Student(Name firstName, Name infix, Name lastName)
+        public Student(Name firstName, Infix infix, Name lastName)
         {
             FirstName = firstName;
             Infix = infix;

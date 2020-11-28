@@ -34,7 +34,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_magisterDirectoryLocation);
             IFileInfoWrapper[] files = directory.GetFiles();
             Console.WriteLine("Files currently available in magister directory:");
-            Console.WriteLine(_magisterDirectoryLocation);
+            Console.WriteLine(_magisterDirectoryLocation.Value);
             int index = 1;
             foreach (IFileInfoWrapper file in files)
             {
@@ -52,7 +52,12 @@ namespace Cifra.ConsoleHost.Areas.Class
             {
                 MagisterFileLocation = chosenFile.FullName
             };
-            await _classController.CreateMagisterClassAsync(request);
+            CreateMagisterClassResult createMagisterClassResponse = await _classController.CreateMagisterClassAsync(request);
+            if (createMagisterClassResponse.ValidationMessages.Count() > 0)
+            {
+                SharedConsoleFlows.PrintValidationMessages(createMagisterClassResponse.ValidationMessages);
+                await StartAsync();
+            }
         }
     }
 }

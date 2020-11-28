@@ -21,7 +21,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         public async Task StartAsync()
         {
-            var classId = await CreateClassFlowAsync();
+            Guid classId = await CreateClassFlowAsync();
             Console.WriteLine("Adding students to the class");
             await AddStudentsFlowAsync(classId);
         }
@@ -29,13 +29,13 @@ namespace Cifra.ConsoleHost.Areas.Class
         private async Task<Guid> CreateClassFlowAsync()
         {
             Console.WriteLine("What is the name of the class?");
-            var className = Console.ReadLine();
+            string className = Console.ReadLine();
             var createClassRequest = new CreateClassRequest()
             {
                 Name = className
             };
-            var createClassResponse = await _classController.CreateClassAsync(createClassRequest);
-            var classId = createClassResponse.ClassId;
+            CreateClassResult createClassResponse = await _classController.CreateClassAsync(createClassRequest);
+            Guid classId = createClassResponse.ClassId;
             if (createClassResponse.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(createClassResponse.ValidationMessages);
@@ -57,9 +57,9 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         private async Task AddStudentFlowAsync(Guid classId)
         {
-            var firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
-            var infix = SharedConsoleFlows.AskForString("What is the infix of the student?");
-            var lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
+            string firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
+            string infix = SharedConsoleFlows.AskForString("What is the infix of the student?");
+            string lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
             var model = new AddStudentRequest
             {
                 ClassId = classId,

@@ -46,7 +46,7 @@ namespace Cifra.FileSystem.Mapping
             ValidateNullInput(input);
             return input.Select(x => new Application.Models.Class.Student(
                 Name.CreateFromString(x.FirstName),
-                Name.CreateFromString(x.Infix),
+                Infix.CreateFromString(x.Infix),
                 Name.CreateFromString(x.LastName)))
                 .ToList();
         }
