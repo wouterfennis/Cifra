@@ -1,4 +1,5 @@
 ﻿using Cifra.Application.Interfaces;
+using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.Mapping;
@@ -13,16 +14,19 @@ namespace Cifra.FileSystem.Repositories
 {
     public class ClassRepository : IClassRepository
     {
-        private IFileInfoWrapper _classRepositoryLocation;
+        private readonly Application.Models.ValueTypes.Path _classRepositoryLocation;
+        private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public ClassRepository(IFileLocationProvider fileLocationProvider)
+        public ClassRepository(IFileLocationProvider fileLocationProvider, 
+            IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _classRepositoryLocation = fileLocationProvider.GetClassRepositoryPath();
+            _fileInfoWrapperFactory = fileInfoWrapperFactory;
         }
 
         public async Task CreateAsync(Application.Models.Class.Class newClass)
         {
-            var classEntity = newClass.MapToFileEntity();
+            Class classEntity = newClass.MapToFileEntity();
             List<Class> classes = await RetrieveOrCreateClassesAsync();
             classes.Add(classEntity);
             await SaveChangesAsync(classes);
@@ -30,21 +34,21 @@ namespace Cifra.FileSystem.Repositories
 
         public async Task<Application.Models.Class.Class> GetAsync(Guid id)
         {
-            var classes = await RetrieveOrCreateClassesAsync();
-            var classEntity = classes.SingleOrDefault(x => x.Id == id);
+            List<Class> classes = await RetrieveOrCreateClassesAsync();
+            Class classEntity = classes.SingleOrDefault(x => x.Id == id);
             return classEntity.MapToModel();
         }
 
         public async Task<ValidationMessage> UpdateAsync(Application.Models.Class.Class @class)
         {
-            var classes = await RetrieveOrCreateClassesAsync();
-            var index = classes.FindIndex(x => x.Id == @class.Id);
+            List<Class> classes = await RetrieveOrCreateClassesAsync();
+            int index = classes.FindIndex(x => x.Id == @class.Id);
 
             if (index == -1)
             {
                 return new ValidationMessage(nameof(@class), "The class was not found");
             }
-            var classEntity = @class.MapToFileEntity();
+            Class classEntity = @class.MapToFileEntity();
             classes[index] = classEntity;
             await SaveChangesAsync(classes);
 
@@ -53,13 +57,13 @@ namespace Cifra.FileSystem.Repositories
 
         public async Task<IEnumerable<Application.Models.Class.Class>> GetAllAsync()
         {
-            var classes = await RetrieveOrCreateClassesAsync();
+            List<Class> classes = await RetrieveOrCreateClassesAsync();
             return classes.Select(x => x.MapToModel());
         }
 
         private async Task<List<Class>> RetrieveOrCreateClassesAsync()
         {
-            var location = _classRepositoryLocation.ToFileInfo();
+            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(_classRepositoryLocation);
             List<Class> classes = null;
             if (!location.Exists)
             {
@@ -77,7 +81,7 @@ namespace Cifra.FileSystem.Repositories
 
         private async Task SaveChangesAsync(IEnumerable<Class> classes)
         {
-            var location = _classRepositoryLocation.ToFileInfo();
+            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(_classRepositoryLocation);
             using (var writer = new StreamWriter(location.OpenWrite()))
             {
                 await writer.WriteAsync(JsonConvert.SerializeObject(classes));

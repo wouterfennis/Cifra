@@ -1,19 +1,18 @@
 ﻿using Cifra.Application.Models.ValueTypes;
-using System.IO;
 
 namespace Cifra.FileSystem
 {
     public class FileLocationProvider : IFileLocationProvider
     {
-        private readonly Application.Models.ValueTypes.Path _classRepositoryPath;
-        private readonly Application.Models.ValueTypes.Path _testRepositoryPath;
-        private readonly Application.Models.ValueTypes.Path _spreadsheetDirectoryPath;
-        private readonly Application.Models.ValueTypes.Path _magisterDirectoryPath;
+        private readonly Path _classRepositoryPath;
+        private readonly Path _testRepositoryPath;
+        private readonly Path _spreadsheetDirectoryPath;
+        private readonly Path _magisterDirectoryPath;
 
-        public FileLocationProvider(Application.Models.ValueTypes.Path classRepositoryPath, 
-            Application.Models.ValueTypes.Path testRepositoryPath, 
-            Application.Models.ValueTypes.Path spreadsheetDirectoryPath,
-            Application.Models.ValueTypes.Path magisterDirectoryPath)
+        public FileLocationProvider(Path classRepositoryPath, 
+            Path testRepositoryPath, 
+            Path spreadsheetDirectoryPath,
+            Path magisterDirectoryPath)
         {
             _classRepositoryPath = classRepositoryPath;
             _testRepositoryPath = testRepositoryPath;
@@ -21,24 +20,24 @@ namespace Cifra.FileSystem
             _magisterDirectoryPath = magisterDirectoryPath;
         }
 
-        public IFileInfoWrapper GetClassRepositoryPath()
+        public Path GetClassRepositoryPath()
         {
-            return new FileInfoWrapper(_classRepositoryPath);
+            return _classRepositoryPath;
         }
 
-        public IFileInfoWrapper GetTestRepositoryPath()
+        public Path GetTestRepositoryPath()
         {
-            return new FileInfoWrapper(_testRepositoryPath);
+            return _testRepositoryPath;
         }
 
-        public IDirectoryInfoWrapper GetSpreadsheetDirectoryPath()
+        public Path GetSpreadsheetDirectoryPath()
         {
-            return new DirectoryInfoWrapper(_spreadsheetDirectoryPath);
+            return _spreadsheetDirectoryPath;
         }
 
-        public IDirectoryInfoWrapper GetMagisterDirectoryPath()
+        public Path GetMagisterDirectoryPath()
         {
-            return new DirectoryInfoWrapper(_magisterDirectoryPath);
+            return _magisterDirectoryPath;
         }
     }
 }

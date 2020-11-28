@@ -7,9 +7,11 @@ namespace Cifra.FileSystem
     {
         private readonly Application.Models.ValueTypes.Path _filePath;
 
-        public string Name { get => ToFileInfo().Name; }
+        public string Name { get => GetFileInfo().Name; }
 
-        public string FullName { get => ToFileInfo().FullName; }
+        public string FullName { get => GetFileInfo().FullName; }
+
+        public bool Exists { get => GetFileInfo().Exists; }
 
         public FileInfoWrapper(Application.Models.ValueTypes.Path filePath)
         {
@@ -18,11 +20,17 @@ namespace Cifra.FileSystem
 
         public Stream OpenRead()
         {
-            var fileInfo = new FileInfo(_filePath.Value);
+            var fileInfo = GetFileInfo();
             return fileInfo.OpenRead();
         }
 
-        public FileInfo ToFileInfo()
+        public Stream OpenWrite()
+        {
+            var fileInfo = GetFileInfo();
+            return fileInfo.OpenWrite();
+        }
+
+        public FileInfo GetFileInfo()
         {
             return new FileInfo(_filePath.Value);
         }

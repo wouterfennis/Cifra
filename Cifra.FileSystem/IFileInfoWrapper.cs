@@ -6,7 +6,10 @@ namespace Cifra.FileSystem
     {
         string Name { get; }
         string FullName { get; }
+        bool Exists { get; }
+
         Stream OpenRead();
-        FileInfo ToFileInfo();
+        FileInfo GetFileInfo();
+        Stream OpenWrite();
     }
 }

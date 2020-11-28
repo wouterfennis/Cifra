@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using Cifra.FileSystem.FileReaders;
+using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -16,55 +17,68 @@ namespace Cifra.FileSystem.UnitTests.FileReaders
     {
         private Fixture _fixture;
         private MagisterFileReader _sut;
+        private Mock<IFileInfoWrapperFactory> _fileInfoWrapperFactoryMock;
 
         [TestInitialize]
         public void Initialize()
         {
             _fixture = new Fixture();
-            _sut = new MagisterFileReader();
+            _fileInfoWrapperFactoryMock = new Mock<IFileInfoWrapperFactory>();
+            _sut = new MagisterFileReader(_fileInfoWrapperFactoryMock.Object);
         }
 
         [TestMethod]
         public void ReadClass_WithValidCsv_ReturnsClass()
         {
+            // Arrange
             string expectedClassName = _fixture.Create<string>();
-            string expectedFirstName = _fixture.Create<string>();
-            string expectedInfix = _fixture.Create<string>();
-            string expectedLastName = _fixture.Create<string>();
+            string firstname = _fixture.Create<string>();
+            string infix = _fixture.Create<string>();
+            string lastName = _fixture.Create<string>();
+            Application.Models.ValueTypes.Path filePath = _fixture.Create<Application.Models.ValueTypes.Path>();
             var validCsv = "Stamnummer,Klas,Roepnaam,Tussenvoegsel,Achternaam,Studie,Email,Telefoonnummer\n" +
                 $"{_fixture.Create<int>()}," +
-                $"\"{expectedClassName}\",\"{expectedFirstName}\",\"{expectedInfix}\",\"{expectedLastName}\"," +
+                $"\"{expectedClassName}\",\"{firstname}\",\"{infix}\",\"{lastName}\"," +
                 $"\"{_fixture.Create<string>()}\",\"{_fixture.Create<string>()}\",{_fixture.Create<int>()}";
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(validCsv));
-            var file = new Mock<IFileInfoWrapper>();
-            file.Setup(x => x.OpenRead())
+            var fileInfoWrapper = new Mock<IFileInfoWrapper>();
+            fileInfoWrapper.Setup(x => x.OpenRead())
                 .Returns(stream);
+            _fileInfoWrapperFactoryMock.Setup(x => x.Create(filePath))
+                .Returns(fileInfoWrapper.Object);
 
-            var result = _sut.ReadClass(file.Object);
+            // Act
+            Application.Models.Class.Magister.MagisterClass result = _sut.ReadClass(filePath);
 
+            // Assert
             result.Should().NotBeNull();
-            result.Id.Should().BeEmpty();
             result.Name.Should().Be(expectedClassName);
         }
 
         [TestMethod]
         public void ReadClass_WithValidCsv_ReturnsStudent()
         {
-            string expectedClassName = _fixture.Create<string>();
+            // Arrange
+            string className = _fixture.Create<string>();
             string expectedFirstName = _fixture.Create<string>();
             string expectedInfix = _fixture.Create<string>();
             string expectedLastName = _fixture.Create<string>();
+            Application.Models.ValueTypes.Path filePath = _fixture.Create<Application.Models.ValueTypes.Path>();
             var validCsv = "Stamnummer,Klas,Roepnaam,Tussenvoegsel,Achternaam,Studie,Email,Telefoonnummer\n" +
                 $"{_fixture.Create<int>()}," +
-                $"\"{expectedClassName}\",\"{expectedFirstName}\",\"{expectedInfix}\",\"{expectedLastName}\"," +
+                $"\"{className}\",\"{expectedFirstName}\",\"{expectedInfix}\",\"{expectedLastName}\"," +
                 $"\"{_fixture.Create<string>()}\",\"{_fixture.Create<string>()}\",{_fixture.Create<int>()}";
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(validCsv));
-            var file = new Mock<IFileInfoWrapper>();
-            file.Setup(x => x.OpenRead())
+            var fileInfoWrapper = new Mock<IFileInfoWrapper>();
+            fileInfoWrapper.Setup(x => x.OpenRead())
                 .Returns(stream);
+            _fileInfoWrapperFactoryMock.Setup(x => x.Create(filePath))
+                .Returns(fileInfoWrapper.Object);
 
-            var result = _sut.ReadClass(file.Object);
+            // Act
+            Application.Models.Class.Magister.MagisterClass result = _sut.ReadClass(filePath);
 
+            // Assert
             result.Should().NotBeNull();
             result.Students.Should().ContainSingle();
 

@@ -16,10 +16,17 @@ namespace Cifra.FileSystem.FileReaders
     /// <inheritdoc/>
     internal class MagisterFileReader : IMagisterFileReader
     {
+        private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
+
+        public MagisterFileReader(IFileInfoWrapperFactory fileInfoWrapperFactory)
+        {
+            _fileInfoWrapperFactory = fileInfoWrapperFactory;
+        }
+
         /// <inheritdoc/>
         public MagisterClass ReadClass(Application.Models.ValueTypes.Path fileLocation)
         {
-            var fileInfo = new FileInfoWrapper(fileLocation);
+            IFileInfoWrapper fileInfo = _fileInfoWrapperFactory.Create(fileLocation);
             using (var reader = new StreamReader(fileInfo.OpenRead()))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {

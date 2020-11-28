@@ -1,4 +1,6 @@
-﻿namespace Cifra.FileSystem
+﻿using Cifra.Application.Models.ValueTypes;
+
+namespace Cifra.FileSystem
 {
     /// <summary>
     /// Provider for file locations needed for storage and input.
@@ -8,21 +10,21 @@
         /// <summary>
         /// Path where the class repository file is located.
         /// </summary>
-        IFileInfoWrapper GetClassRepositoryPath();
+        Path GetClassRepositoryPath();
 
         /// <summary>
         /// Path where the test repository file is located.
         /// </summary>
-        IFileInfoWrapper GetTestRepositoryPath();
+        Path GetTestRepositoryPath();
 
         /// <summary>
         /// Path where spreadsheet files should be saved.
         /// </summary>
-        IDirectoryInfoWrapper GetSpreadsheetDirectoryPath();
+        Path GetSpreadsheetDirectoryPath();
 
         /// <summary>
         /// Path where magister files with raw information is stored
         /// </summary>
-        IDirectoryInfoWrapper GetMagisterDirectoryPath();
+        Path GetMagisterDirectoryPath();
     }
 }

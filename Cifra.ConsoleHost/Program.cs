@@ -43,6 +43,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<TestRepository>().AsImplementedInterfaces();
             builder.RegisterType<ClassRepository>().AsImplementedInterfaces();
             builder.RegisterType<TestResultsSpreadsheetFactory>().AsImplementedInterfaces();
+            builder.RegisterType<IFileInfoWrapperFactory>().AsImplementedInterfaces();
 
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
             builder.RegisterType<Validator<CreateMagisterClassRequest>>().As<IValidator<CreateMagisterClassRequest>>();

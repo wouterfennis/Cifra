@@ -43,6 +43,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         [TestMethod]
         public async Task CreateMagisterClassAsync_WithValidRequest_CreatesClass()
         {
+            // Arrange
             var input = _fixture.Create<CreateMagisterClassRequest>();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
             _magisterClassValidator
@@ -54,8 +55,10 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
                 .Setup(x => x.ReadClass(It.Is<Path>(p => p.Value == input.MagisterFileLocation)))
                 .Returns(expectedMagisterClass);
 
+            // Act
             CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
 
+            // Assert
             result.ClassId.Should().NotBeEmpty();
             result.ValidationMessages.Should().BeEmpty();
 
@@ -66,6 +69,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         [TestMethod]
         public async Task CreateMagisterClassAsync_WithValidRequest_CreatesStudents()
         {
+            // Arrange
             var input = _fixture.Create<CreateMagisterClassRequest>();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
             _magisterClassValidator
@@ -76,9 +80,6 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
             _magisterFileReader
                 .Setup(x => x.ReadClass(It.Is<Path>(p => p.Value == input.MagisterFileLocation)))
                 .Returns(expectedMagisterClass);
-
-            CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
-
             Class actualClass = null;
             _classRepository
                .Setup(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == expectedMagisterClass.Name)))
@@ -87,6 +88,10 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
                    actualClass = @class;
                });
 
+            // Act
+            CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
+
+            // Assert
             actualClass.Should().NotBeNull();
             actualClass.Students.Should().HaveCount(expectedMagisterClass.Students.Count());
             foreach (var actualStudent in actualClass.Students)

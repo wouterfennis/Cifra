@@ -7,26 +7,32 @@ using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.EPPlus;
 using System.Drawing;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
     public class TestResultsSpreadsheetFactory : ITestResultsSpreadsheetFactory
     {
-        private readonly IDirectoryInfoWrapper _spreadsheetDirectory;
+        private readonly Path _spreadsheetDirectory;
         private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
+        private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
+        private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public TestResultsSpreadsheetFactory(IFileLocationProvider locationProvider)
+        public TestResultsSpreadsheetFactory(IFileLocationProvider locationProvider,
+            IDirectoryInfoWrapperFactory directoryInfoWrapperFactory,
+            IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _spreadsheetDirectory = locationProvider.GetSpreadsheetDirectoryPath();
+            _directoryInfoWrapperFactory = directoryInfoWrapperFactory;
+            _fileInfoWrapperFactory = fileInfoWrapperFactory;
         }
 
         public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
         {
-            var newFilePath = System.IO.Path.Combine(_spreadsheetDirectory.FullName, $"{metadata.FileName}.xlsx");
-            FileInfo newFile = new FileInfo(newFilePath);
-            var fileBuilder = new ExcelFileBuilder(newFile);
+            IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_spreadsheetDirectory);
+            string newFilePath = System.IO.Path.Combine(directory.FullName, $"{metadata.FileName}.xlsx");
+            IFileInfoWrapper newFile = _fileInfoWrapperFactory.Create(Path.CreateFromString(newFilePath));
+            var fileBuilder = new ExcelFileBuilder(newFile.GetFileInfo());
 
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
