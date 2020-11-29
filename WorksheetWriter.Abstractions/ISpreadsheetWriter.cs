@@ -29,6 +29,8 @@ namespace SpreadsheetWriter.Abstractions
 
         ISpreadsheetWriter SetFontColor(Color color);
 
+        ISpreadsheetWriter SetFontSize(float size);
+
         ISpreadsheetWriter Write(decimal value);
 
         ISpreadsheetWriter Write(string value);

@@ -16,6 +16,11 @@ namespace SpreadsheetWriter.EPPlus.Extensions
             excelRange.Style.Font.Color.SetColor(color);
         }
 
+        public static void SetFontSize(this ExcelRange excelRange, float size)
+        {
+            excelRange.Style.Font.Size = size;
+        }
+
         public static void ConvertToEuro(this ExcelRange excelRange)
         {
             excelRange.Style.Numberformat.Format = "€#,##0.00";

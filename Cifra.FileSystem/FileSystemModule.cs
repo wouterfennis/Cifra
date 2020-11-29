@@ -11,7 +11,7 @@ namespace Cifra.FileSystem
         {
             builder.RegisterType<TestRepository>().AsImplementedInterfaces();
             builder.RegisterType<ClassRepository>().AsImplementedInterfaces();
-            builder.RegisterType<TestResultsSpreadsheetFactory>().AsImplementedInterfaces();
+            builder.RegisterType<TestResultsSpreadsheetBuilder>().AsImplementedInterfaces();
             builder.RegisterType<FileInfoWrapperFactory>().AsImplementedInterfaces();
             builder.RegisterType<DirectoryInfoWrapperFactory>().AsImplementedInterfaces();
             builder.RegisterType<MagisterFileReader>().AsImplementedInterfaces();

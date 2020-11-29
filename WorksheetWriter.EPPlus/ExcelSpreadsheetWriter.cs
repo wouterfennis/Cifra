@@ -11,11 +11,13 @@ namespace SpreadsheetWriter.EPPlus
         private readonly Color DefaultBackgroundColor = Color.White;
         private readonly Color DefaultFontColor = Color.Black;
         private readonly int DefaultTextRotation = 0;
+        private readonly float DefaultFontSize = 11;
         private readonly int DefaultXPosition = 1;
         private readonly int DefaultYPosition = 1;
         private readonly ExcelWorksheet _excelWorksheet;
         private Color _currentBackgroundColor;
         private Color _currentFontColor;
+        private float _currentFontSize;
         private int _currentTextRotation;
 
         public Point CurrentPosition { get; set; }
@@ -142,6 +144,8 @@ namespace SpreadsheetWriter.EPPlus
             _currentBackgroundColor = DefaultBackgroundColor;
             _currentFontColor = DefaultFontColor;
             _currentTextRotation = DefaultTextRotation;
+            _currentFontSize = DefaultFontSize;
+            
             return this;
         }
 
@@ -158,6 +162,7 @@ namespace SpreadsheetWriter.EPPlus
             CurrentCell.SetBackgroundColor(_currentBackgroundColor);
             CurrentCell.SetFontColor(_currentFontColor);
             CurrentCell.Style.TextRotation = _currentTextRotation;
+            CurrentCell.SetFontSize(_currentFontSize);
         }
     }
 }

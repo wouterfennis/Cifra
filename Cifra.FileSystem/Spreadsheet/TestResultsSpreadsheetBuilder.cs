@@ -3,6 +3,7 @@ using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Mapping;
+using Cifra.FileSystem.Spreadsheet.Blocks;
 using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.EPPlus;
@@ -11,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
-    public class TestResultsSpreadsheetFactory : ITestResultsSpreadsheetFactory
+    public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetFactory
     {
         private readonly Path _spreadsheetDirectory;
         private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
         private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public TestResultsSpreadsheetFactory(IFileLocationProvider locationProvider,
+        public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
             IDirectoryInfoWrapperFactory directoryInfoWrapperFactory,
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
@@ -37,12 +38,11 @@ namespace Cifra.FileSystem.Spreadsheet
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
 
-            spreadsheetWriter
-                .Write(test.Name.Value)
-                .NewLine()
-                .Write("Gemaakt op:")
-                .MoveRight()
-                .Write(metadata.Created.ToString())
+            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition, test.Name, metadata.Created);
+            TitleBlock
+                .Write(spreadsheetWriter, titleInput);
+
+            var configurationInput =
                 .NewLine()
                 .NewLine()
                 .SetBackgroundColor(Color.LightGray)
@@ -118,7 +118,7 @@ namespace Cifra.FileSystem.Spreadsheet
             {
                 Point studentColumnTop = spreadsheetWriter.CurrentPosition;
                 spreadsheetWriter
-                    .SetTextRotation(30)
+                    .SetTextRotation(40)
                     .Write(student.FirstName.Value)
                     .Write(student.Infix.Value) // TODO: spacing
                     .Write(student.LastName.Value)
