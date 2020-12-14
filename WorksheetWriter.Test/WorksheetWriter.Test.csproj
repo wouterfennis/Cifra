@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SpreadsheetWriter.Test</AssemblyName>
+    <RootNamespace>SpreadsheetWriter.Test</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorksheetWriter.Abstractions\SpreadsheetWriter.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

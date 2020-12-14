@@ -38,37 +38,26 @@ namespace Cifra.FileSystem.Spreadsheet
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
 
-            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition, test.Name, metadata.Created);
-            TitleBlock
-                .Write(spreadsheetWriter, titleInput);
+            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Name,
+                metadata.Created);
+            var titleBlock = new TitleBlock(titleInput);
+            titleBlock
+                .Write(spreadsheetWriter);
 
-            var configurationInput =
-                .NewLine()
-                .NewLine()
-                .SetBackgroundColor(Color.LightGray)
-                .Write("Configuratie")
-                .Write("Maximale punten")
-                .MoveRight()
-                .Write(test.GetMaximumPoints());
-            var maximumPointsCell = spreadsheetWriter.CurrentCell;
-            spreadsheetWriter
-                .NewLine()
-                .Write("Normering")
-                .MoveRight()
-                .Write(test.StandardizationFactor.Value);
-            var standardizationfactorCell = spreadsheetWriter.CurrentCell;
-            spreadsheetWriter
-                .NewLine()
-                .Write("Minimale cijfer")
-                .MoveRight()
-                .Write(test.MinimumGrade.Value)
-                .SetBackgroundColor(Color.White);
-            var miniumGradeCell = spreadsheetWriter.CurrentCell;
+            var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
+                test.GetMaximumPoints(),
+                test.StandardizationFactor,
+                test.MinimumGrade);
+            var configurationBlock = new ConfigurationBlock(configurationInput);
+
             spreadsheetWriter
                 .NewLine()
                 .NewLine()
-                .MoveRightTimes(questionNamesColumns)
-                .Write("Naam");
+                .MoveRightTimes(questionNamesColumns);
+            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
+            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
+            studentNamesBlock.Write(spreadsheetWriter);
             var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
 
             spreadsheetWriter
@@ -104,12 +93,15 @@ namespace Cifra.FileSystem.Spreadsheet
             var maximumPointsColumnTop = new Point(questionNamesColumnTopLeft.X + questionNamesColumns, questionNamesColumnTopLeft.Y);
             var maximumPointsColumnBottom = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
             spreadsheetWriter.PlaceStandardFormula(maximumPointsColumnTop, maximumPointsColumnBottom, FormulaType.SUM);
-            var gradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+            // var gradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell,
+            //configurationBlock.MaximumPointsPosition, 
+            //    configurationBlock.StandardizationfactorPosition, 
+            //     configurationBlock.MinimumGradePosition);
             spreadsheetWriter
                 .NewLine()
                 .Write("Cijfer")
-                .MoveRight()
-                .PlaceCustomFormula(gradeFormula);
+                .MoveRight();
+           //     .PlaceCustomFormula(gradeFormula);
 
             var gradeRowStart = spreadsheetWriter.CurrentPosition;
 
@@ -120,7 +112,7 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter
                     .SetTextRotation(40)
                     .Write(student.FirstName.Value)
-                    .Write(student.Infix.Value) // TODO: spacing
+                    .Write(student.Infix) // TODO: spacing
                     .Write(student.LastName.Value)
                     .ResetStyling();
 
@@ -130,9 +122,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter.CurrentPosition = scoredPointsColumnEnd;
                 spreadsheetWriter.MoveDown()
                     .PlaceStandardFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
-                IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
-                spreadsheetWriter.MoveDown()
-                    .PlaceCustomFormula(studentGradeFormula);
+            //    IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+                //spreadsheetWriter.MoveDown()
+                    //.PlaceCustomFormula(studentGradeFormula);
 
                 spreadsheetWriter.CurrentPosition = studentColumnTop;
                 spreadsheetWriter.MoveRight();

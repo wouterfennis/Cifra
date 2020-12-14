@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
     <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+    <ProjectReference Include="..\WorksheetWriter.Test\WorksheetWriter.Test.csproj" />
   </ItemGroup>
 
 </Project>

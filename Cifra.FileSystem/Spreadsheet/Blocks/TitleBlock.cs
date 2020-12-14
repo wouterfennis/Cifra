@@ -12,8 +12,15 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     internal class TitleBlock
     {
         private const int TitleSize = 16;
+        private const string DateFormat = "dd-MM-yyyy";
+        private readonly TitleBlockInput input;
 
-        public static void Write(ISpreadsheetWriter spreadsheetWriter, TitleBlockInput input)
+        public TitleBlock(TitleBlockInput input)
+        {
+            this.input = input;
+        }
+
+        public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
             spreadsheetWriter
@@ -23,7 +30,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .NewLine()
                 .Write("Gemaakt op:")
                 .MoveRight()
-                .Write(input.CreatedOn.ToString());
+                .Write(input.CreatedOn.ToString(DateFormat));
         }
 
         public class TitleBlockInput

@@ -50,7 +50,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
             foreach (var inputStudent in input.Students)
             {
                 result.Students.Should().Contain(x => x.FirstName == inputStudent.FirstName.Value &&
-                x.Infix == inputStudent.Infix.Value &&
+                x.Infix == inputStudent.Infix &&
                 x.LastName == inputStudent.LastName.Value);
             }
         }

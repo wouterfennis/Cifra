@@ -97,7 +97,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
             foreach (var actualStudent in actualClass.Students)
             {
                 expectedMagisterClass.Students.Should().Contain(x => x.FirstName == actualStudent.FirstName.Value &&
-                x.Infix == actualStudent.Infix.Value &&
+                x.Infix == actualStudent.Infix &&
                 x.LastName == actualStudent.LastName.Value);
             }
         }

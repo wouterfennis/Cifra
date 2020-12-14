@@ -29,7 +29,7 @@ namespace Cifra.FileSystem.Mapping
             return input.Select(x => new Student
             {
                 FirstName = x.FirstName.Value,
-                Infix = x.Infix.Value,
+                Infix = x.Infix,
                 LastName = x.LastName.Value
             });
         }
@@ -46,7 +46,7 @@ namespace Cifra.FileSystem.Mapping
             ValidateNullInput(input);
             return input.Select(x => new Application.Models.Class.Student(
                 Name.CreateFromString(x.FirstName),
-                Infix.CreateFromString(x.Infix),
+                x.Infix,
                 Name.CreateFromString(x.LastName)))
                 .ToList();
         }

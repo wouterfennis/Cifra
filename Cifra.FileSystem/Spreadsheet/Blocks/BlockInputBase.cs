@@ -2,7 +2,7 @@
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
-    public class BlockInputBase
+    internal class BlockInputBase
     {
         public Point StartPoint { get; }
 
