@@ -18,14 +18,17 @@ namespace Cifra.FileSystem.Spreadsheet
         private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
         private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
+        private readonly IExcelFileBuilder _excelFileBuilder;
 
         public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
             IDirectoryInfoWrapperFactory directoryInfoWrapperFactory,
-            IFileInfoWrapperFactory fileInfoWrapperFactory)
+            IFileInfoWrapperFactory fileInfoWrapperFactory,
+            IExcelFileBuilder excelFileBuilder)
         {
             _spreadsheetDirectory = locationProvider.GetSpreadsheetDirectoryPath();
             _directoryInfoWrapperFactory = directoryInfoWrapperFactory;
             _fileInfoWrapperFactory = fileInfoWrapperFactory;
+            _excelFileBuilder = excelFileBuilder;
         }
 
         public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
@@ -33,7 +36,7 @@ namespace Cifra.FileSystem.Spreadsheet
             IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_spreadsheetDirectory);
             string newFilePath = System.IO.Path.Combine(directory.FullName, $"{metadata.FileName}.xlsx");
             IFileInfoWrapper newFile = _fileInfoWrapperFactory.Create(Path.CreateFromString(newFilePath));
-            var fileBuilder = new ExcelFileBuilder(newFile.GetFileInfo());
+            var fileBuilder = _excelFileBuilder.CreateNew(newFile.GetFileInfo());
 
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
@@ -50,6 +53,7 @@ namespace Cifra.FileSystem.Spreadsheet
                 test.StandardizationFactor,
                 test.MinimumGrade);
             var configurationBlock = new ConfigurationBlock(configurationInput);
+            configurationBlock.Write(spreadsheetWriter);
 
             spreadsheetWriter
                 .NewLine()
@@ -101,7 +105,7 @@ namespace Cifra.FileSystem.Spreadsheet
                 .NewLine()
                 .Write("Cijfer")
                 .MoveRight();
-           //     .PlaceCustomFormula(gradeFormula);
+            //     .PlaceCustomFormula(gradeFormula);
 
             var gradeRowStart = spreadsheetWriter.CurrentPosition;
 
@@ -122,9 +126,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter.CurrentPosition = scoredPointsColumnEnd;
                 spreadsheetWriter.MoveDown()
                     .PlaceStandardFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
-            //    IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+                //    IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
                 //spreadsheetWriter.MoveDown()
-                    //.PlaceCustomFormula(studentGradeFormula);
+                //.PlaceCustomFormula(studentGradeFormula);
 
                 spreadsheetWriter.CurrentPosition = studentColumnTop;
                 spreadsheetWriter.MoveRight();

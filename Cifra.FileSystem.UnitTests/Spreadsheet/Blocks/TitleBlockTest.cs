@@ -17,8 +17,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private string[,] _worksheet;
         private Point _startpoint;
         private Fixture _fixture;
-        private TestSpreadsheetWriter _spreadsheetWriter;
-        private TitleBlock _sut;
+        private ArraySpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -26,7 +25,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _worksheet = new string[5, 5];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new TestSpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
         }
 
         [TestMethod]
@@ -36,10 +35,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
             var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            _sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(titleBlockInput);
 
             // Act
-            _sut.Write(_spreadsheetWriter);
+            sut.Write(_spreadsheetWriter);
 
             // Assert
             _worksheet[0, 0].Should().Be(expectedTitle.Value);
@@ -52,10 +51,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
             var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            _sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(titleBlockInput);
 
             // Act
-            _sut.Write(_spreadsheetWriter);
+            sut.Write(_spreadsheetWriter);
 
             // Assert
             _worksheet[0, 1].Should().Be("Gemaakt op:");

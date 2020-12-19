@@ -4,6 +4,7 @@ using SpreadsheetWriter.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -27,13 +28,22 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .MoveRight();
             foreach (Student student in input.Students)
             {
-                string infix = student.Infix ?? " ";
+                // append instead of write
+                // with rich text it should be possible to mark the lastname bold
+                var nameBuilder = new StringBuilder(student.FirstName.Value);
+                if (student.Infix != null)
+                {
+                    nameBuilder.Append(" ");
+                    nameBuilder.Append(student.Infix);
+                }
+                nameBuilder.Append(" ");
+                nameBuilder.Append(student.LastName.Value);
+
                 spreadsheetWriter
                     .SetTextRotation(40)
-                    .Write(student.FirstName.Value)
-                    .Write(infix)
-                    .Write(student.LastName.Value)
-                    .ResetStyling();
+                    .Write(nameBuilder.ToString())
+                    .ResetStyling()
+                    .MoveRight();
             }
         }
 

@@ -1,27 +1,34 @@
 ﻿using OfficeOpenXml;
+using SpreadsheetWriter.Abstractions;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace SpreadsheetWriter.EPPlus
 {
-    public sealed class ExcelFileBuilder
+    public sealed class ExcelFileBuilder : IExcelFileBuilder
     {
-        private readonly ExcelPackage _excelPackage;
+        private ExcelPackage _excelPackage;
 
-        public ExcelFileBuilder(FileInfo fileInfo)
+        public IExcelFileBuilder CreateNew(FileInfo fileInfo)
         {
             _excelPackage = new ExcelPackage(fileInfo);
+            return this;
         }
 
         public void FillMetadata(Metadata metadata)
         {
+            if(_excelPackage == null)
+            {
+                throw new InvalidOperationException("No ");
+            }
             _excelPackage.Workbook.Properties.Author = metadata.Author;
             _excelPackage.Workbook.Properties.Title = metadata.Title;
             _excelPackage.Workbook.Properties.Subject = metadata.Subject;
             _excelPackage.Workbook.Properties.Created = metadata.Created;
         }
 
-        public ExcelSpreadsheetWriter CreateSpreadsheetWriter(string name)
+        public ISpreadsheetWriter CreateSpreadsheetWriter(string name)
         {
             ExcelWorksheet worksheet = _excelPackage.Workbook.Worksheets.Add(name);
             return new ExcelSpreadsheetWriter(worksheet);

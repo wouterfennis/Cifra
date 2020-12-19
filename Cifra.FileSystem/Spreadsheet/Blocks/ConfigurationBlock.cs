@@ -28,6 +28,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .NewLine()
                 .SetBackgroundColor(Color.LightGray)
                 .Write("Configuratie")
+                .MoveDown()
                 .Write("Maximale punten")
                 .MoveRight()
                 .Write(input.MaximumPoints);

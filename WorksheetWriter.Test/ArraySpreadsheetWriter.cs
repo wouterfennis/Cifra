@@ -4,13 +4,13 @@ using System.Drawing;
 
 namespace SpreadsheetWriter.Test
 {
-    public class TestSpreadsheetWriter : SpreadsheetWriterBase
+    public class ArraySpreadsheetWriter : SpreadsheetWriterBase
     {
         public string[,] Worksheet { get; }
         private const int DefaultXPosition = 0;
         private const int DefaultYPosition = 0;
 
-        public TestSpreadsheetWriter(string[,] worksheet) : base(DefaultXPosition, DefaultYPosition)
+        public ArraySpreadsheetWriter(string[,] worksheet) : base(DefaultXPosition, DefaultYPosition)
         {
             Worksheet = worksheet;
             CurrentPosition = new Point(DefaultXPosition, DefaultYPosition);
