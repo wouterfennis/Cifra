@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpreadsheetWriter.EPPlus
 {
-    public sealed class ExcelFileBuilder : IExcelFileBuilder
+    public sealed class ExcelFileBuilder : ISpreadsheetFileBuilder
     {
         private ExcelPackage _excelPackage;
 
-        public IExcelFileBuilder CreateNew(FileInfo fileInfo)
+        public ISpreadsheetFileBuilder CreateNew(FileInfo fileInfo)
         {
             _excelPackage = new ExcelPackage(fileInfo);
             return this;
@@ -20,7 +20,7 @@ namespace SpreadsheetWriter.EPPlus
         {
             if(_excelPackage == null)
             {
-                throw new InvalidOperationException("No ");
+                throw new InvalidOperationException($"No excel package has been made, Use {nameof(CreateNew)} to create one.");
             }
             _excelPackage.Workbook.Properties.Author = metadata.Author;
             _excelPackage.Workbook.Properties.Title = metadata.Title;

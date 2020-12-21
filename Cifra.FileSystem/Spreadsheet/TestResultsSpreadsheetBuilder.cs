@@ -18,17 +18,17 @@ namespace Cifra.FileSystem.Spreadsheet
         private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
         private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
-        private readonly IExcelFileBuilder _excelFileBuilder;
+        private readonly ISpreadsheetFileBuilder _spreadsheetFileBuilder;
 
         public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
             IDirectoryInfoWrapperFactory directoryInfoWrapperFactory,
             IFileInfoWrapperFactory fileInfoWrapperFactory,
-            IExcelFileBuilder excelFileBuilder)
+            ISpreadsheetFileBuilder spreadsheetFileBuilder)
         {
             _spreadsheetDirectory = locationProvider.GetSpreadsheetDirectoryPath();
             _directoryInfoWrapperFactory = directoryInfoWrapperFactory;
             _fileInfoWrapperFactory = fileInfoWrapperFactory;
-            _excelFileBuilder = excelFileBuilder;
+            _spreadsheetFileBuilder = spreadsheetFileBuilder;
         }
 
         public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
@@ -36,24 +36,16 @@ namespace Cifra.FileSystem.Spreadsheet
             IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_spreadsheetDirectory);
             string newFilePath = System.IO.Path.Combine(directory.FullName, $"{metadata.FileName}.xlsx");
             IFileInfoWrapper newFile = _fileInfoWrapperFactory.Create(Path.CreateFromString(newFilePath));
-            var fileBuilder = _excelFileBuilder.CreateNew(newFile.GetFileInfo());
+            var fileBuilder = _spreadsheetFileBuilder.CreateNew(newFile.GetFileInfo());
 
             var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
 
-            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Name,
-                metadata.Created);
-            var titleBlock = new TitleBlock(titleInput);
-            titleBlock
-                .Write(spreadsheetWriter);
+            AddTitle(test, metadata, spreadsheetWriter);
 
-            var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
-                test.GetMaximumPoints(),
-                test.StandardizationFactor,
-                test.MinimumGrade);
-            var configurationBlock = new ConfigurationBlock(configurationInput);
-            configurationBlock.Write(spreadsheetWriter);
+            AddConfiguration(test, spreadsheetWriter);
+
+            AddAssignments(test, spreadsheetWriter);
 
             spreadsheetWriter
                 .NewLine()
@@ -64,18 +56,8 @@ namespace Cifra.FileSystem.Spreadsheet
             studentNamesBlock.Write(spreadsheetWriter);
             var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
 
-            spreadsheetWriter
-                .NewLine()
-                .Write("Opgave")
-                .MoveRightTimes(questionNamesColumns)
-                .Write("Punten")
-                .NewLine();
             var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
 
-            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Assignments);
-            var questionsBlock = new AssignmentsBlock(questionsBlockInput);
-            questionsBlock.Write(spreadsheetWriter);
 
             spreadsheetWriter.ResetStyling();
             spreadsheetWriter.Write("Totaal:")
@@ -141,6 +123,34 @@ namespace Cifra.FileSystem.Spreadsheet
             fileBuilder.FillMetadata(metadata.MapToLibraryModel());
 
             await fileBuilder.SaveAsync();
+        }
+
+        private static void AddAssignments(Test test, ISpreadsheetWriter spreadsheetWriter)
+        {
+            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Assignments);
+            var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
+            assignmentsBlock.Write(spreadsheetWriter);
+        }
+
+        private static void AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
+        {
+            var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
+                test.GetMaximumPoints(),
+                test.StandardizationFactor,
+                test.MinimumGrade);
+            var configurationBlock = new ConfigurationBlock(configurationInput);
+            configurationBlock.Write(spreadsheetWriter);
+        }
+
+        private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
+        {
+            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Name,
+                metadata.Created);
+            var titleBlock = new TitleBlock(titleInput);
+            titleBlock
+                .Write(spreadsheetWriter);
         }
 
         private IFormulaBuilder BuildGradeFormula(ExcelRange achievedPoints,

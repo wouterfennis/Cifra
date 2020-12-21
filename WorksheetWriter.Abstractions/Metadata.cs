@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpreadsheetWriter.EPPlus
+namespace SpreadsheetWriter.Abstractions
 {
     /// <summary>
     /// Metadata for the spreadsheet

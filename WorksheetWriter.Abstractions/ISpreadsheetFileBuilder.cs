@@ -2,11 +2,11 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SpreadsheetWriter.EPPlus
+namespace SpreadsheetWriter.Abstractions
 {
-    public interface IExcelFileBuilder
+    public interface ISpreadsheetFileBuilder
     {
-        IExcelFileBuilder CreateNew(FileInfo fileInfo);
+        ISpreadsheetFileBuilder CreateNew(FileInfo fileInfo);
         ISpreadsheetWriter CreateSpreadsheetWriter(string name);
         void FillMetadata(Metadata metadata);
         Task SaveAsync();
