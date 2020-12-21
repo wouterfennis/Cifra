@@ -43,7 +43,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[0, 0].Should().Be("Opgave");
             _worksheet[expectedQuestionNamesColumns + 1, 0].Should().Be("Punten");
         }
@@ -62,17 +61,35 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
             var headerOffset = 1;
-            for (int y = 0; y < expectedQuestions.Count(); y++)
+            var question = expectedQuestions.First();
+            for (int x = 0; x < question.QuestionNames.Count(); x++)
             {
-                var question = expectedQuestions.ElementAt(y);
-                for (int x = 0; x < question.QuestionNames.Count(); x++)
-                {
-                    var questionName = question.QuestionNames.ElementAt(x);
-                    _worksheet[x, y + headerOffset].Should().Be(questionName.Value);
-                }
+                var questionName = question.QuestionNames.ElementAt(x);
+                _worksheet[x, headerOffset].Should().Be(questionName.Value);
             }
+        }
+
+        [TestMethod]
+        public void Write_WithMultipleQuestions_PutsEachQuestionOnNewLine()
+        {
+            // Arrange
+            var assignment = CreateAssignment();
+            var expectedQuestions = assignment.Questions;
+            var assignments = new List<Assignment> { assignment };
+            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments);
+            var sut = new AssignmentsBlock(questionsBlockInput);
+
+            // Act
+            sut.Write(_spreadsheetWriter);
+
+            // Assert
+            var firstQuestion = expectedQuestions.ElementAt(0);
+            var firstQuestionName = firstQuestion.QuestionNames.First();
+            _worksheet[0, 1].Should().Be(firstQuestionName.Value);
+            var secondQuestion = expectedQuestions.ElementAt(1);
+            var secondQuestionName = secondQuestion.QuestionNames.First();
+            _worksheet[0, 2].Should().Be(secondQuestionName.Value);
         }
 
         private Assignment CreateAssignment()
@@ -81,114 +98,5 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 .ToList();
             return new Assignment(_fixture.Create<Guid>(), questions);
         }
-
-        //[TestMethod]
-        //public void Write_WithMaximumPoints_PutsDataOnRightPosition()
-        //{
-        //    // Arrange
-        //    var expectedMaximumPoints = _fixture.Create<decimal>();
-        //    var standardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var minimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, expectedMaximumPoints, standardizationFactor, minimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
-        //    _worksheet[0, 3].Should().Be("Maximale punten");
-        //    _worksheet[1, 3].Should().Be(expectedMaximumPoints.ToString());
-        //}
-
-        //[TestMethod]
-        //public void Write_WithMaximumPoints_SavesPositionOfMaximumPoints()
-        //{
-        //    // Arrange
-        //    var maximumPoints = _fixture.Create<decimal>();
-        //    var standardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var minimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, maximumPoints, standardizationFactor, minimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    sut.MaximumPointsPosition.X.Should().Be(1);
-        //    sut.MaximumPointsPosition.Y.Should().Be(3);
-        //}
-
-        //[TestMethod]
-        //public void Write_WithStandardizationFactor_PutsDataOnRightPosition()
-        //{
-        //    // Arrange
-        //    var maximumPoints = _fixture.Create<decimal>();
-        //    var expectedStandardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var minimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, maximumPoints, expectedStandardizationFactor, minimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    _worksheet[0, 4].Should().Be("Normering");
-        //    _worksheet[1, 4].Should().Be(expectedStandardizationFactor.Value.ToString());
-        //}
-
-        //[TestMethod]
-        //public void Write_WithStandardizationFactor_SavesPositionOfStandardizationFactor()
-        //{
-        //    // Arrange
-        //    var maximumPoints = _fixture.Create<decimal>();
-        //    var standardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var minimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, maximumPoints, standardizationFactor, minimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    sut.StandardizationfactorPosition.X.Should().Be(1);
-        //    sut.StandardizationfactorPosition.Y.Should().Be(4);
-        //}
-
-        //[TestMethod]
-        //public void Write_WithMinimumGrade_PutsDataOnRightPosition()
-        //{
-        //    // Arrange
-        //    var maximumPoints = _fixture.Create<decimal>();
-        //    var standardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var expectedMinimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, maximumPoints, standardizationFactor, expectedMinimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    _worksheet[0, 5].Should().Be("Minimale cijfer");
-        //    _worksheet[1, 5].Should().Be(expectedMinimumGrade.Value.ToString());
-        //}
-
-        //[TestMethod]
-        //public void Write_WithMinimumGrade_SavesPositionOfMinimumGrade()
-        //{
-        //    // Arrange
-        //    var maximumPoints = _fixture.Create<decimal>();
-        //    var standardizationFactor = _fixture.Create<StandardizationFactor>();
-        //    var minimumGrade = Grade.CreateFromByte(1);
-        //    var configurationBlockInput = new ConfigurationBlock.ConfigurationBlockInput(_startpoint, maximumPoints, standardizationFactor, minimumGrade);
-        //    var sut = new ConfigurationBlock(configurationBlockInput);
-
-        //    // Act
-        //    sut.Write(_spreadsheetWriter);
-
-        //    // Assert
-        //    sut.MinimumGradePosition.X.Should().Be(1);
-        //    sut.MinimumGradePosition.Y.Should().Be(5);
-        //}
     }
 }
