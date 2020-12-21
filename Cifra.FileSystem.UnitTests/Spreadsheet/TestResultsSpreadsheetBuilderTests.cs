@@ -93,6 +93,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
             var testSpreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
 
+            // TODO: Factory?
             _spreadsheetFileBuilder
                 .Setup(x => x.CreateSpreadsheetWriter(fileName))
                 .Returns(testSpreadsheetWriter);
