@@ -72,25 +72,11 @@ namespace Cifra.FileSystem.Spreadsheet
                 .NewLine();
             var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
 
-            bool switchColor = false;
-            foreach (Assignment assignment in test.Assignments)
-            {
-                var color = switchColor ? _tableAssignmentRowColor : Color.White;
-                spreadsheetWriter.SetBackgroundColor(color);
-                foreach (Question question in assignment.Questions)
-                {
-                    foreach (Name questionName in question.QuestionNames)
-                    {
-                        spreadsheetWriter
-                            .Write(questionName.Value)
-                            .MoveRight();
-                    }
-                    spreadsheetWriter
-                        .Write(question.MaximumScore.Value)
-                        .NewLine();
-                }
-                switchColor = !switchColor;
-            }
+            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Assignments);
+            var questionsBlock = new AssignmentsBlock(questionsBlockInput);
+            questionsBlock.Write(spreadsheetWriter);
+
             spreadsheetWriter.ResetStyling();
             spreadsheetWriter.Write("Totaal:")
                 .MoveRight();
