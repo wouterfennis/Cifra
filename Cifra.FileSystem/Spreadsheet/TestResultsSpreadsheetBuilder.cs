@@ -7,6 +7,7 @@ using Cifra.FileSystem.Spreadsheet.Blocks;
 using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.EPPlus;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -38,6 +39,12 @@ namespace Cifra.FileSystem.Spreadsheet
             AddConfiguration(test, spreadsheetWriter);
 
             AddHeaders(@class, test, spreadsheetWriter, questionNamesColumns);
+
+            AddTotalPointsRow();
+
+            AddGradeRow();
+
+            AddAverageResults();
 
             //var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
             //var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
@@ -104,6 +111,21 @@ namespace Cifra.FileSystem.Spreadsheet
             //    .PlaceStandardFormula(gradeRowAverageStart, gradeRowAverageEnd, FormulaType.AVERAGE);
 
             await spreadsheetFile.SaveAsync();
+        }
+
+        private void AddTotalPointsRow()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AddGradeRow()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AddAverageResults()
+        {
+            throw new NotImplementedException();
         }
 
         private static void AddHeaders(Class @class, Test test, ISpreadsheetWriter spreadsheetWriter, int questionNamesColumns)

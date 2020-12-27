@@ -42,7 +42,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             public TitleBlockInput(Point startPoint, Name testName, DateTime createdOn)
             {
                 StartPoint = startPoint;
-                StartPoint = startPoint;
                 TestName = testName;
                 CreatedOn = createdOn;
             }
