@@ -42,7 +42,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 2].Should().Be("Configuratie");
+            _worksheet[0, 0].Should().Be("Configuratie");
         }
 
         [TestMethod]
@@ -60,8 +60,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             // Assert
             WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
-            _worksheet[0, 3].Should().Be("Maximale punten");
-            _worksheet[1, 3].Should().Be(expectedMaximumPoints.ToString());
+            _worksheet[0, 1].Should().Be("Maximale punten");
+            _worksheet[1, 1].Should().Be(expectedMaximumPoints.ToString());
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             // Assert
             sut.MaximumPointsPosition.X.Should().Be(1);
-            sut.MaximumPointsPosition.Y.Should().Be(3);
+            sut.MaximumPointsPosition.Y.Should().Be(1);
         }
 
         [TestMethod]
@@ -96,8 +96,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 4].Should().Be("Normering");
-            _worksheet[1, 4].Should().Be(expectedStandardizationFactor.Value.ToString());
+            _worksheet[0, 2].Should().Be("Normering");
+            _worksheet[1, 2].Should().Be(expectedStandardizationFactor.Value.ToString());
         }
 
         [TestMethod]
@@ -115,7 +115,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             // Assert
             sut.StandardizationfactorPosition.X.Should().Be(1);
-            sut.StandardizationfactorPosition.Y.Should().Be(4);
+            sut.StandardizationfactorPosition.Y.Should().Be(2);
         }
 
         [TestMethod]
@@ -132,8 +132,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 5].Should().Be("Minimale cijfer");
-            _worksheet[1, 5].Should().Be(expectedMinimumGrade.Value.ToString());
+            _worksheet[0, 3].Should().Be("Minimale cijfer");
+            _worksheet[1, 3].Should().Be(expectedMinimumGrade.Value.ToString());
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             // Assert
             sut.MinimumGradePosition.X.Should().Be(1);
-            sut.MinimumGradePosition.Y.Should().Be(5);
+            sut.MinimumGradePosition.Y.Should().Be(3);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     internal class AssignmentsBlock
     {
         private readonly AssignmentsBlockInput input;
+        public Point PointsHeaderPosition { get; private set; }
 
         public AssignmentsBlock(AssignmentsBlockInput input)
         {
@@ -28,9 +29,10 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             spreadsheetWriter
                 .Write("Opgave")
                 .MoveRightTimes(questionNamesCollumns)
-                .Write("Punten")
+                .Write("Punten");
+            PointsHeaderPosition = spreadsheetWriter.CurrentPosition;
+            spreadsheetWriter
                 .NewLine();
-            var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
 
             foreach (Assignment assignment in input.Assignments)
             {

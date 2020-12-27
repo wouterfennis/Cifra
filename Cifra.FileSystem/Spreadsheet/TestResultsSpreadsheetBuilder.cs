@@ -14,123 +14,113 @@ namespace Cifra.FileSystem.Spreadsheet
 {
     public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetFactory
     {
-        private readonly Path _spreadsheetDirectory;
         private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
-        private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
-        private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
-        private readonly ISpreadsheetFileBuilder _spreadsheetFileBuilder;
+        private readonly IFileLocationProvider _locationProvider;
+        private readonly ISpreadsheetFileFactory _spreadsheetFileFactory;
 
         public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
-            IDirectoryInfoWrapperFactory directoryInfoWrapperFactory,
-            IFileInfoWrapperFactory fileInfoWrapperFactory,
-            ISpreadsheetFileBuilder spreadsheetFileBuilder)
+            ISpreadsheetFileFactory spreadsheetFileFactory)
         {
-            _spreadsheetDirectory = locationProvider.GetSpreadsheetDirectoryPath();
-            _directoryInfoWrapperFactory = directoryInfoWrapperFactory;
-            _fileInfoWrapperFactory = fileInfoWrapperFactory;
-            _spreadsheetFileBuilder = spreadsheetFileBuilder;
+            _locationProvider = locationProvider;
+            _spreadsheetFileFactory = spreadsheetFileFactory;
         }
 
         public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
         {
-            IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_spreadsheetDirectory);
-            string newFilePath = System.IO.Path.Combine(directory.FullName, $"{metadata.FileName}.xlsx");
-            IFileInfoWrapper newFile = _fileInfoWrapperFactory.Create(Path.CreateFromString(newFilePath));
-            var fileBuilder = _spreadsheetFileBuilder.CreateNew(newFile.GetFileInfo());
+            var libraryMetadata = metadata.MapToLibraryModel();
+            ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_locationProvider.GetSpreadsheetDirectoryPath().Value, libraryMetadata);
 
-            var spreadsheetWriter = fileBuilder.CreateSpreadsheetWriter(metadata.FileName);
+            ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
             int questionNamesColumns = test.GetMaximumQuestionNamesPerAssignment();
 
             AddTitle(test, metadata, spreadsheetWriter);
 
             AddConfiguration(test, spreadsheetWriter);
 
-            AddAssignments(test, spreadsheetWriter);
+            AddHeaders(@class, test, spreadsheetWriter, questionNamesColumns);
 
-            spreadsheetWriter
-                .NewLine()
-                .NewLine()
-                .MoveRightTimes(questionNamesColumns);
-            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
-            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
-            studentNamesBlock.Write(spreadsheetWriter);
-            var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
+            //var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
+            //var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
 
-            var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
+            //spreadsheetWriter.ResetStyling();
+            //spreadsheetWriter.Write("Totaal:")
+            //    .MoveRight();
+            //var maximumPointsColumnTop = new Point(questionNamesColumnTopLeft.X + questionNamesColumns, questionNamesColumnTopLeft.Y);
+            //var maximumPointsColumnBottom = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
+            ////            spreadsheetWriter.PlaceStandardFormula(maximumPointsColumnTop, maximumPointsColumnBottom, FormulaType.SUM);
+            //// var gradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell,
+            ////configurationBlock.MaximumPointsPosition, 
+            ////    configurationBlock.StandardizationfactorPosition, 
+            ////     configurationBlock.MinimumGradePosition);
+            //spreadsheetWriter
+            //    .NewLine()
+            //    .Write("Cijfer")
+            //    .MoveRight();
+            ////     .PlaceCustomFormula(gradeFormula);
 
+            //var gradeRowStart = spreadsheetWriter.CurrentPosition;
 
-            spreadsheetWriter.ResetStyling();
-            spreadsheetWriter.Write("Totaal:")
-                .MoveRight();
-            var maximumPointsColumnTop = new Point(questionNamesColumnTopLeft.X + questionNamesColumns, questionNamesColumnTopLeft.Y);
-            var maximumPointsColumnBottom = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
-            spreadsheetWriter.PlaceStandardFormula(maximumPointsColumnTop, maximumPointsColumnBottom, FormulaType.SUM);
-            // var gradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell,
-            //configurationBlock.MaximumPointsPosition, 
-            //    configurationBlock.StandardizationfactorPosition, 
-            //     configurationBlock.MinimumGradePosition);
-            spreadsheetWriter
-                .NewLine()
-                .Write("Cijfer")
-                .MoveRight();
-            //     .PlaceCustomFormula(gradeFormula);
+            //spreadsheetWriter.CurrentPosition = studentNamesRowStartpoint;
+            //foreach (Student student in @class.Students)
+            //{
+            //    Point studentColumnTop = spreadsheetWriter.CurrentPosition;
+            //    spreadsheetWriter
+            //        .SetTextRotation(40)
+            //        .Write(student.FirstName.Value)
+            //        .Write(student.Infix) // TODO: spacing
+            //        .Write(student.LastName.Value)
+            //        .ResetStyling();
 
-            var gradeRowStart = spreadsheetWriter.CurrentPosition;
+            //    var scoredPointsColumnStart = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnTop.Y);
+            //    var scoredPointsColumnEnd = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnBottom.Y);
 
-            spreadsheetWriter.CurrentPosition = studentNamesRowStartpoint;
-            foreach (Student student in @class.Students)
-            {
-                Point studentColumnTop = spreadsheetWriter.CurrentPosition;
-                spreadsheetWriter
-                    .SetTextRotation(40)
-                    .Write(student.FirstName.Value)
-                    .Write(student.Infix) // TODO: spacing
-                    .Write(student.LastName.Value)
-                    .ResetStyling();
+            //    spreadsheetWriter.CurrentPosition = scoredPointsColumnEnd;
+            //    //  spreadsheetWriter.MoveDown()
+            //    //      .PlaceStandardFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
+            //    //    IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
+            //    //spreadsheetWriter.MoveDown()
+            //    //.PlaceCustomFormula(studentGradeFormula);
 
-                var scoredPointsColumnStart = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnTop.Y);
-                var scoredPointsColumnEnd = new Point(spreadsheetWriter.CurrentPosition.X, maximumPointsColumnBottom.Y);
+            //    spreadsheetWriter.CurrentPosition = studentColumnTop;
+            //    spreadsheetWriter.MoveRight();
+            //}
+            //var studentNamesRowEndPoint = new Point(spreadsheetWriter.CurrentPosition.X - 1, spreadsheetWriter.CurrentPosition.Y);
 
-                spreadsheetWriter.CurrentPosition = scoredPointsColumnEnd;
-                spreadsheetWriter.MoveDown()
-                    .PlaceStandardFormula(scoredPointsColumnStart, scoredPointsColumnEnd, FormulaType.SUM);
-                //    IFormulaBuilder studentGradeFormula = BuildGradeFormula(spreadsheetWriter.CurrentCell, maximumPointsCell, standardizationfactorCell, miniumGradeCell);
-                //spreadsheetWriter.MoveDown()
-                //.PlaceCustomFormula(studentGradeFormula);
+            //var pointsRowAverageStart = new Point(maximumPointsColumnBottom.X + 1, maximumPointsColumnBottom.Y + 1);
+            //var pointsRowAverageEnd = new Point(studentNamesRowEndPoint.X, maximumPointsColumnBottom.Y + 1);
+            //spreadsheetWriter.CurrentPosition = gradeRowStart;
+            //spreadsheetWriter
+            //    .NewLine()
+            //    .NewLine()
+            //    .Write("Gemiddeld aantal punten")
+            //    .MoveRight()
+            //    .PlaceStandardFormula(pointsRowAverageStart, pointsRowAverageEnd, FormulaType.AVERAGE)
+            //    .NewLine();
 
-                spreadsheetWriter.CurrentPosition = studentColumnTop;
-                spreadsheetWriter.MoveRight();
-            }
-            var studentNamesRowEndPoint = new Point(spreadsheetWriter.CurrentPosition.X - 1, spreadsheetWriter.CurrentPosition.Y);
+            //var gradeRowAverageStart = new Point(gradeRowStart.X + 1, gradeRowStart.Y);
+            //var gradeRowAverageEnd = new Point(studentNamesRowEndPoint.X, gradeRowStart.Y);
+            //spreadsheetWriter.Write("Gemiddeld cijfer")
+            //    .MoveRight()
+            //    .PlaceStandardFormula(gradeRowAverageStart, gradeRowAverageEnd, FormulaType.AVERAGE);
 
-            var pointsRowAverageStart = new Point(maximumPointsColumnBottom.X + 1, maximumPointsColumnBottom.Y + 1);
-            var pointsRowAverageEnd = new Point(studentNamesRowEndPoint.X, maximumPointsColumnBottom.Y + 1);
-            spreadsheetWriter.CurrentPosition = gradeRowStart;
-            spreadsheetWriter
-                .NewLine()
-                .NewLine()
-                .Write("Gemiddeld aantal punten")
-                .MoveRight()
-                .PlaceStandardFormula(pointsRowAverageStart, pointsRowAverageEnd, FormulaType.AVERAGE)
-                .NewLine();
-
-            var gradeRowAverageStart = new Point(gradeRowStart.X + 1, gradeRowStart.Y);
-            var gradeRowAverageEnd = new Point(studentNamesRowEndPoint.X, gradeRowStart.Y);
-            spreadsheetWriter.Write("Gemiddeld cijfer")
-                .MoveRight()
-                .PlaceStandardFormula(gradeRowAverageStart, gradeRowAverageEnd, FormulaType.AVERAGE);
-
-            fileBuilder.FillMetadata(metadata.MapToLibraryModel());
-
-            await fileBuilder.SaveAsync();
+            await spreadsheetFile.SaveAsync();
         }
 
-        private static void AddAssignments(Test test, ISpreadsheetWriter spreadsheetWriter)
+        private static void AddHeaders(Class @class, Test test, ISpreadsheetWriter spreadsheetWriter, int questionNamesColumns)
         {
+            spreadsheetWriter
+                .NewLine()
+                .NewLine();
             var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
                 test.Assignments);
             var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
             assignmentsBlock.Write(spreadsheetWriter);
+
+            spreadsheetWriter.CurrentPosition = assignmentsBlock.PointsHeaderPosition;
+            spreadsheetWriter.MoveRight();
+            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
+            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
+            studentNamesBlock.Write(spreadsheetWriter);
         }
 
         private static void AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
@@ -140,6 +130,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 test.StandardizationFactor,
                 test.MinimumGrade);
             var configurationBlock = new ConfigurationBlock(configurationInput);
+            spreadsheetWriter
+                .NewLine()
+                .NewLine();
             configurationBlock.Write(spreadsheetWriter);
         }
 

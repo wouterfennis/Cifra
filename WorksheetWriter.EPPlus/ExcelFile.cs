@@ -6,32 +6,27 @@ using System.Threading.Tasks;
 
 namespace SpreadsheetWriter.EPPlus
 {
-    public sealed class ExcelFileBuilder : ISpreadsheetFileBuilder
+    public sealed class ExcelFile : ISpreadsheetFile
     {
         private ExcelPackage _excelPackage;
+        private ISpreadsheetWriter _writer;
 
-        public ISpreadsheetFileBuilder CreateNew(FileInfo fileInfo)
+        public ExcelFile(string fileLocation, Metadata metadata)
         {
+            var fileInfo = new FileInfo(fileLocation);
             _excelPackage = new ExcelPackage(fileInfo);
-            return this;
-        }
-
-        public void FillMetadata(Metadata metadata)
-        {
-            if(_excelPackage == null)
-            {
-                throw new InvalidOperationException($"No excel package has been made, Use {nameof(CreateNew)} to create one.");
-            }
             _excelPackage.Workbook.Properties.Author = metadata.Author;
             _excelPackage.Workbook.Properties.Title = metadata.Title;
             _excelPackage.Workbook.Properties.Subject = metadata.Subject;
             _excelPackage.Workbook.Properties.Created = metadata.Created;
+
+            ExcelWorksheet worksheet = _excelPackage.Workbook.Worksheets.Add(metadata.Title);
+            _writer = new ExcelSpreadsheetWriter(worksheet);
         }
 
-        public ISpreadsheetWriter CreateSpreadsheetWriter(string name)
+        public ISpreadsheetWriter GetSpreadsheetWriter()
         {
-            ExcelWorksheet worksheet = _excelPackage.Workbook.Worksheets.Add(name);
-            return new ExcelSpreadsheetWriter(worksheet);
+            return _writer;
         }
 
         public async Task SaveAsync()

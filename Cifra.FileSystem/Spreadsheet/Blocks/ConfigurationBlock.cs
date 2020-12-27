@@ -24,8 +24,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
             spreadsheetWriter
-                .NewLine()
-                .NewLine()
                 .SetBackgroundColor(Color.LightGray)
                 .Write("Configuratie")
                 .MoveDown()
