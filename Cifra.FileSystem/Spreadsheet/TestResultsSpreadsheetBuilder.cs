@@ -15,15 +15,17 @@ namespace Cifra.FileSystem.Spreadsheet
 {
     public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetFactory
     {
-        private readonly Color _tableAssignmentRowColor = Color.FromArgb(217, 225, 242);
         private readonly IFileLocationProvider _locationProvider;
         private readonly ISpreadsheetFileFactory _spreadsheetFileFactory;
+        private readonly IFormulaBuilderFactory _formulaBuilderFactory;
 
         public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
-            ISpreadsheetFileFactory spreadsheetFileFactory)
+            ISpreadsheetFileFactory spreadsheetFileFactory,
+            IFormulaBuilderFactory formulaBuilderFactory)
         {
             _locationProvider = locationProvider;
             _spreadsheetFileFactory = spreadsheetFileFactory;
+            _formulaBuilderFactory = formulaBuilderFactory;
         }
 
         public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
@@ -38,13 +40,7 @@ namespace Cifra.FileSystem.Spreadsheet
 
             AddConfiguration(test, spreadsheetWriter);
 
-            AddHeaders(@class, test, spreadsheetWriter, questionNamesColumns);
-
-            AddTotalPointsRow();
-
-            AddGradeRow();
-
-            AddAverageResults();
+            PrintScoreSheet(@class, test, spreadsheetWriter, questionNamesColumns);
 
             //var studentNamesRowStartpoint = new Point(spreadsheetWriter.CurrentPosition.X + 1, spreadsheetWriter.CurrentPosition.Y);
             //var questionNamesColumnTopLeft = spreadsheetWriter.CurrentPosition;
@@ -113,36 +109,14 @@ namespace Cifra.FileSystem.Spreadsheet
             await spreadsheetFile.SaveAsync();
         }
 
-        private void AddTotalPointsRow()
+        private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
         {
-            throw new NotImplementedException();
-        }
-
-        private void AddGradeRow()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void AddAverageResults()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void AddHeaders(Class @class, Test test, ISpreadsheetWriter spreadsheetWriter, int questionNamesColumns)
-        {
-            spreadsheetWriter
-                .NewLine()
-                .NewLine();
-            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Assignments);
-            var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
-            assignmentsBlock.Write(spreadsheetWriter);
-
-            spreadsheetWriter.CurrentPosition = assignmentsBlock.PointsHeaderPosition;
-            spreadsheetWriter.MoveRight();
-            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
-            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
-            studentNamesBlock.Write(spreadsheetWriter);
+            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Name,
+                metadata.Created);
+            var titleBlock = new TitleBlock(titleInput);
+            titleBlock
+                .Write(spreadsheetWriter);
         }
 
         private static void AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
@@ -158,33 +132,65 @@ namespace Cifra.FileSystem.Spreadsheet
             configurationBlock.Write(spreadsheetWriter);
         }
 
-        private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
+        private static void PrintScoreSheet(Class @class, Test test, ISpreadsheetWriter spreadsheetWriter, int questionNamesColumns)
         {
-            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Name,
-                metadata.Created);
-            var titleBlock = new TitleBlock(titleInput);
-            titleBlock
-                .Write(spreadsheetWriter);
+            spreadsheetWriter
+                .NewLine()
+                .NewLine();
+            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
+                test.Assignments);
+            var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
+            assignmentsBlock.Write(spreadsheetWriter);
+
+            spreadsheetWriter.CurrentPosition = assignmentsBlock.ScoresHeaderPosition;
+            spreadsheetWriter.MoveRight();
+            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
+            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
+            studentNamesBlock.Write(spreadsheetWriter);
+
+            spreadsheetWriter.CurrentPosition = assignmentsBlock.LastMaximumValuePosition;
+            spreadsheetWriter.NewLine();
+            var scoresTopRow = new Point(assignmentsBlock.ScoresHeaderPosition.X, assignmentsBlock.ScoresHeaderPosition.Y + 1);
+            AddTotalPointsRow(spreadsheetWriter,
+                scoresTopRow,
+                @class.Students.Count);
+            spreadsheetWriter.NewLine();
+            AddGradesRow(spreadsheetWriter,
+                scoresTopRow,
+                @class.Students.Count);
+
+            AddAverageResults();
         }
 
-        private IFormulaBuilder BuildGradeFormula(ExcelRange achievedPoints,
-            ExcelRange maximumPoints,
-            ExcelRange standardizationFactor,
-            ExcelRange minimumGrade)
+        private static void AddTotalPointsRow(ISpreadsheetWriter spreadsheetWriter,
+            Point scorePointTop,
+            int numberOfStudents)
         {
-            var builder = new FormulaBuilder();
-            builder.AddEqualsSign()
-                .AddOpenParenthesis()
-                .AddCellAddress(achievedPoints.Address)
-                .AddDivideSign()
-                .AddCellAddress(maximumPoints.Address)
-                .AddClosedParenthesis()
-                .AddMultiplySign()
-                .AddCellAddress(standardizationFactor.Address)
-                .AddSumSign()
-                .AddCellAddress(minimumGrade.Address);
-            return builder;
+            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
+                spreadsheetWriter.CurrentPosition,
+                scorePointTop,
+                numberOfStudents);
+            var totalPointsBlock = new TotalScoresBlock(totalPointsBlockInput);
+            totalPointsBlock.Write(spreadsheetWriter);
+        }
+
+        private static void AddGradesRow(ISpreadsheetWriter spreadsheetWriter,
+            Point scorePointTop,
+            int numberOfStudents,
+            IFormulaBuilder formulaBuilder)
+        {
+            var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
+                spreadsheetWriter.CurrentPosition,
+                formulaBuilder,
+                scorePointTop,
+                numberOfStudents);
+            var totalPointsBlock = new GradesBlock(totalPointsBlockInput);
+            totalPointsBlock.Write(spreadsheetWriter);
+        }
+
+        private static void AddAverageResults()
+        {
+            // throw new NotImplementedException();
         }
     }
 }

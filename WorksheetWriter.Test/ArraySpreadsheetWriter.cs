@@ -30,12 +30,15 @@ namespace SpreadsheetWriter.Test
 
         public override ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)
         {
-            throw new NotImplementedException();
+            Worksheet[startPosition.X, startPosition.Y] = $"StartStandardFormula{formulaType}";
+            Worksheet[endPosition.X, endPosition.Y] = $"EndStandardFormula{formulaType}";
+            return this;
         }
 
         public override ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder)
         {
-            throw new NotImplementedException();
+            Worksheet[CurrentPosition.X, CurrentPosition.Y] = formulaBuilder.Build();
+            return this;
         }
     }
 }

@@ -12,7 +12,11 @@ namespace SpreadsheetWriter.EPPlus
         private const int DefaultYPosition = 1;
         private readonly ExcelWorksheet _excelWorksheet;
 
-        public ExcelRange CurrentCell { get => _excelWorksheet.GetCell(CurrentPosition); }
+        internal ExcelRange CurrentCell { get => _excelWorksheet.GetCell(CurrentPosition); }
+
+        public IExcelRange GetExcelRange(Point position) { 
+            return new ExcelRangeWrapper(_excelWorksheet.GetCell(position)); 
+        }
 
         public ExcelSpreadsheetWriter(ExcelWorksheet excelWorksheet) : base (DefaultXPosition, DefaultYPosition)
         {
@@ -42,6 +46,7 @@ namespace SpreadsheetWriter.EPPlus
 
             var formula = $"={formulaType}({startCell.Address}:{endCell.Address})";
             resultCell.Formula = formula;
+
             return this;
         }
 

@@ -18,6 +18,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         private Fixture _fixture;
         private Mock<IFileLocationProvider> _fileLocationProvider;
         private Mock<ISpreadsheetFileFactory> _spreadsheetFileFactory;
+        private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
         private string[,] _worksheet;
         private TestResultsSpreadsheetBuilder _sut;
 
@@ -27,11 +28,13 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _fixture = new Fixture();
             _fileLocationProvider = new Mock<IFileLocationProvider>();
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
+            _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _worksheet = new string[20, 20];
 
             _sut = new TestResultsSpreadsheetBuilder(
                 _fileLocationProvider.Object,
-                _spreadsheetFileFactory.Object);
+                _spreadsheetFileFactory.Object,
+                _formulaBuilderFactory.Object);
         }
 
         [TestMethod]

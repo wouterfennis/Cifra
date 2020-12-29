@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using SpreadsheetWriter.Abstractions;
 using System.Drawing;
 
 namespace SpreadsheetWriter.EPPlus.Extensions
