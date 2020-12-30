@@ -132,5 +132,7 @@ namespace SpreadsheetWriter.Abstractions
         public abstract ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType);
 
         public abstract ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder);
+
+        public abstract IExcelRange GetExcelRange(Point position);
     }
 }

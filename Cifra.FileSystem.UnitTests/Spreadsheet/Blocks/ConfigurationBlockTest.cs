@@ -59,7 +59,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
+            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[0, 1].Should().Be("Maximale punten");
             _worksheet[1, 1].Should().Be(expectedMaximumPoints.ToString());
         }

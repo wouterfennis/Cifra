@@ -20,21 +20,30 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             spreadsheetWriter.CurrentPosition = input.StartPosition;
             spreadsheetWriter
                 .Write("Cijfer")
-                .MoveRightTimes(input.ScoreTopPoint.X);
+                .MoveRightTimes(input.ScoresStartColumn);
+
+            IExcelRange maximumScoreCell = spreadsheetWriter.GetExcelRange(input.MaximumScorePosition);
+            IExcelRange standardizationFactorCell = spreadsheetWriter.GetExcelRange(input.StandardizationFactorPosition);
+            IExcelRange minimumGradeCell = spreadsheetWriter.GetExcelRange(input.MinimumGradePosition);
+
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
-            for (int i = 0; i < numberOfScoreColumns; i++)
+            for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
-                var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, input.ScoreTopPoint.Y);
-                var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y);
+                var achievedScorePosition = new Point(spreadsheetWriter.CurrentPosition.X, input.AchievedScoresRow);
+                IExcelRange achievedScoreCell = spreadsheetWriter.GetExcelRange(achievedScorePosition);
+
                 spreadsheetWriter
-                    .PlaceCustomFormula(SetupGradeFormula())
+                    .PlaceCustomFormula(SetupGradeFormula(achievedScoreCell,
+                    maximumScoreCell,
+                    standardizationFactorCell,
+                    minimumGradeCell))
                     .MoveRight();
             }
         }
 
         private IFormulaBuilder SetupGradeFormula(IExcelRange achievedPoints,
-            IExcelRange maximumPoints,
+            IExcelRange maximumScore,
             IExcelRange standardizationFactor,
             IExcelRange minimumGrade)
         {
@@ -43,7 +52,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddOpenParenthesis()
                 .AddCellAddress(achievedPoints.Address)
                 .AddDivideSign()
-                .AddCellAddress(maximumPoints.Address)
+                .AddCellAddress(maximumScore.Address)
                 .AddClosedParenthesis()
                 .AddMultiplySign()
                 .AddCellAddress(standardizationFactor.Address)
@@ -57,27 +66,35 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             public IFormulaBuilder FormulaBuilder { get; }
 
-            public Point AchievedScorePosition { get; }
+            public int AchievedScoresRow { get; }
+
+            public int ScoresStartColumn { get; }
 
             public Point MaximumScorePosition { get; }
 
             public Point StandardizationFactorPosition { get; }
+
+            public Point MinimumGradePosition { get; }
 
             public int NumberOfStudents { get; }
 
             public GradesBlockInput(
                 Point startPosition,
                 IFormulaBuilder formulaBuilder,
-                Point achievedScorePosition, 
-                Point maximumScorePosition, 
+                int achievedScoreRow,
+                int scoresStartColumn,
+                Point maximumScorePosition,
                 Point standardizationFactorPosition,
+                Point minimumScorePosition,
                 int numberOfStudents)
             {
                 StartPosition = startPosition;
                 FormulaBuilder = formulaBuilder;
-                AchievedScorePosition = achievedScorePosition;
+                AchievedScoresRow = achievedScoreRow;
+                ScoresStartColumn = scoresStartColumn;
                 MaximumScorePosition = maximumScorePosition;
                 StandardizationFactorPosition = standardizationFactorPosition;
+                MinimumGradePosition = minimumScorePosition;
                 NumberOfStudents = numberOfStudents;
             }
         }

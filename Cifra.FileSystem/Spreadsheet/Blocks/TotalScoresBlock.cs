@@ -23,7 +23,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .MoveRightTimes(input.ScoreTopPoint.X);
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
-            for (int i = 0; i < numberOfScoreColumns; i++)
+            for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, input.ScoreTopPoint.Y);
                 var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y);

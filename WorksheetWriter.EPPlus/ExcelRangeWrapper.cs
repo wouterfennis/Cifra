@@ -16,9 +16,5 @@ namespace SpreadsheetWriter.EPPlus
         }
 
         public string Address => _excelRange.Address;
-
-        public object Value { get => _excelRange.Value; set => _excelRange.Value = value; }
-
-        public string Formula { get => _excelRange.Formula; set => _excelRange.Formula = value; }
     }
 }

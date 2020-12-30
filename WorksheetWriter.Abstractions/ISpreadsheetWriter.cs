@@ -6,6 +6,9 @@ namespace SpreadsheetWriter.Abstractions
     public interface ISpreadsheetWriter
     {
         Point CurrentPosition { get; set; }
+
+        IExcelRange GetExcelRange(Point position);
+
         ISpreadsheetWriter MoveUp();
 
         ISpreadsheetWriter MoveUpTimes(int times);

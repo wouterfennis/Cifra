@@ -40,5 +40,10 @@ namespace SpreadsheetWriter.Test
             Worksheet[CurrentPosition.X, CurrentPosition.Y] = formulaBuilder.Build();
             return this;
         }
+
+        public override IExcelRange GetExcelRange(Point position)
+        {
+            return new TestExcelRange(position.ToString());
+        }
     }
 }

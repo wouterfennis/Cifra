@@ -63,7 +63,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
+            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
             _worksheet[1, 5].Should().Be("EndStandardFormulaSUM");
         }
@@ -84,7 +84,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            WorksheetTestUtilities.PrintArrayWorksheet(_worksheet);
+            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
             _worksheet[1, 5].Should().Be("EndStandardFormulaSUM");
 

@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.EPPlus", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem.UnitTests", "Cifra.FileSystem.UnitTests\Cifra.FileSystem.UnitTests.csproj", "{2BE99014-CB3D-4275-988A-EC65FEECDE51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorksheetWriter.Test", "WorksheetWriter.Test\WorksheetWriter.Test.csproj", "{68F046E7-1B88-4A1D-82A0-C011211034EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.Test", "WorksheetWriter.Test\SpreadsheetWriter.Test.csproj", "{68F046E7-1B88-4A1D-82A0-C011211034EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.TestUtilities", "Cifra.TestUtilities\Cifra.TestUtilities.csproj", "{034931D0-D61B-4F45-AAB0-7680631D8948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "Cifra.TestUtilities\Cifra.TestUtilities.csproj", "{034931D0-D61B-4F45-AAB0-7680631D8948}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
