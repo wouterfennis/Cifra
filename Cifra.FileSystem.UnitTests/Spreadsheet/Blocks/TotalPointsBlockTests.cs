@@ -65,7 +65,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Assert
             SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[1, 5].Should().Be("EndStandardFormulaSUM");
+            _worksheet[1, 4].Should().Be("EndStandardFormulaSUM");
+            _worksheet[1, 5].Should().Be("Result of StandardFormulaSUM");
         }
 
         [TestMethod]
@@ -86,16 +87,20 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Assert
             SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
             _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[1, 5].Should().Be("EndStandardFormulaSUM");
+            _worksheet[1, 4].Should().Be("EndStandardFormulaSUM");
+            _worksheet[1, 5].Should().Be("Result of StandardFormulaSUM");
 
             _worksheet[2, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[2, 5].Should().Be("EndStandardFormulaSUM");
+            _worksheet[2, 4].Should().Be("EndStandardFormulaSUM");
+            _worksheet[2, 5].Should().Be("Result of StandardFormulaSUM");
 
             _worksheet[3, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[3, 5].Should().Be("EndStandardFormulaSUM");
+            _worksheet[3, 4].Should().Be("EndStandardFormulaSUM");
+            _worksheet[3, 5].Should().Be("Result of StandardFormulaSUM");
 
             _worksheet[4, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[4, 5].Should().Be("EndStandardFormulaSUM");
+            _worksheet[4, 4].Should().Be("EndStandardFormulaSUM");
+            _worksheet[4, 5].Should().Be("Result of StandardFormulaSUM");
         }
     }
 }

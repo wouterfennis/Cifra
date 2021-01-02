@@ -26,7 +26,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, input.ScoreTopPoint.Y);
-                var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y);
+                var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
                 spreadsheetWriter
                     .PlaceStandardFormula(startPosition, endPosition, FormulaType.SUM)
                     .MoveRight();
@@ -42,8 +42,8 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             public int NumberOfStudents { get; }
 
             public TotalScoresBlockInput(
-                Point startPoint, 
-                Point scoreTopPoint, 
+                Point startPoint,
+                Point scoreTopPoint,
                 int numberOfStudents)
             {
                 StartPoint = startPoint;

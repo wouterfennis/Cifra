@@ -1,13 +1,9 @@
 ﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Mapping;
 using Cifra.FileSystem.Spreadsheet.Blocks;
-using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
-using SpreadsheetWriter.EPPlus;
-using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -32,7 +28,6 @@ namespace Cifra.FileSystem.Spreadsheet
         {
             var libraryMetadata = metadata.MapToLibraryModel();
             ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_locationProvider.GetSpreadsheetDirectoryPath().Value, libraryMetadata);
-
             ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
 
             AddTitle(test, metadata, spreadsheetWriter);
@@ -41,9 +36,9 @@ namespace Cifra.FileSystem.Spreadsheet
             var configurationBlock = AddConfiguration(test, spreadsheetWriter);
 
             PrintScoreSheet(
-                @class, 
-                test, 
-                spreadsheetWriter, 
+                @class,
+                test,
+                spreadsheetWriter,
                 configurationBlock);
 
             await spreadsheetFile.SaveAsync();
@@ -75,9 +70,9 @@ namespace Cifra.FileSystem.Spreadsheet
         }
 
         private void PrintScoreSheet(
-            Class @class, 
-            Test test, 
-            ISpreadsheetWriter spreadsheetWriter, 
+            Class @class,
+            Test test,
+            ISpreadsheetWriter spreadsheetWriter,
             ConfigurationBlock configurationBlock)
         {
             spreadsheetWriter
@@ -103,16 +98,25 @@ namespace Cifra.FileSystem.Spreadsheet
             var achievedScoresRow = spreadsheetWriter.CurrentPosition.Y;
             spreadsheetWriter.NewLine();
 
+            var numberOfStudents = @class.Students.Count;
             AddGradesRow(spreadsheetWriter,
                 achievedScoresRow,
                 assignmentsBlock.LastMaximumValuePosition.X,
                 configurationBlock.MaximumPointsPosition,
                 configurationBlock.MinimumGradePosition,
                 configurationBlock.StandardizationfactorPosition,
-                @class.Students.Count,
-                _formulaBuilderFactory.Create()) ;
+                numberOfStudents,
+                _formulaBuilderFactory.Create());
+            var gradesRow = spreadsheetWriter.CurrentPosition.Y;
+            spreadsheetWriter.NewLine();
+            spreadsheetWriter.NewLine();
 
-            AddAverageResults();
+            AddAverageResults(
+                spreadsheetWriter,
+                achievedScoresRow,
+                gradesRow,
+                assignmentsBlock.LastMaximumValuePosition.X,
+                numberOfStudents);
         }
 
         private static void AddTotalPointsRow(ISpreadsheetWriter spreadsheetWriter,
@@ -149,9 +153,20 @@ namespace Cifra.FileSystem.Spreadsheet
             totalPointsBlock.Write(spreadsheetWriter);
         }
 
-        private static void AddAverageResults()
+        private static void AddAverageResults(ISpreadsheetWriter spreadsheetWriter,
+            int achievedScoresRow,
+            int gradesRow,
+            int scoresStartColumn,
+            int numberOfStudents)
         {
-            // throw new NotImplementedException();
+            var averagesBlockInput = new AveragesBlock.AveragesBlockInput(
+                spreadsheetWriter.CurrentPosition,
+                achievedScoresRow,
+                gradesRow,
+                scoresStartColumn,
+                numberOfStudents);
+            var averagesBlock = new AveragesBlock(averagesBlockInput);
+            averagesBlock.Write(spreadsheetWriter);
         }
     }
 }

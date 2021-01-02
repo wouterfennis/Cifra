@@ -30,9 +30,26 @@ namespace SpreadsheetWriter.Test
 
         public override ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)
         {
-            Worksheet[startPosition.X, startPosition.Y] = $"StartStandardFormula{formulaType}";
-            Worksheet[endPosition.X, endPosition.Y] = $"EndStandardFormula{formulaType}";
+            var currentStartValue = Worksheet[startPosition.X, startPosition.Y];
+            var newStartValue = AppendFormula(currentStartValue, $"StartStandardFormula{formulaType}");
+            Worksheet[startPosition.X, startPosition.Y] = newStartValue;
+
+            var currentEndValue = Worksheet[endPosition.X, endPosition.Y];
+            var newEndValue = AppendFormula(currentEndValue, $"EndStandardFormula{formulaType}");
+            Worksheet[endPosition.X, endPosition.Y] = newEndValue;
+
+            Worksheet[CurrentPosition.X, CurrentPosition.Y] = $"Result of StandardFormula{formulaType}";
             return this;
+        }
+
+        private string AppendFormula(string currentValue, string v)
+        {
+            string newValue = null;
+            if(currentValue != null)
+            {
+                newValue = $"{currentValue} AND ";
+            }
+            return newValue + v;
         }
 
         public override ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder)
