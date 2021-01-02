@@ -85,6 +85,7 @@ namespace Cifra.FileSystem.Spreadsheet
 
             spreadsheetWriter.CurrentPosition = assignmentsBlock.ScoresHeaderPosition;
             spreadsheetWriter.MoveRight();
+            int studentNamesStartColumn = spreadsheetWriter.CurrentPosition.X;
             var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
             var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
             studentNamesBlock.Write(spreadsheetWriter);
@@ -115,7 +116,7 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter,
                 achievedScoresRow,
                 gradesRow,
-                assignmentsBlock.LastMaximumValuePosition.X,
+                studentNamesStartColumn,
                 numberOfStudents);
         }
 

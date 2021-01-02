@@ -31,21 +31,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         }
 
         [TestMethod]
-        public void Write_WithStudents_PutsRowHeaderOnRightPosition()
-        {
-            // Arrange
-            var students = _fixture.CreateMany<Student>();
-            var studentNamesBlockInput = new StudentNamesBlock.StudentNamesBlockInput(_startpoint, students);
-            var sut = new StudentNamesBlock(studentNamesBlockInput);
-
-            // Act
-            sut.Write(_spreadsheetWriter);
-
-            // Assert
-            _worksheet[0, 0].Should().Be("Naam");
-        }
-
-        [TestMethod]
         public void Write_WithStudents_PutsStudentNamesInRow()
         {
             // Arrange
@@ -57,12 +42,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            int headerOffset = 1;
             for (int i = 0; i < students.Count(); i++)
             {
                 var expectedStudent = students.ElementAt(i);
                 var expectedName = $"{expectedStudent.FirstName.Value} {expectedStudent.Infix} {expectedStudent.LastName.Value}";
-                _worksheet[i + headerOffset, 0].Should().Be(expectedName);
+                _worksheet[i, 0].Should().Be(expectedName);
             }
         }
     }

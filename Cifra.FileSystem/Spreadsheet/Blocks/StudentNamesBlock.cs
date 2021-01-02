@@ -23,9 +23,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
-            spreadsheetWriter
-                .Write("Naam")
-                .MoveRight();
             foreach (Student student in input.Students)
             {
                 // append instead of write
