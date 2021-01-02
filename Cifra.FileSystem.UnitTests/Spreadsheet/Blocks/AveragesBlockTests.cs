@@ -27,7 +27,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         }
 
         [TestMethod]
-        public void Write_WithAverages_PutsAchievedPointsTitleOnRightPosition()
+        public void Write_WithAverages_PutsAveragePointsTitleOnRightPosition()
         {
             // Arrange
             var averagesBlockInput = new AveragesBlock.AveragesBlockInput(
@@ -43,7 +43,27 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             // Assert
             SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
-            _worksheet[0, 3].Should().Be("Gemiddeld aantal punten");
+            _worksheet[0, 3].Should().Be("Gemiddelde aantal punten");
+        }
+
+        [TestMethod]
+        public void Write_WithAverages_PutsAverageGradeTitleOnRightPosition()
+        {
+            // Arrange
+            var averagesBlockInput = new AveragesBlock.AveragesBlockInput(
+                _startpoint,
+                0,
+                1,
+                2,
+                3);
+            var sut = new AveragesBlock(averagesBlockInput);
+
+            // Act
+            sut.Write(_spreadsheetWriter);
+
+            // Assert
+            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
+            _worksheet[0, 4].Should().Be("Gemiddelde cijfer");
         }
     }
 }

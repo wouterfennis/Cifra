@@ -19,12 +19,20 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPosition;
 
-            var scoresStartPosition = new Point(input.ScoresStartColumn, input.AchievedScoresRow);
-            var scoresEndPosition = new Point(input.ScoresStartColumn + input.NumberOfStudents, input.AchievedScoresRow);
+            var scoresStartPosition = new Point(input.StartOfStudentsColumn, input.AchievedScoresRow);
+            var scoresEndPosition = new Point(input.StartOfStudentsColumn + input.NumberOfStudents, input.AchievedScoresRow);
             spreadsheetWriter
-                .Write("Gemiddeld aantal punten")
+                .Write("Gemiddelde aantal punten")
                 .MoveRight()
-                .PlaceStandardFormula(scoresStartPosition, scoresEndPosition, FormulaType.AVERAGE);
+                .PlaceStandardFormula(scoresStartPosition, scoresEndPosition, FormulaType.AVERAGE)
+                .NewLine();
+
+            var gradesStartPosition = new Point(input.StartOfStudentsColumn, input.GradesRow);
+            var gradesEndPosition = new Point(input.StartOfStudentsColumn + input.NumberOfStudents, input.GradesRow);
+            spreadsheetWriter
+                .Write("Gemiddelde cijfer")
+                .MoveRight()
+                .PlaceStandardFormula(gradesStartPosition, gradesEndPosition, FormulaType.AVERAGE);
         }
 
         public class AveragesBlockInput
@@ -35,7 +43,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             public int GradesRow { get; }
 
-            public int ScoresStartColumn { get; }
+            public int StartOfStudentsColumn { get; }
 
             public int NumberOfStudents { get; }
 
@@ -43,14 +51,14 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 Point startPosition,
                 int achievedScoreRow,
                 int gradesRow,
-                int scoresStartColumn,
+                int startOfStudents,
                 int numberOfStudents
                 )
             {
                 StartPosition = startPosition;
                 AchievedScoresRow = achievedScoreRow;
                 GradesRow = gradesRow;
-                ScoresStartColumn = scoresStartColumn;
+                StartOfStudentsColumn = startOfStudents;
                 NumberOfStudents = numberOfStudents;
             }
         }
