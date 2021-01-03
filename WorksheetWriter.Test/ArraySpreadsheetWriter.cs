@@ -1,5 +1,5 @@
 ﻿using SpreadsheetWriter.Abstractions;
-using System;
+using SpreadsheetWriter.Abstractions.Formula;
 using System.Drawing;
 
 namespace SpreadsheetWriter.Test

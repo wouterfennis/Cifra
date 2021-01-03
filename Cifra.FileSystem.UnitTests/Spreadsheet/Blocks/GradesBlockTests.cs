@@ -5,6 +5,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private string[,] _worksheet;
         private Point _startpoint;
         private Fixture _fixture;
-        private Mock<IFormulaBuilder> _formulaBuilder;
+        private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
         private ArraySpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
@@ -28,7 +29,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _worksheet = new string[10, 10];
             _startpoint = new Point(0, 5);
             _fixture = new Fixture();
-            _formulaBuilder = new Mock<IFormulaBuilder>();
+            _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
         }
 
@@ -44,11 +45,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             int numberOfStudents = 1;
             var expectedFormula = _fixture.Create<string>();
 
-            SetupFormulaBuilder(_formulaBuilder, expectedFormula);
+            SetupFormulaBuilderFactory(_formulaBuilderFactory, expectedFormula);
 
             var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
                 _startpoint,
-                _formulaBuilder.Object,
+                _formulaBuilderFactory.Object,
                 achievedScoreRow,
                 scoresStartColumn,
                 maximumScorePosition,
@@ -76,11 +77,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             int numberOfStudents = 1;
             var expectedFormula = _fixture.Create<string>();
 
-            SetupFormulaBuilder(_formulaBuilder, expectedFormula);
+            SetupFormulaBuilderFactory(_formulaBuilderFactory, expectedFormula);
 
             var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
                 _startpoint,
-                _formulaBuilder.Object,
+                _formulaBuilderFactory.Object,
                 achievedScoreRow,
                 scoresStartColumn,
                 maximumScorePosition,
@@ -97,8 +98,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _worksheet[2, 5].Should().Be(expectedFormula);
         }
 
-        private void SetupFormulaBuilder(Mock<IFormulaBuilder> formulaBuilder, string expectedFormula)
+        private void SetupFormulaBuilderFactory(Mock<IFormulaBuilderFactory> formulaBuilderFactory, string expectedFormula)
         {
+            var formulaBuilder = new Mock<IFormulaBuilder>();
+
             formulaBuilder.Setup(x => x.AddCellAddress(It.IsAny<string>()))
                 .Returns(formulaBuilder.Object);
 
@@ -128,6 +131,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             formulaBuilder.Setup(x => x.Build())
                 .Returns(expectedFormula);
+
+            formulaBuilderFactory.Setup(x => x.Create())
+                .Returns(formulaBuilder.Object);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.File;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SpreadsheetWriter.EPPlus
+namespace SpreadsheetWriter.EPPlus.File
 {
     public sealed class ExcelFile : ISpreadsheetFile
     {

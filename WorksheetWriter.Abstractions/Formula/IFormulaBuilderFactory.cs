@@ -1,5 +1,5 @@
 ﻿
-namespace SpreadsheetWriter.Abstractions
+namespace SpreadsheetWriter.Abstractions.Formula
 {
     /// <summary>
     /// Factory for creating IFormulaBuilder

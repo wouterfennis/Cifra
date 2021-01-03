@@ -1,4 +1,5 @@
 ﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Formula;
 using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
@@ -19,8 +20,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
             spreadsheetWriter
-                .Write("Totaal")
-                .MoveRightTimes(input.ScoreTopPoint.X);
+                .Write("Totaal");
+            spreadsheetWriter.CurrentPosition = new Point(input.ScoreTopPoint.X, spreadsheetWriter.CurrentPosition.Y);
+
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)

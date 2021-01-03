@@ -4,6 +4,8 @@ using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.File;
+using SpreadsheetWriter.Abstractions.Formula;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -107,7 +109,7 @@ namespace Cifra.FileSystem.Spreadsheet
                 configurationBlock.MinimumGradePosition,
                 configurationBlock.StandardizationfactorPosition,
                 numberOfStudents,
-                _formulaBuilderFactory.Create());
+                _formulaBuilderFactory);
             var gradesRow = spreadsheetWriter.CurrentPosition.Y;
             spreadsheetWriter.NewLine();
             spreadsheetWriter.NewLine();
@@ -139,11 +141,11 @@ namespace Cifra.FileSystem.Spreadsheet
             Point minimumGradePosition,
             Point standardizationfactorPosition,
             int numberOfStudents,
-            IFormulaBuilder formulaBuilder)
+            IFormulaBuilderFactory formulaBuilderFactory)
         {
             var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
                 spreadsheetWriter.CurrentPosition,
-                formulaBuilder,
+                formulaBuilderFactory,
                 achievedScoresRow,
                 scoresStartColumn,
                 maximumPointsPosition,

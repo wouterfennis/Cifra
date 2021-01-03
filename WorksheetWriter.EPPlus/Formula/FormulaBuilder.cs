@@ -1,7 +1,7 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using SpreadsheetWriter.Abstractions.Formula;
 using System.Text;
 
-namespace SpreadsheetWriter.EPPlus
+namespace SpreadsheetWriter.EPPlus.Formula
 {
     public class FormulaBuilder : IFormulaBuilder
     {

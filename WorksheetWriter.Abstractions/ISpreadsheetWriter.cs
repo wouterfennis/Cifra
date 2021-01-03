@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpreadsheetWriter.Abstractions.Formula;
+using System;
 using System.Drawing;
 
 namespace SpreadsheetWriter.Abstractions

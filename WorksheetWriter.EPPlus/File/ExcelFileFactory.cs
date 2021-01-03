@@ -1,7 +1,8 @@
 ﻿
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.File;
 
-namespace SpreadsheetWriter.EPPlus
+namespace SpreadsheetWriter.EPPlus.File
 {
     public class ExcelFileFactory : ISpreadsheetFileFactory
     {

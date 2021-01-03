@@ -1,4 +1,4 @@
-﻿namespace SpreadsheetWriter.Abstractions
+﻿namespace SpreadsheetWriter.Abstractions.Formula
 {
     public interface IFormulaBuilder
     {

@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.EPPlus.Extensions;
 using System.Drawing;
 

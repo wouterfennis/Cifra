@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Cifra.FileSystem
+namespace Cifra.FileSystem.FileSystemInfo
 {
     public interface IDirectoryInfoWrapper
     {

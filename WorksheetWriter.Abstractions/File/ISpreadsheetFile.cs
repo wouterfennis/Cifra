@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace SpreadsheetWriter.Abstractions
+namespace SpreadsheetWriter.Abstractions.File
 {
     /// <summary>
     /// Abstraction around SpreadsheetFile instance.

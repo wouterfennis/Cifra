@@ -7,8 +7,9 @@ using Cifra.TestUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.File;
+using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
-using System;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet

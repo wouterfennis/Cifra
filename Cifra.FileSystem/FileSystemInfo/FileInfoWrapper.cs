@@ -1,7 +1,7 @@
 ﻿using Cifra.Application.Models.ValueTypes;
 using System.IO;
 
-namespace Cifra.FileSystem
+namespace Cifra.FileSystem.FileSystemInfo
 {
     public class FileInfoWrapper : IFileInfoWrapper
     {

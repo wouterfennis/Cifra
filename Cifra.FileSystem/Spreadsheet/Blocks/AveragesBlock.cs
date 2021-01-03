@@ -1,4 +1,5 @@
 ﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Formula;
 using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks

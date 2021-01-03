@@ -1,5 +1,5 @@
 ﻿
-namespace SpreadsheetWriter.Abstractions
+namespace SpreadsheetWriter.Abstractions.File
 {
     /// <summary>
     /// Factory for creating ISpreadsheetFile

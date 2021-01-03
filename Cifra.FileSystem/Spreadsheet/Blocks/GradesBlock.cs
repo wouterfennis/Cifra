@@ -1,4 +1,5 @@
 ﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Formula;
 using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
@@ -19,8 +20,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPosition;
             spreadsheetWriter
-                .Write("Cijfer")
-                .MoveRightTimes(input.ScoresStartColumn);
+                .Write("Cijfer");
+
+            spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
 
             IExcelRange maximumScoreCell = spreadsheetWriter.GetExcelRange(input.MaximumScorePosition);
             IExcelRange standardizationFactorCell = spreadsheetWriter.GetExcelRange(input.StandardizationFactorPosition);
@@ -47,7 +49,8 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             IExcelRange standardizationFactor,
             IExcelRange minimumGrade)
         {
-            return input.FormulaBuilder
+            IFormulaBuilder formulaBuilder = input.FormulaBuilderFactory.Create();
+            return formulaBuilder
                 .AddEqualsSign()
                 .AddOpenParenthesis()
                 .AddCellAddress(achievedPoints.Address)
@@ -64,7 +67,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             public Point StartPosition { get; }
 
-            public IFormulaBuilder FormulaBuilder { get; }
+            public IFormulaBuilderFactory FormulaBuilderFactory { get; }
 
             public int AchievedScoresRow { get; }
 
@@ -80,7 +83,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             public GradesBlockInput(
                 Point startPosition,
-                IFormulaBuilder formulaBuilder,
+                IFormulaBuilderFactory formulaBuilderFactory,
                 int achievedScoreRow,
                 int scoresStartColumn,
                 Point maximumScorePosition,
@@ -89,7 +92,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 int numberOfStudents)
             {
                 StartPosition = startPosition;
-                FormulaBuilder = formulaBuilder;
+                FormulaBuilderFactory = formulaBuilderFactory;
                 AchievedScoresRow = achievedScoreRow;
                 ScoresStartColumn = scoresStartColumn;
                 MaximumScorePosition = maximumScorePosition;

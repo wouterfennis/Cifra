@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace Cifra.FileSystem
+namespace Cifra.FileSystem.FileSystemInfo
 {
     public class DirectoryInfoWrapper : IDirectoryInfoWrapper
     {

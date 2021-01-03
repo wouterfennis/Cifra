@@ -1,6 +1,6 @@
 ﻿using Cifra.Application.Models.ValueTypes;
 
-namespace Cifra.FileSystem
+namespace Cifra.FileSystem.FileSystemInfo
 {
     /// <summary>
     /// Factory to create IFileInfoWrappers

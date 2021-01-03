@@ -3,6 +3,7 @@ using Cifra.Application.Models.Class.Magister;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.FileEntity.Csv;
+using Cifra.FileSystem.FileSystemInfo;
 using Cifra.FileSystem.Mapping;
 using CsvHelper;
 using System;
