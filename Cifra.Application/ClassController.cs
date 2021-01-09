@@ -1,18 +1,19 @@
 ﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Magister;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
+    /// <summary>
+    /// Application Controller for the Class entity
+    /// </summary>
     public class ClassController
     {
         private readonly IClassRepository _classRepository;
@@ -21,6 +22,10 @@ namespace Cifra.Application
         private readonly IValidator<CreateMagisterClassRequest> _magisterClassValidator;
         private readonly IValidator<AddStudentRequest> _studentValidator;
 
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
         public ClassController(IClassRepository classRepository,
             IMagisterFileReader magisterFileReader,
             IValidator<CreateClassRequest> classValidator,
@@ -34,6 +39,9 @@ namespace Cifra.Application
             _studentValidator = studentValidator;
         }
 
+        /// <summary>
+        /// Creates a class
+        /// </summary>
         public async Task<CreateClassResult> CreateClassAsync(CreateClassRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
@@ -48,6 +56,9 @@ namespace Cifra.Application
             return new CreateClassResult(@class.Id);
         }
 
+        /// <summary>
+        /// Creates a magister class
+        /// </summary>
         public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _magisterClassValidator.ValidateRules(model);
@@ -69,12 +80,18 @@ namespace Cifra.Application
             return new CreateMagisterClassResult(@class.Id);
         }
 
+        /// <summary>
+        /// Retrieves classes currently available
+        /// </summary>
         public async Task<GetAllClassesResult> GetClassesAsync()
         {
             var classes = await _classRepository.GetAllAsync();
             return new GetAllClassesResult(classes);
         }
 
+        /// <summary>
+        /// Adds a students to class
+        /// </summary>
         public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);

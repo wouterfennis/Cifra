@@ -1,5 +1,4 @@
 ﻿using SpreadsheetWriter.Abstractions;
-using SpreadsheetWriter.EPPlus;
 using System;
 
 namespace Cifra.FileSystem.Mapping

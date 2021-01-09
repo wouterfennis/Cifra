@@ -1,13 +1,12 @@
 ﻿using AutoFixture;
 using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Class;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +29,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
             var classValidator = new Mock<IValidator<CreateClassRequest>>();
             var magisterClassValidator = new Mock<IValidator<CreateMagisterClassRequest>>();
             _studentValidator = new Mock<IValidator<AddStudentRequest>>();
+
             _sut = new ClassController(_classRepository.Object,
                 magisterFileReader.Object,
                 classValidator.Object,

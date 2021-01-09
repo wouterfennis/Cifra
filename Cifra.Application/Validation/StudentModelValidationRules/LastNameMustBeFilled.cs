@@ -3,9 +3,14 @@ using System;
 
 namespace Cifra.Application.Validation.StudentModelValidationRules
 {
+    /// <summary>
+    /// Validates the last name of a student
+    /// </summary>
     public class LastNameMustBeFilled : IValidationRule<AddStudentRequest>
     {
         private const string Message = "Last name is required";
+
+        /// <inheritdoc/>
         public ValidationMessage Validate(AddStudentRequest model)
         {
             NullChecks(model);

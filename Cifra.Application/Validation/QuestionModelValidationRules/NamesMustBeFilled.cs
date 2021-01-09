@@ -3,10 +3,14 @@ using System;
 
 namespace Cifra.Application.Validation.QuestionModelValidationRules
 {
+    /// <summary>
+    /// Validates the names of question
+    /// </summary>
     public class NamesMustBeFilled : IValidationRule<AddQuestionRequest>
     {
         private const string Message = "Not all names are valid";
 
+        /// <inheritdoc/>
         public ValidationMessage Validate(AddQuestionRequest model)
         {
             NullChecks(model);

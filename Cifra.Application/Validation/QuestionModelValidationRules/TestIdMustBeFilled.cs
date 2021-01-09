@@ -6,9 +6,14 @@ using System.Text;
 
 namespace Cifra.Application.Validation.QuestionModelValidationRules
 {
+    /// <summary>
+    /// Validates the test id of a question
+    /// </summary>
     public class TestIdMustBeFilled : IValidationRule<AddQuestionRequest>
     {
         private const string Message = "TestId is required";
+
+        /// <inheritdoc/>
         public ValidationMessage Validate(AddQuestionRequest model)
         {
             NullChecks(model);

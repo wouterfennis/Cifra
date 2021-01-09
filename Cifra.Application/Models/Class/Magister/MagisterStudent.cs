@@ -1,6 +1,9 @@
 ﻿
 namespace Cifra.Application.Models.Class.Magister
 {
+    /// <summary>
+    /// A magister student
+    /// </summary>
     public class MagisterStudent
     {
         /// <summary>

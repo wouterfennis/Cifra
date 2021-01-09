@@ -1,14 +1,16 @@
-﻿using Cifra.Application.Models;
-using Cifra.Application.Models.Test.Requests;
+﻿using Cifra.Application.Models.Test.Requests;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.Application.Validation.TestModelValidationRules
 {
+    /// <summary>
+    /// Validates the name of a test
+    /// </summary>
     public class NameMustBeFilled : IValidationRule<CreateTestRequest>
     {
         private const string Message = "Name is required";
+
+        /// <inheritdoc/>
         public ValidationMessage Validate(CreateTestRequest model)
         {
             NullChecks(model);

@@ -3,9 +3,14 @@ using System;
 
 namespace Cifra.Application.Validation.MagisterClassModelValidationRules
 {
+    /// <summary>
+    /// Validation rule to check the file location of a magister class.
+    /// </summary>
     public class FileLocationMustBeFilled : IValidationRule<CreateMagisterClassRequest>
     {
         private const string Message = "File location is required";
+
+        /// <inheritdoc/>
         public ValidationMessage Validate(CreateMagisterClassRequest model)
         {
             NullChecks(model);

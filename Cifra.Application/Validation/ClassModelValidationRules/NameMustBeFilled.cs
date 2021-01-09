@@ -3,9 +3,14 @@ using System;
 
 namespace Cifra.Application.Validation.ClassModelValidationRules
 {
+    /// <summary>
+    /// Validation rule to check name of the class
+    /// </summary>
     public class NameMustBeFilled : IValidationRule<CreateClassRequest>
     {
         private const string Message = "Name is required";
+
+        /// <inheritdoc/>
         public ValidationMessage Validate(CreateClassRequest model)
         {
             NullChecks(model);

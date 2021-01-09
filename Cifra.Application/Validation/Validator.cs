@@ -1,20 +1,21 @@
-﻿using Cifra.Application.Models;
-using Cifra.Application.Models.Test.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Cifra.Application.Validation
 {
+    /// <inheritdoc/>
     public class Validator<T> : IValidator<T>
     {
         private readonly IEnumerable<IValidationRule<T>> validationRules;
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
         public Validator(IEnumerable<IValidationRule<T>> validationRules)
         {
             this.validationRules = validationRules;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<ValidationMessage> ValidateRules(T model)
         {
             var validationMessages = new List<ValidationMessage>();

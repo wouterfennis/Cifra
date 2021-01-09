@@ -5,13 +5,15 @@ using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
+    /// <summary>
+    /// Application Controller for the Test entity
+    /// </summary>
     public class TestController
     {
         private readonly ITestRepository _testRepository;
@@ -19,6 +21,10 @@ namespace Cifra.Application
         private readonly IValidator<AddAssignmentRequest> _assignmentValidator;
         private readonly IValidator<AddQuestionRequest> _questionValidator;
 
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
         public TestController(ITestRepository testRepository,
             IValidator<CreateTestRequest> testValidator,
             IValidator<AddAssignmentRequest> assignmentValidator,
@@ -29,6 +35,10 @@ namespace Cifra.Application
             _assignmentValidator = assignmentValidator;
             _questionValidator = questionValidator;
         }
+
+        /// <summary>
+        /// Creates a test
+        /// </summary>
 
         public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
         {
@@ -44,6 +54,10 @@ namespace Cifra.Application
             return new CreateTestResult(test.Id);
         }
 
+
+        /// <summary>
+        /// Adds an assignment to a test
+        /// </summary>
         public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _assignmentValidator.ValidateRules(model);
@@ -71,6 +85,9 @@ namespace Cifra.Application
             return new AddAssignmentResult(test.Id, assignment.Id);
         }
 
+        /// <summary>
+        /// Adds a question to a assignment
+        /// </summary>
         public async Task<AddQuestionResult> AddQuestionAsync(AddQuestionRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _questionValidator.ValidateRules(model);
@@ -87,7 +104,7 @@ namespace Cifra.Application
 
             Assignment assignment = test.GetAssignment(model.AssignmentId);
 
-            if(assignment == null)
+            if (assignment == null)
             {
                 return new AddQuestionResult(new ValidationMessage(nameof(model.AssignmentId), "No assignment was found"));
             }
@@ -106,6 +123,9 @@ namespace Cifra.Application
             return new AddQuestionResult();
         }
 
+        /// <summary>
+        /// Retrieves all tests currently available
+        /// </summary>
         public async Task<GetAllTestsResult> GetTestsAsync()
         {
             var tests = await _testRepository.GetAllAsync();
