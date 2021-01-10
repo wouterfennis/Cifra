@@ -40,7 +40,7 @@ namespace Cifra.FileSystem.Mapping
 
             return input.Select(x => new FileEntity.Question
             {
-                MaximalScore = x.MaximumScore.Value,
+                MaximumScore = x.MaximumScore.Value,
                 QuestionNames = x.QuestionNames.Select(n => n.Value)
             });
         }
@@ -65,7 +65,7 @@ namespace Cifra.FileSystem.Mapping
             ValidateNullInput(input);
             return input.Select(x => new Application.Models.Test.Question(
                 x.QuestionNames.Select(n => Name.CreateFromString(n)),
-                QuestionScore.CreateFromByte(x.MaximalScore)))
+                QuestionScore.CreateFromByte(x.MaximumScore)))
                 .ToList();
         }
 

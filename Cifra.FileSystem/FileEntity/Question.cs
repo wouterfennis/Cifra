@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Cifra.FileSystem.FileEntity
 {
-    internal sealed class Question
+    public sealed class Question
     {
-        public byte MaximalScore { get; set; }
+        public byte MaximumScore { get; set; }
         public IEnumerable<string> QuestionNames { get; set; }
     }
 }

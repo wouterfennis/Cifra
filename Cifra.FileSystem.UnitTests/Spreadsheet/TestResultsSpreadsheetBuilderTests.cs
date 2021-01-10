@@ -3,7 +3,7 @@ using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet;
-using Cifra.TestUtilities;
+using Cifra.TestUtilities.Application;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;

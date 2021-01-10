@@ -1,16 +1,14 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.FileSystem.FileEntity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Cifra.TestUtilities
+namespace Cifra.TestUtilities.FileSystem
 {
     public class TestBuilder
     {
         private readonly Fixture _fixture;
-        private Grade _minimumGrade;
+        private byte _minimumGrade;
         private readonly List<Assignment> _assignments;
 
         public TestBuilder()
@@ -19,9 +17,9 @@ namespace Cifra.TestUtilities
             _fixture = new Fixture();
         }
 
-        public TestBuilder WithMinimumGrade(Grade grade)
+        public TestBuilder WithValidMinimumGrade()
         {
-            _minimumGrade = grade;
+            _minimumGrade = 1;
             return this;
         }
 
@@ -33,15 +31,22 @@ namespace Cifra.TestUtilities
                     .WithRandomQuestions()
                     .Build();
                 _assignments.Add(assignment);
-            }            
+            }
             return this;
         }
 
         public Test Build()
         {
-            var testName = _fixture.Create<Name>();
-            var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            return new Test(Guid.NewGuid(), testName, standardizationFactor, _minimumGrade, _assignments);
+            string testName = _fixture.Create<string>();
+            var standardizationFactor = _fixture.Create<byte>();
+            return new Test
+            {
+                Id = Guid.NewGuid(),
+                Name = testName,
+                Assignments = _assignments,
+                MinimumGrade = _minimumGrade,
+                StandardizationFactor = standardizationFactor
+            };
         }
     }
 }

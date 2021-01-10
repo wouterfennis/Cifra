@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cifra.FileSystem.FileEntity
+﻿namespace Cifra.FileSystem.FileEntity
 {
     /// <summary>
     /// The student entity
     /// </summary>
-    internal sealed class Student
+    public sealed class Student
     {
         /// <summary>
         /// The first name of the student
