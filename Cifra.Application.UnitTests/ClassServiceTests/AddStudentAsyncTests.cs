@@ -10,7 +10,7 @@ using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cifra.Application.UnitTests.ClassControllerTests
+namespace Cifra.Application.UnitTests.ClassServiceTests
 {
     [TestClass]
     public class AddStudentAsyncTests
@@ -18,7 +18,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         private Fixture _fixture;
         private Mock<IClassRepository> _classRepository;
         private Mock<IValidator<AddStudentRequest>> _studentValidator;
-        private ClassController _sut;
+        private ClassService _sut;
 
         [TestInitialize]
         public void Initialize()
@@ -30,7 +30,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
             var magisterClassValidator = new Mock<IValidator<CreateMagisterClassRequest>>();
             _studentValidator = new Mock<IValidator<AddStudentRequest>>();
 
-            _sut = new ClassController(_classRepository.Object,
+            _sut = new ClassService(_classRepository.Object,
                 magisterFileReader.Object,
                 classValidator.Object,
                 magisterClassValidator.Object,

@@ -1,17 +1,15 @@
 ﻿using AutoFixture;
 using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Class;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cifra.Application.UnitTests.ClassControllerTests
+namespace Cifra.Application.UnitTests.ClassServiceTests
 {
     [TestClass]
     public class CreateClassAsyncTests
@@ -19,7 +17,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
         private Fixture _fixture;
         private Mock<IClassRepository> _classRepository;
         private Mock<IValidator<CreateClassRequest>> _classValidator;
-        private ClassController _sut;
+        private ClassService _sut;
 
         [TestInitialize]
         public void Initialize()
@@ -30,7 +28,7 @@ namespace Cifra.Application.UnitTests.ClassControllerTests
             _classValidator = new Mock<IValidator<CreateClassRequest>>();
             var magisterClassValidator = new Mock<IValidator<CreateMagisterClassRequest>>();
             var studentValidator = new Mock<IValidator<AddStudentRequest>>();
-            _sut = new ClassController(_classRepository.Object, 
+            _sut = new ClassService(_classRepository.Object,
                 magisterFileReader.Object,
                 _classValidator.Object,
                 magisterClassValidator.Object,

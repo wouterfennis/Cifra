@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
-    public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetFactory
+    public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetBuilder
     {
         private readonly IFileLocationProvider _locationProvider;
         private readonly ISpreadsheetFileFactory _spreadsheetFileFactory;

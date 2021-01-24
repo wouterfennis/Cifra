@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 namespace Cifra.Application
 {
     /// <summary>
-    /// Application Controller for the Test entity
+    /// Application Service for the Test entity
     /// </summary>
-    public class TestController
+    public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
         private readonly IValidator<CreateTestRequest> _testValidator;
@@ -25,7 +25,7 @@ namespace Cifra.Application
         /// <summary>
         /// Ctor
         /// </summary>
-        public TestController(ITestRepository testRepository,
+        public TestService(ITestRepository testRepository,
             IValidator<CreateTestRequest> testValidator,
             IValidator<AddAssignmentRequest> assignmentValidator,
             IValidator<AddQuestionRequest> questionValidator)

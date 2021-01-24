@@ -1,20 +1,17 @@
-﻿using Cifra.Application;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
-using Cifra.ConsoleHost.Areas;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
     internal class CreateClassManuallyFlow : IFlow
     {
-        private readonly ClassController _classController;
+        private readonly IClassService _classController;
 
-        public CreateClassManuallyFlow(ClassController classController)
+        public CreateClassManuallyFlow(IClassService classController)
         {
             _classController = classController;
         }

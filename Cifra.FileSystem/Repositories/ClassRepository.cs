@@ -1,5 +1,4 @@
 ﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.FileSystemInfo;
@@ -15,13 +14,13 @@ namespace Cifra.FileSystem.Repositories
 {
     public class ClassRepository : IClassRepository
     {
-        private readonly Application.Models.ValueTypes.Path _classRepositoryLocation;
+        private readonly IFileLocationProvider _fileLocationProvider;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public ClassRepository(IFileLocationProvider fileLocationProvider, 
+        public ClassRepository(IFileLocationProvider fileLocationProvider,
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
-            _classRepositoryLocation = fileLocationProvider.GetClassRepositoryPath();
+            _fileLocationProvider = fileLocationProvider;
             _fileInfoWrapperFactory = fileInfoWrapperFactory;
         }
 
@@ -64,25 +63,26 @@ namespace Cifra.FileSystem.Repositories
 
         private async Task<List<Class>> RetrieveOrCreateClassesAsync()
         {
-            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(_classRepositoryLocation);
+            var repositoryPath = _fileLocationProvider.GetClassRepositoryPath();
+            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(repositoryPath);
             List<Class> classes = null;
-            if (!location.Exists)
+            if (location.Exists)
             {
-                classes = new List<Class>();
-            }
-            else
-            {
-                using (var reader = new StreamReader(location.OpenRead()))
+                using (StreamReader reader = new StreamReader(location.OpenRead()))
                 {
                     classes = JsonConvert.DeserializeObject<List<Class>>(await reader.ReadToEndAsync());
                 }
+            }
+            else
+            {
+                classes = new List<Class>();
             }
             return classes;
         }
 
         private async Task SaveChangesAsync(IEnumerable<Class> classes)
         {
-            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(_classRepositoryLocation);
+            IFileInfoWrapper location = _fileInfoWrapperFactory.Create(_fileLocationProvider.GetClassRepositoryPath());
             using (var writer = new StreamWriter(location.OpenWrite()))
             {
                 await writer.WriteAsync(JsonConvert.SerializeObject(classes));

@@ -1,27 +1,22 @@
-﻿using Cifra.Application;
-using Cifra.Application.Interfaces;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
-using Cifra.ConsoleHost.Areas;
 using Cifra.FileSystem;
-using Cifra.FileSystem.FileReaders;
 using Cifra.FileSystem.FileSystemInfo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
     internal class CreateClassFromMagisterFlow : IFlow
     {
-        private readonly ClassController _classController;
+        private readonly IClassService _classController;
         private readonly IDirectoryInfoWrapperFactory _directoryInfoWrapperFactory;
         private readonly Path _magisterDirectoryLocation;
 
-        public CreateClassFromMagisterFlow(ClassController classController,
+        public CreateClassFromMagisterFlow(IClassService classController,
             IFileLocationProvider fileLocationProvider,
             IDirectoryInfoWrapperFactory directoryInfoWrapperFactory)
         {

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.Test", "W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "Cifra.TestUtilities\Cifra.TestUtilities.csproj", "{034931D0-D61B-4F45-AAB0-7680631D8948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Cifra.Application;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.ValueTypes;
@@ -20,8 +21,8 @@ namespace Cifra.ConsoleHost
             string magisterDirectoryPath = appsettings["MagisterDirectory"];
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
-            builder.RegisterType<ClassController>();
-            builder.RegisterType<TestController>();
+            builder.RegisterType<ClassService>().As<IClassService>();
+            builder.RegisterType<TestService>().As<ITestService>();
 
             builder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
             builder.RegisterType<Validator<CreateMagisterClassRequest>>().As<IValidator<CreateMagisterClassRequest>>();

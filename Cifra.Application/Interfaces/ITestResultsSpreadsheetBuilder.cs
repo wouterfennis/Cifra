@@ -8,7 +8,7 @@ namespace Cifra.Application.Interfaces
     /// <summary>
     /// Factory to create test results spreadsheets
     /// </summary>
-    public interface ITestResultsSpreadsheetFactory
+    public interface ITestResultsSpreadsheetBuilder
     {
         /// <summary>
         /// Creates a test results spreadsheet

@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 namespace Cifra.Application
 {
     /// <summary>
-    /// Application Controller for the Class entity
+    /// Application Service for the Class entity
     /// </summary>
-    public class ClassController
+    public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
         private readonly IMagisterFileReader _magisterFileReader;
@@ -26,7 +26,7 @@ namespace Cifra.Application
         /// <summary>
         /// Ctor
         /// </summary>
-        public ClassController(IClassRepository classRepository,
+        public ClassService(IClassRepository classRepository,
             IMagisterFileReader magisterFileReader,
             IValidator<CreateClassRequest> classValidator,
             IValidator<CreateMagisterClassRequest> magisterClassValidator,

@@ -1,24 +1,18 @@
-﻿using Cifra.Application;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Class.Results;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.ValueTypes;
-using Cifra.ConsoleHost.Areas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {
     internal class CreateTestFlow : IFlow
     {
-        private readonly TestController _testController;
+        private readonly ITestService _testController;
 
-        public CreateTestFlow(TestController classController)
+        public CreateTestFlow(ITestService classController)
         {
             _testController = classController;
         }
@@ -65,7 +59,8 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task AddAssignmentFlowAsync(Guid testId)
         {
-            var addAssignmentRequest = new AddAssignmentRequest { 
+            var addAssignmentRequest = new AddAssignmentRequest
+            {
                 TestId = testId
             };
             var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
@@ -74,7 +69,8 @@ namespace Cifra.ConsoleHost.Areas.Test
             {
                 SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
                 await AddAssignmentFlowAsync(testId);
-            } else
+            }
+            else
             {
                 await AddQuestionsFlowAsync(testId, addAssignmentResult.AssignmentId.Value);
             }

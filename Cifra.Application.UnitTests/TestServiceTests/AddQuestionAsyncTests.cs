@@ -1,27 +1,29 @@
 ﻿using AutoFixture;
 using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Test;
+using Cifra.Application.Models.Test.Requests;
+using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Cifra.Application.Models.Test.Requests;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.ValueTypes;
 using System.Threading.Tasks;
 
-namespace Cifra.Application.UnitTests.TestControllerTests
+namespace Cifra.Application.UnitTests.TestServiceTests
 {
     [TestClass]
-    public class AddAssignmentAsyncTests
+    public class AddQuestionAsyncTests
     {
         private Fixture _fixture;
         private Mock<ITestRepository> _testRepository;
         private Mock<IValidator<CreateTestRequest>> _testValidator;
         private Mock<IValidator<AddQuestionRequest>> _questionValidator;
         private Mock<IValidator<AddAssignmentRequest>> _assignmentValidator;
-        private TestController _sut;
+        private TestService _sut;
 
         [TestInitialize]
         public void Initialize()
@@ -31,44 +33,44 @@ namespace Cifra.Application.UnitTests.TestControllerTests
             _testValidator = new Mock<IValidator<CreateTestRequest>>();
             _assignmentValidator = new Mock<IValidator<AddAssignmentRequest>>();
             _questionValidator = new Mock<IValidator<AddQuestionRequest>>();
-            _sut = new TestController(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object, _questionValidator.Object);
+            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object, _questionValidator.Object);
         }
 
         [TestMethod]
-        public async Task AddAssignment_WithValidationMessages_ReturnsValidationMessages()
+        public async Task AddQuestion_WithValidationMessages_ReturnsValidationMessages()
         {
-            var input = _fixture.Create<AddAssignmentRequest>();
+            var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
-            _assignmentValidator
+            _questionValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddAssignmentResult result = await _sut.AddAssignmentAsync(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             result.Should().NotBeNull();
             result.ValidationMessages.Should().BeEquivalentTo(expectedValidationMessages);
         }
 
         [TestMethod]
-        public async Task AddAssignment_WithValidationMessages_DoesNotAddStudent()
+        public async Task AddQuestion_WithValidationMessages_DoesNotAddStudent()
         {
-            var input = _fixture.Create<AddAssignmentRequest>();
+            var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>();
-            _assignmentValidator
+            _questionValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddAssignmentResult result = await _sut.AddAssignmentAsync(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
-        public async Task AddAssignment_TestDoesNotExists_ReturnsValidationMessage()
+        public async Task AddQuestion_TestDoesNotExists_ReturnsValidationMessage()
         {
-            var input = _fixture.Create<AddAssignmentRequest>();
+            var input = _fixture.Create<AddQuestionRequest>();
             var expectedValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
-            _assignmentValidator
+            _questionValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
@@ -76,7 +78,7 @@ namespace Cifra.Application.UnitTests.TestControllerTests
                 .Setup(x => x.GetAsync(input.TestId))
                 .ReturnsAsync((Test)null);
 
-            AddAssignmentResult result = await _sut.AddAssignmentAsync(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
             result.ValidationMessages.Should().ContainSingle();
             ValidationMessage validationMessage = result.ValidationMessages.Single();
@@ -85,7 +87,34 @@ namespace Cifra.Application.UnitTests.TestControllerTests
         }
 
         [TestMethod]
-        public async Task AddAssignment_UpdateFails_ReturnsValidationMessage()
+        public async Task AddQuestion_AssignmentDoesNotExists_ReturnsValidationMessage()
+        {
+            var input = _fixture.Create<AddQuestionRequest>();
+            var assignmentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
+            _questionValidator
+                .Setup(x => x.ValidateRules(input))
+                .Returns(assignmentValidationMessages);
+
+            Test expectedTest = CreateDefaultTest();
+            _testRepository
+                .Setup(x => x.GetAsync(input.TestId))
+                .ReturnsAsync(expectedTest);
+
+            var testValidationMessage = _fixture.Create<ValidationMessage>();
+            _testRepository
+                .Setup(x => x.UpdateAsync(expectedTest))
+                .ReturnsAsync(testValidationMessage);
+
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
+
+            result.ValidationMessages.Should().ContainSingle();
+            ValidationMessage validationMessage = result.ValidationMessages.Single();
+            validationMessage.Field.Should().Be("AssignmentId");
+            validationMessage.Message.Should().Be("No assignment was found");
+        }
+
+        [TestMethod]
+        public async Task AddQuestion_UpdateFails_ReturnsValidationMessage()
         {
             var input = _fixture.Create<AddAssignmentRequest>();
             var assignmentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
@@ -110,15 +139,17 @@ namespace Cifra.Application.UnitTests.TestControllerTests
         }
 
         [TestMethod]
-        public async Task AddAssignment_UpdateSucceeds_ReturnsResult()
+        public async Task AddQuestion_UpdateSucceeds_ReturnsResult()
         {
-            var input = _fixture.Create<AddAssignmentRequest>();
+            Test expectedTest = CreateDefaultTest();
+            var input = _fixture.Build<AddQuestionRequest>()
+                .With(x => x.AssignmentId, expectedTest.Assignments.First().Id)
+                .Create();
             var assignmentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
-            _assignmentValidator
+            _questionValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(assignmentValidationMessages);
 
-            Test expectedTest = CreateDefaultTest();
             _testRepository
                 .Setup(x => x.GetAsync(input.TestId))
                 .ReturnsAsync(expectedTest);
@@ -127,19 +158,26 @@ namespace Cifra.Application.UnitTests.TestControllerTests
                 .Setup(x => x.UpdateAsync(expectedTest))
                 .ReturnsAsync((ValidationMessage)null);
 
-            AddAssignmentResult result = await _sut.AddAssignmentAsync(input);
+            AddQuestionResult result = await _sut.AddQuestionAsync(input);
 
-            result.AssignmentId.Should().NotBeEmpty();
-            result.TestId.Should().Be(expectedTest.Id);
             result.ValidationMessages.Should().BeEmpty();
         }
 
         private Test CreateDefaultTest()
         {
-            return new Test(
+            return new Test(Guid.NewGuid(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 StandardizationFactor.CreateFromByte(5),
-                Grade.CreateFromByte(4));
+                Grade.CreateFromByte(4),
+                CreateDefaultAssignments());
+        }
+
+        private List<Assignment> CreateDefaultAssignments()
+        {
+            return new List<Assignment>
+            {
+                new Assignment()
+            };
         }
     }
 }

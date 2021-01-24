@@ -10,13 +10,13 @@ namespace Cifra.ConsoleHost.Areas.Test
 {
     internal class CreateSpreadsheetFlow : IFlow
     {
-        private readonly ClassController _classController;
-        private readonly TestController _testController;
-        private readonly ITestResultsSpreadsheetFactory spreadsheetFactory;
+        private readonly IClassService _classController;
+        private readonly ITestService _testController;
+        private readonly ITestResultsSpreadsheetBuilder spreadsheetFactory;
 
-        public CreateSpreadsheetFlow(ClassController classController,
-            TestController testController,
-            ITestResultsSpreadsheetFactory spreadsheetFactory)
+        public CreateSpreadsheetFlow(IClassService classController,
+            ITestService testController,
+            ITestResultsSpreadsheetBuilder spreadsheetFactory)
         {
             _classController = classController;
             _testController = testController;
