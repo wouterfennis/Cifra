@@ -12,7 +12,7 @@ namespace SpreadsheetWriter.Test
         /// <summary>
         /// Print a array spreadsheet in the console.
         /// </summary>
-        public static void PrintArrayWorksheet(string[,] worksheet)
+        public static void PrintArraySpreadsheet(string[,] worksheet)
         {
             int rowLength = worksheet.GetLength(0);
             int collumnLength = worksheet.GetLength(1);

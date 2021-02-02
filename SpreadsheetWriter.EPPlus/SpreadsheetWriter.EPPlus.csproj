@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorksheetWriter.Abstractions\SpreadsheetWriter.Abstractions.csproj" />
+    <ProjectReference Include="..\SpreadsheetWriter.Abstractions\SpreadsheetWriter.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

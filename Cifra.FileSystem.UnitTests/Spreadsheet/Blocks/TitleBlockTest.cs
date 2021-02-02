@@ -14,7 +14,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     [TestClass]
     public class TitleBlockTest
     {
-        private string[,] _worksheet;
+        private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
         private ArraySpreadsheetWriter _spreadsheetWriter;
@@ -22,10 +22,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         [TestInitialize]
         public void Initialize()
         {
-            _worksheet = new string[5, 5];
+            _spreadsheet = new string[5, 5];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 0].Should().Be(expectedTitle.Value);
+            _spreadsheet[0, 0].Should().Be(expectedTitle.Value);
         }
 
         [TestMethod]
@@ -57,8 +57,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 1].Should().Be("Gemaakt op:");
-            _worksheet[1, 1].Should().Be(expectedCreatedOn.ToString("dd-MM-yyyy"));
+            _spreadsheet[0, 1].Should().Be("Gemaakt op:");
+            _spreadsheet[1, 1].Should().Be(expectedCreatedOn.ToString("dd-MM-yyyy"));
         }
     }
 }

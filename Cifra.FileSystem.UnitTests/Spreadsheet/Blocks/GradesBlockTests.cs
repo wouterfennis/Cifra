@@ -17,7 +17,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     [TestClass]
     public class GradesBlockTests
     {
-        private string[,] _worksheet;
+        private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
@@ -26,11 +26,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         [TestInitialize]
         public void Initialize()
         {
-            _worksheet = new string[10, 10];
+            _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 5);
             _fixture = new Fixture();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 5].Should().Be("Cijfer");
+            _spreadsheet[0, 5].Should().Be("Cijfer");
         }
 
         [TestMethod]
@@ -94,8 +94,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[1, 5].Should().Be(expectedFormula);
-            _worksheet[2, 5].Should().Be(expectedFormula);
+            _spreadsheet[1, 5].Should().Be(expectedFormula);
+            _spreadsheet[2, 5].Should().Be(expectedFormula);
         }
 
         private void SetupFormulaBuilderFactory(Mock<IFormulaBuilderFactory> formulaBuilderFactory, string expectedFormula)

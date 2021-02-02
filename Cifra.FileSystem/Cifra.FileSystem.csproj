@@ -12,7 +12,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-		<ProjectReference Include="..\WorksheetWriter.EPPlus\SpreadsheetWriter.EPPlus.csproj" />
+		<ProjectReference Include="..\SpreadsheetWriter.EPPlus\SpreadsheetWriter.EPPlus.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

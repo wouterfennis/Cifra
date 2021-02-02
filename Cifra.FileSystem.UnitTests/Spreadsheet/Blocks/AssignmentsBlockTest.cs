@@ -14,7 +14,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     [TestClass]
     public class AssignmentsBlockTest
     {
-        private string[,] _worksheet;
+        private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
         private ArraySpreadsheetWriter _spreadsheetWriter;
@@ -22,10 +22,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         [TestInitialize]
         public void Initialize()
         {
-            _worksheet = new string[10, 10];
+            _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -41,8 +41,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 0].Should().Be("Opgave");
-            _worksheet[expectedQuestionNamesColumns + 1, 0].Should().Be("Punten");
+            _spreadsheet[0, 0].Should().Be("Opgave");
+            _spreadsheet[expectedQuestionNamesColumns + 1, 0].Should().Be("Punten");
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             for (int x = 0; x < question.QuestionNames.Count(); x++)
             {
                 var questionName = question.QuestionNames.ElementAt(x);
-                _worksheet[x, headerOffset].Should().Be(questionName.Value);
+                _spreadsheet[x, headerOffset].Should().Be(questionName.Value);
             }
         }
 
@@ -84,10 +84,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Assert
             var firstQuestion = expectedQuestions.ElementAt(0);
             var firstQuestionName = firstQuestion.QuestionNames.First();
-            _worksheet[0, 1].Should().Be(firstQuestionName.Value);
+            _spreadsheet[0, 1].Should().Be(firstQuestionName.Value);
             var secondQuestion = expectedQuestions.ElementAt(1);
             var secondQuestionName = secondQuestion.QuestionNames.First();
-            _worksheet[0, 2].Should().Be(secondQuestionName.Value);
+            _spreadsheet[0, 2].Should().Be(secondQuestionName.Value);
         }
 
         private Assignment CreateAssignment()

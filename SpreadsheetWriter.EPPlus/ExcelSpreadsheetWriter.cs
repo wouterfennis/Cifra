@@ -1,9 +1,8 @@
-﻿using OfficeOpenXml;
-using OfficeOpenXml.Style;
+﻿using System.Drawing;
+using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.EPPlus.Extensions;
-using System.Drawing;
 
 namespace SpreadsheetWriter.EPPlus
 {
@@ -20,7 +19,7 @@ namespace SpreadsheetWriter.EPPlus
             return new ExcelRangeWrapper(_excelWorksheet.GetCell(position));
         }
 
-        public ExcelSpreadsheetWriter(ExcelWorksheet excelWorksheet) : base (DefaultXPosition, DefaultYPosition)
+        public ExcelSpreadsheetWriter(ExcelWorksheet excelWorksheet) : base(DefaultXPosition, DefaultYPosition)
         {
             _excelWorksheet = excelWorksheet;
             CurrentPosition = new Point(DefaultXPosition, DefaultYPosition);

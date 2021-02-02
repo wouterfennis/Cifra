@@ -14,7 +14,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     [TestClass]
     public class TotalPointsBlockTests
     {
-        private string[,] _worksheet;
+        private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
         private ArraySpreadsheetWriter _spreadsheetWriter;
@@ -22,10 +22,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         [TestInitialize]
         public void Initialize()
         {
-            _worksheet = new string[10, 10];
+            _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 5);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 5].Should().Be("Totaal");
+            _spreadsheet[0, 5].Should().Be("Totaal");
         }
 
         [TestMethod]
@@ -63,10 +63,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
-            _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[1, 4].Should().Be("EndStandardFormulaSUM");
-            _worksheet[1, 5].Should().Be("Result of StandardFormulaSUM");
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(_spreadsheet);
+            _spreadsheet[1, 0].Should().Be("StartStandardFormulaSUM");
+            _spreadsheet[1, 4].Should().Be("EndStandardFormulaSUM");
+            _spreadsheet[1, 5].Should().Be("Result of StandardFormulaSUM");
         }
 
         [TestMethod]
@@ -85,22 +85,22 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
-            _worksheet[1, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[1, 4].Should().Be("EndStandardFormulaSUM");
-            _worksheet[1, 5].Should().Be("Result of StandardFormulaSUM");
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(_spreadsheet);
+            _spreadsheet[1, 0].Should().Be("StartStandardFormulaSUM");
+            _spreadsheet[1, 4].Should().Be("EndStandardFormulaSUM");
+            _spreadsheet[1, 5].Should().Be("Result of StandardFormulaSUM");
 
-            _worksheet[2, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[2, 4].Should().Be("EndStandardFormulaSUM");
-            _worksheet[2, 5].Should().Be("Result of StandardFormulaSUM");
+            _spreadsheet[2, 0].Should().Be("StartStandardFormulaSUM");
+            _spreadsheet[2, 4].Should().Be("EndStandardFormulaSUM");
+            _spreadsheet[2, 5].Should().Be("Result of StandardFormulaSUM");
 
-            _worksheet[3, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[3, 4].Should().Be("EndStandardFormulaSUM");
-            _worksheet[3, 5].Should().Be("Result of StandardFormulaSUM");
+            _spreadsheet[3, 0].Should().Be("StartStandardFormulaSUM");
+            _spreadsheet[3, 4].Should().Be("EndStandardFormulaSUM");
+            _spreadsheet[3, 5].Should().Be("Result of StandardFormulaSUM");
 
-            _worksheet[4, 0].Should().Be("StartStandardFormulaSUM");
-            _worksheet[4, 4].Should().Be("EndStandardFormulaSUM");
-            _worksheet[4, 5].Should().Be("Result of StandardFormulaSUM");
+            _spreadsheet[4, 0].Should().Be("StartStandardFormulaSUM");
+            _spreadsheet[4, 4].Should().Be("EndStandardFormulaSUM");
+            _spreadsheet[4, 5].Should().Be("Result of StandardFormulaSUM");
         }
     }
 }

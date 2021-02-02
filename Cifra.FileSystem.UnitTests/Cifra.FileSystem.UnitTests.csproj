@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
     <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
     <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
-    <ProjectReference Include="..\WorksheetWriter.Test\SpreadsheetWriter.Test.csproj" />
+    <ProjectReference Include="..\SpreadsheetWriter.Abstractions\SpreadsheetWriter.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

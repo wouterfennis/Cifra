@@ -22,7 +22,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         private Mock<ISpreadsheetFileFactory> _spreadsheetFileFactory;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
         private Mock<IFormulaBuilder> _formulaBuilder;
-        private string[,] _worksheet;
+        private string[,] _spreadsheet;
         private TestResultsSpreadsheetBuilder _sut;
 
         [TestInitialize]
@@ -33,7 +33,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _formulaBuilder = new Mock<IFormulaBuilder>();
-            _worksheet = new string[20, 22];
+            _spreadsheet = new string[20, 22];
 
             SetupFormulaBuilderFactory();
 
@@ -61,7 +61,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             await _sut.CreateTestResultsSpreadsheetAsync(@class, test, metadata);
 
             // Assert
-            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(_spreadsheet);
         }
 
         private void SetupFormulaBuilderFactory()
@@ -76,7 +76,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _fileLocationProvider.Setup(x => x.GetSpreadsheetDirectoryPath())
                 .Returns(path);
 
-            var testSpreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            var testSpreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
 
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile.Setup(x => x.GetSpreadsheetWriter())

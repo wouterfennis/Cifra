@@ -14,7 +14,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     [TestClass]
     public class ConfigurationBlockTest
     {
-        private string[,] _worksheet;
+        private string[,] spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
         private ArraySpreadsheetWriter _spreadsheetWriter;
@@ -22,10 +22,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         [TestInitialize]
         public void Initialize()
         {
-            _worksheet = new string[10, 10];
+            spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_worksheet);
+            _spreadsheetWriter = new ArraySpreadsheetWriter(spreadsheet);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 0].Should().Be("Configuratie");
+            spreadsheet[0, 0].Should().Be("Configuratie");
         }
 
         [TestMethod]
@@ -59,9 +59,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            SpreadsheetTestUtilities.PrintArrayWorksheet(_worksheet);
-            _worksheet[0, 1].Should().Be("Maximale punten");
-            _worksheet[1, 1].Should().Be(expectedMaximumPoints.ToString());
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(spreadsheet);
+            spreadsheet[0, 1].Should().Be("Maximale punten");
+            spreadsheet[1, 1].Should().Be(expectedMaximumPoints.ToString());
         }
 
         [TestMethod]
@@ -96,8 +96,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 2].Should().Be("Normering");
-            _worksheet[1, 2].Should().Be(expectedStandardizationFactor.Value.ToString());
+            spreadsheet[0, 2].Should().Be("Normering");
+            spreadsheet[1, 2].Should().Be(expectedStandardizationFactor.Value.ToString());
         }
 
         [TestMethod]
@@ -132,8 +132,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            _worksheet[0, 3].Should().Be("Minimale cijfer");
-            _worksheet[1, 3].Should().Be(expectedMinimumGrade.Value.ToString());
+            spreadsheet[0, 3].Should().Be("Minimale cijfer");
+            spreadsheet[1, 3].Should().Be(expectedMinimumGrade.Value.ToString());
         }
 
         [TestMethod]
