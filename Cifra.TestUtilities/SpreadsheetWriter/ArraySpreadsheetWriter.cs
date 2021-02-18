@@ -58,7 +58,7 @@ namespace SpreadsheetWriter.Test
             return this;
         }
 
-        public override IExcelRange GetExcelRange(Point position)
+        public override ICellRange GetCellRange(Point position)
         {
             return new TestExcelRange(position.ToString());
         }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SpreadsheetWriter.EPPlus
 {
-    public class ExcelRangeWrapper : IExcelRange
+    public class ExcelRangeWrapper : ICellRange
     {
         ExcelRange _excelRange;
 

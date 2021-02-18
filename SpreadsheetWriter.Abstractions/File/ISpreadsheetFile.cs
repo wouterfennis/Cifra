@@ -1,11 +1,10 @@
-﻿using SpreadsheetWriter.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace SpreadsheetWriter.Abstractions.File
 {
     /// <summary>
-    /// Abstraction around SpreadsheetFile instance.
+    /// Abstraction for spreadsheet files.
     /// </summary>
     public interface ISpreadsheetFile : IDisposable
     {
@@ -15,7 +14,7 @@ namespace SpreadsheetWriter.Abstractions.File
         ISpreadsheetWriter GetSpreadsheetWriter();
 
         /// <summary>
-        /// Saves the SpreadsheetFile
+        /// Saves the spreadsheet.
         /// </summary>
         Task SaveAsync();
     }

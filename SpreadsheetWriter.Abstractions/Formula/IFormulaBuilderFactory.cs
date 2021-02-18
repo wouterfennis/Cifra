@@ -2,12 +2,12 @@
 namespace SpreadsheetWriter.Abstractions.Formula
 {
     /// <summary>
-    /// Factory for creating IFormulaBuilder
+    /// Factory for creating <see cref="IFormulaBuilder"/>.
     /// </summary>
     public interface IFormulaBuilderFactory
     {
         /// <summary>
-        /// Creates a IFormulaBuilder
+        /// Creates a <see cref="IFormulaBuilder"/>.
         /// </summary>
         IFormulaBuilder Create();
     }

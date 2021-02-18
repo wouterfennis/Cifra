@@ -24,16 +24,16 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
 
-            IExcelRange maximumScoreCell = spreadsheetWriter.GetExcelRange(input.MaximumScorePosition);
-            IExcelRange standardizationFactorCell = spreadsheetWriter.GetExcelRange(input.StandardizationFactorPosition);
-            IExcelRange minimumGradeCell = spreadsheetWriter.GetExcelRange(input.MinimumGradePosition);
+            ICellRange maximumScoreCell = spreadsheetWriter.GetCellRange(input.MaximumScorePosition);
+            ICellRange standardizationFactorCell = spreadsheetWriter.GetCellRange(input.StandardizationFactorPosition);
+            ICellRange minimumGradeCell = spreadsheetWriter.GetCellRange(input.MinimumGradePosition);
 
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var achievedScorePosition = new Point(spreadsheetWriter.CurrentPosition.X, input.AchievedScoresRow);
-                IExcelRange achievedScoreCell = spreadsheetWriter.GetExcelRange(achievedScorePosition);
+                ICellRange achievedScoreCell = spreadsheetWriter.GetCellRange(achievedScorePosition);
 
                 spreadsheetWriter
                     .PlaceCustomFormula(SetupGradeFormula(achievedScoreCell,
@@ -44,22 +44,22 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             }
         }
 
-        private IFormulaBuilder SetupGradeFormula(IExcelRange achievedPoints,
-            IExcelRange maximumScore,
-            IExcelRange standardizationFactor,
-            IExcelRange minimumGrade)
+        private IFormulaBuilder SetupGradeFormula(ICellRange achievedPoints,
+            ICellRange maximumScore,
+            ICellRange standardizationFactor,
+            ICellRange minimumGrade)
         {
             IFormulaBuilder formulaBuilder = input.FormulaBuilderFactory.Create();
             return formulaBuilder
                 .AddEqualsSign()
                 .AddOpenParenthesis()
                 .AddCellAddress(achievedPoints.Address)
-                .AddDivideSign()
+                .AddDivisionSign()
                 .AddCellAddress(maximumScore.Address)
-                .AddClosedParenthesis()
-                .AddMultiplySign()
+                .AddClosingParenthesis()
+                .AddMultiplicationSign()
                 .AddCellAddress(standardizationFactor.Address)
-                .AddSumSign()
+                .AddSummationSign()
                 .AddCellAddress(minimumGrade.Address);
         }
 

@@ -2,7 +2,7 @@
 
 namespace SpreadsheetWriter.Test
 {
-    public class TestExcelRange : IExcelRange
+    public class TestExcelRange : ICellRange
     {
         private readonly string _address;
 

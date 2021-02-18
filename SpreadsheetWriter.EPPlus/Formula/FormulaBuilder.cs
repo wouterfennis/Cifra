@@ -18,25 +18,25 @@ namespace SpreadsheetWriter.EPPlus.Formula
             return this;
         }
 
-        public IFormulaBuilder AddDivideSign()
+        public IFormulaBuilder AddDivisionSign()
         {
             _stringBuilder.Append("/");
             return this;
         }
 
-        public IFormulaBuilder AddMultiplySign()
+        public IFormulaBuilder AddMultiplicationSign()
         {
             _stringBuilder.Append("*");
             return this;
         }
 
-        public IFormulaBuilder AddSubtractSign()
+        public IFormulaBuilder AddSubtractionSign()
         {
             _stringBuilder.Append("-");
             return this;
         }
 
-        public IFormulaBuilder AddSumSign()
+        public IFormulaBuilder AddSummationSign()
         {
             _stringBuilder.Append("+");
             return this;
@@ -48,7 +48,7 @@ namespace SpreadsheetWriter.EPPlus.Formula
             return this;
         }
 
-        public IFormulaBuilder AddClosedParenthesis()
+        public IFormulaBuilder AddClosingParenthesis()
         {
             _stringBuilder.Append(")");
             return this;

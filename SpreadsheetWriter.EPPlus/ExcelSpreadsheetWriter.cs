@@ -14,7 +14,7 @@ namespace SpreadsheetWriter.EPPlus
 
         internal ExcelRange CurrentCell { get => _excelWorksheet.GetCell(CurrentPosition); }
 
-        public override IExcelRange GetExcelRange(Point position)
+        public override ICellRange GetCellRange(Point position)
         {
             return new ExcelRangeWrapper(_excelWorksheet.GetCell(position));
         }

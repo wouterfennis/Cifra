@@ -92,28 +92,28 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             formulaBuilder.Setup(x => x.AddCellAddress(It.IsAny<string>()))
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddClosedParenthesis())
+            formulaBuilder.Setup(x => x.AddClosingParenthesis())
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddDivideSign())
+            formulaBuilder.Setup(x => x.AddDivisionSign())
                 .Returns(formulaBuilder.Object);
 
             formulaBuilder.Setup(x => x.AddEqualsSign())
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddMultiplySign())
+            formulaBuilder.Setup(x => x.AddMultiplicationSign())
                 .Returns(formulaBuilder.Object);
 
             formulaBuilder.Setup(x => x.AddOpenParenthesis())
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddSubtractSign())
+            formulaBuilder.Setup(x => x.AddSubtractionSign())
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddSumSign())
+            formulaBuilder.Setup(x => x.AddSummationSign())
                 .Returns(formulaBuilder.Object);
 
-            formulaBuilder.Setup(x => x.AddSumSign())
+            formulaBuilder.Setup(x => x.AddSummationSign())
                 .Returns(formulaBuilder.Object);
 
             formulaBuilder.Setup(x => x.Build())
