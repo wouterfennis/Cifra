@@ -1,0 +1,41 @@
+$scrollbarBG: rgb(212, 212, 212);
+$scrollbarColor: rgb(153, 153, 153);
+$primary: #bdbdbd;
+$primaryL: #efefef;
+$primaryD: #8d8d8d;
+@mixin primary {
+  background: $primary;
+  color: rgba(0, 0, 0, 0.8); // min: 0.59
+  //   > svg {
+  //     color: rgba(0, 0, 0, 0.9); // min: 0.57
+  //   }
+}
+@mixin primary-l {
+  background: $primaryL;
+  color: rgba(0, 0, 0, 0.7); // min: 0.55
+}
+
+@mixin primary-d {
+  background: $primaryD;
+  color: rgba(0, 0, 0, 0.9); // min: 0.66
+}
+
+$secondary: #90a4ae;
+$secondaryL: #c1d5e0;
+$secondaryD: #62757f;
+@mixin secondary {
+  background: $secondary;
+  color: rgba(0, 0, 0, 0.91); // min: 0.91
+}
+@mixin secondary-l {
+  background: $secondaryL;
+  color: rgba(0, 0, 0, 0.55); // min: 0.63
+  b {
+    color: rgba(0, 0, 0, 0.75); // min: 0.63
+  }
+}
+
+@mixin secondary-d {
+  background: $secondaryD;
+  color: rgba(255, 255, 255, 0.73); // min: 0.63
+}

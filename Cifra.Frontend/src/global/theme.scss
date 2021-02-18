@@ -1,0 +1,159 @@
+h1 {
+  font-weight: bold !important;
+}
+.text {
+  line-height: 150%;
+}
+.accordionButton {
+  background-color: whitesmoke;
+
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-xs);
+
+  color: rgb(0 0 0 / 65%);
+  // > div {
+  //   -webkit-transition: transform 0.4s cubic-bezier(0, 0, 0.2, 1); /* Safari */
+  //   transition: transform 0.4s cubic-bezier(0, 0, 0.2, 1);
+  //   transform: rotate(0deg);
+  //   &.active {
+  //     transform: rotate(180deg);
+  //   }
+  // }
+}
+
+button {
+  border: none;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  position: relative;
+  overflow: hidden;
+  outline: 0;
+  @include secondary();
+  font-weight: bold;
+  // transition: background 400ms box-shadow 200ms
+  //   cubic-bezier(0.65, 0.05, 0.36, 1);
+  &.round {
+    &-md {
+      height: 35px;
+      width: 35px;
+    }
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+  }
+  // box-shadow: rgb(0 0 0 / 30%) 0px 2px 2px,
+  //   inset 0 0 0 0px rgb(255 255 255 / 40%); /* black with 30% opacity */
+  cursor: pointer;
+  &.secondaryL {
+    @include secondary-l();
+  }
+  &:focus {
+    opacity: 0.75;
+  }
+  //   &:active,
+  //   &:focus,
+  //   &:focus-within {
+  //     box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+  //     &:hover {
+  //       box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3),
+  //         inset 0 0 0 200px rgba(125, 125, 125, 0.3);
+  //     }
+  //   }
+  //   &:hover {
+  //     box-shadow: inset 0 0 0 200px rgba(125, 125, 125, 0.3);
+  //   }
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $scrollbarColor $scrollbarBG;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+
+  //   &:hover {
+  //     opacity: 1;
+  //   }
+}
+
+*::-webkit-scrollbar-track {
+  background: $scrollbarBG; /* color of the tracking area */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $scrollbarColor; /* color of the scroll thumb */
+  border-radius: 20px;
+  border: 3px solid $scrollbarBG; /* creates padding around scroll thumb */
+}
+
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.card {
+  background: whitesmoke;
+  width: 350px;
+
+  border-radius: 8px;
+  box-shadow: 1px 2px 3px 0 rgba(0, 0, 0, 0.3), 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
+  margin: 20px;
+
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: bottom;
+
+    border-radius: 7.5px 7.5px 0 0;
+  }
+  section {
+    padding: 20px;
+    > h1 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+  }
+}
+.createElement {
+  display: grid;
+}
+
+.shadow-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.shadow-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
