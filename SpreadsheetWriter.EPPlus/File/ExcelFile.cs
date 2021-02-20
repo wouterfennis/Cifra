@@ -1,12 +1,12 @@
-﻿using OfficeOpenXml;
+﻿using System.IO;
+using System.Threading.Tasks;
+using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace SpreadsheetWriter.EPPlus.File
 {
+    /// <inheritdoc/>
     public sealed class ExcelFile : ISpreadsheetFile
     {
         private ExcelPackage _excelPackage;
@@ -25,16 +25,19 @@ namespace SpreadsheetWriter.EPPlus.File
             _writer = new ExcelSpreadsheetWriter(worksheet);
         }
 
+        /// <inheritdoc/>
         public ISpreadsheetWriter GetSpreadsheetWriter()
         {
             return _writer;
         }
 
+        /// <inheritdoc/>
         public async Task SaveAsync()
         {
             await _excelPackage.SaveAsync();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             _excelPackage.Dispose();

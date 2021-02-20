@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "Cifr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetWriter.UnitTests", "SpreadsheetWriter.Tests\SpreadsheetWriter.UnitTests.csproj", "{178261B3-FE35-4261-A2DD-3799ADD4423B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{CA64AB83-909B-4014-8805-5A2AF41B639F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA64AB83-909B-4014-8805-5A2AF41B639F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA64AB83-909B-4014-8805-5A2AF41B639F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178261B3-FE35-4261-A2DD-3799ADD4423B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178261B3-FE35-4261-A2DD-3799ADD4423B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178261B3-FE35-4261-A2DD-3799ADD4423B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178261B3-FE35-4261-A2DD-3799ADD4423B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
