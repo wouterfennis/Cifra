@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
@@ -19,7 +20,7 @@ namespace SpreadsheetWriter.EPPlus
 
         public ExcelSpreadsheetWriter(ExcelWorksheet excelWorksheet) : base(DefaultXPosition, DefaultYPosition)
         {
-            _excelWorksheet = excelWorksheet;
+            _excelWorksheet = excelWorksheet ?? throw new ArgumentNullException(nameof(excelWorksheet));
             CurrentPosition = new Point(DefaultXPosition, DefaultYPosition);
         }
 

@@ -3,7 +3,6 @@ using AutoFixture;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Abstractions.Formula;
-using SpreadsheetWriter.EPPlus.Formula;
 
 namespace SpreadsheetWriter.UnitTests.Formula
 {
@@ -11,23 +10,23 @@ namespace SpreadsheetWriter.UnitTests.Formula
     public class FormulaBuilderTests
     {
         private Fixture _fixture;
-        private FormulaBuilder _formulaBuilder;
+        private EPPlus.Formula.FormulaBuilder _formulaBuilder;
 
         [TestInitialize]
         public void Initialize()
         {
             _fixture = new Fixture();
-            _formulaBuilder = new FormulaBuilder();
+            _formulaBuilder = new EPPlus.Formula.FormulaBuilder();
         }
 
         [TestMethod]
         public void AddCellAddress_WithoutAddress_ThrowsException()
         {
             // Arrange
-            FormulaBuilder formulaBuilder = new FormulaBuilder();
+            string address = null;
 
             // Act
-            Action action = () => formulaBuilder.AddCellAddress(null);
+            Action action = () => _formulaBuilder.AddCellAddress(address);
 
             // Assert
             action.Should().Throw<ArgumentNullException>();

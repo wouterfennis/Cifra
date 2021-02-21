@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using System;
+using OfficeOpenXml;
 using SpreadsheetWriter.Abstractions;
 
 namespace SpreadsheetWriter.EPPlus
@@ -8,9 +9,9 @@ namespace SpreadsheetWriter.EPPlus
     {
         ExcelRange _excelRange;
 
-        public ExcelRangeWrapper(ExcelRange excelAddress)
+        public ExcelRangeWrapper(ExcelRange excelRange)
         {
-            _excelRange = excelAddress;
+            _excelRange = excelRange ?? throw new ArgumentNullException(nameof(excelRange));
         }
 
         /// <inheritdoc/>
