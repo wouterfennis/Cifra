@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.EPPlus.Formula;
 
-namespace SpreadsheetWriter.UnitTests.FormulaBuilder
+namespace SpreadsheetWriter.EPPlus.UnitTests.FormulaBuilder
 {
     [TestClass]
     public class FormulabuilderFactoryTests

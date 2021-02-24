@@ -4,7 +4,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Abstractions.Formula;
 
-namespace SpreadsheetWriter.UnitTests.Formula
+namespace SpreadsheetWriter.EPPlus.UnitTests.Formula
 {
     [TestClass]
     public class FormulaBuilderTests

@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
 using SpreadsheetWriter.EPPlus.Extensions;
 
-namespace SpreadsheetWriter.UnitTests.Extensions
+namespace SpreadsheetWriter.EPPlus.UnitTests.Extensions
 {
     [TestClass]
     public class ExcelRangeExtensionsTests

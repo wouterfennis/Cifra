@@ -33,17 +33,29 @@ namespace SpreadsheetWriter.EPPlus
         /// <inheritdoc/>
         public override ISpreadsheetWriter Write(decimal value)
         {
-            ApplyCellStyling();
-            CurrentCell.Value = value;
+            WriteInternal(value);
             return this;
         }
 
         /// <inheritdoc/>
         public override ISpreadsheetWriter Write(string value)
         {
+            WriteInternal(value);
+            return this;
+        }
+
+        private void WriteInternal(object value)
+        {
             ApplyCellStyling();
             CurrentCell.Value = value;
-            return this;
+        }
+
+        private void ApplyCellStyling()
+        {
+            CurrentCell.SetBackgroundColor(CurrentBackgroundColor);
+            CurrentCell.SetFontColor(CurrentFontColor);
+            CurrentCell.Style.TextRotation = CurrentTextRotation;
+            CurrentCell.SetFontSize(CurrentFontSize);
         }
 
         /// <inheritdoc/>
@@ -66,15 +78,6 @@ namespace SpreadsheetWriter.EPPlus
 
             resultCell.Formula = formulaBuilder.Build();
             return this;
-        }
-
-        /// <inheritdoc/>
-        private void ApplyCellStyling()
-        {
-            CurrentCell.SetBackgroundColor(CurrentBackgroundColor);
-            CurrentCell.SetFontColor(CurrentFontColor);
-            CurrentCell.Style.TextRotation = CurrentTextRotation;
-            CurrentCell.SetFontSize(CurrentFontSize);
         }
     }
 }

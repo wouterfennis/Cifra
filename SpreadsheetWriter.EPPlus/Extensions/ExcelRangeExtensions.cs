@@ -2,6 +2,7 @@
 using System.Drawing;
 using OfficeOpenXml;
 
+
 namespace SpreadsheetWriter.EPPlus.Extensions
 {
     /// <summary>

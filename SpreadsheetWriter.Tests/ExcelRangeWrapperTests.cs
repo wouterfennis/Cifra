@@ -2,10 +2,9 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
-using SpreadsheetWriter.EPPlus;
-using SpreadsheetWriter.UnitTests.Builders;
+using SpreadsheetWriter.EPPlus.UnitTests.Builders;
 
-namespace SpreadsheetWriter.UnitTests
+namespace SpreadsheetWriter.EPPlus.UnitTests
 {
     [TestClass]
     public class ExcelRangeWrapperTests

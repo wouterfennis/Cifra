@@ -16,7 +16,10 @@ namespace SpreadsheetWriter.Abstractions
         protected Color CurrentFontColor;
         protected float CurrentFontSize;
         protected int CurrentTextRotation;
-
+        
+        /// <summary>
+        /// The position of the current selected Cell
+        /// </summary>
         public Point CurrentPosition { get; set; }
 
         public SpreadsheetWriterBase(int defaultXPosition, int defaultYPosition)

@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "Cifr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.UnitTests", "SpreadsheetWriter.Tests\SpreadsheetWriter.UnitTests.csproj", "{178261B3-FE35-4261-A2DD-3799ADD4423B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.EPPlus.UnitTests", "SpreadsheetWriter.Tests\SpreadsheetWriter.EPPlus.UnitTests.csproj", "{178261B3-FE35-4261-A2DD-3799ADD4423B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetWriter.IntegrationTests", "SpreadsheetWriter.IntegrationTests\SpreadsheetWriter.IntegrationTests.csproj", "{A5570BE5-6647-4FC9-963A-0F55268E1F17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter.IntegrationTests", "SpreadsheetWriter.IntegrationTests\SpreadsheetWriter.IntegrationTests.csproj", "{A5570BE5-6647-4FC9-963A-0F55268E1F17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

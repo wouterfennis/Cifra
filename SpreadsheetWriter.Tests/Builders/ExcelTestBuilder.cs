@@ -1,6 +1,6 @@
 ﻿using OfficeOpenXml;
 
-namespace SpreadsheetWriter.UnitTests.Builders
+namespace SpreadsheetWriter.EPPlus.UnitTests.Builders
 {
     public static class ExcelTestBuilder
     {
@@ -12,6 +12,7 @@ namespace SpreadsheetWriter.UnitTests.Builders
 
         public static ExcelWorksheet CreateExcelWorksheet()
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var excelPackage = new ExcelPackage();
             return excelPackage.Workbook.Worksheets.Add("test");
         }
