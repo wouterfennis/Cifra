@@ -4,7 +4,7 @@ namespace Cifra.FileSystem.FileEntity.Csv
     /// <summary>
     /// The record of Magister that contains information of the class and the student
     /// </summary>
-    internal class MagisterRecord
+    internal sealed class MagisterRecord
     {
         /// <summary>
         /// The id of the student

@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 namespace Cifra.Application.Interfaces
 {
     /// <summary>
-    /// Repository for Classes
+    /// Repository for Classes.
     /// </summary>
     public interface IClassRepository
     {
         /// <summary>
-        /// Retrieves a class
+        /// Retrieves a <see cref="Class"/>.
         /// </summary>
         Task<Class> GetAsync(Guid id);
 
         /// <summary>
-        /// Create a class 
+        /// Create a <see cref="Class"/>.
         /// </summary>
         Task CreateAsync(Class @class);
 
         /// <summary>
-        /// Updates a class
+        /// Updates a <see cref="Class"/>.
         /// </summary>
         Task<ValidationMessage> UpdateAsync(Class @class);
 
         /// <summary>
-        /// Get all classes
+        /// Get all a <see cref="Class"/>es.
         /// </summary>
         Task<IEnumerable<Class>> GetAllAsync();
     }

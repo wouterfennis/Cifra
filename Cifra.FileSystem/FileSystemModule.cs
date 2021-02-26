@@ -12,8 +12,8 @@ namespace Cifra.FileSystem
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<TestRepository>().AsImplementedInterfaces();
-            builder.RegisterType<ClassRepository>().AsImplementedInterfaces();
+            builder.RegisterType<TestFileRepository>().AsImplementedInterfaces();
+            builder.RegisterType<ClassFileRepository>().AsImplementedInterfaces();
             builder.RegisterType<FileInfoWrapperFactory>().AsImplementedInterfaces();
             builder.RegisterType<DirectoryInfoWrapperFactory>().AsImplementedInterfaces();
             builder.RegisterType<MagisterFileReader>().AsImplementedInterfaces();

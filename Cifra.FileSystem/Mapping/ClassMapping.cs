@@ -1,15 +1,21 @@
-﻿using Cifra.Application.Models.Class.Magister;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Cifra.Application.Models.Class.Magister;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.FileEntity.Csv;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cifra.FileSystem.Mapping
 {
+    /// <summary>
+    /// Mapping for <see cref="Application.Models.Class.Class"/> to other types.
+    /// </summary>
     internal static class ClassMapping
     {
+        /// <summary>
+        /// Maps <see cref="Application.Models.Class.Class"/> to <see cref="Class"/>.
+        /// </summary>
         public static Class MapToFileEntity(this Application.Models.Class.Class input)
         {
             ValidateNullInput(input);
@@ -22,6 +28,9 @@ namespace Cifra.FileSystem.Mapping
             };
         }
 
+        /// <summary>
+        /// Maps a list of <see cref="Application.Models.Class.Student"/> to a list of <see cref="Student"/>.
+        /// </summary>
         public static IEnumerable<Student> MapToFileEntity(this IEnumerable<Application.Models.Class.Student> input)
         {
             ValidateNullInput(input);
@@ -34,6 +43,9 @@ namespace Cifra.FileSystem.Mapping
             });
         }
 
+        /// <summary>
+        /// Maps <see cref="Class"/> to <see cref="Application.Models.Class.Class"/>.
+        /// </summary>
         public static Application.Models.Class.Class MapToModel(this Class input)
         {
             ValidateNullInput(input);
@@ -41,6 +53,9 @@ namespace Cifra.FileSystem.Mapping
             return new Application.Models.Class.Class(input.Id, Name.CreateFromString(input.Name), input.Students.MapToModel());
         }
 
+        /// <summary>
+        /// Maps a list of <see cref="Application.Models.Class.Student"/> to a list of <see cref="Student"/>.
+        /// </summary>
         public static List<Application.Models.Class.Student> MapToModel(this IEnumerable<Student> input)
         {
             ValidateNullInput(input);
@@ -51,6 +66,9 @@ namespace Cifra.FileSystem.Mapping
                 .ToList();
         }
 
+        /// <summary>
+        /// Maps a list of <see cref="MagisterRecord"/> to a list of <see cref="MagisterStudent"/>.
+        /// </summary>
         public static List<MagisterStudent> MapToMagisterStudents(this IEnumerable<MagisterRecord> input)
         {
             ValidateNullInput(input);

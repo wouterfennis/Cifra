@@ -1,10 +1,15 @@
-﻿using SpreadsheetWriter.Abstractions;
-using System;
+﻿using System;
+using SpreadsheetWriter.Abstractions;
 
 namespace Cifra.FileSystem.Mapping
 {
     internal static class SpreadsheetMapping
     {
+        /// <summary>
+        /// Maps to library metadata model.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static Metadata MapToLibraryModel(this Application.Models.Spreadsheet.Metadata input)
         {
             ValidateNullInput(input);

@@ -12,18 +12,20 @@ using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Repositories
 {
-    public class ClassRepository : IClassRepository
+    /// <inheritdoc/>
+    public class ClassFileRepository : IClassRepository
     {
         private readonly IFileLocationProvider _fileLocationProvider;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public ClassRepository(IFileLocationProvider fileLocationProvider,
+        public ClassFileRepository(IFileLocationProvider fileLocationProvider,
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _fileLocationProvider = fileLocationProvider;
             _fileInfoWrapperFactory = fileInfoWrapperFactory;
         }
 
+        /// <inheritdoc/>
         public async Task CreateAsync(Application.Models.Class.Class newClass)
         {
             Class classEntity = newClass.MapToFileEntity();
@@ -32,6 +34,7 @@ namespace Cifra.FileSystem.Repositories
             await SaveChangesAsync(classes);
         }
 
+        /// <inheritdoc/>
         public async Task<Application.Models.Class.Class> GetAsync(Guid id)
         {
             List<Class> classes = await RetrieveOrCreateClassesAsync();
@@ -39,6 +42,7 @@ namespace Cifra.FileSystem.Repositories
             return classEntity.MapToModel();
         }
 
+        /// <inheritdoc/>
         public async Task<ValidationMessage> UpdateAsync(Application.Models.Class.Class @class)
         {
             List<Class> classes = await RetrieveOrCreateClassesAsync();
@@ -55,6 +59,7 @@ namespace Cifra.FileSystem.Repositories
             return null;
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Application.Models.Class.Class>> GetAllAsync()
         {
             List<Class> classes = await RetrieveOrCreateClassesAsync();

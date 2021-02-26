@@ -1,29 +1,31 @@
-﻿using Cifra.Application.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Validation;
 using Cifra.FileSystem.FileSystemInfo;
 using Cifra.FileSystem.Mapping;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Repositories
 {
-    public class TestRepository : ITestRepository
+    /// <inheritdoc/>
+    public class TestFileRepository : ITestRepository
     {
         private readonly Application.Models.ValueTypes.Path _testRepositoryLocation;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public TestRepository(IFileLocationProvider fileLocationProvider,
+        public TestFileRepository(IFileLocationProvider fileLocationProvider,
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _testRepositoryLocation = fileLocationProvider.GetTestRepositoryPath();
             _fileInfoWrapperFactory = fileInfoWrapperFactory;
         }
 
+        /// <inheritdoc/>
         public async Task CreateAsync(Test newTest)
         {
             FileEntity.Test testEntity = newTest.MapToFileEntity();
@@ -32,6 +34,7 @@ namespace Cifra.FileSystem.Repositories
             await SaveChangesAsync(tests);
         }
 
+        /// <inheritdoc/>
         public async Task<Test> GetAsync(Guid id)
         {
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();
@@ -39,6 +42,7 @@ namespace Cifra.FileSystem.Repositories
             return testEntity.MapToModel();
         }
 
+        /// <inheritdoc/>
         public async Task<ValidationMessage> UpdateAsync(Test test)
         {
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();
@@ -55,6 +59,7 @@ namespace Cifra.FileSystem.Repositories
             return null;
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Test>> GetAllAsync()
         {
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();

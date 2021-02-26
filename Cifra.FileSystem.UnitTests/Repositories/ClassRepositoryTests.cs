@@ -19,7 +19,7 @@ namespace Cifra.FileSystem.UnitTests.Repositories
         private Fixture _fixture;
         private Mock<IFileLocationProvider> _fileLocationProvider;
         private Mock<IFileInfoWrapperFactory> _fileInfoWrapperFactory;
-        private ClassRepository _sut;
+        private ClassFileRepository _sut;
 
         [TestInitialize]
         public void Initialize()
@@ -28,7 +28,7 @@ namespace Cifra.FileSystem.UnitTests.Repositories
             _fileLocationProvider = new Mock<IFileLocationProvider>();
             _fileInfoWrapperFactory = new Mock<IFileInfoWrapperFactory>();
 
-            _sut = new ClassRepository(_fileLocationProvider.Object, _fileInfoWrapperFactory.Object);
+            _sut = new ClassFileRepository(_fileLocationProvider.Object, _fileInfoWrapperFactory.Object);
         }
 
         [TestMethod]
