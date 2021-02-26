@@ -1,8 +1,8 @@
-﻿using Cifra.ConsoleHost.Areas.Class;
+﻿using System;
+using System.Threading.Tasks;
+using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
 using Cifra.ConsoleHost.Areas.Test;
-using System;
-using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost
 {
@@ -21,7 +21,7 @@ namespace Cifra.ConsoleHost
 
         public async Task StartAsync()
         {
-            Console.WriteLine("Welcome to Cifra");
+            PrintTitle();
             Console.WriteLine("What would you like to do? Type the number");
             Console.WriteLine($"[{(int)AreaMenuOption.Class}] - Open the Class menu");
             Console.WriteLine($"[{(int)AreaMenuOption.Test}] - Open the Test menu");
@@ -29,6 +29,20 @@ namespace Cifra.ConsoleHost
             Console.WriteLine($"[{(int)AreaMenuOption.Quit}] - Quit application");
             var option = Console.ReadLine();
             await RedirectToArea(option);
+        }
+
+        private static void PrintTitle()
+        {
+            string title = @"
+         _______         ________   
+        /  _____\   ___ /\   ____\ _______  
+       /\  \    /  /\__\\ \  \___ /\   ___\  ______ 
+      /  \  \__/__ \/\  \\ \   __\\ \  \__/ /  __  \
+      \   \________\\ \  \\ \  \_/ \ \  \  /\  \L\  \
+       \  /        / \ \__\\ \__\   \ \ _\ \ \__/.\__\
+        \/________/   \/__/ \/__/    \/__/  \/__/\/__/";
+            Console.WriteLine(title);
+            Console.WriteLine();
         }
 
         private async Task RedirectToArea(string option)
