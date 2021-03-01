@@ -31,7 +31,7 @@ namespace Cifra.TestUtilities.FileSystem
             return new Assignment
             {
                 Id = Guid.NewGuid(),
-                Questions = _questions
+                NumberOfQuestions = _questions
             };
         }
     }

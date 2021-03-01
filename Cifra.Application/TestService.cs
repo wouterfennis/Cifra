@@ -1,44 +1,35 @@
-﻿using Cifra.Application.Extensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
-    /// <summary>
-    /// Application Service for the Test entity
-    /// </summary>
+    /// <inheritdoc/>
     public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
         private readonly IValidator<CreateTestRequest> _testValidator;
         private readonly IValidator<AddAssignmentRequest> _assignmentValidator;
-        private readonly IValidator<AddQuestionRequest> _questionValidator;
-
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestService(ITestRepository testRepository,
             IValidator<CreateTestRequest> testValidator,
-            IValidator<AddAssignmentRequest> assignmentValidator,
-            IValidator<AddQuestionRequest> questionValidator)
+            IValidator<AddAssignmentRequest> assignmentValidator)
         {
             _testRepository = testRepository;
             _testValidator = testValidator;
             _assignmentValidator = assignmentValidator;
-            _questionValidator = questionValidator;
         }
 
-        /// <summary>
-        /// Creates a test
-        /// </summary>
+        /// <inheritdoc/>
 
         public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
         {
@@ -55,9 +46,7 @@ namespace Cifra.Application
         }
 
 
-        /// <summary>
-        /// Adds an assignment to a test
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _assignmentValidator.ValidateRules(model);
@@ -72,7 +61,7 @@ namespace Cifra.Application
                 return new AddAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
             }
 
-            var assignment = new Assignment();
+            var assignment = new Assignment(model.NumberOfQuestions);
 
             test.AddAssignment(assignment);
             ValidationMessage result = await _testRepository.UpdateAsync(test);
@@ -85,47 +74,7 @@ namespace Cifra.Application
             return new AddAssignmentResult(test.Id, assignment.Id);
         }
 
-        /// <summary>
-        /// Adds a question to a assignment
-        /// </summary>
-        public async Task<AddQuestionResult> AddQuestionAsync(AddQuestionRequest model)
-        {
-            IEnumerable<ValidationMessage> validationMessages = _questionValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
-            {
-                return new AddQuestionResult(validationMessages);
-            }
-
-            var test = await _testRepository.GetAsync(model.TestId);
-            if (test == null)
-            {
-                return new AddQuestionResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
-            }
-
-            Assignment assignment = test.GetAssignment(model.AssignmentId);
-
-            if (assignment == null)
-            {
-                return new AddQuestionResult(new ValidationMessage(nameof(model.AssignmentId), "No assignment was found"));
-            }
-
-            var names = model.Names.ToNames();
-            var question = new Question(names, QuestionScore.CreateFromByte(model.MaximumScore));
-
-            assignment.AddQuestion(question);
-            ValidationMessage result = await _testRepository.UpdateAsync(test);
-
-            if (result != null)
-            {
-                return new AddQuestionResult(result);
-            }
-
-            return new AddQuestionResult();
-        }
-
-        /// <summary>
-        /// Retrieves all tests currently available
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<GetAllTestsResult> GetTestsAsync()
         {
             var tests = await _testRepository.GetAllAsync();

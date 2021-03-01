@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Cifra.FileSystem.FileEntity
 {
@@ -14,8 +13,8 @@ namespace Cifra.FileSystem.FileEntity
         public Guid Id { get; set; }
 
         /// <summary>
-        /// The questions of the <see cref="Assignment"/>.
+        /// The number of questions of the <see cref="Assignment"/>.
         /// </summary>
-        public IEnumerable<Question> Questions { get; set; }
+        public int NumberOfQuestions { get; set; }
     }
 }

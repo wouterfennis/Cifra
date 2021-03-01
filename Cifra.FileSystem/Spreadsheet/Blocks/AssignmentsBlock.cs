@@ -1,9 +1,8 @@
-﻿using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
-using SpreadsheetWriter.Abstractions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Cifra.Application.Models.Test;
+using SpreadsheetWriter.Abstractions;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -46,13 +45,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             for (int assignmentIndex = 0; assignmentIndex < totalAssignments; assignmentIndex++)
             {
                 Assignment assignment = input.Assignments.ElementAt(assignmentIndex);
-                var totalQuestions = assignment.Questions.Count;
-                for (int questionIndex = 0; questionIndex < totalQuestions; questionIndex++)
+                var totalQuestions = assignment.NumberOfQuestions;
+                for (int questionIndex = 0; questionIndex < assignment.NumberOfQuestions; questionIndex++)
                 {
-                    Question question = assignment.Questions.ElementAt(questionIndex);
-                    PrintQuestionNames(spreadsheetWriter, question);
-                    spreadsheetWriter
-                        .Write(question.MaximumScore.Value);
                     bool isLastMaximumValueReached = assignmentIndex == totalAssignments - 1 && questionIndex == totalQuestions - 1;
                     if (isLastMaximumValueReached)
                     {
@@ -63,16 +58,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 }
             }
             return lastMaximumValuePosition;
-        }
-
-        private static void PrintQuestionNames(ISpreadsheetWriter spreadsheetWriter, Question question)
-        {
-            foreach (Name questionName in question.QuestionNames)
-            {
-                spreadsheetWriter
-                    .Write(questionName.Value)
-                    .MoveRight();
-            }
         }
 
         public class AssignmentsBlockInput : BlockInputBase

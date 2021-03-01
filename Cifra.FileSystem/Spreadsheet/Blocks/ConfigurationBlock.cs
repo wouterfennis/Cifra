@@ -1,7 +1,6 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using System.Drawing;
+using Cifra.Application.Models.ValueTypes;
 using SpreadsheetWriter.Abstractions;
-using System;
-using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -11,7 +10,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     internal class ConfigurationBlock
     {
         private readonly ConfigurationBlockInput input;
-        public Point MaximumPointsPosition { get; private set; }
         public Point StandardizationfactorPosition { get; private set; }
         public Point MinimumGradePosition { get; private set; }
 
@@ -25,12 +23,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             spreadsheetWriter.CurrentPosition = input.StartPoint;
             spreadsheetWriter
                 .SetBackgroundColor(Color.LightGray)
-                .Write("Configuratie")
-                .MoveDown()
-                .Write("Maximale punten")
-                .MoveRight()
-                .Write(input.MaximumPoints);
-            MaximumPointsPosition = spreadsheetWriter.CurrentPosition;
+                .Write("Configuratie");
 
             spreadsheetWriter
                 .NewLine()
@@ -50,16 +43,13 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
         public class ConfigurationBlockInput : BlockInputBase
         {
-            public decimal MaximumPoints { get; }
             public StandardizationFactor StandardizationFactor { get; }
             public Grade MinimumGrade { get; }
 
             public ConfigurationBlockInput(Point startPoint,
-                decimal maximumPoints,
                 StandardizationFactor standardizationFactor,
                 Grade minimumGrade) : base(startPoint)
             {
-                MaximumPoints = maximumPoints;
                 StandardizationFactor = standardizationFactor;
                 MinimumGrade = minimumGrade;
             }

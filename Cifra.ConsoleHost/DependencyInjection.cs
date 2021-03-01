@@ -5,7 +5,7 @@ using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
-using Cifra.Application.Validation.QuestionModelValidationRules;
+using Cifra.Application.Validation.AssignmentModelValidationRules;
 using Cifra.FileSystem;
 using Microsoft.Extensions.Configuration;
 
@@ -29,9 +29,7 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<Validator<AddStudentRequest>>().As<IValidator<AddStudentRequest>>();
             builder.RegisterType<Validator<CreateTestRequest>>().As<IValidator<CreateTestRequest>>();
             builder.RegisterType<Validator<AddAssignmentRequest>>().As<IValidator<AddAssignmentRequest>>();
-            builder.RegisterType<Validator<AddQuestionRequest>>().As<IValidator<AddQuestionRequest>>();
-            builder.RegisterType<NamesMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
-            builder.RegisterType<TestIdMustBeFilled>().As<IValidationRule<AddQuestionRequest>>();
+            builder.RegisterType<NumberOfQuestionsMustBeValid>().As<IValidationRule<AddAssignmentRequest>>();
 
             builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.FirstNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
             builder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.LastNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.Application.Models.Test.Requests
 {
@@ -13,5 +11,10 @@ namespace Cifra.Application.Models.Test.Requests
         /// The Test Id where the assignment should be added
         /// </summary>
         public Guid TestId { get; set; }
+
+        /// <summary>
+        /// The number of questions in this Assignment.
+        /// </summary>
+        public int NumberOfQuestions { get; set; }
     }
 }

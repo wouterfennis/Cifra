@@ -1,10 +1,8 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test.Requests;
-using Cifra.Application.Models.Test.Results;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Test.Requests;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {
@@ -48,76 +46,31 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task AddAssignmentsFlowAsync(Guid testId)
         {
-            await AddAssignmentFlowAsync(testId);
-            bool addAnotherAssignment = SharedConsoleFlows.AskForBool("Add another assignment?");
+            byte numberOfAssignments = SharedConsoleFlows.AskForByte("How many assignments are there?");
 
-            if (addAnotherAssignment)
+            for (int assignmentIndex = 0; assignmentIndex < numberOfAssignments; assignmentIndex++)
             {
-                await AddAssignmentsFlowAsync(testId);
+                await AddAssignmentFlowAsync(testId, assignmentIndex);
             }
         }
 
-        private async Task AddAssignmentFlowAsync(Guid testId)
+        private async Task AddAssignmentFlowAsync(Guid testId, int assignmentIndex)
         {
+            byte numberOfQuestions = SharedConsoleFlows.AskForByte($"How many questions are there for assignment: {assignmentIndex + 1}?");
+
             var addAssignmentRequest = new AddAssignmentRequest
             {
-                TestId = testId
+                TestId = testId,
+                NumberOfQuestions = numberOfQuestions
             };
+
             var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
             if (addAssignmentResult.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
-                await AddAssignmentFlowAsync(testId);
+                await AddAssignmentFlowAsync(testId, assignmentIndex);
             }
-            else
-            {
-                await AddQuestionsFlowAsync(testId, addAssignmentResult.AssignmentId.Value);
-            }
-        }
-
-        private async Task AddQuestionsFlowAsync(Guid testId, Guid assignmentId)
-        {
-            await AddQuestionFlowAsync(testId, assignmentId);
-            bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question to this assignment?");
-
-            if (addAnotherQuestion)
-            {
-                await AddQuestionsFlowAsync(testId, assignmentId);
-            }
-        }
-
-        private async Task AddQuestionFlowAsync(Guid testId, Guid assignmentId)
-        {
-            IEnumerable<string> names = CollectQuestionNames();
-            var maximalScore = SharedConsoleFlows.AskForByte("What is the maximal score of the question?");
-            var model = new AddQuestionRequest
-            {
-                TestId = testId,
-                AssignmentId = assignmentId,
-                Names = names,
-                MaximumScore = maximalScore
-            };
-            AddQuestionResult addQuestionResponse = await _testController.AddQuestionAsync(model);
-
-            if (addQuestionResponse.ValidationMessages.Count() > 0)
-            {
-                SharedConsoleFlows.PrintValidationMessages(addQuestionResponse.ValidationMessages);
-                await AddQuestionFlowAsync(testId, assignmentId);
-            }
-        }
-
-        private IEnumerable<string> CollectQuestionNames()
-        {
-            var names = new List<string>();
-            var name = SharedConsoleFlows.AskForString("Type a name for the question");
-            names.Add(name);
-            var addAnotherName = SharedConsoleFlows.AskForBool("Add an additional name to the question?");
-            if (addAnotherName)
-            {
-                names.AddRange(CollectQuestionNames());
-            }
-            return names;
         }
     }
 }

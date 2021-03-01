@@ -1,7 +1,7 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cifra.Application.Models.ValueTypes;
 
 namespace Cifra.Application.Models.Test
 {
@@ -61,26 +61,6 @@ namespace Cifra.Application.Models.Test
             Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
-        }
-
-        /// <summary>
-        /// Gets the maximum points that can be achieved in this test
-        /// </summary>
-        public decimal GetMaximumPoints()
-        {
-            return Assignments.Sum(x => x.GetMaximumPoints());
-        }
-
-        /// <summary>
-        /// Gets the maximum number of question names present of all assignments
-        /// </summary>
-        public int GetMaximumQuestionNamesPerAssignment()
-        {
-            if (Assignments.Any())
-            {
-                return Assignments.Max(x => x.GetMaximumQuestionNamesPerQuestion());
-            }
-            return 0;
         }
 
         /// <summary>

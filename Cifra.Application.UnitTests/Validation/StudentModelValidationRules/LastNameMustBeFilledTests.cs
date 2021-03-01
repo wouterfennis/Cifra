@@ -1,12 +1,8 @@
-﻿using AutoFixture;
+﻿using System;
+using AutoFixture;
 using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Test.Requests;
-using Cifra.Application.Validation.QuestionModelValidationRules;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.Application.UnitTests.Validation.StudentModelValidationRules
 {

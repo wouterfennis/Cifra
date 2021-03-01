@@ -1,4 +1,6 @@
-﻿using Cifra.Application.Interfaces;
+﻿using System.Drawing;
+using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
@@ -6,8 +8,6 @@ using Cifra.FileSystem.Spreadsheet.Blocks;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
-using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
@@ -59,7 +59,6 @@ namespace Cifra.FileSystem.Spreadsheet
         private static ConfigurationBlock AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
         {
             var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
-                test.GetMaximumPoints(),
                 test.StandardizationFactor,
                 test.MinimumGrade);
             var configurationBlock = new ConfigurationBlock(configurationInput);
@@ -105,7 +104,7 @@ namespace Cifra.FileSystem.Spreadsheet
             AddGradesRow(spreadsheetWriter,
                 achievedScoresRow,
                 assignmentsBlock.LastMaximumValuePosition.X,
-                configurationBlock.MaximumPointsPosition,
+                new Point(assignmentsBlock.ScoresHeaderPosition.X, achievedScoresRow),
                 configurationBlock.MinimumGradePosition,
                 configurationBlock.StandardizationfactorPosition,
                 numberOfStudents,

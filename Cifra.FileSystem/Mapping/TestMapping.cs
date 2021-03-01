@@ -39,21 +39,7 @@ namespace Cifra.FileSystem.Mapping
             return input.Select(x => new FileEntity.Assignment
             {
                 Id = x.Id,
-                Questions = x.Questions.MapToFileEntity()
-            });
-        }
-
-        /// <summary>
-        /// Maps a list of <see cref="Application.Models.Test.Question"/> to a list of <see cref="Question"/>.
-        /// </summary>
-        public static IEnumerable<FileEntity.Question> MapToFileEntity(this IEnumerable<Application.Models.Test.Question> input)
-        {
-            ValidateNullInput(input);
-
-            return input.Select(x => new FileEntity.Question
-            {
-                MaximumScore = x.MaximumScore.Value,
-                QuestionNames = x.QuestionNames.Select(n => n.Value)
+                NumberOfQuestions = x.NumberOfQuestions
             });
         }
 
@@ -75,18 +61,7 @@ namespace Cifra.FileSystem.Mapping
             ValidateNullInput(input);
             return input.Select(x => new Application.Models.Test.Assignment(
                 x.Id,
-                x.Questions.MapToModel())).ToList();
-        }
-
-        /// <summary>
-        /// Maps a list of <see cref="Application.Models.Test.Question"/> to a list of <see cref="Question"/>.
-        /// </summary>
-        public static List<Application.Models.Test.Question> MapToModel(this IEnumerable<FileEntity.Question> input)
-        {
-            ValidateNullInput(input);
-            return input.Select(x => new Application.Models.Test.Question(
-                x.QuestionNames.Select(n => Name.CreateFromString(n)),
-                QuestionScore.CreateFromByte(x.MaximumScore)))
+                x.NumberOfQuestions))
                 .ToList();
         }
 

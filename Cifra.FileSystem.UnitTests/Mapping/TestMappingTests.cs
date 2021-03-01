@@ -120,7 +120,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
 
             result.Assignments.Should().HaveCount(input.Assignments.Count);
 
-            var allQuestions = result.Assignments.SelectMany(x => x.Questions);
+            var allQuestions = result.Assignments.SelectMany(x => x.NumberOfQuestions);
 
             foreach (var assignment in input.Assignments)
             {

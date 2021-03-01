@@ -1,65 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cifra.Application.Models.Test
 {
     /// <summary>
-    /// The Assignment entity
+    /// The Assignment entity.
     /// </summary>
     public sealed class Assignment
     {
-        public Guid  Id { get; }
-        public List<Question> Questions { get; }
+        /// <summary>
+        /// The id of the <see cref="Assignment"/>.
+        /// </summary>
+        public Guid Id { get; }
+
+        /// <summary>
+        /// The number of questions the <see cref="Assignment"/> has.
+        /// </summary>
+        public int NumberOfQuestions;
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public Assignment(Guid id, List<Question> questions)
+        public Assignment(Guid id, int numberOfQuestions)
         {
             Id = id;
-            Questions = questions;
+            NumberOfQuestions = numberOfQuestions;
         }
 
-        /// <summary>
-        /// Constructor for a new Assignment
-        /// </summary>
-        public Assignment()
+        public Assignment(int numberOfQuestions)
         {
             Id = Guid.NewGuid();
-            Questions = new List<Question>();
-        }
-
-        /// <summary>
-        /// Gets the maximum points that can be achieved in this assignment
-        /// </summary>
-        public decimal GetMaximumPoints()
-        {
-            return Questions.Sum(x => x.MaximumScore.Value);
-        }
-
-        /// <summary>
-        /// Gets the maximum number of question names present of all assignments
-        /// </summary>
-        public int GetMaximumQuestionNamesPerQuestion()
-        {
-            if (Questions.Any())
-            {
-                return Questions.Max(x => x.QuestionNames.Count());
-            }
-            return 0;
-        }
-
-        /// <summary>
-        /// Adds a question to the assignment
-        /// </summary>
-        public void AddQuestion(Question question)
-        {
-            if (question == null)
-            {
-                throw new ArgumentNullException(nameof(question));
-            }
-            Questions.Add(question);
+            NumberOfQuestions = numberOfQuestions;
         }
     }
 }
