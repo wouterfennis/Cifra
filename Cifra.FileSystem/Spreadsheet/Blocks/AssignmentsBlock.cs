@@ -25,7 +25,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
-            var questionNamesCollumns = input.Assignments.Max(x => x.GetMaximumQuestionNamesPerQuestion());
+            var questionNamesCollumns = input.NumberOfVersions;
 
             spreadsheetWriter
                 .Write("Opgave")
@@ -62,12 +62,16 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
         public class AssignmentsBlockInput : BlockInputBase
         {
+            public int NumberOfVersions { get; }
+
             public IEnumerable<Assignment> Assignments { get; }
 
             public AssignmentsBlockInput(Point startPoint,
-            IEnumerable<Assignment> assignments) : base(startPoint)
+            IEnumerable<Assignment> assignments,
+            int numberOfVersions) : base(startPoint)
             {
                 Assignments = assignments;
+                NumberOfVersions = numberOfVersions;
             }
         }
     }

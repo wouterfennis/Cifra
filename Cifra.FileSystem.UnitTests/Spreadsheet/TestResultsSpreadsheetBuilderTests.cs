@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System.Threading.Tasks;
+using AutoFixture;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
@@ -10,7 +11,6 @@ using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
-using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
 {
@@ -53,6 +53,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
             Class @class = _fixture.Create<Class>();
             Test test = new TestBuilder()
+                .WithNumberOfVersions(2)
                 .WithMinimumGrade(Grade.CreateFromByte(1))
                 .WithRandomAssignments()
                 .Build();

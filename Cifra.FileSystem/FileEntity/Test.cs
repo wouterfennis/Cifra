@@ -32,5 +32,10 @@ namespace Cifra.FileSystem.FileEntity
         /// The standardization factor of the <see cref="Test"/>.
         /// </summary>
         public byte StandardizationFactor { get; set; }
+
+        /// <summary>
+        /// The number of versions that exist of the <see cref="Test"/>.
+        /// </summary>
+        public int NumberOfVersions { get; set; }
     }
 }

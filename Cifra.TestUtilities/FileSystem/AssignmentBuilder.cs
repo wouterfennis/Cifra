@@ -1,28 +1,22 @@
-﻿using Cifra.FileSystem.FileEntity;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using AutoFixture;
+using Cifra.FileSystem.FileEntity;
 
 namespace Cifra.TestUtilities.FileSystem
 {
     public class AssignmentBuilder
     {
-        private readonly List<Question> _questions;
+        private int _numberOfQuestions;
+        private Fixture _fixture;
 
         public AssignmentBuilder()
         {
-            _questions = new List<Question>();
+            _fixture = new Fixture();
         }
 
         public AssignmentBuilder WithRandomQuestions()
         {
-            for (int i = 0; i < 3; i++)
-            {
-                var question = new QuestionBuilder()
-                     .WithMaximumScore(1)
-                     .WithRandomQuestionNames()
-                     .Build();
-                _questions.Add(question);
-            }
+            _numberOfQuestions = _fixture.Create<int>();
             return this;
         }
 
@@ -31,7 +25,7 @@ namespace Cifra.TestUtilities.FileSystem
             return new Assignment
             {
                 Id = Guid.NewGuid(),
-                NumberOfQuestions = _questions
+                NumberOfQuestions = _numberOfQuestions
             };
         }
     }

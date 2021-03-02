@@ -80,7 +80,8 @@ namespace Cifra.FileSystem.Spreadsheet
                 .NewLine()
                 .NewLine();
             var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Assignments);
+                test.Assignments,
+                test.NumberOfVersions);
             var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
             assignmentsBlock.Write(spreadsheetWriter);
 

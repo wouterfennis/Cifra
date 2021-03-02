@@ -23,6 +23,7 @@ namespace Cifra.FileSystem.Mapping
             {
                 Id = input.Id,
                 Name = input.Name.Value,
+                NumberOfVersions = input.NumberOfVersions,
                 MinimumGrade = input.MinimumGrade.Value,
                 StandardizationFactor = input.StandardizationFactor.Value,
                 Assignments = input.Assignments.MapToFileEntity()
@@ -50,7 +51,13 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return new Application.Models.Test.Test(input.Id, Name.CreateFromString(input.Name), StandardizationFactor.CreateFromByte(input.StandardizationFactor), Grade.CreateFromByte(input.MinimumGrade), input.Assignments.MapToModel());
+            return new Application.Models.Test.Test(
+                input.Id,
+                Name.CreateFromString(input.Name),
+                StandardizationFactor.CreateFromByte(input.StandardizationFactor),
+                Grade.CreateFromByte(input.MinimumGrade),
+                input.Assignments.MapToModel(),
+                input.NumberOfVersions);
         }
 
         /// <summary>

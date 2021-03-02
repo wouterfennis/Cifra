@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoFixture;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.Test.Requests;
@@ -8,8 +10,6 @@ using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests.TestServiceTests
 {
@@ -19,7 +19,6 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         private Fixture _fixture;
         private Mock<ITestRepository> _testRepository;
         private Mock<IValidator<CreateTestRequest>> _testValidator;
-        private Mock<IValidator<AddQuestionRequest>> _questionValidator;
         private Mock<IValidator<AddAssignmentRequest>> _assignmentValidator;
         private TestService _sut;
 
@@ -30,8 +29,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
             _testRepository = new Mock<ITestRepository>();
             _testValidator = new Mock<IValidator<CreateTestRequest>>();
             _assignmentValidator = new Mock<IValidator<AddAssignmentRequest>>();
-            _questionValidator = new Mock<IValidator<AddQuestionRequest>>();
-            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object, _questionValidator.Object);
+            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object);
         }
 
         [TestMethod]
@@ -71,7 +69,8 @@ namespace Cifra.Application.UnitTests.TestServiceTests
             return new Test(
                 Name.CreateFromString(_fixture.Create<string>()),
                 StandardizationFactor.CreateFromByte(5),
-                Grade.CreateFromByte(4));
+                Grade.CreateFromByte(4),
+                1);
         }
     }
 }

@@ -30,7 +30,6 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-
         public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _testValidator.ValidateRules(model);
@@ -39,7 +38,10 @@ namespace Cifra.Application
                 return new CreateTestResult(validationMessages);
             }
 
-            var test = new Test(Name.CreateFromString(model.Name), StandardizationFactor.CreateFromByte(model.StandardizationFactor), Grade.CreateFromByte(model.MinimumGrade));
+            var test = new Test(Name.CreateFromString(model.Name),
+                StandardizationFactor.CreateFromByte(model.StandardizationFactor),
+                Grade.CreateFromByte(model.MinimumGrade),
+                model.NumberOfVersions);
             await _testRepository.CreateAsync(test);
 
             return new CreateTestResult(test.Id);

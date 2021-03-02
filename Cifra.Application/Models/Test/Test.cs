@@ -21,6 +21,11 @@ namespace Cifra.Application.Models.Test
         public Name Name { get; }
 
         /// <summary>
+        /// The number of versions of the test that where made.
+        /// </summary>
+        public int NumberOfVersions { get; }
+
+        /// <summary>
         /// The Assignments
         /// </summary>
         public List<Assignment> Assignments { get; }
@@ -38,13 +43,14 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// Constructor for a new Test
         /// </summary>
-        public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade)
+        public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade, int numberOfVersions)
         {
             Id = Guid.NewGuid();
             Name = testName;
             Assignments = new List<Assignment>();
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+            NumberOfVersions = numberOfVersions;
         }
 
         /// <summary>
@@ -54,13 +60,15 @@ namespace Cifra.Application.Models.Test
             Name testName,
             StandardizationFactor standardizationFactor,
             Grade minimumGrade,
-            List<Assignment> assignments)
+            List<Assignment> assignments,
+            int numberOfVersions)
         {
             Id = id;
             Name = testName;
             Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+            NumberOfVersions = numberOfVersions;
         }
 
         /// <summary>
