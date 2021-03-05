@@ -25,6 +25,7 @@ namespace Cifra.ConsoleHost.Areas.Test
         private async Task<Guid> CreateTestFlowAsync()
         {
             var testName = SharedConsoleFlows.AskForString("What is the name of the test?");
+            var numberOfVersions = SharedConsoleFlows.AskForByte("How many versions are there?");
             var minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
             var standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
 
@@ -32,7 +33,8 @@ namespace Cifra.ConsoleHost.Areas.Test
             {
                 Name = testName,
                 MinimumGrade = minimumGrade,
-                StandardizationFactor = standardizationFactor
+                StandardizationFactor = standardizationFactor,
+                NumberOfVersions = numberOfVersions
             };
             var createTestResponse = await _testController.CreateTestAsync(createTestRequest);
             var testId = createTestResponse.TestId;

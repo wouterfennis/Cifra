@@ -1,10 +1,9 @@
-﻿using Cifra.Application.Models.Class;
-using Cifra.Application.Models.ValueTypes;
-using SpreadsheetWriter.Abstractions;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
+using Cifra.Application.Models.Class;
+using SpreadsheetWriter.Abstractions;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -23,7 +22,10 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
-            foreach (Student student in input.Students)
+            IOrderedEnumerable<Student> orderedStudents = input.Students
+                .OrderBy(x => x.LastName.Value);
+
+            foreach (Student student in orderedStudents)
             {
                 // append instead of write
                 // with rich text it should be possible to mark the lastname bold

@@ -55,7 +55,7 @@ namespace Cifra.ConsoleHost.Areas.Class
         private async Task AddStudentFlowAsync(Guid classId)
         {
             string firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
-            string infix = SharedConsoleFlows.AskForString("What is the infix of the student?");
+            string infix = SharedConsoleFlows.AskForOptionalString("What is the infix of the student?");
             string lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
             var model = new AddStudentRequest
             {

@@ -33,7 +33,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _formulaBuilder = new Mock<IFormulaBuilder>();
-            _spreadsheet = new string[20, 22];
+            _spreadsheet = new string[30, 30];
 
             SetupFormulaBuilderFactory();
 

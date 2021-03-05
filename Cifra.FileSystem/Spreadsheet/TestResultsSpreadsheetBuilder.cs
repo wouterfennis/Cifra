@@ -92,8 +92,9 @@ namespace Cifra.FileSystem.Spreadsheet
             var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
             studentNamesBlock.Write(spreadsheetWriter);
 
-            spreadsheetWriter.CurrentPosition = assignmentsBlock.LastMaximumValuePosition;
+            spreadsheetWriter.CurrentPosition = new Point(spreadsheetWriter.CurrentPosition.X, assignmentsBlock.LastQuestionRow);
             spreadsheetWriter.NewLine();
+
             var scoresTopRow = new Point(assignmentsBlock.ScoresHeaderPosition.X, assignmentsBlock.ScoresHeaderPosition.Y + 1);
             AddTotalPointsRow(spreadsheetWriter,
                 scoresTopRow,
@@ -104,7 +105,7 @@ namespace Cifra.FileSystem.Spreadsheet
             var numberOfStudents = @class.Students.Count;
             AddGradesRow(spreadsheetWriter,
                 achievedScoresRow,
-                assignmentsBlock.LastMaximumValuePosition.X,
+                assignmentsBlock.ScoresHeaderPosition.X,
                 new Point(assignmentsBlock.ScoresHeaderPosition.X, achievedScoresRow),
                 configurationBlock.MinimumGradePosition,
                 configurationBlock.StandardizationfactorPosition,

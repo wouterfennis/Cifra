@@ -11,53 +11,52 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     /// </summary>
     internal class AssignmentsBlock
     {
-        private readonly AssignmentsBlockInput input;
+        private readonly AssignmentsBlockInput _input;
 
         public Point ScoresHeaderPosition { get; private set; }
 
-        public Point LastMaximumValuePosition { get; private set; }
+        public int LastQuestionRow { get; private set; }
+
+        public List<int> AssignmentStartRows { get; }
 
         public AssignmentsBlock(AssignmentsBlockInput input)
         {
-            this.input = input;
+            _input = input;
+            AssignmentStartRows = new List<int>();
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.CurrentPosition = input.StartPoint;
-            var questionNamesCollumns = input.NumberOfVersions;
+            spreadsheetWriter.CurrentPosition = _input.StartPoint;
+            var questionNamesCollumns = _input.NumberOfVersions;
 
             spreadsheetWriter
                 .Write("Opgave")
                 .MoveRightTimes(questionNamesCollumns)
                 .Write("Punten");
             ScoresHeaderPosition = spreadsheetWriter.CurrentPosition;
-            spreadsheetWriter
-                .NewLine();
 
-            LastMaximumValuePosition = PrintAssignments(spreadsheetWriter);
+            LastQuestionRow = PrintAssignments(spreadsheetWriter);
         }
 
-        private Point PrintAssignments(ISpreadsheetWriter spreadsheetWriter)
+        private int PrintAssignments(ISpreadsheetWriter spreadsheetWriter)
         {
-            Point lastMaximumValuePosition;
-            var totalAssignments = input.Assignments.Count();
+            int lastQuestionRow = 0;
+            var totalAssignments = _input.Assignments.Count();
             for (int assignmentIndex = 0; assignmentIndex < totalAssignments; assignmentIndex++)
             {
-                Assignment assignment = input.Assignments.ElementAt(assignmentIndex);
-                var totalQuestions = assignment.NumberOfQuestions;
-                for (int questionIndex = 0; questionIndex < assignment.NumberOfQuestions; questionIndex++)
+                Assignment assignment = _input.Assignments.ElementAt(assignmentIndex);
+                AssignmentStartRows.Add(spreadsheetWriter.CurrentPosition.Y + 1);
+
+                spreadsheetWriter.MoveDownTimes(assignment.NumberOfQuestions);
+
+                bool isLastAssignmentReached = assignmentIndex == totalAssignments - 1;
+                if (isLastAssignmentReached)
                 {
-                    bool isLastMaximumValueReached = assignmentIndex == totalAssignments - 1 && questionIndex == totalQuestions - 1;
-                    if (isLastMaximumValueReached)
-                    {
-                        lastMaximumValuePosition = spreadsheetWriter.CurrentPosition;
-                    }
-                    spreadsheetWriter
-                        .NewLine();
+                    lastQuestionRow = spreadsheetWriter.CurrentPosition.Y;
                 }
             }
-            return lastMaximumValuePosition;
+            return lastQuestionRow;
         }
 
         public class AssignmentsBlockInput : BlockInputBase
