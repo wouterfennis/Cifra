@@ -1,6 +1,6 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
 
 namespace SpreadsheetWriter.Test
 {
@@ -45,7 +45,7 @@ namespace SpreadsheetWriter.Test
         private string AppendFormula(string currentValue, string v)
         {
             string newValue = null;
-            if(currentValue != null)
+            if (currentValue != null)
             {
                 newValue = $"{currentValue} AND ";
             }
@@ -60,7 +60,7 @@ namespace SpreadsheetWriter.Test
 
         public override ICellRange GetCellRange(Point position)
         {
-            return new TestExcelRange(position.ToString());
+            return new TestExcelRange(position.ToString(), string.Empty);
         }
     }
 }

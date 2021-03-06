@@ -19,8 +19,10 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPosition;
+            spreadsheetWriter.SetFontBold(true);
             spreadsheetWriter
                 .Write("Cijfer");
+            spreadsheetWriter.ResetStyling();
 
             spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
 

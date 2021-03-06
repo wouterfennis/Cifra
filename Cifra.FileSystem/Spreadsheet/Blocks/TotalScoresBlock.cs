@@ -1,6 +1,6 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -20,7 +20,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPoint;
             spreadsheetWriter
-                .Write("Totaal");
+                .SetFontBold(true)
+                .Write("Totaal")
+                .SetFontBold(false);
             spreadsheetWriter.CurrentPosition = new Point(input.ScoreTopPoint.X, spreadsheetWriter.CurrentPosition.Y);
 
             const int maximumPointsColumn = 1;

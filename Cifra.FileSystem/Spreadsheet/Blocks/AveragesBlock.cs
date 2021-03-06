@@ -1,6 +1,6 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -22,8 +22,11 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             var scoresStartPosition = new Point(input.StartOfStudentsColumn, input.AchievedScoresRow);
             var scoresEndPosition = new Point(input.StartOfStudentsColumn + input.NumberOfStudents, input.AchievedScoresRow);
+
             spreadsheetWriter
+                .SetFontBold(true)
                 .Write("Gemiddelde aantal punten")
+                .SetFontBold(false)
                 .MoveRight()
                 .PlaceStandardFormula(scoresStartPosition, scoresEndPosition, FormulaType.AVERAGE)
                 .NewLine();
@@ -31,7 +34,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             var gradesStartPosition = new Point(input.StartOfStudentsColumn, input.GradesRow);
             var gradesEndPosition = new Point(input.StartOfStudentsColumn + input.NumberOfStudents, input.GradesRow);
             spreadsheetWriter
+                .SetFontBold(true)
                 .Write("Gemiddelde cijfer")
+                .SetFontBold(false)
                 .MoveRight()
                 .PlaceStandardFormula(gradesStartPosition, gradesEndPosition, FormulaType.AVERAGE);
         }

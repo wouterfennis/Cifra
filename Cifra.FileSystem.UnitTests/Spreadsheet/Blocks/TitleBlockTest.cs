@@ -1,13 +1,11 @@
-﻿using AutoFixture;
+﻿using System;
+using System.Drawing;
+using AutoFixture;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -34,8 +32,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
-            var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            var sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -50,8 +47,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
-            var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            var sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn);
 
             // Act
             sut.Write(_spreadsheetWriter);

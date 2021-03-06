@@ -9,50 +9,46 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     /// </summary>
     internal class ConfigurationBlock
     {
-        private readonly ConfigurationBlockInput input;
+        public Point StartPoint { get; set; }
+        public StandardizationFactor StandardizationFactor { get; }
+        public Grade MinimumGrade { get; }
         public Point StandardizationfactorPosition { get; private set; }
         public Point MinimumGradePosition { get; private set; }
 
-        public ConfigurationBlock(ConfigurationBlockInput input)
+        public ConfigurationBlock(Point startPoint,
+                StandardizationFactor standardizationFactor,
+                Grade minimumGrade)
         {
-            this.input = input;
+            StartPoint = startPoint;
+            StandardizationFactor = standardizationFactor;
+            MinimumGrade = minimumGrade;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.CurrentPosition = input.StartPoint;
+            spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
                 .SetBackgroundColor(Color.LightGray)
+                .SetFontBold(true)
                 .Write("Configuratie");
 
             spreadsheetWriter
                 .NewLine()
                 .Write("Normering")
+                .SetFontBold(false)
                 .MoveRight()
-                .Write(input.StandardizationFactor.Value);
+                .Write(StandardizationFactor.Value);
             StandardizationfactorPosition = spreadsheetWriter.CurrentPosition;
 
             spreadsheetWriter
                 .NewLine()
+                .SetFontBold(true)
                 .Write("Minimale cijfer")
+                .SetFontBold(false)
                 .MoveRight()
-                .Write(input.MinimumGrade.Value)
+                .Write(MinimumGrade.Value)
                 .SetBackgroundColor(Color.White);
             MinimumGradePosition = spreadsheetWriter.CurrentPosition;
-        }
-
-        public class ConfigurationBlockInput : BlockInputBase
-        {
-            public StandardizationFactor StandardizationFactor { get; }
-            public Grade MinimumGrade { get; }
-
-            public ConfigurationBlockInput(Point startPoint,
-                StandardizationFactor standardizationFactor,
-                Grade minimumGrade) : base(startPoint)
-            {
-                StandardizationFactor = standardizationFactor;
-                MinimumGrade = minimumGrade;
-            }
         }
     }
 }

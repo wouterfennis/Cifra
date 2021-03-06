@@ -48,20 +48,18 @@ namespace Cifra.FileSystem.Spreadsheet
 
         private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
         {
-            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
+            var titleBlock = new TitleBlock(spreadsheetWriter.CurrentPosition,
                 test.Name,
                 metadata.Created);
-            var titleBlock = new TitleBlock(titleInput);
             titleBlock
                 .Write(spreadsheetWriter);
         }
 
         private static ConfigurationBlock AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
         {
-            var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
+            var configurationBlock = new ConfigurationBlock(spreadsheetWriter.CurrentPosition,
                 test.StandardizationFactor,
                 test.MinimumGrade);
-            var configurationBlock = new ConfigurationBlock(configurationInput);
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
@@ -79,10 +77,9 @@ namespace Cifra.FileSystem.Spreadsheet
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
-            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
+            var assignmentsBlock = new AssignmentsBlock(spreadsheetWriter.CurrentPosition,
                 test.Assignments,
                 test.NumberOfVersions);
-            var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
             assignmentsBlock.Write(spreadsheetWriter);
 
             spreadsheetWriter.CurrentPosition = assignmentsBlock.ScoresHeaderPosition;

@@ -33,8 +33,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             int expectedQuestionNamesColumns = 2;
             var assignments = new List<Assignment> { };
-            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments, expectedQuestionNamesColumns);
-            var sut = new AssignmentsBlock(questionsBlockInput);
+            var sut = new AssignmentsBlock(_startpoint, assignments, expectedQuestionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -47,7 +46,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         }
 
         [TestMethod]
-        public void Write_WithAssignment_SavesStartRowOfAssignment()
+        public void Write_WithAssignment_SavesLastRowOfAssignment()
         {
             // Arrange
             int questionNamesColumns = 2;
@@ -55,20 +54,19 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             var assignments = new List<Assignment> {
                 new Assignment(numberOfQuestions)
             };
-            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments, questionNamesColumns);
-            var sut = new AssignmentsBlock(assignmentsBlockInput);
+            var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            sut.AssignmentStartRows.Should().ContainSingle();
-            var actualStartRow = sut.AssignmentStartRows.Single();
-            actualStartRow.Should().Be(1);
+            sut.AssignmentBottomRows.Should().ContainSingle();
+            var actualStartRow = sut.AssignmentBottomRows.Single();
+            actualStartRow.Should().Be(4);
         }
 
         [TestMethod]
-        public void Write_WithAssignments_SavesStartRowOfEachAssignment()
+        public void Write_WithAssignments_SavesLastRowOfEachAssignment()
         {
             // Arrange
             int questionNamesColumns = 2;
@@ -77,20 +75,19 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 new Assignment(numberOfQuestions),
                 new Assignment(0)
             };
-            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments, questionNamesColumns);
-            var sut = new AssignmentsBlock(assignmentsBlockInput);
+            var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
 
             // Assert
             int headerOffset = 1;
-            sut.AssignmentStartRows.Should().HaveCount(assignments.Count);
-            sut.AssignmentStartRows.Should().HaveCount(assignments.Count);
-            int firstAssignmentRow = sut.AssignmentStartRows.ElementAt(0);
-            firstAssignmentRow.Should().Be(headerOffset);
+            sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
+            sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
+            int firstAssignmentRow = sut.AssignmentBottomRows.ElementAt(0);
+            firstAssignmentRow.Should().Be(headerOffset + 3);
 
-            int secondAssignmentRow = sut.AssignmentStartRows.ElementAt(1);
+            int secondAssignmentRow = sut.AssignmentBottomRows.ElementAt(1);
             secondAssignmentRow.Should().Be(headerOffset + numberOfQuestions);
         }
     }
