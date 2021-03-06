@@ -5,10 +5,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="6.0.0" />
-		<PackageReference Include="CsvHelper" Version="16.1.0" />
+		<PackageReference Include="Autofac" Version="6.1.0" />
+		<PackageReference Include="CsvHelper" Version="26.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.0" />
+		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,6 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -30,6 +30,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
+            spreadsheetWriter.SetFormat("0.0");
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var achievedScorePosition = new Point(spreadsheetWriter.CurrentPosition.X, input.AchievedScoresRow);
@@ -42,6 +43,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                     minimumGradeCell))
                     .MoveRight();
             }
+            spreadsheetWriter.ResetStyling();
         }
 
         private IFormulaBuilder SetupGradeFormula(ICellRange achievedPoints,
