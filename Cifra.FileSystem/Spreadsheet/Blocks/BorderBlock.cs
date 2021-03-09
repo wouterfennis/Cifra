@@ -23,8 +23,10 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             MostRightColumn = mostRightColumn;
         }
 
+        // UNIT TEST
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
+            spreadsheetWriter.SetBorder(BorderStyle.Medium, BorderDirection.Top);
             for (int assignmentIndex = 0; assignmentIndex < AssignmentBottomRows.Count(); assignmentIndex++)
             {
                 var assignmentBottomRow = AssignmentBottomRows.ElementAt(assignmentIndex);
@@ -36,6 +38,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                     spreadsheetWriter.Write(cell.Value);
                 }
             }
+            spreadsheetWriter.ResetStyling();
         }
     }
 }
