@@ -51,8 +51,8 @@ namespace Cifra.FileSystem.Spreadsheet
             var titleBlock = new TitleBlock(spreadsheetWriter.CurrentPosition,
                 test.Name,
                 metadata.Created);
-            titleBlock
-                .Write(spreadsheetWriter);
+            //titleBlock
+            //   .Write(spreadsheetWriter);
         }
 
         private static ConfigurationBlock AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
@@ -85,8 +85,7 @@ namespace Cifra.FileSystem.Spreadsheet
             spreadsheetWriter.CurrentPosition = assignmentsBlock.ScoresHeaderPosition;
             spreadsheetWriter.MoveRight();
             int studentNamesStartColumn = spreadsheetWriter.CurrentPosition.X;
-            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
-            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
+            var studentNamesBlock = new StudentNamesBlock(spreadsheetWriter.CurrentPosition, @class.Students);
             studentNamesBlock.Write(spreadsheetWriter);
 
             spreadsheetWriter.CurrentPosition = new Point(spreadsheetWriter.CurrentPosition.X, assignmentsBlock.LastQuestionRow);
@@ -119,7 +118,12 @@ namespace Cifra.FileSystem.Spreadsheet
                 studentNamesStartColumn,
                 numberOfStudents);
 
-            var borderBlock = new BorderBlock(assignmentsBlock.AssignmentBottomRows, 20);
+            var borderBlock = new BorderBlock(
+                assignmentsBlock.ScoresHeaderPosition.Y,
+                assignmentsBlock.AssignmentBottomRows,
+                achievedScoresRow,
+                gradesRow,
+                studentNamesBlock.MostOuterColumn);
             borderBlock.Write(spreadsheetWriter);
         }
 

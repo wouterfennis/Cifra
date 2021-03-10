@@ -58,7 +58,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 Assignment assignment = Assignments.ElementAt(assignmentIndex);
 
                 spreadsheetWriter.MoveDownTimes(assignment.NumberOfQuestions);
-                AssignmentBottomRows.Add(spreadsheetWriter.CurrentPosition.Y + 1);
+                AssignmentBottomRows.Add(spreadsheetWriter.CurrentPosition.Y);
 
                 bool isLastAssignmentReached = assignmentIndex == totalAssignments - 1;
                 if (isLastAssignmentReached)

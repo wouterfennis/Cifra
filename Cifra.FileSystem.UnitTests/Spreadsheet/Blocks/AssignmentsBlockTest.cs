@@ -62,7 +62,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Assert
             sut.AssignmentBottomRows.Should().ContainSingle();
             var actualStartRow = sut.AssignmentBottomRows.Single();
-            actualStartRow.Should().Be(4);
+            actualStartRow.Should().Be(3);
         }
 
         [TestMethod]
@@ -70,10 +70,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             int questionNamesColumns = 2;
-            int numberOfQuestions = 3;
             var assignments = new List<Assignment> {
-                new Assignment(numberOfQuestions),
-                new Assignment(0)
+                new Assignment(3),
+                new Assignment(1)
             };
             var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
@@ -85,10 +84,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
             sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
             int firstAssignmentRow = sut.AssignmentBottomRows.ElementAt(0);
-            firstAssignmentRow.Should().Be(headerOffset + 3);
+            firstAssignmentRow.Should().Be(headerOffset + 2);
 
             int secondAssignmentRow = sut.AssignmentBottomRows.ElementAt(1);
-            secondAssignmentRow.Should().Be(headerOffset + numberOfQuestions);
+            secondAssignmentRow.Should().Be(headerOffset + 3);
         }
     }
 }

@@ -12,17 +12,20 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     /// </summary>
     internal class StudentNamesBlock
     {
-        private readonly StudentNamesBlockInput input;
+        public Point StartPoint { get; }
+        public IEnumerable<Student> Students { get; }
+        public int MostOuterColumn { get; private set; }
 
-        public StudentNamesBlock(StudentNamesBlockInput input)
+        public StudentNamesBlock(Point startPoint, IEnumerable<Student> students)
         {
-            this.input = input;
+            StartPoint = startPoint;
+            Students = students;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.CurrentPosition = input.StartPoint;
-            IOrderedEnumerable<Student> orderedStudents = input.Students
+            spreadsheetWriter.CurrentPosition = StartPoint;
+            IOrderedEnumerable<Student> orderedStudents = Students
                 .OrderBy(x => x.LastName.Value);
 
             foreach (Student student in orderedStudents)
@@ -44,17 +47,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                     .ResetStyling()
                     .MoveRight();
             }
-        }
-
-        public class StudentNamesBlockInput : BlockInputBase
-        {
-            public IEnumerable<Student> Students { get; }
-
-            public StudentNamesBlockInput(Point startPoint,
-                IEnumerable<Student> students) : base(startPoint)
-            {
-                Students = students;
-            }
+            MostOuterColumn = spreadsheetWriter.CurrentPosition.X;
         }
     }
 }
