@@ -4,13 +4,16 @@ using SpreadsheetWriter.Abstractions.Formula;
 
 namespace SpreadsheetWriter.Test
 {
-    public class ArraySpreadsheetWriter : SpreadsheetWriterBase
+    /// <summary>
+    /// Test implementation of the spreadsheet writer in order to assert certain contents in the spreadsheet.
+    /// </summary>
+    public class ArrayContentSpreadsheetWriter : SpreadsheetWriterBase
     {
         public string[,] Spreadsheet { get; }
         private const int DefaultXPosition = 0;
         private const int DefaultYPosition = 0;
 
-        public ArraySpreadsheetWriter(string[,] spreadsheet) : base(DefaultXPosition, DefaultYPosition)
+        public ArrayContentSpreadsheetWriter(string[,] spreadsheet) : base(DefaultXPosition, DefaultYPosition)
         {
             Spreadsheet = spreadsheet;
             CurrentPosition = new Point(DefaultXPosition, DefaultYPosition);

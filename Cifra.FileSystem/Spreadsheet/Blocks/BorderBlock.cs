@@ -11,29 +11,28 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     /// </summary>
     internal class BorderBlock
     {
-        private const BorderStyle AssignmentBorder = BorderStyle.Medium;
-        public Point StartPoint { get; }
+        private const BorderStyle AssignmentBorderStyle = BorderStyle.Medium;
+        private const BorderDirection AssignmentBorderDirection = BorderDirection.Bottom;
         public IEnumerable<int> AssignmentBottomRows { get; }
         public int MostRightColumn { get; }
 
-        public BorderBlock(Point startPoint, IEnumerable<int> assignmentBottomRows, int mostRightColumn)
+        public BorderBlock(IEnumerable<int> assignmentBottomRows, int mostRightColumn)
         {
-            StartPoint = startPoint;
             AssignmentBottomRows = assignmentBottomRows;
             MostRightColumn = mostRightColumn;
         }
 
-        // UNIT TEST
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.SetBorder(BorderStyle.Medium, BorderDirection.Top);
+            spreadsheetWriter.SetBorder(AssignmentBorderStyle, AssignmentBorderDirection);
             for (int assignmentIndex = 0; assignmentIndex < AssignmentBottomRows.Count(); assignmentIndex++)
             {
                 var assignmentBottomRow = AssignmentBottomRows.ElementAt(assignmentIndex);
                 spreadsheetWriter.CurrentPosition = new Point(0, assignmentBottomRow);
 
-                for (int columIndex = 0; columIndex < MostRightColumn; columIndex++)
+                for (int columnIndex = 0; columnIndex < MostRightColumn; columnIndex++)
                 {
+                    spreadsheetWriter.CurrentPosition = new Point(columnIndex, assignmentBottomRow);
                     var cell = spreadsheetWriter.GetCellRange(spreadsheetWriter.CurrentPosition);
                     spreadsheetWriter.Write(cell.Value);
                 }

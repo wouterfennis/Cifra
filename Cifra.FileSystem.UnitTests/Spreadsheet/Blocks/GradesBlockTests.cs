@@ -21,7 +21,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private Point _startpoint;
         private Fixture _fixture;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
-        private ArraySpreadsheetWriter _spreadsheetWriter;
+        private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -30,7 +30,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _startpoint = new Point(0, 5);
             _fixture = new Fixture();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]

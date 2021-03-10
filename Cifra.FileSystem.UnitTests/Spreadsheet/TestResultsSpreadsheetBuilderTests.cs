@@ -77,7 +77,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _fileLocationProvider.Setup(x => x.GetSpreadsheetDirectoryPath())
                 .Returns(path);
 
-            var testSpreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
 
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile.Setup(x => x.GetSpreadsheetWriter())

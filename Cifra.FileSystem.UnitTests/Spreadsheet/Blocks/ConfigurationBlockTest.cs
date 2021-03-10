@@ -14,7 +14,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private string[,] spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
-        private ArraySpreadsheetWriter _spreadsheetWriter;
+        private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -22,7 +22,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(spreadsheet);
+            _spreadsheetWriter = new ArrayContentSpreadsheetWriter(spreadsheet);
         }
 
         [TestMethod]

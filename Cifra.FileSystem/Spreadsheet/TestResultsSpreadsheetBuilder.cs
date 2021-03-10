@@ -118,6 +118,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 gradesRow,
                 studentNamesStartColumn,
                 numberOfStudents);
+
+            var borderBlock = new BorderBlock(assignmentsBlock.AssignmentBottomRows, 20);
+            borderBlock.Write(spreadsheetWriter);
         }
 
         private static void AddTotalPointsRow(ISpreadsheetWriter spreadsheetWriter,

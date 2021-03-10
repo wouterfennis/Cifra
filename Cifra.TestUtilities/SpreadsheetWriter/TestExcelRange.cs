@@ -18,6 +18,6 @@ namespace SpreadsheetWriter.Test
         public string Address => _address;
 
         /// <inheritdoc/>
-        public string Value => throw new System.NotImplementedException();
+        public string Value => _value;
     }
 }
