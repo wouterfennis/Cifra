@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
+using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -9,50 +10,50 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     /// </summary>
     internal class TotalScoresBlock
     {
-        private readonly TotalScoresBlockInput input;
+        public Point StartPoint { get; }
 
-        public TotalScoresBlock(TotalScoresBlockInput input)
+        public Point ScoreTopPoint { get; }
+
+        public int NumberOfStudents { get; }
+
+        public int NumberOfVerions { get; }
+
+        public TotalScoresBlock(
+            Point startPoint,
+            Point scoreTopPoint,
+            int numberOfStudents)
         {
-            this.input = input;
+            StartPoint = startPoint;
+            ScoreTopPoint = scoreTopPoint;
+            NumberOfStudents = numberOfStudents;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.CurrentPosition = input.StartPoint;
+            spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
                 .SetFontBold(true)
+                .SetBorder(BorderStyle.Double, BorderDirection.Bottom, Color.Black)
                 .Write("Totaal")
                 .SetFontBold(false);
-            spreadsheetWriter.CurrentPosition = new Point(input.ScoreTopPoint.X, spreadsheetWriter.CurrentPosition.Y);
+
+            int columnsBetweenFirstPoint = ScoreTopPoint.X - spreadsheetWriter.CurrentPosition.X;
+            for (int i = 0; i < columnsBetweenFirstPoint; i++)
+            {
+                spreadsheetWriter.MoveRight();
+                spreadsheetWriter.Write(string.Empty);
+            }
+            // spreadsheetWriter.CurrentPosition = new Point(input.ScoreTopPoint.X, spreadsheetWriter.CurrentPosition.Y);
 
             const int maximumPointsColumn = 1;
-            int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
+            int numberOfScoreColumns = NumberOfStudents + maximumPointsColumn;
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
-                var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, input.ScoreTopPoint.Y);
+                var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, ScoreTopPoint.Y);
                 var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
                 spreadsheetWriter
                     .PlaceStandardFormula(startPosition, endPosition, FormulaType.SUM)
                     .MoveRight();
-            }
-        }
-
-        public class TotalScoresBlockInput
-        {
-            public Point StartPoint { get; }
-
-            public Point ScoreTopPoint { get; }
-
-            public int NumberOfStudents { get; }
-
-            public TotalScoresBlockInput(
-                Point startPoint,
-                Point scoreTopPoint,
-                int numberOfStudents)
-            {
-                StartPoint = startPoint;
-                ScoreTopPoint = scoreTopPoint;
-                NumberOfStudents = numberOfStudents;
             }
         }
     }

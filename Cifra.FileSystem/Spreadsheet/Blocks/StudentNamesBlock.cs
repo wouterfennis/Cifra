@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Cifra.Application.Models.Class;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -43,6 +44,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
                 spreadsheetWriter
                     .SetTextRotation(40)
+                    .SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black)
                     .Write(nameBuilder.ToString())
                     .ResetStyling()
                     .MoveRight();

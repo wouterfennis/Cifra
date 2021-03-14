@@ -131,11 +131,10 @@ namespace Cifra.FileSystem.Spreadsheet
             Point scorePointTop,
             int numberOfStudents)
         {
-            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
+            var totalPointsBlock = new TotalScoresBlock(
                 spreadsheetWriter.CurrentPosition,
                 scorePointTop,
                 numberOfStudents);
-            var totalPointsBlock = new TotalScoresBlock(totalPointsBlockInput);
             totalPointsBlock.Write(spreadsheetWriter);
         }
 

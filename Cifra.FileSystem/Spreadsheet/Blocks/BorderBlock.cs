@@ -36,17 +36,14 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            DrawHeaderBorder(spreadsheetWriter);
             DrawAssignmentBorders(spreadsheetWriter);
-            DrawTotalRowBorder(spreadsheetWriter);
-            DrawGradeRowBorder(spreadsheetWriter);
 
             spreadsheetWriter.ResetStyling();
         }
 
         private void DrawAssignmentBorders(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom);
+            spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black);
             for (int assignmentIndex = 0; assignmentIndex < AssignmentBottomRows.Count(); assignmentIndex++)
             {
                 var assignmentBottomRow = AssignmentBottomRows.ElementAt(assignmentIndex);
@@ -55,37 +52,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 {
                     DrawBorder(spreadsheetWriter, columnIndex, assignmentBottomRow);
                 }
-            }
-            spreadsheetWriter.ResetStyling();
-        }
-
-        private void DrawHeaderBorder(ISpreadsheetWriter spreadsheetWriter)
-        {
-            // Styling is lost of previous data
-            spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom);
-            for (int columnIndex = 1; columnIndex <= MostRightColumn; columnIndex++)
-            {
-                DrawBorder(spreadsheetWriter, columnIndex, HeaderRow);
-            }
-            spreadsheetWriter.ResetStyling();
-        }
-
-        private void DrawTotalRowBorder(ISpreadsheetWriter spreadsheetWriter)
-        {
-            spreadsheetWriter.SetBorder(BorderStyle.Double, BorderDirection.Bottom);
-            for (int columnIndex = 1; columnIndex <= MostRightColumn; columnIndex++)
-            {
-                DrawBorder(spreadsheetWriter, columnIndex, TotalRow);
-            }
-            spreadsheetWriter.ResetStyling();
-        }
-
-        private void DrawGradeRowBorder(ISpreadsheetWriter spreadsheetWriter)
-        {
-            spreadsheetWriter.SetBorder(BorderStyle.Double, BorderDirection.Bottom);
-            for (int columnIndex = 1; columnIndex <= MostRightColumn; columnIndex++)
-            {
-                DrawBorder(spreadsheetWriter, columnIndex, GradeRow);
             }
             spreadsheetWriter.ResetStyling();
         }

@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
+using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -19,12 +20,20 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.CurrentPosition = input.StartPosition;
-            spreadsheetWriter.SetFontBold(true);
             spreadsheetWriter
-                .Write("Cijfer");
-            spreadsheetWriter.ResetStyling();
+                .SetFontBold(true)
+                .SetBorder(BorderStyle.Double, BorderDirection.Bottom, Color.Black)
+                .Write("Cijfer")
+                .SetFontBold(false);
 
-            spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
+            int columnsBetweenFirstPoint = input.ScoresStartColumn - spreadsheetWriter.CurrentPosition.X;
+            for (int i = 0; i < columnsBetweenFirstPoint; i++)
+            {
+                spreadsheetWriter.MoveRight();
+                spreadsheetWriter.Write(string.Empty);
+            }
+
+            // spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
 
             ICellRange maximumScoreCell = spreadsheetWriter.GetCellRange(input.MaximumScorePosition);
             ICellRange standardizationFactorCell = spreadsheetWriter.GetCellRange(input.StandardizationFactorPosition);

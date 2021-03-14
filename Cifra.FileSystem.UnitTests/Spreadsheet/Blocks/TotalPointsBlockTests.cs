@@ -1,13 +1,9 @@
-﻿using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+﻿using System.Drawing;
+using AutoFixture;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -34,11 +30,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var scoreTopPoint = new Point(1, 0);
             int numberOfStudents = 1;
-            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
-                _startpoint, 
-                scoreTopPoint, 
+            var sut = new TotalScoresBlock(
+                _startpoint,
+                scoreTopPoint,
                 numberOfStudents);
-            var sut = new TotalScoresBlock(totalPointsBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -53,11 +48,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var scoreTopPoint = new Point(1, 0);
             int numberOfStudents = 1;
-            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
-                _startpoint, 
+            var sut = new TotalScoresBlock(
+                _startpoint,
                 scoreTopPoint,
                 numberOfStudents);
-            var sut = new TotalScoresBlock(totalPointsBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -75,11 +69,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var scoreTopPoint = new Point(1, 0);
             int numberOfStudents = 3;
-            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
+            var sut = new TotalScoresBlock(
                 _startpoint,
                 scoreTopPoint,
                 numberOfStudents);
-            var sut = new TotalScoresBlock(totalPointsBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);

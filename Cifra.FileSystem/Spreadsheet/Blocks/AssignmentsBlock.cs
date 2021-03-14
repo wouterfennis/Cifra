@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using Cifra.Application.Models.Test;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -39,11 +40,18 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             var questionNamesCollumns = NumberOfVersions;
 
             spreadsheetWriter
+                .SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black)
                 .SetFontBold(true)
-                .Write("Opgave")
-                .MoveRightTimes(questionNamesCollumns)
+                .Write("Opgave");
+
+            for (int i = 0; i < questionNamesCollumns; i++)
+            {
+                spreadsheetWriter.MoveRight();
+                spreadsheetWriter.Write(string.Empty);
+            }
+            spreadsheetWriter
                 .Write("Punten")
-                .SetFontBold(false);
+                .ResetStyling();
             ScoresHeaderPosition = spreadsheetWriter.CurrentPosition;
 
             LastQuestionRow = PrintAssignments(spreadsheetWriter);

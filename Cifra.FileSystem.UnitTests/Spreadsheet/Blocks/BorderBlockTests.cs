@@ -36,7 +36,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            for (int columnIndex = 1; columnIndex <= mostRightColumn; columnIndex++)
+            for (int columnIndex = 1; columnIndex < mostRightColumn; columnIndex++)
             {
                 _spreadsheet[columnIndex, expectedAssignmentBottomRow].Should().Be("Bottom + Thin");
             }
@@ -86,72 +86,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 {
                     _spreadsheet[columnIndex, assignmentBottomRow].Should().Be("Bottom + Thin");
                 }
-            }
-        }
-
-        [TestMethod]
-        public void Write_WithHeaderRow_DrawsBorderOnHeaderRow()
-        {
-            // Arrange
-            int headerRow = 1;
-            int totalRow = 10;
-            int gradeRow = 11;
-            int mostRightColumn = 5;
-            List<int> assignmentBottomRows = new List<int> { 4 };
-
-            var sut = new BorderBlock(headerRow, assignmentBottomRows, totalRow, gradeRow, mostRightColumn);
-
-            // Act
-            sut.Write(_spreadsheetWriter);
-
-            // Assert
-            for (int columnIndex = 1; columnIndex <= mostRightColumn; columnIndex++)
-            {
-                _spreadsheet[columnIndex, headerRow].Should().Be("Bottom + Thin");
-            }
-        }
-
-        [TestMethod]
-        public void Write_WithTotalRow_DrawsBorderOnTotalRow()
-        {
-            // Arrange
-            int headerRow = 1;
-            int totalRow = 10;
-            int gradeRow = 11;
-            int mostRightColumn = 5;
-            List<int> assignmentBottomRows = new List<int> { 4 };
-
-            var sut = new BorderBlock(headerRow, assignmentBottomRows, totalRow, gradeRow, mostRightColumn);
-
-            // Act
-            sut.Write(_spreadsheetWriter);
-
-            // Assert
-            for (int columnIndex = 1; columnIndex <= mostRightColumn; columnIndex++)
-            {
-                _spreadsheet[columnIndex, totalRow].Should().Be("Bottom + Double");
-            }
-        }
-
-        [TestMethod]
-        public void Write_WithGradeRow_DrawsBorderOnGradeRow()
-        {
-            // Arrange
-            int headerRow = 1;
-            int totalRow = 10;
-            int gradeRow = 11;
-            int mostRightColumn = 5;
-            List<int> assignmentBottomRows = new List<int> { 4 };
-
-            var sut = new BorderBlock(headerRow, assignmentBottomRows, totalRow, gradeRow, mostRightColumn);
-
-            // Act
-            sut.Write(_spreadsheetWriter);
-
-            // Assert
-            for (int columnIndex = 1; columnIndex <= mostRightColumn; columnIndex++)
-            {
-                _spreadsheet[columnIndex, gradeRow].Should().Be("Bottom + Double");
             }
         }
     }
