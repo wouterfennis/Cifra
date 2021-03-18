@@ -10,14 +10,19 @@ namespace Cifra.Application.Interfaces
     public interface ITestService
     {
         /// <summary>
+        /// Creates a test.
+        /// </summary>
+        Task<CreateTestResult> CreateTestAsync(CreateTestRequest model);
+
+        /// <summary>
         /// Adds an assignment to a test.
         /// </summary>
         Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model);
 
         /// <summary>
-        /// Creates a test.
+        /// Sets the bonus assignment to the test.
         /// </summary>
-        Task<CreateTestResult> CreateTestAsync(CreateTestRequest model);
+        Task<AddBonusAssignmentResult> AddBonusAssignmentAsync(AddBonusAssignmentRequest model);
 
         /// <summary>
         /// Retrieves all tests currently available.

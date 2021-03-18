@@ -20,6 +20,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             var testId = await CreateTestFlowAsync();
             Console.WriteLine("Adding assignments to the test");
             await AddAssignmentsFlowAsync(testId);
+            await AddBonusAssignmentFlowAsync(testId);
         }
 
         private async Task<Guid> CreateTestFlowAsync()
@@ -72,6 +73,26 @@ namespace Cifra.ConsoleHost.Areas.Test
             {
                 SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
                 await AddAssignmentFlowAsync(testId, assignmentIndex);
+            }
+        }
+
+        private async Task AddBonusAssignmentFlowAsync(Guid testId)
+        {
+            bool isBonusAssignmentNeeded = SharedConsoleFlows.AskForBool($"Is there a bonus question?");
+
+            if (isBonusAssignmentNeeded)
+            {
+                var addBonusAssignment = new AddBonusAssignmentRequest
+                {
+                    TestId = testId
+                };
+
+                var addBonusAssignmentResult = await _testController.AddBonusAssignmentAsync(addBonusAssignment);
+
+                if (addBonusAssignmentResult.ValidationMessages.Count() > 0)
+                {
+                    SharedConsoleFlows.PrintValidationMessages(addBonusAssignmentResult.ValidationMessages);
+                }
             }
         }
     }

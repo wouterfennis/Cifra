@@ -5,6 +5,7 @@ using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet;
 using Cifra.TestUtilities.Application;
+using Cifra.TestUtilities.SpreadsheetWriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
@@ -49,7 +50,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             // Arrange
             var metadata = _fixture.Create<Application.Models.Spreadsheet.Metadata>();
             SetupSpreadsheetFileBuilder();
-            SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
+            FormulaBuilderTestUtilities.SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
 
             Class @class = _fixture.Create<Class>();
             Test test = new TestBuilder()
@@ -86,39 +87,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _spreadsheetFileFactory
                 .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))
                 .Returns(spreadsheetFile.Object);
-        }
-
-        private void SetupFormulaBuilder(Mock<IFormulaBuilder> formulaBuilder, string expectedFormula)
-        {
-            formulaBuilder.Setup(x => x.AddCellAddress(It.IsAny<string>()))
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddClosingParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddDivisionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddEqualsSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddMultiplicationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddOpenParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSubtractionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.Build())
-                .Returns(expectedFormula);
         }
     }
 }

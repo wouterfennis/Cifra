@@ -1,21 +1,21 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using SpreadsheetWriter.Abstractions.Cell;
 
 namespace SpreadsheetWriter.Test
 {
     /// <inheritdoc/>
     public class TestExcelRange : ICellRange
     {
-        private readonly string _address;
+        private readonly ICellAddress _address;
         private readonly string _value;
 
-        public TestExcelRange(string address, string value)
+        public TestExcelRange(ICellAddress address, string value)
         {
             _address = address;
             _value = value;
         }
 
         /// <inheritdoc/>
-        public string Address => _address;
+        public ICellAddress Address => _address;
 
         /// <inheritdoc/>
         public string Value => _value;

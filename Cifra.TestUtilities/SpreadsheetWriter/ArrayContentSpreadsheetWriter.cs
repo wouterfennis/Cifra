@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
 
 namespace SpreadsheetWriter.Test
@@ -63,7 +64,7 @@ namespace SpreadsheetWriter.Test
 
         public override ICellRange GetCellRange(Point position)
         {
-            return new TestExcelRange(position.ToString(), string.Empty);
+            return new TestExcelRange(new TestExcelAddress(), string.Empty);
         }
     }
 }

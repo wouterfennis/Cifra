@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Abstractions.Styling;
 
@@ -68,12 +69,22 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddOpenParenthesis()
                 .AddCellAddress(achievedPoints.Address)
                 .AddDivisionSign()
-                .AddCellAddress(maximumScore.Address)
+                .AddConstantSign()
+                .AddCellColumnLetter(maximumScore.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(maximumScore.Address.RowNumber)
                 .AddClosingParenthesis()
                 .AddMultiplicationSign()
-                .AddCellAddress(standardizationFactor.Address)
+                .AddConstantSign()
+                .AddCellColumnLetter(standardizationFactor.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(standardizationFactor.Address.RowNumber)
                 .AddSummationSign()
-                .AddCellAddress(minimumGrade.Address);
+                .AddConstantSign()
+                .AddCellColumnLetter(minimumGrade.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(minimumGrade.Address.RowNumber);
+
         }
 
         public class GradesBlockInput
