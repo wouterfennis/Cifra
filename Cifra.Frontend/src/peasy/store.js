@@ -1,23 +1,11 @@
 /* eslint-disable import/prefer-default-export */
-import { action, createStore, persist, computed, thunk} from 'easy-peasy';
-import { formatBytes } from 'global/functions';
-import {find, findIndex} from "lodash";
-
-const ui = {
-  control: {
-  }
-}
+import { createStore, persist } from 'easy-peasy';
 
 const translate = {
-  more: 'More'
-}
-
-const content = {
-}
+  more: 'More',
+};
 const store = createStore({
-  translate,
-  ui,
-  content: persist(content)
+  translate: persist(translate),
 });
 
 // Wrapping dev only code like this normally gets stripped out by bundlers
