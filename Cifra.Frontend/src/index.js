@@ -5,7 +5,7 @@ import './global/theme.scss';
 import { StoreProvider } from 'easy-peasy';
 import { store } from './peasy/store';
 import App from './containers/App';
-
+import 'antd/dist/antd.css';
 const wrapper = document.getElementById('container');
 wrapper
   ? ReactDOM.render(

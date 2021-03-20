@@ -36,20 +36,26 @@ module.exports = {
           {
             loader: 'sass-resources-loader',
             options: {
-                resources: 'src/global/variables.scss'
-            }
-        }
+              resources: 'src/global/variables.scss',
+            },
+          },
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            outputPath: 'assets/images',
-          },
-        }],
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
 
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'assets/images',
+            },
+          },
+        ],
       },
       {
         test: /\.html$/,
@@ -68,8 +74,8 @@ module.exports = {
       global: path.resolve(__dirname, 'src/global/'),
       img: path.resolve(__dirname, 'src/img/'),
       peasy: path.resolve(__dirname, 'src/peasy/'),
-      components: path.resolve(__dirname, 'src/components/')
-    }
+      components: path.resolve(__dirname, 'src/components/'),
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -82,12 +88,9 @@ module.exports = {
     new GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
-
     }),
     new CopyPlugin({
-      patterns: [
-        { from: 'src/public', to: 'public' },
-      ],
+      patterns: [{ from: 'src/public', to: 'public' }],
     }),
   ],
 };
