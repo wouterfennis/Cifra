@@ -1,11 +1,21 @@
 /* eslint-disable import/prefer-default-export */
-import { createStore, persist } from 'easy-peasy';
+import { createStore, persist, action } from 'easy-peasy';
 
 const translate = {
   more: 'More',
 };
+const ui = {
+  navigationBar: {
+    collapsed: false,
+    toggleCollapsed: action((state) => {
+      state.collapsed = !state.collapsed;
+    }),
+  },
+};
+
 const store = createStore({
   translate: persist(translate),
+  ui,
 });
 
 // Wrapping dev only code like this normally gets stripped out by bundlers
