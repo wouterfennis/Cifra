@@ -3,8 +3,10 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
+  target: `web`,
   module: {
     rules: [
       {
@@ -75,9 +77,11 @@ module.exports = {
       img: path.resolve(__dirname, 'src/img/'),
       peasy: path.resolve(__dirname, 'src/peasy/'),
       components: path.resolve(__dirname, 'src/components/'),
+      moment: 'moment/moment.js',
     },
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/),
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
