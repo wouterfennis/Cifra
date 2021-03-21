@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
@@ -38,14 +39,15 @@ namespace Cifra.ConsoleHost
 
         private static void PrintTitle()
         {
-            string title = @"
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            string title = $@"
          _______         ________   
         /  _____\   ___ /\   ____\ _______  
        /\  \    /  /\__\\ \  \___ /\   ___\  ______ 
       /  \  \__/__ \/\  \\ \   __\\ \  \__/ /  __  \
       \   \________\\ \  \\ \  \_/ \ \  \  /\  \L\  \
        \  /        / \ \__\\ \__\   \ \ _\ \ \__/.\__\
-        \/________/   \/__/ \/__/    \/__/  \/__/\/__/
+        \/________/   \/__/ \/__/    \/__/  \/__/\/__/ v{version}
 -------------------------------------------------------------
 Created by:
                                   __               
