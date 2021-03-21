@@ -33,7 +33,7 @@ namespace Cifra.Application.UnitTests.Models.Test
         }
 
         [TestMethod]
-        public void Constructor_ExistingClassWithQuestionsNull_ThrowsException()
+        public void Constructor_ExistingClassWithAssignmentsNull_ThrowsException()
         {
             Action action = () => new Application.Models.Test.Test(
                 _fixture.Create<Guid>(),

@@ -48,6 +48,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var scoreTopPoint = new Point(1, 0);
             int numberOfStudents = 1;
+
             var sut = new TotalScoresBlock(
                 _startpoint,
                 scoreTopPoint,

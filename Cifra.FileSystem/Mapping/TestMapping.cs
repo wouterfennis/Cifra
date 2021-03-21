@@ -26,7 +26,7 @@ namespace Cifra.FileSystem.Mapping
                 NumberOfVersions = input.NumberOfVersions,
                 MinimumGrade = input.MinimumGrade.Value,
                 StandardizationFactor = input.StandardizationFactor.Value,
-                Assignments = input.Assignments.MapToFileEntity()
+                Assignments = input.Assignments.MapToFileEntity(),
             };
         }
 
@@ -37,11 +37,23 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return input.Select(x => new FileEntity.Assignment
+            return input.Select(x => x.MapToFileEntity());
+        }
+
+        /// Maps a <see cref="Application.Models.Test.Assignment"/> to a <see cref="Assignment"/>.
+        /// </summary>
+        public static FileEntity.Assignment MapToFileEntity(this Application.Models.Test.Assignment input)
+        {
+            if (input == null)
             {
-                Id = x.Id,
-                NumberOfQuestions = x.NumberOfQuestions
-            });
+                return null;
+            }
+
+            return new FileEntity.Assignment
+            {
+                Id = input.Id,
+                NumberOfQuestions = input.NumberOfQuestions
+            };
         }
 
         /// <summary>
@@ -66,10 +78,23 @@ namespace Cifra.FileSystem.Mapping
         public static List<Application.Models.Test.Assignment> MapToModel(this IEnumerable<FileEntity.Assignment> input)
         {
             ValidateNullInput(input);
-            return input.Select(x => new Application.Models.Test.Assignment(
-                x.Id,
-                x.NumberOfQuestions))
+            return input.Select(x => x.MapToModel())
                 .ToList();
+        }
+
+        /// <summary>
+        /// Maps a <see cref="Application.Models.Test.Assignment"/> to a <see cref="Assignment"/>.
+        /// </summary>
+        public static Application.Models.Test.Assignment MapToModel(this FileEntity.Assignment input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new Application.Models.Test.Assignment(
+                input.Id,
+                input.NumberOfQuestions);
         }
 
         private static void ValidateNullInput(object input)

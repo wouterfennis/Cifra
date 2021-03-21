@@ -31,11 +31,6 @@ namespace Cifra.Application.Models.Test
         public List<Assignment> Assignments { get; }
 
         /// <summary>
-        /// The bonus assignment.
-        /// </summary>
-        public Assignment BonusAssignment { get; private set; }
-
-        /// <summary>
         /// The Standardization Factor.
         /// </summary>
         public StandardizationFactor StandardizationFactor { get; }
@@ -66,13 +61,11 @@ namespace Cifra.Application.Models.Test
             StandardizationFactor standardizationFactor,
             Grade minimumGrade,
             List<Assignment> assignments,
-            Assignment bonusAssignment,
             int numberOfVersions)
         {
             Id = id;
             Name = testName;
             Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
-            BonusAssignment = bonusAssignment;
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
             NumberOfVersions = numberOfVersions;
@@ -88,18 +81,6 @@ namespace Cifra.Application.Models.Test
                 throw new ArgumentNullException(nameof(assignment));
             }
             Assignments.Add(assignment);
-        }
-
-        /// <summary>
-        /// Adds a assignment to the test.
-        /// </summary>
-        public void SetBonusAssignment(Assignment assignment)
-        {
-            if (assignment == null)
-            {
-                throw new ArgumentNullException(nameof(assignment));
-            }
-            BonusAssignment = assignment;
         }
 
         /// <summary>

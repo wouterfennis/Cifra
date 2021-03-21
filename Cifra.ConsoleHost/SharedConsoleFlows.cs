@@ -4,6 +4,9 @@ using Cifra.Application.Validation;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// Console logic that is recurring in the application.
+    /// </summary>
     internal static class SharedConsoleFlows
     {
         private const string InvalidInputMessage = "Invalid Input";

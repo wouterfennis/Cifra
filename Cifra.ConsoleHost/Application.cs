@@ -6,13 +6,18 @@ using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// The start point of the application.
+    /// </summary>
     internal class Application
     {
         private readonly ClassMenuFlow _classMenuFlow;
         private readonly TestMenuFlow _testMenuFlow;
         private readonly SpreadsheetMenuFlow _spreadsheetMenuFlow;
 
-        public Application(ClassMenuFlow classMenuFlow, TestMenuFlow testMenuFlow, SpreadsheetMenuFlow spreadsheetMenuFlow)
+        public Application(ClassMenuFlow classMenuFlow,
+            TestMenuFlow testMenuFlow,
+            SpreadsheetMenuFlow spreadsheetMenuFlow)
         {
             _classMenuFlow = classMenuFlow;
             _testMenuFlow = testMenuFlow;
@@ -62,12 +67,15 @@ Created by:
             {
                 case (int)AreaMenuOption.Class:
                     await _classMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Test:
                     await _testMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Spreadsheet:
                     await _spreadsheetMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Quit:
                     break;
@@ -79,6 +87,7 @@ Created by:
 
         private async Task RetryMenuAsync()
         {
+            Console.Clear();
             Console.WriteLine("Invalid choice!");
             await StartAsync();
         }

@@ -1,9 +1,9 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Class.Results;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Models.Class.Results;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
@@ -18,6 +18,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         public async Task StartAsync()
         {
+            Console.Clear();
             Guid classId = await CreateClassFlowAsync();
             Console.WriteLine("Adding students to the class");
             await AddStudentsFlowAsync(classId);

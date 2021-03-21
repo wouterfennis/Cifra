@@ -5,13 +5,13 @@ using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.Spreadsheet;
 
-namespace Cifra.ConsoleHost.Areas.Test
+namespace Cifra.ConsoleHost.Areas.Spreadsheet
 {
     internal class CreateSpreadsheetFlow : IFlow
     {
         private readonly IClassService _classController;
         private readonly ITestService _testController;
-        private readonly ITestResultsSpreadsheetBuilder spreadsheetFactory;
+        private readonly ITestResultsSpreadsheetBuilder _spreadsheetFactory;
 
         public CreateSpreadsheetFlow(IClassService classController,
             ITestService testController,
@@ -19,9 +19,10 @@ namespace Cifra.ConsoleHost.Areas.Test
         {
             _classController = classController;
             _testController = testController;
-            this.spreadsheetFactory = spreadsheetFactory;
+            _spreadsheetFactory = spreadsheetFactory;
         }
 
+        /// <inheritdoc/>
         public async Task StartAsync()
         {
             Console.Clear();
@@ -86,7 +87,7 @@ namespace Cifra.ConsoleHost.Areas.Test
                 FileName = fileName
             };
 
-            await spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);
+            await _spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);
         }
     }
 }

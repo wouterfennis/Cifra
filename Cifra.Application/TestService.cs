@@ -76,28 +76,6 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-        public async Task<AddBonusAssignmentResult> AddBonusAssignmentAsync(AddBonusAssignmentRequest model)
-        {
-            var test = await _testRepository.GetAsync(model.TestId);
-            if (test == null)
-            {
-                return new AddBonusAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
-            }
-
-            var assignment = new Assignment(1);
-
-            test.SetBonusAssignment(assignment);
-            ValidationMessage result = await _testRepository.UpdateAsync(test);
-
-            if (result != null)
-            {
-                return new AddBonusAssignmentResult(result);
-            }
-
-            return new AddBonusAssignmentResult(test.Id, assignment.Id);
-        }
-
-        /// <inheritdoc/>
         public async Task<GetAllTestsResult> GetTestsAsync()
         {
             var tests = await _testRepository.GetAllAsync();

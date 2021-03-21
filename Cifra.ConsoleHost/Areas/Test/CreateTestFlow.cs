@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test.Requests;
+using Cifra.Application.Models.Test.Results;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {
@@ -17,7 +18,8 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         public async Task StartAsync()
         {
-            var testId = await CreateTestFlowAsync();
+            Console.Clear();
+            Guid testId = await CreateTestFlowAsync();
             Console.WriteLine("Adding assignments to the test");
             await AddAssignmentsFlowAsync(testId);
             await AddBonusAssignmentFlowAsync(testId);
@@ -25,10 +27,10 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task<Guid> CreateTestFlowAsync()
         {
-            var testName = SharedConsoleFlows.AskForString("What is the name of the test?");
-            var numberOfVersions = SharedConsoleFlows.AskForByte("How many versions are there?");
-            var minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
-            var standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
+            string testName = SharedConsoleFlows.AskForString("What is the name of the test?");
+            byte numberOfVersions = SharedConsoleFlows.AskForByte("How many versions are there?");
+            byte minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
+            byte standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
 
             var createTestRequest = new CreateTestRequest()
             {
@@ -37,8 +39,8 @@ namespace Cifra.ConsoleHost.Areas.Test
                 StandardizationFactor = standardizationFactor,
                 NumberOfVersions = numberOfVersions
             };
-            var createTestResponse = await _testController.CreateTestAsync(createTestRequest);
-            var testId = createTestResponse.TestId;
+            CreateTestResult createTestResponse = await _testController.CreateTestAsync(createTestRequest);
+            Guid testId = createTestResponse.TestId;
             if (createTestResponse.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
@@ -49,7 +51,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task AddAssignmentsFlowAsync(Guid testId)
         {
-            byte numberOfAssignments = SharedConsoleFlows.AskForByte("How many assignments are there?");
+            byte numberOfAssignments = SharedConsoleFlows.AskForByte("How many normal assignments are there?");
 
             for (int assignmentIndex = 0; assignmentIndex < numberOfAssignments; assignmentIndex++)
             {
@@ -67,7 +69,7 @@ namespace Cifra.ConsoleHost.Areas.Test
                 NumberOfQuestions = numberOfQuestions
             };
 
-            var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
+            AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
             if (addAssignmentResult.ValidationMessages.Count() > 0)
             {
@@ -82,16 +84,17 @@ namespace Cifra.ConsoleHost.Areas.Test
 
             if (isBonusAssignmentNeeded)
             {
-                var addBonusAssignment = new AddBonusAssignmentRequest
+                var addAssignmentRequest = new AddAssignmentRequest
                 {
-                    TestId = testId
+                    TestId = testId,
+                    NumberOfQuestions = 1
                 };
 
-                var addBonusAssignmentResult = await _testController.AddBonusAssignmentAsync(addBonusAssignment);
+                AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
-                if (addBonusAssignmentResult.ValidationMessages.Count() > 0)
+                if (addAssignmentResult.ValidationMessages.Count() > 0)
                 {
-                    SharedConsoleFlows.PrintValidationMessages(addBonusAssignmentResult.ValidationMessages);
+                    SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
         public int NumberOfVersions { get; }
 
-        public IEnumerable<Assignment> Assignments { get; }
+        public IEnumerable<Assignment> TotalAssignments { get; }
 
         public Point ScoresHeaderPosition { get; private set; }
 
@@ -29,7 +29,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             int numberOfVersions)
         {
             StartPoint = startPoint;
-            Assignments = assignments;
+            TotalAssignments = assignments;
             NumberOfVersions = numberOfVersions;
             AssignmentBottomRows = new List<int>();
         }
@@ -60,10 +60,10 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         private int PrintAssignments(ISpreadsheetWriter spreadsheetWriter)
         {
             int lastQuestionRow = 0;
-            var totalAssignments = Assignments.Count();
+            var totalAssignments = TotalAssignments.Count();
             for (int assignmentIndex = 0; assignmentIndex < totalAssignments; assignmentIndex++)
             {
-                Assignment assignment = Assignments.ElementAt(assignmentIndex);
+                Assignment assignment = TotalAssignments.ElementAt(assignmentIndex);
 
                 spreadsheetWriter.MoveDownTimes(assignment.NumberOfQuestions);
                 AssignmentBottomRows.Add(spreadsheetWriter.CurrentPosition.Y);
@@ -74,6 +74,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                     lastQuestionRow = spreadsheetWriter.CurrentPosition.Y;
                 }
             }
+
             return lastQuestionRow;
         }
     }

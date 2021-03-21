@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-
-namespace Cifra.ConsoleHost.Areas.Class
+﻿namespace Cifra.ConsoleHost.Areas.Class
 {
+    /// <summary>
+    /// Possible menu options in the class area.
+    /// </summary>
     internal enum ClassMenuOption
     {
         Unknown = 0,
@@ -13,8 +11,6 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         CreateClassFromMagister = 2,
 
-        EditClass = 3,
-
-        DeleteClass = 4,
+        GoBack = 3,
     }
 }

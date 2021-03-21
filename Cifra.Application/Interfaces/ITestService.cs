@@ -20,11 +20,6 @@ namespace Cifra.Application.Interfaces
         Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model);
 
         /// <summary>
-        /// Sets the bonus assignment to the test.
-        /// </summary>
-        Task<AddBonusAssignmentResult> AddBonusAssignmentAsync(AddBonusAssignmentRequest model);
-
-        /// <summary>
         /// Retrieves all tests currently available.
         /// </summary>
         Task<GetAllTestsResult> GetTestsAsync();

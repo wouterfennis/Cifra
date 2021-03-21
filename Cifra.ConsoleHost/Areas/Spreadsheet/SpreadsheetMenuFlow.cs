@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Cifra.ConsoleHost.Areas.Class;
-using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost.Areas.Spreadsheet
 {
@@ -19,6 +18,7 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
             Console.Clear();
             Console.WriteLine("What would you like to do? Type the number");
             Console.WriteLine($"[{(int)SpreadsheetMenuOption.CreateSpreadsheet}] - Create a spreadsheet");
+            Console.WriteLine($"[{(int)SpreadsheetMenuOption.GoBack}] - Go back");
             var option = Console.ReadLine();
             await RedirectToSpreadsheetOption(option);
         }
@@ -34,7 +34,9 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
             {
                 case (int)SpreadsheetMenuOption.CreateSpreadsheet:
                     await _createSpreadsheetFlow.StartAsync();
-                    await StartAsync();
+                    await RetryMenu();
+                    break;
+                case (int)SpreadsheetMenuOption.GoBack:
                     break;
                 default:
                     await RetryMenu();

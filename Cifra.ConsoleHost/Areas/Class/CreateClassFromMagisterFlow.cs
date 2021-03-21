@@ -1,12 +1,12 @@
-﻿using Cifra.Application.Interfaces;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem;
 using Cifra.FileSystem.FileSystemInfo;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
@@ -27,6 +27,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         public async Task StartAsync()
         {
+            Console.Clear();
             IDirectoryInfoWrapper directory = _directoryInfoWrapperFactory.Create(_magisterDirectoryLocation);
             IFileInfoWrapper[] files = directory.GetFiles();
             Console.WriteLine("Files currently available in magister directory:");

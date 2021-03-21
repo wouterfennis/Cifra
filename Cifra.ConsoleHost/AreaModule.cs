@@ -5,6 +5,9 @@ using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// Module containing all the area's
+    /// </summary>
     public class AreaModule : Module
     {
         protected override void Load(ContainerBuilder builder)

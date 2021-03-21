@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
@@ -77,6 +78,7 @@ namespace Cifra.FileSystem.Spreadsheet
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
+
             var assignmentsBlock = new AssignmentsBlock(spreadsheetWriter.CurrentPosition,
                 test.Assignments,
                 test.NumberOfVersions);

@@ -43,14 +43,14 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 spreadsheetWriter.MoveRight();
                 spreadsheetWriter.Write(string.Empty);
             }
-            // spreadsheetWriter.CurrentPosition = new Point(input.ScoreTopPoint.X, spreadsheetWriter.CurrentPosition.Y);
 
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = NumberOfStudents + maximumPointsColumn;
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var startPosition = new Point(spreadsheetWriter.CurrentPosition.X, ScoreTopPoint.Y);
-                var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - 1);
+                var lastQuestionRowOffset = 1;
+                var endPosition = new Point(spreadsheetWriter.CurrentPosition.X, spreadsheetWriter.CurrentPosition.Y - lastQuestionRowOffset);
                 spreadsheetWriter
                     .PlaceStandardFormula(startPosition, endPosition, FormulaType.SUM)
                     .MoveRight();

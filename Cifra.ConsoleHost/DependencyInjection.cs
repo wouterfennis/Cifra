@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// Responsible for registering all the dependencies.
+    /// </summary>
     internal class DependencyInjection
     {
         internal static IContainer RegisterDependencies(IConfigurationSection appsettings)

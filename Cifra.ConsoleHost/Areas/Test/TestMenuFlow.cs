@@ -14,8 +14,10 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         public async Task StartAsync()
         {
+            Console.Clear();
             Console.WriteLine("What would you like to do? Type the number");
             Console.WriteLine($"[{(int)TestMenuOption.CreateTest}] - Create a new test");
+            Console.WriteLine($"[{(int)TestMenuOption.GoBack}] - Go back");
             var option = Console.ReadLine();
             await RedirectToTestOption(option);
         }
@@ -31,6 +33,9 @@ namespace Cifra.ConsoleHost.Areas.Test
             {
                 case (int)TestMenuOption.CreateTest:
                     await _createTestFlow.StartAsync();
+                    await RetryMenu();
+                    break;
+                case (int)TestMenuOption.GoBack:
                     break;
                 default:
                     await RetryMenu();
