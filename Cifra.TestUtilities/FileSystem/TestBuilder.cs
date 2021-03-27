@@ -1,7 +1,7 @@
-﻿using AutoFixture;
-using Cifra.FileSystem.FileEntity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using AutoFixture;
+using Cifra.FileSystem.FileEntity;
 
 namespace Cifra.TestUtilities.FileSystem
 {
@@ -9,6 +9,7 @@ namespace Cifra.TestUtilities.FileSystem
     {
         private readonly Fixture _fixture;
         private byte _minimumGrade;
+        private int _numberOfVersions;
         private readonly List<Assignment> _assignments;
 
         public TestBuilder()
@@ -20,6 +21,12 @@ namespace Cifra.TestUtilities.FileSystem
         public TestBuilder WithValidMinimumGrade()
         {
             _minimumGrade = 1;
+            return this;
+        }
+
+        public TestBuilder WithNumberOfVersions(int numberOfVersions)
+        {
+            _numberOfVersions = numberOfVersions;
             return this;
         }
 
@@ -45,6 +52,7 @@ namespace Cifra.TestUtilities.FileSystem
                 Name = testName,
                 Assignments = _assignments,
                 MinimumGrade = _minimumGrade,
+                NumberOfVersions = _numberOfVersions,
                 StandardizationFactor = standardizationFactor
             };
         }

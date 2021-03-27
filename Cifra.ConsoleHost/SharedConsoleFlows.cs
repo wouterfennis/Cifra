@@ -1,10 +1,12 @@
-﻿using Cifra.Application.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Cifra.Application.Validation;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// Console logic that is recurring in the application.
+    /// </summary>
     internal static class SharedConsoleFlows
     {
         private const string InvalidInputMessage = "Invalid Input";
@@ -62,17 +64,28 @@ namespace Cifra.ConsoleHost
         /// <returns>The string</returns>
         public static string AskForString(string question)
         {
-            if (question != null)
-            {
-                Console.WriteLine(question);
-            }
-            string input = Console.ReadLine();
+            var input = AskForOptionalString(question);
 
             if (string.IsNullOrWhiteSpace(input) || input == string.Empty)
             {
                 Console.WriteLine(InvalidInputMessage);
                 return AskForString(question);
             }
+            return input;
+        }
+
+        /// <summary>
+        /// Asks for an optional string
+        /// </summary>
+        /// <returns>The string</returns>
+        public static string AskForOptionalString(string question)
+        {
+            if (question != null)
+            {
+                Console.WriteLine(question);
+            }
+            string input = Console.ReadLine();
+
             return input;
         }
 

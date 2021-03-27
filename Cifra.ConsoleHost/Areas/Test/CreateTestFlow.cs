@@ -1,10 +1,9 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test.Requests;
-using Cifra.Application.Models.Test.Results;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Test.Requests;
+using Cifra.Application.Models.Test.Results;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {
@@ -19,25 +18,29 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         public async Task StartAsync()
         {
-            var testId = await CreateTestFlowAsync();
+            Console.Clear();
+            Guid testId = await CreateTestFlowAsync();
             Console.WriteLine("Adding assignments to the test");
             await AddAssignmentsFlowAsync(testId);
+            await AddBonusAssignmentFlowAsync(testId);
         }
 
         private async Task<Guid> CreateTestFlowAsync()
         {
-            var testName = SharedConsoleFlows.AskForString("What is the name of the test?");
-            var minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
-            var standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
+            string testName = SharedConsoleFlows.AskForString("What is the name of the test?");
+            byte numberOfVersions = SharedConsoleFlows.AskForByte("How many versions are there?");
+            byte minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
+            byte standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
 
             var createTestRequest = new CreateTestRequest()
             {
                 Name = testName,
                 MinimumGrade = minimumGrade,
-                StandardizationFactor = standardizationFactor
+                StandardizationFactor = standardizationFactor,
+                NumberOfVersions = numberOfVersions
             };
-            var createTestResponse = await _testController.CreateTestAsync(createTestRequest);
-            var testId = createTestResponse.TestId;
+            CreateTestResult createTestResponse = await _testController.CreateTestAsync(createTestRequest);
+            Guid testId = createTestResponse.TestId;
             if (createTestResponse.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
@@ -48,76 +51,52 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task AddAssignmentsFlowAsync(Guid testId)
         {
-            await AddAssignmentFlowAsync(testId);
-            bool addAnotherAssignment = SharedConsoleFlows.AskForBool("Add another assignment?");
+            byte numberOfAssignments = SharedConsoleFlows.AskForByte("How many normal assignments are there?");
 
-            if (addAnotherAssignment)
+            for (int assignmentIndex = 0; assignmentIndex < numberOfAssignments; assignmentIndex++)
             {
-                await AddAssignmentsFlowAsync(testId);
+                await AddAssignmentFlowAsync(testId, assignmentIndex);
             }
         }
 
-        private async Task AddAssignmentFlowAsync(Guid testId)
+        private async Task AddAssignmentFlowAsync(Guid testId, int assignmentIndex)
         {
+            byte numberOfQuestions = SharedConsoleFlows.AskForByte($"How many questions are there for assignment: {assignmentIndex + 1}?");
+
             var addAssignmentRequest = new AddAssignmentRequest
             {
-                TestId = testId
+                TestId = testId,
+                NumberOfQuestions = numberOfQuestions
             };
-            var addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
+
+            AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
             if (addAssignmentResult.ValidationMessages.Count() > 0)
             {
                 SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
-                await AddAssignmentFlowAsync(testId);
-            }
-            else
-            {
-                await AddQuestionsFlowAsync(testId, addAssignmentResult.AssignmentId.Value);
+                await AddAssignmentFlowAsync(testId, assignmentIndex);
             }
         }
 
-        private async Task AddQuestionsFlowAsync(Guid testId, Guid assignmentId)
+        private async Task AddBonusAssignmentFlowAsync(Guid testId)
         {
-            await AddQuestionFlowAsync(testId, assignmentId);
-            bool addAnotherQuestion = SharedConsoleFlows.AskForBool("Add another question to this assignment?");
+            bool isBonusAssignmentNeeded = SharedConsoleFlows.AskForBool($"Is there a bonus question?");
 
-            if (addAnotherQuestion)
+            if (isBonusAssignmentNeeded)
             {
-                await AddQuestionsFlowAsync(testId, assignmentId);
+                var addAssignmentRequest = new AddAssignmentRequest
+                {
+                    TestId = testId,
+                    NumberOfQuestions = 1
+                };
+
+                AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
+
+                if (addAssignmentResult.ValidationMessages.Count() > 0)
+                {
+                    SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
+                }
             }
-        }
-
-        private async Task AddQuestionFlowAsync(Guid testId, Guid assignmentId)
-        {
-            IEnumerable<string> names = CollectQuestionNames();
-            var maximalScore = SharedConsoleFlows.AskForByte("What is the maximal score of the question?");
-            var model = new AddQuestionRequest
-            {
-                TestId = testId,
-                AssignmentId = assignmentId,
-                Names = names,
-                MaximumScore = maximalScore
-            };
-            AddQuestionResult addQuestionResponse = await _testController.AddQuestionAsync(model);
-
-            if (addQuestionResponse.ValidationMessages.Count() > 0)
-            {
-                SharedConsoleFlows.PrintValidationMessages(addQuestionResponse.ValidationMessages);
-                await AddQuestionFlowAsync(testId, assignmentId);
-            }
-        }
-
-        private IEnumerable<string> CollectQuestionNames()
-        {
-            var names = new List<string>();
-            var name = SharedConsoleFlows.AskForString("Type a name for the question");
-            names.Add(name);
-            var addAnotherName = SharedConsoleFlows.AskForBool("Add an additional name to the question?");
-            if (addAnotherName)
-            {
-                names.AddRange(CollectQuestionNames());
-            }
-            return names;
         }
     }
 }

@@ -1,147 +1,99 @@
-﻿using AutoFixture;
+﻿using System;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
 using Cifra.TestUtilities.FileSystem;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 
 namespace Cifra.FileSystem.UnitTests.Mapping
 {
     [TestClass]
     public class TestMappingTests
     {
-        private Fixture _fixture;
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            _fixture = new Fixture();
-        }
-
         [TestMethod]
         public void MapToFileEntity_InputNull_ThrowsException()
         {
+            // Arrange
             Test input = null;
 
+            // Act
             Action action = () => input.MapToFileEntity();
 
+            // Assert
             action.Should().Throw<ArgumentNullException>();
         }
 
         [TestMethod]
         public void MapToModel_InputNull_ThrowsException()
         {
+            // Arrange
             FileEntity.Test input = null;
 
+            // Act
             Action action = () => input.MapToModel();
 
+            // Assert
             action.Should().Throw<ArgumentNullException>();
         }
 
         [TestMethod]
         public void MapToFileEntity_WithValidTest_MapsTestProperties()
         {
+            // Arrange
             var input = new TestUtilities.Application.TestBuilder()
                 .WithValidMinimumGrade()
+                .WithNumberOfVersions(1)
                 .WithRandomAssignments()
                 .Build();
 
+            // Act
             FileEntity.Test result = input.MapToFileEntity();
 
+            // Assert
             result.Id.Should().Be(input.Id);
             result.Name.Should().Be(input.Name.Value);
             result.MinimumGrade.Should().Be(input.MinimumGrade.Value);
             result.StandardizationFactor.Should().Be(input.StandardizationFactor.Value);
+            result.NumberOfVersions.Should().Be(input.NumberOfVersions);
         }
 
         [TestMethod]
         public void MapToModel_WithValidTest_MapsTestProperties()
         {
+            // Arrange
             var input = new TestBuilder()
                 .WithValidMinimumGrade()
+                .WithNumberOfVersions(1)
                 .WithRandomAssignments()
                 .Build();
 
+            // Act
             Test result = input.MapToModel();
 
+            // Assert
             result.Id.Should().Be(input.Id);
             result.Name.Value.Should().Be(input.Name);
             result.MinimumGrade.Value.Should().Be(input.MinimumGrade);
             result.StandardizationFactor.Value.Should().Be(input.StandardizationFactor);
+            result.NumberOfVersions.Should().Be(input.NumberOfVersions);
+
         }
 
         [TestMethod]
         public void MapToFileEntity_WithValidTest_MapsAssignments()
         {
+            // Arrange
             var input = new TestUtilities.Application.TestBuilder()
                 .WithValidMinimumGrade()
+                .WithNumberOfVersions(1)
                 .WithRandomAssignments()
                 .Build();
 
+            // Act
             FileEntity.Test result = input.MapToFileEntity();
 
+            // Assert
             result.Assignments.Should().HaveCount(input.Assignments.Count);
-            foreach (var assignment in input.Assignments)
-            {
-                result.Assignments.Should().Contain(x => x.Id == assignment.Id);
-            }
-        }
-
-        [TestMethod]
-        public void MapToModel_WithValidClass_MapsStudents()
-
-        {
-            var input = new TestBuilder()
-                .WithValidMinimumGrade()
-                .WithRandomAssignments()
-                .Build();
-
-            Test result = input.MapToModel();
-
-            result.Assignments.Should().HaveCount(input.Assignments.Count());
-            foreach (var assignment in input.Assignments)
-            {
-                result.Assignments.Should().Contain(x => x.Id == assignment.Id);
-            }
-        }
-
-
-        [TestMethod]
-        public void MapToFileEntity_WithValidTest_MapsQuestions()
-        {
-            var input = new TestUtilities.Application.TestBuilder()
-                .WithValidMinimumGrade()
-                .WithRandomAssignments()
-                .Build();
-
-            FileEntity.Test result = input.MapToFileEntity();
-
-            result.Assignments.Should().HaveCount(input.Assignments.Count);
-
-            var allQuestions = result.Assignments.SelectMany(x => x.Questions);
-
-            foreach (var assignment in input.Assignments)
-            {
-                foreach (var question in assignment.Questions)
-                {
-                    allQuestions.Should().Contain(x => x.MaximumScore == question.MaximumScore.Value);
-                }
-            }
-        }
-
-        [TestMethod]
-        public void MapToModel_WithValidClass_MapsQuestions()
-        {
-            var input = new TestBuilder()
-                .WithValidMinimumGrade()
-                .WithRandomAssignments()
-                .Build();
-
-            Test result = input.MapToModel();
-
-            result.Assignments.Should().HaveCount(input.Assignments.Count());
             foreach (var assignment in input.Assignments)
             {
                 result.Assignments.Should().Contain(x => x.Id == assignment.Id);

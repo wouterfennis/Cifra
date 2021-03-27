@@ -1,8 +1,8 @@
-﻿using AutoFixture;
+﻿using System;
+using System.Collections.Generic;
+using AutoFixture;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
-using System;
-using System.Collections.Generic;
 
 namespace Cifra.TestUtilities.Application
 {
@@ -11,6 +11,7 @@ namespace Cifra.TestUtilities.Application
         private readonly Fixture _fixture;
         private Grade _minimumGrade;
         private readonly List<Assignment> _assignments;
+        private int _numberOfVersions;
 
         public TestBuilder()
         {
@@ -30,6 +31,12 @@ namespace Cifra.TestUtilities.Application
             return this;
         }
 
+        public TestBuilder WithNumberOfVersions(int numberOfVersions)
+        {
+            _numberOfVersions = numberOfVersions;
+            return this;
+        }
+
         public TestBuilder WithRandomAssignments()
         {
             for (int i = 0; i < 3; i++)
@@ -46,7 +53,13 @@ namespace Cifra.TestUtilities.Application
         {
             Name testName = _fixture.Create<Name>();
             StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
-            return new Test(Guid.NewGuid(), testName, standardizationFactor, _minimumGrade, _assignments);
+            return new Test(
+                Guid.NewGuid(),
+                testName,
+                standardizationFactor,
+                _minimumGrade,
+                _assignments,
+                _numberOfVersions);
         }
     }
 }

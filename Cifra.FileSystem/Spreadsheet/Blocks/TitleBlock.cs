@@ -1,8 +1,7 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using SpreadsheetWriter.Abstractions;
-using System;
+﻿using System;
 using System.Drawing;
-using static Cifra.FileSystem.Spreadsheet.Blocks.TitleBlock;
+using Cifra.Application.Models.ValueTypes;
+using SpreadsheetWriter.Abstractions;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -13,38 +12,30 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     {
         private const int TitleSize = 16;
         private const string DateFormat = "dd-MM-yyyy";
-        private readonly TitleBlockInput input;
+        public Point StartPoint { get; }
+        public Name TestName { get; }
+        public DateTime CreatedOn { get; }
 
-        public TitleBlock(TitleBlockInput input)
+        public TitleBlock(Point startPoint, Name testName, DateTime createdOn)
         {
-            this.input = input;
+            StartPoint = startPoint;
+            TestName = testName;
+            CreatedOn = createdOn;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            spreadsheetWriter.CurrentPosition = input.StartPoint;
+            spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
                 .SetFontSize(TitleSize)
-                .Write(input.TestName.Value)
+                .Write(TestName.Value)
                 .ResetStyling()
                 .NewLine()
+                .SetFontBold(true)
                 .Write("Gemaakt op:")
+                .SetFontBold(false)
                 .MoveRight()
-                .Write(input.CreatedOn.ToString(DateFormat));
-        }
-
-        public class TitleBlockInput
-        {
-            public Point StartPoint { get; }
-            public Name TestName { get; }
-            public DateTime CreatedOn { get; }
-
-            public TitleBlockInput(Point startPoint, Name testName, DateTime createdOn)
-            {
-                StartPoint = startPoint;
-                TestName = testName;
-                CreatedOn = createdOn;
-            }
+                .Write(CreatedOn.ToString(DateFormat));
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Class.Results;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Models.Class.Results;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
@@ -18,6 +18,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         public async Task StartAsync()
         {
+            Console.Clear();
             Guid classId = await CreateClassFlowAsync();
             Console.WriteLine("Adding students to the class");
             await AddStudentsFlowAsync(classId);
@@ -55,7 +56,7 @@ namespace Cifra.ConsoleHost.Areas.Class
         private async Task AddStudentFlowAsync(Guid classId)
         {
             string firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
-            string infix = SharedConsoleFlows.AskForString("What is the infix of the student?");
+            string infix = SharedConsoleFlows.AskForOptionalString("What is the infix of the student?");
             string lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
             var model = new AddStudentRequest
             {

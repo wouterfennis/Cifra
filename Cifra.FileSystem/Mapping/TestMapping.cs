@@ -23,9 +23,10 @@ namespace Cifra.FileSystem.Mapping
             {
                 Id = input.Id,
                 Name = input.Name.Value,
+                NumberOfVersions = input.NumberOfVersions,
                 MinimumGrade = input.MinimumGrade.Value,
                 StandardizationFactor = input.StandardizationFactor.Value,
-                Assignments = input.Assignments.MapToFileEntity()
+                Assignments = input.Assignments.MapToFileEntity(),
             };
         }
 
@@ -36,25 +37,23 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return input.Select(x => new FileEntity.Assignment
-            {
-                Id = x.Id,
-                Questions = x.Questions.MapToFileEntity()
-            });
+            return input.Select(x => x.MapToFileEntity());
         }
 
-        /// <summary>
-        /// Maps a list of <see cref="Application.Models.Test.Question"/> to a list of <see cref="Question"/>.
+        /// Maps a <see cref="Application.Models.Test.Assignment"/> to a <see cref="Assignment"/>.
         /// </summary>
-        public static IEnumerable<FileEntity.Question> MapToFileEntity(this IEnumerable<Application.Models.Test.Question> input)
+        public static FileEntity.Assignment MapToFileEntity(this Application.Models.Test.Assignment input)
         {
-            ValidateNullInput(input);
-
-            return input.Select(x => new FileEntity.Question
+            if (input == null)
             {
-                MaximumScore = x.MaximumScore.Value,
-                QuestionNames = x.QuestionNames.Select(n => n.Value)
-            });
+                return null;
+            }
+
+            return new FileEntity.Assignment
+            {
+                Id = input.Id,
+                NumberOfQuestions = input.NumberOfQuestions
+            };
         }
 
         /// <summary>
@@ -64,7 +63,13 @@ namespace Cifra.FileSystem.Mapping
         {
             ValidateNullInput(input);
 
-            return new Application.Models.Test.Test(input.Id, Name.CreateFromString(input.Name), StandardizationFactor.CreateFromByte(input.StandardizationFactor), Grade.CreateFromByte(input.MinimumGrade), input.Assignments.MapToModel());
+            return new Application.Models.Test.Test(
+                input.Id,
+                Name.CreateFromString(input.Name),
+                StandardizationFactor.CreateFromByte(input.StandardizationFactor),
+                Grade.CreateFromByte(input.MinimumGrade),
+                input.Assignments.MapToModel(),
+                input.NumberOfVersions);
         }
 
         /// <summary>
@@ -73,21 +78,23 @@ namespace Cifra.FileSystem.Mapping
         public static List<Application.Models.Test.Assignment> MapToModel(this IEnumerable<FileEntity.Assignment> input)
         {
             ValidateNullInput(input);
-            return input.Select(x => new Application.Models.Test.Assignment(
-                x.Id,
-                x.Questions.MapToModel())).ToList();
+            return input.Select(x => x.MapToModel())
+                .ToList();
         }
 
         /// <summary>
-        /// Maps a list of <see cref="Application.Models.Test.Question"/> to a list of <see cref="Question"/>.
+        /// Maps a <see cref="Application.Models.Test.Assignment"/> to a <see cref="Assignment"/>.
         /// </summary>
-        public static List<Application.Models.Test.Question> MapToModel(this IEnumerable<FileEntity.Question> input)
+        public static Application.Models.Test.Assignment MapToModel(this FileEntity.Assignment input)
         {
-            ValidateNullInput(input);
-            return input.Select(x => new Application.Models.Test.Question(
-                x.QuestionNames.Select(n => Name.CreateFromString(n)),
-                QuestionScore.CreateFromByte(x.MaximumScore)))
-                .ToList();
+            if (input == null)
+            {
+                return null;
+            }
+
+            return new Application.Models.Test.Assignment(
+                input.Id,
+                input.NumberOfQuestions);
         }
 
         private static void ValidateNullInput(object input)

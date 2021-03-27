@@ -1,90 +1,78 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cifra.Application.Models.ValueTypes;
 
 namespace Cifra.Application.Models.Test
 {
     /// <summary>
-    /// The Test entity
+    /// The Test entity.
     /// </summary>
     public sealed class Test
     {
         /// <summary>
-        /// The Id
+        /// The Id.
         /// </summary>
         public Guid Id { get; }
 
         /// <summary>
-        /// The Name
+        /// The Name.
         /// </summary>
         public Name Name { get; }
 
         /// <summary>
-        /// The Assignments
+        /// The number of versions of the test that where made.
+        /// </summary>
+        public int NumberOfVersions { get; }
+
+        /// <summary>
+        /// The Assignments.
         /// </summary>
         public List<Assignment> Assignments { get; }
 
         /// <summary>
-        /// The Standardization Factor
+        /// The Standardization Factor.
         /// </summary>
         public StandardizationFactor StandardizationFactor { get; }
 
         /// <summary>
-        /// The Minimum Grade
+        /// The Minimum Grade.
         /// </summary>
         public Grade MinimumGrade { get; }
 
         /// <summary>
-        /// Constructor for a new Test
+        /// Constructor for a new Test.
         /// </summary>
-        public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade)
+        public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade, int numberOfVersions)
         {
             Id = Guid.NewGuid();
             Name = testName;
             Assignments = new List<Assignment>();
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+            NumberOfVersions = numberOfVersions;
         }
 
         /// <summary>
-        /// Constructor for existing tests
+        /// Constructor for existing tests.
         /// </summary>
         public Test(Guid id,
             Name testName,
             StandardizationFactor standardizationFactor,
             Grade minimumGrade,
-            List<Assignment> assignments)
+            List<Assignment> assignments,
+            int numberOfVersions)
         {
             Id = id;
             Name = testName;
             Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+            NumberOfVersions = numberOfVersions;
         }
 
         /// <summary>
-        /// Gets the maximum points that can be achieved in this test
-        /// </summary>
-        public decimal GetMaximumPoints()
-        {
-            return Assignments.Sum(x => x.GetMaximumPoints());
-        }
-
-        /// <summary>
-        /// Gets the maximum number of question names present of all assignments
-        /// </summary>
-        public int GetMaximumQuestionNamesPerAssignment()
-        {
-            if (Assignments.Any())
-            {
-                return Assignments.Max(x => x.GetMaximumQuestionNamesPerQuestion());
-            }
-            return 0;
-        }
-
-        /// <summary>
-        /// Adds a assignment to the test
+        /// Adds a assignment to the test.
         /// </summary>
         public void AddAssignment(Assignment assignment)
         {
@@ -96,7 +84,7 @@ namespace Cifra.Application.Models.Test
         }
 
         /// <summary>
-        /// Gets the assignment
+        /// Gets the assignment.
         /// </summary>
         public Assignment GetAssignment(Guid assignmentId)
         {

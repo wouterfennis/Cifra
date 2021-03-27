@@ -1,6 +1,8 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
+using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -20,9 +22,19 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = input.StartPosition;
             spreadsheetWriter
-                .Write("Cijfer");
+                .SetFontBold(true)
+                .SetBorder(BorderStyle.Double, BorderDirection.Bottom, Color.Black)
+                .Write("Cijfer")
+                .SetFontBold(false);
 
-            spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
+            int columnsBetweenFirstPoint = input.ScoresStartColumn - spreadsheetWriter.CurrentPosition.X;
+            for (int i = 0; i < columnsBetweenFirstPoint; i++)
+            {
+                spreadsheetWriter.MoveRight();
+                spreadsheetWriter.Write(string.Empty);
+            }
+
+            // spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
 
             ICellRange maximumScoreCell = spreadsheetWriter.GetCellRange(input.MaximumScorePosition);
             ICellRange standardizationFactorCell = spreadsheetWriter.GetCellRange(input.StandardizationFactorPosition);
@@ -30,6 +42,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             const int maximumPointsColumn = 1;
             int numberOfScoreColumns = input.NumberOfStudents + maximumPointsColumn;
+            spreadsheetWriter.SetFormat("0.0");
             for (int columnIndex = 0; columnIndex < numberOfScoreColumns; columnIndex++)
             {
                 var achievedScorePosition = new Point(spreadsheetWriter.CurrentPosition.X, input.AchievedScoresRow);
@@ -42,6 +55,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                     minimumGradeCell))
                     .MoveRight();
             }
+            spreadsheetWriter.ResetStyling();
         }
 
         private IFormulaBuilder SetupGradeFormula(ICellRange achievedPoints,
@@ -55,12 +69,22 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddOpenParenthesis()
                 .AddCellAddress(achievedPoints.Address)
                 .AddDivisionSign()
-                .AddCellAddress(maximumScore.Address)
+                .AddConstantSign()
+                .AddCellColumnLetter(maximumScore.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(maximumScore.Address.RowNumber)
                 .AddClosingParenthesis()
                 .AddMultiplicationSign()
-                .AddCellAddress(standardizationFactor.Address)
+                .AddConstantSign()
+                .AddCellColumnLetter(standardizationFactor.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(standardizationFactor.Address.RowNumber)
                 .AddSummationSign()
-                .AddCellAddress(minimumGrade.Address);
+                .AddConstantSign()
+                .AddCellColumnLetter(minimumGrade.Address.ColumnLetter)
+                .AddConstantSign()
+                .AddRowNumber(minimumGrade.Address.RowNumber);
+
         }
 
         public class GradesBlockInput

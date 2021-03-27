@@ -5,6 +5,9 @@ using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// Module containing all the area's
+    /// </summary>
     public class AreaModule : Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -12,14 +15,10 @@ namespace Cifra.ConsoleHost
             builder.RegisterType<ClassMenuFlow>();
             builder.RegisterType<CreateClassManuallyFlow>();
             builder.RegisterType<CreateClassFromMagisterFlow>();
-            builder.RegisterType<EditClassFlow>();
-            builder.RegisterType<DeleteClassFlow>();
             builder.RegisterType<SpreadsheetMenuFlow>();
             builder.RegisterType<CreateSpreadsheetFlow>();
             builder.RegisterType<TestMenuFlow>();
             builder.RegisterType<CreateTestFlow>();
-            builder.RegisterType<EditTestFlow>();
-            builder.RegisterType<DeleteTestFlow>();
         }
     }
 }

@@ -1,16 +1,20 @@
-﻿using SpreadsheetWriter.Abstractions;
+﻿using System.Drawing;
+using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
 
 namespace SpreadsheetWriter.Test
 {
-    public class ArraySpreadsheetWriter : SpreadsheetWriterBase
+    /// <summary>
+    /// Test implementation of the spreadsheet writer in order to assert certain contents in the spreadsheet.
+    /// </summary>
+    public class ArrayContentSpreadsheetWriter : SpreadsheetWriterBase
     {
         public string[,] Spreadsheet { get; }
         private const int DefaultXPosition = 0;
         private const int DefaultYPosition = 0;
 
-        public ArraySpreadsheetWriter(string[,] spreadsheet) : base(DefaultXPosition, DefaultYPosition)
+        public ArrayContentSpreadsheetWriter(string[,] spreadsheet) : base(DefaultXPosition, DefaultYPosition)
         {
             Spreadsheet = spreadsheet;
             CurrentPosition = new Point(DefaultXPosition, DefaultYPosition);
@@ -45,7 +49,7 @@ namespace SpreadsheetWriter.Test
         private string AppendFormula(string currentValue, string v)
         {
             string newValue = null;
-            if(currentValue != null)
+            if (currentValue != null)
             {
                 newValue = $"{currentValue} AND ";
             }
@@ -60,7 +64,7 @@ namespace SpreadsheetWriter.Test
 
         public override ICellRange GetCellRange(Point position)
         {
-            return new TestExcelRange(position.ToString());
+            return new TestExcelRange(new TestExcelAddress(), string.Empty);
         }
     }
 }

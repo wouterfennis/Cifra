@@ -1,14 +1,24 @@
-﻿using Cifra.Application.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Cifra.Application.Validation;
 
 namespace Cifra.Application.Models.Test.Results
 {
     /// <summary>
-    /// Result of the Add Question operation
+    /// Result of the Add Assignment operation
     /// </summary>
-    public sealed class AddQuestionResult
+    public sealed class AddBonusAssignmentResult
     {
+        /// <summary>
+        /// The test Id
+        /// </summary>
+        public Guid? TestId { get; }
+
+        /// <summary>
+        /// The assignment Id
+        /// </summary>
+        public Guid? AssignmentId { get; }
+
         /// <summary>
         /// The validation messages
         /// </summary>
@@ -17,15 +27,17 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public AddQuestionResult()
+        public AddBonusAssignmentResult(Guid testId, Guid assignmentId)
         {
+            TestId = testId;
+            AssignmentId = assignmentId;
             ValidationMessages = new List<ValidationMessage>();
         }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public AddQuestionResult(IEnumerable<ValidationMessage> validationMessages)
+        public AddBonusAssignmentResult(IEnumerable<ValidationMessage> validationMessages)
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
@@ -33,7 +45,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public AddQuestionResult(ValidationMessage validationMessage)
+        public AddBonusAssignmentResult(ValidationMessage validationMessage)
         {
             if (validationMessage == null)
             {

@@ -1,13 +1,11 @@
-﻿using AutoFixture;
+﻿using System;
+using System.Drawing;
+using AutoFixture;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -17,7 +15,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
-        private ArraySpreadsheetWriter _spreadsheetWriter;
+        private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -25,7 +23,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _spreadsheet = new string[5, 5];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -34,8 +32,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
-            var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            var sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -50,8 +47,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var expectedTitle = _fixture.Create<Name>();
             var expectedCreatedOn = _fixture.Create<DateTime>();
-            var titleBlockInput = new TitleBlock.TitleBlockInput(_startpoint, expectedTitle, expectedCreatedOn);
-            var sut = new TitleBlock(titleBlockInput);
+            var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn);
 
             // Act
             sut.Write(_spreadsheetWriter);

@@ -11,6 +11,11 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// The number of versions of this test that exist.
+        /// </summary>
+        public int NumberOfVersions { get; set; }
+
+        /// <summary>
         /// The standardization factor
         /// </summary>
         public byte StandardizationFactor { get; set; }

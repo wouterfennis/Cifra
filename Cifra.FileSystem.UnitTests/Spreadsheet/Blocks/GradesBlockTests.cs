@@ -1,16 +1,12 @@
-﻿using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+﻿using System.Drawing;
+using AutoFixture;
 using Cifra.FileSystem.Spreadsheet.Blocks;
+using Cifra.TestUtilities.SpreadsheetWriter;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -21,7 +17,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private Point _startpoint;
         private Fixture _fixture;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
-        private ArraySpreadsheetWriter _spreadsheetWriter;
+        private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -30,7 +26,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _startpoint = new Point(0, 5);
             _fixture = new Fixture();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -101,36 +97,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private void SetupFormulaBuilderFactory(Mock<IFormulaBuilderFactory> formulaBuilderFactory, string expectedFormula)
         {
             var formulaBuilder = new Mock<IFormulaBuilder>();
-
-            formulaBuilder.Setup(x => x.AddCellAddress(It.IsAny<string>()))
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddClosingParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddDivisionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddEqualsSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddMultiplicationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddOpenParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSubtractionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.Build())
-                .Returns(expectedFormula);
+            FormulaBuilderTestUtilities.SetupFormulaBuilder(formulaBuilder, expectedFormula);
 
             formulaBuilderFactory.Setup(x => x.Create())
                 .Returns(formulaBuilder.Object);

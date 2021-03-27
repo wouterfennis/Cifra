@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
@@ -6,13 +7,18 @@ using Cifra.ConsoleHost.Areas.Test;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// The start point of the application.
+    /// </summary>
     internal class Application
     {
         private readonly ClassMenuFlow _classMenuFlow;
         private readonly TestMenuFlow _testMenuFlow;
         private readonly SpreadsheetMenuFlow _spreadsheetMenuFlow;
 
-        public Application(ClassMenuFlow classMenuFlow, TestMenuFlow testMenuFlow, SpreadsheetMenuFlow spreadsheetMenuFlow)
+        public Application(ClassMenuFlow classMenuFlow,
+            TestMenuFlow testMenuFlow,
+            SpreadsheetMenuFlow spreadsheetMenuFlow)
         {
             _classMenuFlow = classMenuFlow;
             _testMenuFlow = testMenuFlow;
@@ -33,14 +39,21 @@ namespace Cifra.ConsoleHost
 
         private static void PrintTitle()
         {
-            string title = @"
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            string title = $@"
          _______         ________   
         /  _____\   ___ /\   ____\ _______  
        /\  \    /  /\__\\ \  \___ /\   ___\  ______ 
       /  \  \__/__ \/\  \\ \   __\\ \  \__/ /  __  \
       \   \________\\ \  \\ \  \_/ \ \  \  /\  \L\  \
        \  /        / \ \__\\ \__\   \ \ _\ \ \__/.\__\
-        \/________/   \/__/ \/__/    \/__/  \/__/\/__/";
+        \/________/   \/__/ \/__/    \/__/  \/__/\/__/ v{version}
+-------------------------------------------------------------
+Created by:
+                                  __               
+            | | _    _|_ _  __   |_  _ __ __  o  _ 
+            |^|(_)|_| |_(/_ |    |  (/_| || | | _> 
+";
             Console.WriteLine(title);
             Console.WriteLine();
         }
@@ -56,12 +69,15 @@ namespace Cifra.ConsoleHost
             {
                 case (int)AreaMenuOption.Class:
                     await _classMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Test:
                     await _testMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Spreadsheet:
                     await _spreadsheetMenuFlow.StartAsync();
+                    await StartAsync();
                     break;
                 case (int)AreaMenuOption.Quit:
                     break;
@@ -73,6 +89,7 @@ namespace Cifra.ConsoleHost
 
         private async Task RetryMenuAsync()
         {
+            Console.Clear();
             Console.WriteLine("Invalid choice!");
             await StartAsync();
         }

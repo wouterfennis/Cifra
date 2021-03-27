@@ -1,4 +1,7 @@
-﻿using Cifra.Application.Interfaces;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
@@ -6,8 +9,6 @@ using Cifra.FileSystem.Spreadsheet.Blocks;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
-using System.Drawing;
-using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
@@ -48,21 +49,18 @@ namespace Cifra.FileSystem.Spreadsheet
 
         private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
         {
-            var titleInput = new TitleBlock.TitleBlockInput(spreadsheetWriter.CurrentPosition,
+            var titleBlock = new TitleBlock(spreadsheetWriter.CurrentPosition,
                 test.Name,
                 metadata.Created);
-            var titleBlock = new TitleBlock(titleInput);
-            titleBlock
-                .Write(spreadsheetWriter);
+            //titleBlock
+            //   .Write(spreadsheetWriter);
         }
 
         private static ConfigurationBlock AddConfiguration(Test test, ISpreadsheetWriter spreadsheetWriter)
         {
-            var configurationInput = new ConfigurationBlock.ConfigurationBlockInput(spreadsheetWriter.CurrentPosition,
-                test.GetMaximumPoints(),
+            var configurationBlock = new ConfigurationBlock(spreadsheetWriter.CurrentPosition,
                 test.StandardizationFactor,
                 test.MinimumGrade);
-            var configurationBlock = new ConfigurationBlock(configurationInput);
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
@@ -80,20 +78,21 @@ namespace Cifra.FileSystem.Spreadsheet
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
-            var assignmentsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(spreadsheetWriter.CurrentPosition,
-                test.Assignments);
-            var assignmentsBlock = new AssignmentsBlock(assignmentsBlockInput);
+
+            var assignmentsBlock = new AssignmentsBlock(spreadsheetWriter.CurrentPosition,
+                test.Assignments,
+                test.NumberOfVersions);
             assignmentsBlock.Write(spreadsheetWriter);
 
             spreadsheetWriter.CurrentPosition = assignmentsBlock.ScoresHeaderPosition;
             spreadsheetWriter.MoveRight();
             int studentNamesStartColumn = spreadsheetWriter.CurrentPosition.X;
-            var studentNamesInput = new StudentNamesBlock.StudentNamesBlockInput(spreadsheetWriter.CurrentPosition, @class.Students);
-            var studentNamesBlock = new StudentNamesBlock(studentNamesInput);
+            var studentNamesBlock = new StudentNamesBlock(spreadsheetWriter.CurrentPosition, @class.Students);
             studentNamesBlock.Write(spreadsheetWriter);
 
-            spreadsheetWriter.CurrentPosition = assignmentsBlock.LastMaximumValuePosition;
+            spreadsheetWriter.CurrentPosition = new Point(spreadsheetWriter.CurrentPosition.X, assignmentsBlock.LastQuestionRow);
             spreadsheetWriter.NewLine();
+
             var scoresTopRow = new Point(assignmentsBlock.ScoresHeaderPosition.X, assignmentsBlock.ScoresHeaderPosition.Y + 1);
             AddTotalPointsRow(spreadsheetWriter,
                 scoresTopRow,
@@ -104,8 +103,8 @@ namespace Cifra.FileSystem.Spreadsheet
             var numberOfStudents = @class.Students.Count;
             AddGradesRow(spreadsheetWriter,
                 achievedScoresRow,
-                assignmentsBlock.LastMaximumValuePosition.X,
-                configurationBlock.MaximumPointsPosition,
+                assignmentsBlock.ScoresHeaderPosition.X,
+                new Point(assignmentsBlock.ScoresHeaderPosition.X, achievedScoresRow),
                 configurationBlock.MinimumGradePosition,
                 configurationBlock.StandardizationfactorPosition,
                 numberOfStudents,
@@ -120,17 +119,24 @@ namespace Cifra.FileSystem.Spreadsheet
                 gradesRow,
                 studentNamesStartColumn,
                 numberOfStudents);
+
+            var borderBlock = new BorderBlock(
+                assignmentsBlock.ScoresHeaderPosition.Y,
+                assignmentsBlock.AssignmentBottomRows,
+                achievedScoresRow,
+                gradesRow,
+                studentNamesBlock.MostOuterColumn);
+            borderBlock.Write(spreadsheetWriter);
         }
 
         private static void AddTotalPointsRow(ISpreadsheetWriter spreadsheetWriter,
             Point scorePointTop,
             int numberOfStudents)
         {
-            var totalPointsBlockInput = new TotalScoresBlock.TotalScoresBlockInput(
+            var totalPointsBlock = new TotalScoresBlock(
                 spreadsheetWriter.CurrentPosition,
                 scorePointTop,
                 numberOfStudents);
-            var totalPointsBlock = new TotalScoresBlock(totalPointsBlockInput);
             totalPointsBlock.Write(spreadsheetWriter);
         }
 

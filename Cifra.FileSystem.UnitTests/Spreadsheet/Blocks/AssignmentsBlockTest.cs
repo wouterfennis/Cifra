@@ -1,13 +1,12 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using AutoFixture;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -17,7 +16,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         private string[,] _spreadsheet;
         private Point _startpoint;
         private Fixture _fixture;
-        private ArraySpreadsheetWriter _spreadsheetWriter;
+        private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
         public void Initialize()
@@ -25,7 +24,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
             _fixture = new Fixture();
-            _spreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 
         [TestMethod]
@@ -33,68 +32,62 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             int expectedQuestionNamesColumns = 2;
-            var assignments = new List<Assignment> { CreateAssignment() };
-            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments);
-            var sut = new AssignmentsBlock(questionsBlockInput);
+            var assignments = new List<Assignment> { };
+            var sut = new AssignmentsBlock(_startpoint, assignments, expectedQuestionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
 
             // Assert
             _spreadsheet[0, 0].Should().Be("Opgave");
-            _spreadsheet[expectedQuestionNamesColumns + 1, 0].Should().Be("Punten");
+            _spreadsheet[expectedQuestionNamesColumns, 0].Should().Be("Punten");
+
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(_spreadsheet);
         }
 
         [TestMethod]
-        public void Write_WithMultipleQuestionNames_PutsQuestionNamesInGivenOrder()
+        public void Write_WithAssignment_SavesLastRowOfAssignment()
         {
             // Arrange
-            var assignment = CreateAssignment();
-            var expectedQuestions = assignment.Questions;
-            var assignments = new List<Assignment> { assignment };
-            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments);
-            var sut = new AssignmentsBlock(questionsBlockInput);
+            int questionNamesColumns = 2;
+            int numberOfQuestions = 3;
+            var assignments = new List<Assignment> {
+                new Assignment(numberOfQuestions)
+            };
+            var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            var headerOffset = 1;
-            var question = expectedQuestions.First();
-            for (int x = 0; x < question.QuestionNames.Count(); x++)
-            {
-                var questionName = question.QuestionNames.ElementAt(x);
-                _spreadsheet[x, headerOffset].Should().Be(questionName.Value);
-            }
+            sut.AssignmentBottomRows.Should().ContainSingle();
+            var actualStartRow = sut.AssignmentBottomRows.Single();
+            actualStartRow.Should().Be(3);
         }
 
         [TestMethod]
-        public void Write_WithMultipleQuestions_PutsEachQuestionOnNewLine()
+        public void Write_WithAssignments_SavesLastRowOfEachAssignment()
         {
             // Arrange
-            var assignment = CreateAssignment();
-            var expectedQuestions = assignment.Questions;
-            var assignments = new List<Assignment> { assignment };
-            var questionsBlockInput = new AssignmentsBlock.AssignmentsBlockInput(_startpoint, assignments);
-            var sut = new AssignmentsBlock(questionsBlockInput);
+            int questionNamesColumns = 2;
+            var assignments = new List<Assignment> {
+                new Assignment(3),
+                new Assignment(1)
+            };
+            var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
             // Act
             sut.Write(_spreadsheetWriter);
 
             // Assert
-            var firstQuestion = expectedQuestions.ElementAt(0);
-            var firstQuestionName = firstQuestion.QuestionNames.First();
-            _spreadsheet[0, 1].Should().Be(firstQuestionName.Value);
-            var secondQuestion = expectedQuestions.ElementAt(1);
-            var secondQuestionName = secondQuestion.QuestionNames.First();
-            _spreadsheet[0, 2].Should().Be(secondQuestionName.Value);
-        }
+            int headerOffset = 1;
+            sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
+            sut.AssignmentBottomRows.Should().HaveCount(assignments.Count);
+            int firstAssignmentRow = sut.AssignmentBottomRows.ElementAt(0);
+            firstAssignmentRow.Should().Be(headerOffset + 2);
 
-        private Assignment CreateAssignment()
-        {
-            var questions = _fixture.CreateMany<Question>()
-                .ToList();
-            return new Assignment(_fixture.Create<Guid>(), questions);
+            int secondAssignmentRow = sut.AssignmentBottomRows.ElementAt(1);
+            secondAssignmentRow.Should().Be(headerOffset + 3);
         }
     }
 }

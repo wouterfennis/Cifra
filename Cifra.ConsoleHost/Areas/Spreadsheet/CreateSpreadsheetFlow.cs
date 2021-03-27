@@ -1,18 +1,17 @@
-﻿using Cifra.Application;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.Spreadsheet;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Cifra.ConsoleHost.Areas.Test
+namespace Cifra.ConsoleHost.Areas.Spreadsheet
 {
     internal class CreateSpreadsheetFlow : IFlow
     {
         private readonly IClassService _classController;
         private readonly ITestService _testController;
-        private readonly ITestResultsSpreadsheetBuilder spreadsheetFactory;
+        private readonly ITestResultsSpreadsheetBuilder _spreadsheetFactory;
 
         public CreateSpreadsheetFlow(IClassService classController,
             ITestService testController,
@@ -20,13 +19,16 @@ namespace Cifra.ConsoleHost.Areas.Test
         {
             _classController = classController;
             _testController = testController;
-            this.spreadsheetFactory = spreadsheetFactory;
+            _spreadsheetFactory = spreadsheetFactory;
         }
 
+        /// <inheritdoc/>
         public async Task StartAsync()
         {
+            Console.Clear();
             Cifra.Application.Models.Class.Class chosenClass = await AskForClassAsync();
             Cifra.Application.Models.Test.Test chosenTest = await AskForTestAsync();
+            Console.Clear();
             string fileName = SharedConsoleFlows.AskForString("What should be the name of the spreadsheet?");
 
             await BuildSpreadsheetAsync(chosenClass, chosenTest, fileName);
@@ -34,6 +36,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task<Cifra.Application.Models.Class.Class> AskForClassAsync()
         {
+            Console.Clear();
             Console.WriteLine("The following classes exist:");
             GetAllClassesResult result = await _classController.GetClassesAsync();
             int index = 1;
@@ -54,6 +57,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
         private async Task<Cifra.Application.Models.Test.Test> AskForTestAsync()
         {
+            Console.Clear();
             Console.WriteLine("The following tests exist:");
             var result = await _testController.GetTestsAsync();
             int index = 1;
@@ -83,7 +87,7 @@ namespace Cifra.ConsoleHost.Areas.Test
                 FileName = fileName
             };
 
-            await spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);
+            await _spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);
         }
     }
 }

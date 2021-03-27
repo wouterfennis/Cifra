@@ -1,16 +1,17 @@
-﻿using AutoFixture;
+﻿using System.Threading.Tasks;
+using AutoFixture;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet;
 using Cifra.TestUtilities.Application;
+using Cifra.TestUtilities.SpreadsheetWriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
-using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
 {
@@ -33,7 +34,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _formulaBuilder = new Mock<IFormulaBuilder>();
-            _spreadsheet = new string[20, 22];
+            _spreadsheet = new string[30, 30];
 
             SetupFormulaBuilderFactory();
 
@@ -49,10 +50,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             // Arrange
             var metadata = _fixture.Create<Application.Models.Spreadsheet.Metadata>();
             SetupSpreadsheetFileBuilder();
-            SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
+            FormulaBuilderTestUtilities.SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
 
             Class @class = _fixture.Create<Class>();
             Test test = new TestBuilder()
+                .WithNumberOfVersions(2)
                 .WithMinimumGrade(Grade.CreateFromByte(1))
                 .WithRandomAssignments()
                 .Build();
@@ -76,7 +78,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _fileLocationProvider.Setup(x => x.GetSpreadsheetDirectoryPath())
                 .Returns(path);
 
-            var testSpreadsheetWriter = new ArraySpreadsheetWriter(_spreadsheet);
+            var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
 
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile.Setup(x => x.GetSpreadsheetWriter())
@@ -85,39 +87,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             _spreadsheetFileFactory
                 .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))
                 .Returns(spreadsheetFile.Object);
-        }
-
-        private void SetupFormulaBuilder(Mock<IFormulaBuilder> formulaBuilder, string expectedFormula)
-        {
-            formulaBuilder.Setup(x => x.AddCellAddress(It.IsAny<string>()))
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddClosingParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddDivisionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddEqualsSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddMultiplicationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddOpenParenthesis())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSubtractionSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.AddSummationSign())
-                .Returns(formulaBuilder.Object);
-
-            formulaBuilder.Setup(x => x.Build())
-                .Returns(expectedFormula);
         }
     }
 }

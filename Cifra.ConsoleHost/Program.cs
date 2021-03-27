@@ -1,11 +1,14 @@
-﻿using Autofac;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Autofac;
+using Microsoft.Extensions.Configuration;
 
 namespace Cifra.ConsoleHost
 {
+    /// <summary>
+    /// The technical starting point of the application.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     internal class Program
     {
