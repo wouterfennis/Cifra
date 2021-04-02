@@ -16,7 +16,6 @@ namespace Cifra.ConsoleHost
         {
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine("This is a test version. Not ready for actual use");
             Console.ResetColor();
             IConfigurationSection appsettings = SetupAppsettings();
             var container = DependencyInjection.RegisterDependencies(appsettings);

@@ -45,6 +45,7 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
                 Console.WriteLine($"[{index}] {@class.Name.Value}");
                 index++;
             }
+            Console.WriteLine();
             var chosenIndex = SharedConsoleFlows.AskForByte("Select one of the following classes, type a number");
             var chosenClass = result.Classes.ElementAtOrDefault(chosenIndex - 1);
             if (chosenClass == null)

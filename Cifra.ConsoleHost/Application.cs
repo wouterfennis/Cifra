@@ -27,6 +27,7 @@ namespace Cifra.ConsoleHost
 
         public async Task StartAsync()
         {
+            Console.Clear();
             PrintTitle();
             Console.WriteLine("What would you like to do? Type the number");
             Console.WriteLine($"[{(int)AreaMenuOption.Class}] - Open the Class menu");
