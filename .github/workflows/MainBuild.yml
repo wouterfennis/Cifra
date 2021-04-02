@@ -1,0 +1,35 @@
+name: Continuous Integration Pull Request
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        source-url: https://nuget.pkg.github.com/wouterfennis/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Restore dependencies of project
+      run: dotnet restore
+    - name: Build project
+      run: dotnet build --no-restore --configuration Release
+    - name: Run tests
+      run: dotnet test --no-restore
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v5.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish project for ubuntu x64
+      run: dotnet publish --no-restore --configuration Release -runtime ubuntu.16.04-x64 --self-contained --version--suffix ${{ steps.tag_version.outputs.new_version }}    
+    - name: Publish project for windows x64
+      run: dotnet publish --no-restore --configuration Release -runtime win-x64 --self-contained --version--suffix ${{ steps.tag_version.outputs.new_version }}
