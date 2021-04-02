@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-    <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Application\Cifra.Application.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.FileSystem\Cifra.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>
