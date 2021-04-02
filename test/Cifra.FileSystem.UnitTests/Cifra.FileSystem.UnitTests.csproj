@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="AutoFixture" Version="4.16.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
@@ -21,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cifra.ConsoleHost\Cifra.ConsoleHost.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Application\Cifra.Application.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.FileSystem\Cifra.FileSystem.csproj" />
     <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
   </ItemGroup>
 

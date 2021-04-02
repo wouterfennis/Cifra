@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost", "Cifra.ConsoleHost\Cifra.ConsoleHost.csproj", "{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost", "src\Cifra.ConsoleHost\Cifra.ConsoleHost.csproj", "{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application", "Cifra.Application\Cifra.Application.csproj", "{DF459647-6414-4A50-9887-8B071713BC3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application", "src\Cifra.Application\Cifra.Application.csproj", "{DF459647-6414-4A50-9887-8B071713BC3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application.UnitTests", "Cifra.Application.UnitTests\Cifra.Application.UnitTests.csproj", "{D39CF269-7B7D-4124-B58D-97EDC98629B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application.UnitTests", "test\Cifra.Application.UnitTests\Cifra.Application.UnitTests.csproj", "{D39CF269-7B7D-4124-B58D-97EDC98629B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem", "Cifra.FileSystem\Cifra.FileSystem.csproj", "{8468699C-C2AA-4325-B68D-9C88801C2FF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem", "src\Cifra.FileSystem\Cifra.FileSystem.csproj", "{8468699C-C2AA-4325-B68D-9C88801C2FF7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem.UnitTests", "Cifra.FileSystem.UnitTests\Cifra.FileSystem.UnitTests.csproj", "{2BE99014-CB3D-4275-988A-EC65FEECDE51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem.UnitTests", "test\Cifra.FileSystem.UnitTests\Cifra.FileSystem.UnitTests.csproj", "{2BE99014-CB3D-4275-988A-EC65FEECDE51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "Cifra.TestUtilities\Cifra.TestUtilities.csproj", "{034931D0-D61B-4F45-AAB0-7680631D8948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "test\Cifra.TestUtilities\Cifra.TestUtilities.csproj", "{034931D0-D61B-4F45-AAB0-7680631D8948}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "test\Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{CA64AB83-909B-4014-8805-5A2AF41B639F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
