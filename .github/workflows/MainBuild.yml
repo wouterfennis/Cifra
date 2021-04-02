@@ -29,16 +29,16 @@ jobs:
       uses: mathieudutour/github-tag-action@v5.3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Publish project for ubuntu x64
+    - name: Publish project for Linux x64
       run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Linux64
-    - name: Upload Windows x64 Artifact
+    - name: Upload Linux x64 Artifact
       uses: actions/upload-artifact@v2
       with:
         name: Linux64
         path: |
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publish/Cifra.ConsoleHost
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publish/appsettings.json
-    - name: Publish project for windows x64
+    - name: Publish project for Windows x64
       run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64
     - name: Upload Windows x64 Artifact
       uses: actions/upload-artifact@v2
