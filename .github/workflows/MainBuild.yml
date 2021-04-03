@@ -36,12 +36,12 @@ jobs:
       with:
         name: Linux64
         path: |
-          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publish/Cifra.ConsoleHost
-          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publish/appsettings.json
+          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishLinux64/Cifra.ConsoleHost
+          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishLinux64/appsettings.json
     - name: Publish project for Windows x64
       run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64
     - name: Upload Windows x64 Artifact
       uses: actions/upload-artifact@v2
       with:
         name: Windows64
-        path: ./src/Cifra.ConsoleHost/bin/Release/net5.0/publish
+        path: ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishWindows64/
