@@ -12,6 +12,13 @@ An application to create a template for filling in exam points and calculating t
 
 ## Tutorial
 
+### Creating a class of students
+
+
+### Creating a test
+
+
+### Creating a spreadsheet
 
 
 
