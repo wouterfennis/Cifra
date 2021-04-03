@@ -44,4 +44,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Windows64
-        path: ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishWindows64/
+        path: |
+          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishWindows64/Cifra.ConsoleHost.exe
+          ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishWindows64/appsettings.json
