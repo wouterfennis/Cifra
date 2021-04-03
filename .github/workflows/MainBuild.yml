@@ -39,7 +39,7 @@ jobs:
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishLinux64/Cifra.ConsoleHost
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishLinux64/appsettings.json
     - name: Publish project for Windows x64
-      run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64
+      run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64 -p:IncludeNativeLibrariesForSelfExtract=true
     - name: Upload Windows x64 Artifact
       uses: actions/upload-artifact@v2
       with:
