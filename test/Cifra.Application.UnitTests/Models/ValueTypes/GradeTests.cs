@@ -1,7 +1,7 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using System;
+using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
@@ -47,7 +47,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
             var grade1 = Grade.CreateFromByte(input);
             var grade2 = Grade.CreateFromByte(input);
 
-            grade1.Equals(grade2);
+            grade1.Should().Equals(grade2);
         }
     }
 }

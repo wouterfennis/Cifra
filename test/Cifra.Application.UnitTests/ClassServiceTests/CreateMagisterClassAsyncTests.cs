@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using AutoFixture;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Magister;
@@ -9,8 +11,6 @@ using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests.ClassServiceTests
 {
@@ -88,7 +88,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                });
 
             // Act
-            CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
+            await _sut.CreateMagisterClassAsync(input);
 
             // Assert
             actualClass.Should().NotBeNull();
@@ -125,7 +125,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
+            await _sut.CreateMagisterClassAsync(input);
 
             _classRepository.VerifyNoOtherCalls();
         }

@@ -5,8 +5,8 @@ namespace SpreadsheetWriter.Test
     /// <inheritdoc/>
     public class TestExcelAddress : ICellAddress
     {
-        private string _columnLetter;
-        private string _rowNumber;
+        private readonly string _columnLetter;
+        private readonly string _rowNumber;
 
         public TestExcelAddress()
         {

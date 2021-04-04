@@ -7,7 +7,7 @@ namespace Cifra.TestUtilities.FileSystem
     public class AssignmentBuilder
     {
         private int _numberOfQuestions;
-        private Fixture _fixture;
+        private readonly Fixture _fixture;
 
         public AssignmentBuilder()
         {

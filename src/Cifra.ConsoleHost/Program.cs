@@ -10,7 +10,7 @@ namespace Cifra.ConsoleHost
     /// The technical starting point of the application.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    internal class Program
+    internal static class Program
     {
         internal static async Task Main(string[] args)
         {

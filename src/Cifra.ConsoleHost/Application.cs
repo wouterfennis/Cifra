@@ -50,11 +50,7 @@ namespace Cifra.ConsoleHost
        \  /        / \ \__\\ \__\   \ \ _\ \ \__/.\__\
         \/________/   \/__/ \/__/    \/__/  \/__/\/__/ v{version}
 -------------------------------------------------------------
-Created by:
-                                  __               
-            | | _    _|_ _  __   |_  _ __ __  o  _ 
-            |^|(_)|_| |_(/_ |    |  (/_| || | | _> 
-";
+Created by: Wouter Fennis";
             Console.WriteLine(title);
             Console.WriteLine();
         }

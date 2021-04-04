@@ -15,10 +15,10 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
         /// </summary>
-        public int NumberOfQuestions;
+        public int NumberOfQuestions { get; }
 
         /// <summary>
-        /// Ctor
+        /// Constructor for existing assignment.
         /// </summary>
         public Assignment(Guid id, int numberOfQuestions)
         {
@@ -26,6 +26,9 @@ namespace Cifra.Application.Models.Test
             NumberOfQuestions = numberOfQuestions;
         }
 
+        /// <summary>
+        /// Constructor for new assignment.
+        /// </summary>
         public Assignment(int numberOfQuestions)
         {
             Id = Guid.NewGuid();

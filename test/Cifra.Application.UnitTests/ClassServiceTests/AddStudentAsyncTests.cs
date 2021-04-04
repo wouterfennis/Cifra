@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using AutoFixture;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Requests;
@@ -7,8 +9,6 @@ using Cifra.Application.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests.ClassServiceTests
 {
@@ -61,7 +61,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddStudentResult result = await _sut.AddStudentAsync(input);
+            await _sut.AddStudentAsync(input);
 
             _classRepository.VerifyNoOtherCalls();
         }

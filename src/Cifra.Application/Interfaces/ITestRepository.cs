@@ -1,8 +1,8 @@
-﻿using Cifra.Application.Models.Test;
-using Cifra.Application.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cifra.Application.Models.Test;
+using Cifra.Application.Validation;
 
 namespace Cifra.Application.Interfaces
 {
@@ -19,7 +19,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Create a test 
         /// </summary>
-        Task CreateAsync(Test test);
+        Task CreateAsync(Test newTest);
 
         /// <summary>
         /// Updates a test

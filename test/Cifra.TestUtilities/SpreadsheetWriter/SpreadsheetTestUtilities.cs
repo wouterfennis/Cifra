@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SpreadsheetWriter.Test
 {
@@ -21,7 +19,7 @@ namespace SpreadsheetWriter.Test
                 for (int x = 0; x < rowLength; x++)
                 {
                     Console.Write($"| {worksheet[x, y]} ");
-                    if (x == rowLength)
+                    if (x == rowLength - 1)
                     {
                         Console.Write("|");
                     }
