@@ -1,11 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<AssemblyName>Cifra</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
 		<RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
 		<SignAssembly>false</SignAssembly>
 		<AssemblyOriginatorKeyFile>Cifra.ConsoleHost.pfx</AssemblyOriginatorKeyFile>
+		<ApplicationIcon>Cifra.ico</ApplicationIcon>
+		<Authors>Wouter Fennis</Authors>
+		<Company>Cifra</Company>
+		<Product>Cifra desktop application</Product>
+		<Description>An application to create a template for filling in exam points and calculating the test score.</Description>
+		<Copyright>Wouter Fennis</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageIcon>Cifra.ico</PackageIcon>
+		<RepositoryUrl>https://github.com/wouterfennis/Cifra</RepositoryUrl>
+		<PackageTags>Cifra, Exam results, Excel, Openoffice</PackageTags>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageProjectUrl>https://github.com/wouterfennis/Cifra</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -31,6 +44,17 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
 		<ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\img\Cifra.ico">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
