@@ -1,13 +1,13 @@
-﻿using Cifra.Application.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Magister;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
@@ -45,7 +45,7 @@ namespace Cifra.Application
         public async Task<CreateClassResult> CreateClassAsync(CreateClassRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
+            if (validationMessages.Any())
             {
                 return new CreateClassResult(validationMessages);
             }
@@ -62,7 +62,7 @@ namespace Cifra.Application
         public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _magisterClassValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
+            if (validationMessages.Any())
             {
                 return new CreateMagisterClassResult(validationMessages);
             }
@@ -95,7 +95,7 @@ namespace Cifra.Application
         public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
+            if (validationMessages.Any())
             {
                 return new AddStudentResult(validationMessages);
             }

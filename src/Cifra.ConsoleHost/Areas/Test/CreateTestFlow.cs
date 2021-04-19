@@ -41,7 +41,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             };
             CreateTestResult createTestResponse = await _testController.CreateTestAsync(createTestRequest);
             Guid testId = createTestResponse.TestId;
-            if (createTestResponse.ValidationMessages.Count() > 0)
+            if (createTestResponse.ValidationMessages.Any())
             {
                 SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
                 testId = await CreateTestFlowAsync();
@@ -71,7 +71,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
             AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
-            if (addAssignmentResult.ValidationMessages.Count() > 0)
+            if (addAssignmentResult.ValidationMessages.Any())
             {
                 SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
                 await AddAssignmentFlowAsync(testId, assignmentIndex);
@@ -92,7 +92,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
                 AddAssignmentResult addAssignmentResult = await _testController.AddAssignmentAsync(addAssignmentRequest);
 
-                if (addAssignmentResult.ValidationMessages.Count() > 0)
+                if (addAssignmentResult.ValidationMessages.Any())
                 {
                     SharedConsoleFlows.PrintValidationMessages(addAssignmentResult.ValidationMessages);
                 }

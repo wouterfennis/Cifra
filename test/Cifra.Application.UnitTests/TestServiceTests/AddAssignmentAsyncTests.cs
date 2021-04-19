@@ -56,7 +56,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            AddAssignmentResult result = await _sut.AddAssignmentAsync(input);
+            await _sut.AddAssignmentAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }

@@ -1,15 +1,10 @@
-﻿using Cifra.Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cifra.Application.Validation
+﻿namespace Cifra.Application.Validation
 {
     /// <summary>
     /// Validation rule for <c>T</c>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IValidationRule<T>
+    public interface IValidationRule<in T>
     {
         /// <summary>
         /// Validates model

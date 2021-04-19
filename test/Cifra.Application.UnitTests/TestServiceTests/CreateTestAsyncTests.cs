@@ -72,7 +72,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
                 .Setup(x => x.ValidateRules(input))
                 .Returns(expectedValidationMessages);
 
-            CreateTestResult result = await _sut.CreateTestAsync(input);
+            await _sut.CreateTestAsync(input);
 
             _testRepository.VerifyNoOtherCalls();
         }

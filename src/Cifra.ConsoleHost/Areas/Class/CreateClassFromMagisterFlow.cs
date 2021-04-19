@@ -45,15 +45,18 @@ namespace Cifra.ConsoleHost.Areas.Class
                 Console.WriteLine("Invalid choice!");
                 await StartAsync();
             }
-            var request = new CreateMagisterClassRequest
+            else
             {
-                MagisterFileLocation = chosenFile.FullName
-            };
-            CreateMagisterClassResult createMagisterClassResponse = await _classController.CreateMagisterClassAsync(request);
-            if (createMagisterClassResponse.ValidationMessages.Count() > 0)
-            {
-                SharedConsoleFlows.PrintValidationMessages(createMagisterClassResponse.ValidationMessages);
-                await StartAsync();
+                var request = new CreateMagisterClassRequest
+                {
+                    MagisterFileLocation = chosenFile.FullName
+                };
+                CreateMagisterClassResult createMagisterClassResponse = await _classController.CreateMagisterClassAsync(request);
+                if (createMagisterClassResponse.ValidationMessages.Any())
+                {
+                    SharedConsoleFlows.PrintValidationMessages(createMagisterClassResponse.ValidationMessages);
+                    await StartAsync();
+                }
             }
         }
     }

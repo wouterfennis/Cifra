@@ -34,7 +34,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             };
             CreateClassResult createClassResponse = await _classController.CreateClassAsync(createClassRequest);
             Guid classId = createClassResponse.ClassId;
-            if (createClassResponse.ValidationMessages.Count() > 0)
+            if (createClassResponse.ValidationMessages.Any())
             {
                 SharedConsoleFlows.PrintValidationMessages(createClassResponse.ValidationMessages);
                 classId = await CreateClassFlowAsync();
@@ -67,7 +67,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             };
             AddStudentResult addStudentResponse = await _classController.AddStudentAsync(model);
 
-            if (addStudentResponse.ValidationMessages.Count() > 0)
+            if (addStudentResponse.ValidationMessages.Any())
             {
                 SharedConsoleFlows.PrintValidationMessages(addStudentResponse.ValidationMessages);
                 await AddStudentFlowAsync(classId);
