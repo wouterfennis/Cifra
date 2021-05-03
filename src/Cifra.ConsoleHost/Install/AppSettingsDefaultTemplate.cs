@@ -19,7 +19,7 @@ namespace Cifra.ConsoleHost.Install
             {
                 AppSettings = new
                 {
-                    InstallationDate = DateTime.Now,
+                    InstallationDate = DateTimeProvider.Now(),
                     ClassRepository = $"{currentDirectory}\\{_classesFileName}",
                     TestRepository = $"{currentDirectory}\\{_testsFileName}",
                     SpreadsheetDirectory = $"{currentDirectory}\\{_spreadsheetDirectoryName}",
@@ -35,4 +35,5 @@ namespace Cifra.ConsoleHost.Install
             };
         }
     }
+
 }
