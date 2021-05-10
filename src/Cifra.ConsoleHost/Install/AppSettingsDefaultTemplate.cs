@@ -2,6 +2,9 @@
 
 namespace Cifra.ConsoleHost.Install
 {
+    /// <summary>
+    /// Template for a default appsettings file.
+    /// </summary>
     internal class AppSettingsDefaultTemplate
     {
         private const string _classesFileName = "classes.json";

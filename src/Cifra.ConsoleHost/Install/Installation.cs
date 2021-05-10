@@ -25,13 +25,16 @@ namespace Cifra.ConsoleHost.Istall
 
         private static bool IsInstallationRequired(IConfigurationSection appsettings)
         {
-            if (appsettings == null ||
-                !appsettings.Exists() ||
-                string.IsNullOrEmpty(appsettings["InstallationDate"]))
+            bool isAppsettingsDefined = appsettings != null;
+            bool isAppsettingsExisting = appsettings.Exists();
+            bool isInstalltionDatePresent = !string.IsNullOrEmpty(appsettings["InstallationDate"]);
+            if (isAppsettingsDefined  &&
+                isAppsettingsExisting &&
+                isInstalltionDatePresent)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
 }
