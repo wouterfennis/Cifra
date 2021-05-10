@@ -11,24 +11,27 @@ namespace Cifra.ConsoleHost.Istall
     {
         private const string _appsettingsFileName = "appsettings.json";
 
-        public static async Task Start(IConfigurationSection appsettings)
+        public static async Task Start(IConfigurationRoot configuration)
         {
-            if (IsInstallationRequired(appsettings))
+            if (IsInstallationRequired(configuration))
             {
                 object apsettingsContent = AppSettingsDefaultTemplate.Create();
                 var appsettingsFile = new FileInfo(Path.Combine(Environment.CurrentDirectory, _appsettingsFileName));
 
                 using var writer = new StreamWriter(appsettingsFile.OpenWrite());
                 await writer.WriteAsync(JsonConvert.SerializeObject(apsettingsContent));
+                writer.Close();
+                configuration.Reload();
             }
         }
 
-        private static bool IsInstallationRequired(IConfigurationSection appsettings)
+        private static bool IsInstallationRequired(IConfigurationRoot configuration)
         {
+            var appsettings = configuration.GetSection("AppSettings");
             bool isAppsettingsDefined = appsettings != null;
             bool isAppsettingsExisting = appsettings.Exists();
-            bool isInstalltionDatePresent = !string.IsNullOrEmpty(appsettings["InstallationDate"]);
-            if (isAppsettingsDefined  &&
+            bool isInstalltionDatePresent = !string.IsNullOrEmpty(configuration["InstallationDate"]);
+            if (isAppsettingsDefined &&
                 isAppsettingsExisting &&
                 isInstalltionDatePresent)
             {

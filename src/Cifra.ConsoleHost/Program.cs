@@ -19,22 +19,22 @@ namespace Cifra.ConsoleHost
             Console.ForegroundColor = ConsoleColor.Black;
             Console.ResetColor();
 
-            IConfigurationSection appsettings = SetupAppsettings();
+            IConfigurationRoot configuration = LoadConfiguration();
 
-            await Installation.Start(appsettings);
+            await Installation.Start(configuration);
 
-            var container = DependencyInjection.RegisterDependencies(appsettings);
+            var container = DependencyInjection.RegisterDependencies(configuration.GetSection("Appsettings"));
             var application = container.Resolve<Application>();
             await application.StartAsync();
         }
 
-        private static IConfigurationSection SetupAppsettings()
+        private static IConfigurationRoot LoadConfiguration()
         {
-            var configuration = new ConfigurationBuilder()
+            IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile(path: "./appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
-            return configuration.GetSection("Appsettings");
+            return configuration;
         }
     }
 }

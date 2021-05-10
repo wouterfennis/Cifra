@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Cifra.ConsoleHost.Install
 {
@@ -18,15 +19,17 @@ namespace Cifra.ConsoleHost.Install
         /// </summary>
         public static object Create() {
             string currentDirectory = Environment.CurrentDirectory;
+            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            string slash = isWindows ? "\\" : "/";
             return new
             {
                 AppSettings = new
                 {
                     InstallationDate = DateTimeProvider.Now(),
-                    ClassRepository = $"{currentDirectory}\\{_classesFileName}",
-                    TestRepository = $"{currentDirectory}\\{_testsFileName}",
-                    SpreadsheetDirectory = $"{currentDirectory}\\{_spreadsheetDirectoryName}",
-                    MagisterDirectory = $"{currentDirectory}\\{_magisterDirectoryName}",
+                    ClassRepository = $"{currentDirectory}{slash}{_classesFileName}",
+                    TestRepository = $"{currentDirectory}{slash}{_testsFileName}",
+                    SpreadsheetDirectory = $"{currentDirectory}{slash}{_spreadsheetDirectoryName}",
+                    MagisterDirectory = $"{currentDirectory}{slash}{_magisterDirectoryName}",
                 },
                 EPPlus = new
                 {

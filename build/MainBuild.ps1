@@ -1,3 +1,5 @@
+Write-Output "Publishing Cifra as a Main build"
+
 cd $PSScriptRoot/../
 
 <#
@@ -18,3 +20,5 @@ dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration 
 Publish project for Windows x64
 #>
 dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64 -p:IncludeNativeLibrariesForSelfExtract=true
+
+Write-Output "Done publishing Cifra as a Main build"
