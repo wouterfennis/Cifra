@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
@@ -12,6 +11,7 @@ using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
+using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
 {

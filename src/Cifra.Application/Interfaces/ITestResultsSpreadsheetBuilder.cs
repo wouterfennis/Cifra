@@ -13,6 +13,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Creates a test results spreadsheet
         /// </summary>
-        Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
+        Task<SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
     }
 }

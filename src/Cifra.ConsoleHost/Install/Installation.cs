@@ -15,13 +15,10 @@ namespace Cifra.ConsoleHost.Istall
         {
             if (IsInstallationRequired(configuration))
             {
-                object apsettingsContent = AppSettingsDefaultTemplate.Create();
-                var appsettingsFile = new FileInfo(Path.Combine(Environment.CurrentDirectory, _appsettingsFileName));
-
-                using var writer = new StreamWriter(appsettingsFile.OpenWrite());
-                await writer.WriteAsync(JsonConvert.SerializeObject(apsettingsContent));
-                writer.Close();
-                configuration.Reload();
+                await CreateAppSettingsFile(configuration);
+                var appSettings = configuration.GetSection("AppSettings");
+                await CreateFolder(appSettings["SpreadsheetDirectory"]);
+                await CreateFolder(appSettings["MagisterDirectory"]);
             }
         }
 
@@ -38,6 +35,21 @@ namespace Cifra.ConsoleHost.Istall
                 return false;
             }
             return true;
+        }
+
+        private static async Task CreateAppSettingsFile(IConfigurationRoot configuration)
+        {
+            object apsettingsContent = AppSettingsDefaultTemplate.Create();
+            var appsettingsFile = new FileInfo(Path.Combine(Environment.CurrentDirectory, _appsettingsFileName));
+            using var writer = new StreamWriter(appsettingsFile.OpenWrite());
+            await writer.WriteAsync(JsonConvert.SerializeObject(apsettingsContent));
+            writer.Close();
+            configuration.Reload();
+        }
+
+        private static Task CreateFolder(string path)
+        {
+            return Task.Factory.StartNew(() => Directory.CreateDirectory(path));
         }
     }
 }
