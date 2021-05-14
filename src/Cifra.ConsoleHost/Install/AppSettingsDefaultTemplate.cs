@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cifra.ConsoleHost.Utilities;
+using System;
 using System.Runtime.InteropServices;
 
 namespace Cifra.ConsoleHost.Install

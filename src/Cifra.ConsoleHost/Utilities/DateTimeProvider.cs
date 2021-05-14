@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cifra.ConsoleHost
+namespace Cifra.ConsoleHost.Utilities
 {
     /// <summary>
     /// Provider for DateTime.

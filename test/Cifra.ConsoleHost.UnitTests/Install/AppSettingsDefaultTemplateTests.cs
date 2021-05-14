@@ -1,4 +1,5 @@
 ﻿using Cifra.ConsoleHost.Install;
+using Cifra.ConsoleHost.Utilities;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

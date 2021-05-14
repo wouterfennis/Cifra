@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cifra.ConsoleHost
+namespace Cifra.ConsoleHost.Utilities
 {
     /// <summary>
     /// Console logic that is recurring in the application.

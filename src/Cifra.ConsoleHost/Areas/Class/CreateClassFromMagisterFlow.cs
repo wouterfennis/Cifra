@@ -2,6 +2,7 @@
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
+using Cifra.ConsoleHost.Utilities;
 using Cifra.FileSystem;
 using Cifra.FileSystem.FileSystemInfo;
 using System;

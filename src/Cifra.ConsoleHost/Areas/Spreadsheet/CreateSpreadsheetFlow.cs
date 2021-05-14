@@ -1,6 +1,7 @@
 ﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.Spreadsheet;
+using Cifra.ConsoleHost.Utilities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
