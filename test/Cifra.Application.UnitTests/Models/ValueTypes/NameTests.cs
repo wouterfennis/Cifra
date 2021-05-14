@@ -1,10 +1,8 @@
-﻿using AutoFixture;
+﻿using System;
+using AutoFixture;
 using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
@@ -57,7 +55,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
             var name1 = Name.CreateFromString(input);
             var name2 = Name.CreateFromString(input);
 
-            name1.Equals(name2);
+            name1.Should().Equals(name2);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Cifra.Application
         public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _testValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
+            if (validationMessages.Any())
             {
                 return new CreateTestResult(validationMessages);
             }
@@ -51,7 +51,7 @@ namespace Cifra.Application
         public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model)
         {
             IEnumerable<ValidationMessage> validationMessages = _assignmentValidator.ValidateRules(model);
-            if (validationMessages.Count() > 0)
+            if (validationMessages.Any())
             {
                 return new AddAssignmentResult(validationMessages);
             }

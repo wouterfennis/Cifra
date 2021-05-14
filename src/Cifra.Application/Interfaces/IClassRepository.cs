@@ -1,8 +1,8 @@
-﻿using Cifra.Application.Models.Class;
-using Cifra.Application.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cifra.Application.Models.Class;
+using Cifra.Application.Validation;
 
 namespace Cifra.Application.Interfaces
 {
@@ -19,7 +19,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Create a <see cref="Class"/>.
         /// </summary>
-        Task CreateAsync(Class @class);
+        Task CreateAsync(Class @newClass);
 
         /// <summary>
         /// Updates a <see cref="Class"/>.

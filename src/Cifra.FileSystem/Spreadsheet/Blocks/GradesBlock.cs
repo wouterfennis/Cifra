@@ -34,8 +34,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 spreadsheetWriter.Write(string.Empty);
             }
 
-            // spreadsheetWriter.CurrentPosition = new Point(input.ScoresStartColumn, spreadsheetWriter.CurrentPosition.Y);
-
             ICellRange maximumScoreCell = spreadsheetWriter.GetCellRange(input.MaximumScorePosition);
             ICellRange standardizationFactorCell = spreadsheetWriter.GetCellRange(input.StandardizationFactorPosition);
             ICellRange minimumGradeCell = spreadsheetWriter.GetCellRange(input.MinimumGradePosition);
