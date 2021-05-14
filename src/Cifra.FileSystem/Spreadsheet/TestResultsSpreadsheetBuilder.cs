@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.FileSystem.Mapping;
@@ -9,6 +6,8 @@ using Cifra.FileSystem.Spreadsheet.Blocks;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
+using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
@@ -27,7 +26,7 @@ namespace Cifra.FileSystem.Spreadsheet
             _formulaBuilderFactory = formulaBuilderFactory;
         }
 
-        public async Task CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
+        public async Task<Application.Models.Spreadsheet.SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
         {
             var libraryMetadata = metadata.MapToLibraryModel();
             ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_locationProvider.GetSpreadsheetDirectoryPath().Value, libraryMetadata);
@@ -44,7 +43,8 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter,
                 configurationBlock);
 
-            await spreadsheetFile.SaveAsync();
+            SaveResult saveResult = await spreadsheetFile.SaveAsync();
+            return saveResult.MapToModel();
         }
 
         private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test.Requests;
 using Cifra.Application.Models.Test.Results;
+using Cifra.ConsoleHost.Utilities;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {

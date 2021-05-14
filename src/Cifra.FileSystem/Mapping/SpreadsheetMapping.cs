@@ -1,5 +1,6 @@
-﻿using System;
-using SpreadsheetWriter.Abstractions;
+﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.File;
+using System;
 
 namespace Cifra.FileSystem.Mapping
 {
@@ -8,8 +9,6 @@ namespace Cifra.FileSystem.Mapping
         /// <summary>
         /// Maps to library metadata model.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         public static Metadata MapToLibraryModel(this Application.Models.Spreadsheet.Metadata input)
         {
             ValidateNullInput(input);
@@ -21,6 +20,20 @@ namespace Cifra.FileSystem.Mapping
                 Author = input.Author,
                 Created = input.Created,
                 FileName = input.FileName
+            };
+        }
+
+        /// <summary>
+        /// Maps to save result model.
+        /// </summary>
+        public static Application.Models.Spreadsheet.SaveResult MapToModel(this  SaveResult input)
+        {
+            ValidateNullInput(input);
+
+            return new Application.Models.Spreadsheet.SaveResult
+            {
+                IsSuccess = input.IsSuccess,
+                Exception = input.Exception,
             };
         }
 

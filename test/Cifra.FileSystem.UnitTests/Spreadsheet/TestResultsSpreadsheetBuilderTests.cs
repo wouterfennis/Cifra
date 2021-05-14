@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
@@ -12,6 +11,7 @@ using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
+using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
 {
@@ -75,14 +75,20 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         private void SetupSpreadsheetFileBuilder()
         {
             var path = _fixture.Create<Path>();
-            _fileLocationProvider.Setup(x => x.GetSpreadsheetDirectoryPath())
+            _fileLocationProvider
+                .Setup(x => x.GetSpreadsheetDirectoryPath())
                 .Returns(path);
 
             var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
 
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
-            spreadsheetFile.Setup(x => x.GetSpreadsheetWriter())
+            spreadsheetFile
+                .Setup(x => x.GetSpreadsheetWriter())
                 .Returns(testSpreadsheetWriter);
+
+            spreadsheetFile
+                .Setup(x => x.SaveAsync())
+                .ReturnsAsync(_fixture.Create<SaveResult>());
 
             _spreadsheetFileFactory
                 .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))

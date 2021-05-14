@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Cifra.Application.Validation;
+using System;
 using System.Collections.Generic;
-using Cifra.Application.Validation;
 
-namespace Cifra.ConsoleHost
+namespace Cifra.ConsoleHost.Utilities
 {
     /// <summary>
     /// Console logic that is recurring in the application.
@@ -13,7 +13,7 @@ namespace Cifra.ConsoleHost
         private const ConsoleColor WarningColor = ConsoleColor.Yellow;
 
         /// <summary>
-        /// Asks for a binary choice (boolean)
+        /// Asks for a binary choice (boolean).
         /// </summary>
         /// <returns>The parsed boolean</returns>
         public static bool AskForBool(string question)
@@ -39,7 +39,7 @@ namespace Cifra.ConsoleHost
         }
 
         /// <summary>
-        /// Asks for a small number
+        /// Asks for a small number.
         /// </summary>
         /// <returns>The parsed number</returns>
         public static byte AskForByte(string question)
@@ -59,7 +59,7 @@ namespace Cifra.ConsoleHost
         }
 
         /// <summary>
-        /// Asks for a string
+        /// Asks for a string.
         /// </summary>
         /// <returns>The string</returns>
         public static string AskForString(string question)
@@ -75,7 +75,20 @@ namespace Cifra.ConsoleHost
         }
 
         /// <summary>
-        /// Asks for an optional string
+        /// Asks for any key.
+        /// </summary>
+        /// <returns>The string</returns>
+        public static void AskForAnyKey(string question)
+        {
+            if (question != null)
+            {
+                Console.WriteLine(question);
+            }
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Asks for an optional string.
         /// </summary>
         /// <returns>The string</returns>
         public static string AskForOptionalString(string question)

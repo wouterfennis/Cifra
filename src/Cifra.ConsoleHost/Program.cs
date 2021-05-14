@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Autofac;
+using Cifra.ConsoleHost.Istall;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Autofac;
-using Microsoft.Extensions.Configuration;
 
 namespace Cifra.ConsoleHost
 {
@@ -17,20 +18,23 @@ namespace Cifra.ConsoleHost
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.ResetColor();
-            IConfigurationSection appsettings = SetupAppsettings();
-            var container = DependencyInjection.RegisterDependencies(appsettings);
+
+            IConfigurationRoot configuration = LoadConfiguration();
+
+            await Installation.Start(configuration);
+
+            var container = DependencyInjection.RegisterDependencies(configuration.GetSection("Appsettings"));
             var application = container.Resolve<Application>();
             await application.StartAsync();
         }
 
-        private static IConfigurationSection SetupAppsettings()
+        private static IConfigurationRoot LoadConfiguration()
         {
-            var configuration = new ConfigurationBuilder()
+            IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Environment.CurrentDirectory)
-                .AddJsonFile("./appsettings.json", false, true)
+                .AddJsonFile(path: "./appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
-
-            return configuration.GetSection("Appsettings");
+            return configuration;
         }
     }
 }

@@ -1,3 +1,5 @@
+Write-Output "Building Cifra as a PR build"
+
 cd $PSScriptRoot/../
 
 <#
@@ -8,3 +10,5 @@ dotnet restore
 dotnet build --no-restore --configuration Release
 
 dotnet test --no-restore
+
+Write-Output "Done building Cifra as a PR build"

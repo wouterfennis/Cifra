@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
+using Cifra.ConsoleHost.Utilities;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
