@@ -27,7 +27,7 @@ namespace Cifra.ConsoleHost.Istall
             var appsettings = configuration.GetSection("AppSettings");
             bool isAppsettingsDefined = appsettings != null;
             bool isAppsettingsExisting = appsettings.Exists();
-            bool isInstalltionDatePresent = !string.IsNullOrEmpty(configuration["InstallationDate"]);
+            bool isInstalltionDatePresent = !string.IsNullOrEmpty(appsettings["InstallationDate"]);
             if (isAppsettingsDefined &&
                 isAppsettingsExisting &&
                 isInstalltionDatePresent)
