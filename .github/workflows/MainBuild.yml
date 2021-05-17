@@ -42,7 +42,7 @@ jobs:
     - name: Upload Osx x64 Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: Linux64
+        name: Osx64
         path: |
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishOsx64/Cifra
     - name: Publish project for Windows x64
