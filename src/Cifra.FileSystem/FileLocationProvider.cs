@@ -7,17 +7,17 @@ namespace Cifra.FileSystem
         private readonly Path _classRepositoryPath;
         private readonly Path _testRepositoryPath;
         private readonly Path _spreadsheetDirectoryPath;
-        private readonly Path _magisterDirectoryPath;
+        private readonly Path _classesDirectoryPath;
 
         public FileLocationProvider(Path classRepositoryPath, 
             Path testRepositoryPath, 
             Path spreadsheetDirectoryPath,
-            Path magisterDirectoryPath)
+            Path classesDirectoryPath)
         {
             _classRepositoryPath = classRepositoryPath;
             _testRepositoryPath = testRepositoryPath;
             _spreadsheetDirectoryPath = spreadsheetDirectoryPath;
-            _magisterDirectoryPath = magisterDirectoryPath;
+            _classesDirectoryPath = classesDirectoryPath;
         }
 
         public Path GetClassRepositoryPath()
@@ -35,9 +35,9 @@ namespace Cifra.FileSystem
             return _spreadsheetDirectoryPath;
         }
 
-        public Path GetMagisterDirectoryPath()
+        public Path GetClassesDirectoryPath()
         {
-            return _magisterDirectoryPath;
+            return _classesDirectoryPath;
         }
     }
 }

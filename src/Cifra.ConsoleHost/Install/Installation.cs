@@ -18,7 +18,7 @@ namespace Cifra.ConsoleHost.Istall
                 await CreateAppSettingsFile(configuration);
                 var appSettings = configuration.GetSection("AppSettings");
                 await CreateFolder(appSettings["SpreadsheetDirectory"]);
-                await CreateFolder(appSettings["MagisterDirectory"]);
+                await CreateFolder(appSettings["ClassesDirectory"]);
             }
         }
 

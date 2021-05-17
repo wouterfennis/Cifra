@@ -25,6 +25,6 @@ namespace Cifra.FileSystem
         /// <summary>
         /// Path where magister files with raw information is stored
         /// </summary>
-        Path GetMagisterDirectoryPath();
+        Path GetClassesDirectoryPath();
     }
 }

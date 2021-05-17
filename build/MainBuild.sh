@@ -14,7 +14,7 @@ dotnet test --no-restore
 dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Linux64
 
 #Publish project for Mac OSX x64
-dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64
+dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64 -p:IncludeNativeLibrariesForSelfExtract=true
 
 #Publish project for Windows x64
 dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Windows64 -p:IncludeNativeLibrariesForSelfExtract=true

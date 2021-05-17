@@ -31,7 +31,6 @@ namespace Cifra.FileSystem.FileReaders
                     .GetRecords<MagisterRecord>()
                     .ToList();
                 var students = magisterRecords.MapToMagisterStudents();
-                // TODO: validate magisterRecords
 
                 return new MagisterClass
                 {
