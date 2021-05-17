@@ -1,4 +1,4 @@
-name: Continuous Integration Pull Request
+name: Continuous Integration Main build
 
 on:
   push:
