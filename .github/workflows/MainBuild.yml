@@ -38,7 +38,7 @@ jobs:
         path: |
           ./src/Cifra.ConsoleHost/bin/Release/net5.0/publishLinux64/Cifra
     - name: Publish project for Mac OSX x64
-      run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64
+      run: dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64 -p:IncludeNativeLibrariesForSelfExtract=true
     - name: Upload Osx x64 Artifact
       uses: actions/upload-artifact@v2
       with:

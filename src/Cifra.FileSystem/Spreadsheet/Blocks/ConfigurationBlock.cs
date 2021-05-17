@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Application.Models.ValueTypes;
 using SpreadsheetWriter.Abstractions;
+using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -28,7 +28,6 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         {
             spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
-                .SetBackgroundColor(Color.LightGray)
                 .SetFontBold(true)
                 .Write("Configuratie");
 
@@ -46,8 +45,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .Write("Minimale cijfer")
                 .SetFontBold(false)
                 .MoveRight()
-                .Write(MinimumGrade.Value)
-                .SetBackgroundColor(Color.White);
+                .Write(MinimumGrade.Value);
             MinimumGradePosition = spreadsheetWriter.CurrentPosition;
         }
     }

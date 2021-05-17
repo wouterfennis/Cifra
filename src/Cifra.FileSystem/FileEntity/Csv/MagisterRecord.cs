@@ -9,7 +9,7 @@ namespace Cifra.FileSystem.FileEntity.Csv
         /// <summary>
         /// The id of the student
         /// </summary>
-        public int Stamnummer { get; set; }
+        public string Stamnummer { get; set; }
 
         /// <summary>
         /// The class name
@@ -44,6 +44,6 @@ namespace Cifra.FileSystem.FileEntity.Csv
         /// <summary>
         /// The phonenumber of the student
         /// </summary>
-        public int Telefoonnummer { get; set; }
+        public string Telefoonnummer { get; set; }
     }
 }

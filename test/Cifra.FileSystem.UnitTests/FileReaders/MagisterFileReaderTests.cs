@@ -35,9 +35,9 @@ namespace Cifra.FileSystem.UnitTests.FileReaders
             string lastName = _fixture.Create<string>();
             Application.Models.ValueTypes.Path filePath = _fixture.Create<Application.Models.ValueTypes.Path>();
             var validCsv = "Stamnummer,Klas,Roepnaam,Tussenvoegsel,Achternaam,Studie,Email,Telefoonnummer\n" +
-                $"{_fixture.Create<int>()}," +
+                $"\"{_fixture.Create<int>()}\"," +
                 $"\"{expectedClassName}\",\"{firstname}\",\"{infix}\",\"{lastName}\"," +
-                $"\"{_fixture.Create<string>()}\",\"{_fixture.Create<string>()}\",{_fixture.Create<int>()}";
+                $"\"{_fixture.Create<string>()}\",\"{_fixture.Create<string>()}\",\"{_fixture.Create<int>()}\"";
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(validCsv));
             var fileInfoWrapper = new Mock<IFileInfoWrapper>();
             fileInfoWrapper.Setup(x => x.OpenRead())

@@ -19,7 +19,7 @@ dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration 
 <#
 Publish project for Mac OSX x64
 #>
-dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64
+dotnet publish ./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj --configuration Release --no-restore -p:PublishProfile=Osx64 -p:IncludeNativeLibrariesForSelfExtract=true
 
 <#
 Publish project for Windows x64

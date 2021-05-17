@@ -3,7 +3,6 @@ using Cifra.TestUtilities.Autofac;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -45,7 +44,7 @@ namespace Cifra.ConsoleHost.UnitTests
                     ClassRepository = _fixture.Create<string>(),
                     TestRepository = _fixture.Create<string>(),
                     SpreadsheetDirectory = _fixture.Create<string>(),
-                    MagisterDirectory = _fixture.Create<string>(),
+                    ClassesDirectory = _fixture.Create<string>(),
                 }
             });
 

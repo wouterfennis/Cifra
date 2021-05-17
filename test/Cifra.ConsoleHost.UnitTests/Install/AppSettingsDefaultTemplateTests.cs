@@ -89,7 +89,7 @@ namespace Cifra.ConsoleHost.UnitTests.Install
         }
 
         [TestMethod]
-        public void Create_WithCurrentDirectory_CreatesDefaultMagisterLocation()
+        public void Create_WithCurrentDirectory_CreatesDefaultClassesDirectory()
         {
             // Arrange
 
@@ -98,10 +98,10 @@ namespace Cifra.ConsoleHost.UnitTests.Install
 
             // Assert
             object appSettings = result.GetType().GetProperty("AppSettings").GetValue(result);
-            object magisterDirectoryObj = appSettings.GetType().GetProperty("MagisterDirectory").GetValue(appSettings);
+            object magisterDirectoryObj = appSettings.GetType().GetProperty("ClassesDirectory").GetValue(appSettings);
             string magisterDirectory = (string)magisterDirectoryObj;
 
-            magisterDirectory.Should().Contain("Magister");
+            magisterDirectory.Should().Contain("Classes");
         }
 
         [TestMethod]
