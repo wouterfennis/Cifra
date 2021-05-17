@@ -4,7 +4,7 @@
 		<AssemblyName>Cifra</AssemblyName>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
-		<RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
 		<SignAssembly>false</SignAssembly>
 		<AssemblyOriginatorKeyFile>Cifra.ConsoleHost.pfx</AssemblyOriginatorKeyFile>
 		<ApplicationIcon>Cifra.ico</ApplicationIcon>
