@@ -21,7 +21,7 @@ namespace Cifra.ConsoleHost
             string classRepositoryPath = appsettings["ClassRepository"];
             string testRepositoryPath = appsettings["TestRepository"];
             string spreadsheetDirectoryPath = appsettings["SpreadsheetDirectory"];
-            string magisterDirectoryPath = appsettings["MagisterDirectory"];
+            string magisterDirectoryPath = appsettings["ClassesDirectory"];
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
             builder.RegisterType<ClassService>().As<IClassService>();

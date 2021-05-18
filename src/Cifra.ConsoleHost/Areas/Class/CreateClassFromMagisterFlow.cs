@@ -23,7 +23,7 @@ namespace Cifra.ConsoleHost.Areas.Class
         {
             _classController = classController;
             _directoryInfoWrapperFactory = directoryInfoWrapperFactory;
-            _magisterDirectoryLocation = fileLocationProvider.GetMagisterDirectoryPath();
+            _magisterDirectoryLocation = fileLocationProvider.GetClassesDirectoryPath();
         }
 
         public async Task StartAsync()

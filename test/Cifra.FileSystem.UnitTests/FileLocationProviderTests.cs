@@ -63,14 +63,14 @@ namespace Cifra.FileSystem.UnitTests
         }
 
         [TestMethod]
-        public void GetMagisterDirectoryPath_PreviousSetPath_ReturnsPath()
+        public void GetClassesDirectoryPath_PreviousSetPath_ReturnsPath()
         {
             // Arrange
             Path expectedPath = _fixture.Create<Path>();
             var sut = new FileLocationProvider(null, null, null, expectedPath);
 
             // Act
-            Path result = sut.GetMagisterDirectoryPath();
+            Path result = sut.GetClassesDirectoryPath();
 
             // Assert
             result.Should().NotBeNull();

@@ -12,7 +12,7 @@ namespace Cifra.ConsoleHost.Install
         private const string _classesFileName = "classes.json";
         private const string _testsFileName = "tests.json";
         private const string _spreadsheetDirectoryName = "Spreadsheets";
-        private const string _magisterDirectoryName = "Magister";
+        private const string _classesDirectoryName = "Classes";
         private const string _standardEpplusLicense = "NonCommercial";
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Cifra.ConsoleHost.Install
                     ClassRepository = $"{currentDirectory}{slash}{_classesFileName}",
                     TestRepository = $"{currentDirectory}{slash}{_testsFileName}",
                     SpreadsheetDirectory = $"{currentDirectory}{slash}{_spreadsheetDirectoryName}",
-                    MagisterDirectory = $"{currentDirectory}{slash}{_magisterDirectoryName}",
+                    ClassesDirectory = $"{currentDirectory}{slash}{_classesDirectoryName}",
                 },
                 EPPlus = new
                 {
