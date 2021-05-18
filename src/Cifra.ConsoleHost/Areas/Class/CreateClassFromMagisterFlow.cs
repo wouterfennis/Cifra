@@ -52,6 +52,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             foreach (IFileInfoWrapper file in files)
             {
                 Console.WriteLine($"[{index}] - {file.Name}");
+                index++;
             }
         }
 
