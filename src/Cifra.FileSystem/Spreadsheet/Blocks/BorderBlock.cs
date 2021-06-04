@@ -44,6 +44,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         private void DrawAssignmentBorders(ISpreadsheetWriter spreadsheetWriter)
         {
             spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black);
+            spreadsheetWriter.SetHorizontalAlignment(HorizontalAlignment.Center);
             for (int assignmentIndex = 0; assignmentIndex < AssignmentBottomRows.Count(); assignmentIndex++)
             {
                 var assignmentBottomRow = AssignmentBottomRows.ElementAt(assignmentIndex);

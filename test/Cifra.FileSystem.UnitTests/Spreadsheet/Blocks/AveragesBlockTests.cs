@@ -1,10 +1,8 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
-using System;
 using System.Drawing;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
@@ -30,13 +28,12 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithAverages_PutsAveragePointsTitleOnRightPosition()
         {
             // Arrange
-            var averagesBlockInput = new AveragesBlock.AveragesBlockInput(
+            var sut = new StatisticsBlock(
                 _startpoint,
                 0,
                 1,
                 2,
                 3);
-            var sut = new AveragesBlock(averagesBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -50,13 +47,12 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithAverages_PutsAverageGradeTitleOnRightPosition()
         {
             // Arrange
-            var averagesBlockInput = new AveragesBlock.AveragesBlockInput(
+            var sut = new StatisticsBlock(
                 _startpoint,
                 0,
                 1,
                 2,
                 3);
-            var sut = new AveragesBlock(averagesBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);

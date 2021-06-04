@@ -1,7 +1,7 @@
-﻿using System;
-using System.Drawing;
-using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Application.Models.ValueTypes;
 using SpreadsheetWriter.Abstractions;
+using System;
+using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -15,12 +15,14 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public Point StartPoint { get; }
         public Name TestName { get; }
         public DateTime CreatedOn { get; }
+        public string ApplicationVersion { get; }
 
-        public TitleBlock(Point startPoint, Name testName, DateTime createdOn)
+        public TitleBlock(Point startPoint, Name testName, DateTime createdOn, string applicationVersion)
         {
             StartPoint = startPoint;
             TestName = testName;
             CreatedOn = createdOn;
+            ApplicationVersion = applicationVersion;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
@@ -35,7 +37,11 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .Write("Gemaakt op:")
                 .SetFontBold(false)
                 .MoveRight()
-                .Write(CreatedOn.ToString(DateFormat));
+                .Write(CreatedOn.ToString(DateFormat))
+                .NewLine()
+                .Write("Cifra:")
+                .MoveRight()
+                .Write(ApplicationVersion);
         }
     }
 }

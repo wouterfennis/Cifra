@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Cifra.Application.Models.Test;
+﻿using Cifra.Application.Models.Test;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Styling;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -41,6 +41,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             spreadsheetWriter
                 .SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black)
+                .SetHorizontalAlignment(HorizontalAlignment.Center)
                 .SetFontBold(true)
                 .Write("Opgave");
 

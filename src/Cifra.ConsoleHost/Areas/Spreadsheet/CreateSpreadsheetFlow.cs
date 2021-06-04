@@ -4,6 +4,7 @@ using Cifra.Application.Models.Spreadsheet;
 using Cifra.ConsoleHost.Utilities;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Spreadsheet
@@ -97,7 +98,8 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
                 Subject = fileName,
                 Author = "Todo",
                 Created = DateTime.Now,
-                FileName = fileName
+                FileName = fileName,
+                ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(3)
             };
 
             return await _spreadsheetFactory.CreateTestResultsSpreadsheetAsync(chosenClass, chosenTest, metadata);

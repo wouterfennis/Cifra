@@ -34,7 +34,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var students = _fixture.CreateMany<Student>()
                 .OrderBy(x => x.LastName.Value);
-            var sut = new StudentNamesBlock(_startpoint, students);
+            var sut = new StudentNamesBlock(_startpoint, students, 2);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -56,7 +56,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 new Student(Name.CreateFromString("-"), null, Name.CreateFromString("Z")),
                 new Student(Name.CreateFromString("-"), null, Name.CreateFromString("A"))
             };
-            var sut = new StudentNamesBlock(_startpoint, students);
+            var sut = new StudentNamesBlock(_startpoint, students, 2);
 
             // Act
             sut.Write(_spreadsheetWriter);

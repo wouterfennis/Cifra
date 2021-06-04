@@ -19,7 +19,8 @@ namespace Cifra.FileSystem.Mapping
                 Subject = input.Subject,
                 Author = input.Author,
                 Created = input.Created,
-                FileName = input.FileName
+                FileName = input.FileName,
+                ApplicationVersion = input.ApplicationVersion
             };
         }
 
