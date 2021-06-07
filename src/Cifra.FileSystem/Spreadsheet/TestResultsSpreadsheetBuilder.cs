@@ -150,7 +150,7 @@ namespace Cifra.FileSystem.Spreadsheet
             int numberOfStudents,
             IFormulaBuilderFactory formulaBuilderFactory)
         {
-            var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
+            var totalPointsBlock = new GradesBlock(
                 spreadsheetWriter.CurrentPosition,
                 formulaBuilderFactory,
                 achievedScoresRow,
@@ -159,7 +159,6 @@ namespace Cifra.FileSystem.Spreadsheet
                 standardizationfactorPosition,
                 minimumGradePosition,
                 numberOfStudents);
-            var totalPointsBlock = new GradesBlock(totalPointsBlockInput);
             totalPointsBlock.Write(spreadsheetWriter);
         }
 

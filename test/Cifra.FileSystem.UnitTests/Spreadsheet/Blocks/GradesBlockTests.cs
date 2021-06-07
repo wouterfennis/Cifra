@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using Cifra.TestUtilities.SpreadsheetWriter;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
+using System.Drawing;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -43,7 +43,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             SetupFormulaBuilderFactory(_formulaBuilderFactory, expectedFormula);
 
-            var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
+            var sut = new GradesBlock(
                 _startpoint,
                 _formulaBuilderFactory.Object,
                 achievedScoreRow,
@@ -52,7 +52,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 standardizationFactorPosition,
                 minimumScorePosition,
                 numberOfStudents);
-            var sut = new GradesBlock(totalPointsBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -75,7 +74,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 
             SetupFormulaBuilderFactory(_formulaBuilderFactory, expectedFormula);
 
-            var totalPointsBlockInput = new GradesBlock.GradesBlockInput(
+            var sut = new GradesBlock(
                 _startpoint,
                 _formulaBuilderFactory.Object,
                 achievedScoreRow,
@@ -84,7 +83,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
                 standardizationFactorPosition,
                 minimumScorePosition,
                 numberOfStudents);
-            var sut = new GradesBlock(totalPointsBlockInput);
 
             // Act
             sut.Write(_spreadsheetWriter);
