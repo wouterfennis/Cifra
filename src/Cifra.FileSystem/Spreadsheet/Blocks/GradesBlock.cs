@@ -76,7 +76,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 ICellRange achievedScoreCell = spreadsheetWriter.GetCellRange(achievedScorePosition);
 
                 spreadsheetWriter
-                    .PlaceLessThanRule(5.5, Color.OrangeRed)
+                    .PlaceLessThanRule(5.5, Color.Red)
                     .PlaceCustomFormula(SetupGradeFormula(achievedScoreCell,
                     maximumScoreCell,
                     standardizationFactorCell,

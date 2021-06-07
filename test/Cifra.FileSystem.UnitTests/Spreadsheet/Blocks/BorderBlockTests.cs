@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Cifra.FileSystem.Spreadsheet.Blocks;
+﻿using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
+using System.Collections.Generic;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
 {
@@ -72,7 +72,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             int totalRow = 10;
             int gradeRow = 11;
             int mostRightColumn = 5;
-            List<int> assignmentBottomRows = new List<int> { 1, 5, 9 };
+            List<int> assignmentBottomRows = new List<int> { 2, 5, 9 };
 
             var sut = new BorderBlock(headerRow, assignmentBottomRows, totalRow, gradeRow, mostRightColumn);
 

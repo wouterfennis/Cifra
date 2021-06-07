@@ -32,6 +32,11 @@ namespace SpreadsheetWriter.Test
             return this;
         }
 
+        public override ISpreadsheetWriter ApplyStyling()
+        {
+            return this;
+        }
+
         public override ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)
         {
             var currentStartValue = Spreadsheet[startPosition.X, startPosition.Y];
@@ -58,7 +63,6 @@ namespace SpreadsheetWriter.Test
 
         public override ISpreadsheetWriter PlaceLessThanRule(double lessThanValue, Color fillColor)
         {
-            // nothing.
             return this;
         }
 

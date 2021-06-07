@@ -34,6 +34,11 @@ namespace SpreadsheetWriter.Test
             return this;
         }
 
+        public override ISpreadsheetWriter ApplyStyling()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private string GenerateStylingString()
         {
             return $"{CurrentBorderDirection} + {CurrentBorderStyle}";
