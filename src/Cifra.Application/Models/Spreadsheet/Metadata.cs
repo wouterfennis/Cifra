@@ -31,5 +31,10 @@ namespace Cifra.Application.Models.Spreadsheet
         /// The filename of the spreadsheet
         /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// The version of the application.
+        /// </summary>
+        public string ApplicationVersion { get; set; }
     }
 }

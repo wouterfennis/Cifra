@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Styling;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using SpreadsheetWriter.Abstractions;
-using SpreadsheetWriter.Abstractions.Styling;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
 {
@@ -36,31 +36,24 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
         {
-            DrawAssignmentBorders(spreadsheetWriter);
 
-            spreadsheetWriter.ResetStyling();
-        }
-
-        private void DrawAssignmentBorders(ISpreadsheetWriter spreadsheetWriter)
-        {
-            spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black);
-            for (int assignmentIndex = 0; assignmentIndex < AssignmentBottomRows.Count(); assignmentIndex++)
+            for (int index = HeaderRow; index < TotalRow; index++)
             {
-                var assignmentBottomRow = AssignmentBottomRows.ElementAt(assignmentIndex);
+                var y = index + 1;
 
                 for (int columnIndex = 1; columnIndex <= MostRightColumn; columnIndex++)
                 {
-                    DrawBorder(spreadsheetWriter, columnIndex, assignmentBottomRow);
+                    spreadsheetWriter.CurrentPosition = new Point(columnIndex, y);
+                    spreadsheetWriter.SetHorizontalAlignment(HorizontalAlignment.Center);
+
+                    if (AssignmentBottomRows.Contains(y))
+                    {
+                        spreadsheetWriter.SetBorder(BorderStyle.Thin, BorderDirection.Bottom, Color.Black);
+                    }
+                    spreadsheetWriter.ApplyStyling();
+                    spreadsheetWriter.ResetStyling();
                 }
             }
-            spreadsheetWriter.ResetStyling();
-        }
-
-        private static void DrawBorder(ISpreadsheetWriter spreadsheetWriter, int x, int y)
-        {
-            spreadsheetWriter.CurrentPosition = new Point(x, y);
-            var cell = spreadsheetWriter.GetCellRange(spreadsheetWriter.CurrentPosition);
-            spreadsheetWriter.Write(cell.Value);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using SpreadsheetWriter.Abstractions;
+﻿using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
+using System.Drawing;
 
 namespace SpreadsheetWriter.Test
 {
@@ -34,6 +34,13 @@ namespace SpreadsheetWriter.Test
             return this;
         }
 
+        public override ISpreadsheetWriter ApplyStyling()
+        {
+            string stylingString = GenerateStylingString();
+            Spreadsheet[CurrentPosition.X, CurrentPosition.Y] = stylingString;
+            return this;
+        }
+
         private string GenerateStylingString()
         {
             return $"{CurrentBorderDirection} + {CurrentBorderStyle}";
@@ -42,6 +49,11 @@ namespace SpreadsheetWriter.Test
         public override ICellRange GetCellRange(Point position)
         {
             return new TestExcelRange(new TestExcelAddress(), string.Empty);
+        }
+
+        public override ISpreadsheetWriter PlaceLessThanRule(double lessThanValue, Color fillColor)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)

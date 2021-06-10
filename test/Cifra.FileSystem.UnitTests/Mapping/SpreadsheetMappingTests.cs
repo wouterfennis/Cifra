@@ -47,6 +47,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
             result.FileName.Should().Be(model.FileName);
             result.Subject.Should().Be(model.Subject);
             result.Title.Should().Be(model.Title);
+            result.ApplicationVersion.Should().Be(model.ApplicationVersion);
         }
 
         [TestMethod]

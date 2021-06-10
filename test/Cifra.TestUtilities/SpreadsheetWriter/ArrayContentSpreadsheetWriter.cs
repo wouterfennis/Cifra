@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using SpreadsheetWriter.Abstractions;
+﻿using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
+using System.Drawing;
 
 namespace SpreadsheetWriter.Test
 {
@@ -32,6 +32,11 @@ namespace SpreadsheetWriter.Test
             return this;
         }
 
+        public override ISpreadsheetWriter ApplyStyling()
+        {
+            return this;
+        }
+
         public override ISpreadsheetWriter PlaceStandardFormula(Point startPosition, Point endPosition, FormulaType formulaType)
         {
             var currentStartValue = Spreadsheet[startPosition.X, startPosition.Y];
@@ -54,6 +59,11 @@ namespace SpreadsheetWriter.Test
                 newValue = $"{currentValue} AND ";
             }
             return newValue + v;
+        }
+
+        public override ISpreadsheetWriter PlaceLessThanRule(double lessThanValue, Color fillColor)
+        {
+            return this;
         }
 
         public override ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder)
