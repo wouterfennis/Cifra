@@ -36,7 +36,9 @@ namespace SpreadsheetWriter.Test
 
         public override ISpreadsheetWriter ApplyStyling()
         {
-            throw new System.NotImplementedException();
+            string stylingString = GenerateStylingString();
+            Spreadsheet[CurrentPosition.X, CurrentPosition.Y] = stylingString;
+            return this;
         }
 
         private string GenerateStylingString()

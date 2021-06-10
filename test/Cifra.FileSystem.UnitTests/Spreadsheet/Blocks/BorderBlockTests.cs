@@ -35,6 +35,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Act
             sut.Write(_spreadsheetWriter);
 
+            SpreadsheetTestUtilities.PrintArraySpreadsheet(_spreadsheet);
+
             // Assert
             for (int columnIndex = 1; columnIndex < mostRightColumn; columnIndex++)
             {
