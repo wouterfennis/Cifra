@@ -15,15 +15,13 @@ namespace Cifra.ConsoleHost
     {
         internal static async Task Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.ResetColor();
-
             IConfigurationRoot configuration = LoadConfiguration();
 
             await Installation.Start(configuration);
-
-            var container = DependencyInjection.RegisterDependencies(configuration.GetSection("Appsettings"));
+            var containerBuilder = new ContainerBuilder();
+            DependencyInjection.RegisterApplicationDependencies(containerBuilder, configuration.GetSection("Appsettings"));
+            DependencyInjection.RegisterLogging(containerBuilder, configuration);
+            IContainer container = containerBuilder.Build();
             var application = container.Resolve<Application>();
             await application.StartAsync();
         }
