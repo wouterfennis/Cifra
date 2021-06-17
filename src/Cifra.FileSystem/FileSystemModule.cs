@@ -8,6 +8,9 @@ using SpreadsheetWriter.EPPlus.Formula;
 
 namespace Cifra.FileSystem
 {
+    /// <summary>
+    /// Dependency injection module for filesystem components
+    /// </summary>
     public class FileSystemModule : Module
     {
         protected override void Load(ContainerBuilder builder)

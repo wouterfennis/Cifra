@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using Autofac;
+using AutoFixture;
 using Cifra.TestUtilities.Autofac;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
@@ -22,20 +23,42 @@ namespace Cifra.ConsoleHost.UnitTests
         }
 
         [TestMethod]
-        public void Resolve_WithFileSystemModule_ShouldNotThrowException()
+        public void Resolve_WithApplicationDependencies_ShouldNotThrowException()
         {
             // Arrange
-           var appsettings = SetupAppsettings();
-           var container = DependencyInjection.RegisterDependencies(appsettings);
+            IConfigurationSection appsettings = SetupAppsettings().GetSection("Appsettings");
+            var containerBuilder = new ContainerBuilder();
+            DependencyInjection.RegisterApplicationDependencies(containerBuilder, appsettings);
+            IContainer container = containerBuilder.Build();
 
-           var scope = container.BeginLifetimeScope();
+            var scope = container.BeginLifetimeScope();
 
-           Action action = () => scope.ResolveAll();
+            // Act
+            Action action = () => scope.ResolveAll();
 
-           action.Should().NotThrow();
+            // Assert
+            action.Should().NotThrow();
         }
 
-        private IConfigurationSection SetupAppsettings()
+        [TestMethod]
+        public void Resolve_WithLogging_ShouldNotThrowException()
+        {
+            // Arrange
+            IConfigurationRoot appsettings = SetupAppsettings();
+            var containerBuilder = new ContainerBuilder();
+            DependencyInjection.RegisterLogging(containerBuilder, appsettings);
+            IContainer container = containerBuilder.Build();
+
+            var scope = container.BeginLifetimeScope();
+
+            // Act
+            Action action = () => scope.ResolveAll();
+
+            // Assert
+            action.Should().NotThrow();
+        }
+
+        private IConfigurationRoot SetupAppsettings()
         {
             var appsettings = JsonConvert.SerializeObject(new
             {
@@ -52,7 +75,7 @@ namespace Cifra.ConsoleHost.UnitTests
 
             builder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appsettings)));
 
-            return builder.Build().GetSection("Appsettings");
+            return builder.Build();
         }
     }
 }

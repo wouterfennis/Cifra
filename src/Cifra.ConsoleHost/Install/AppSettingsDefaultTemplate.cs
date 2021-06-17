@@ -38,6 +38,23 @@ namespace Cifra.ConsoleHost.Install
                     {
                         LicenseContext = _standardEpplusLicense
                     }
+                },
+                Serilog = new
+                {
+                    Using = new[] { "Serilog.Sinks.File" },
+                    MinimumLevel = "Information",
+                    WriteTo = new dynamic[] {
+                        new {
+                        Name = "File",
+                        Args = new {
+                            path = $"{currentDirectory}{slash}logs.json",
+                            formatter = "Serilog.Formatting.Json.JsonFormatter, Serilog"
+                            }
+                        }
+                    },
+                    Properties = new {
+                        Application = "Cifra"
+                    }
                 }
             };
         }

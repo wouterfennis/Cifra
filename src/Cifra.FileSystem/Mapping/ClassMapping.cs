@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cifra.Application.Models.Class.Magister;
+﻿using Cifra.Application.Models.Class.Magister;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.FileSystem.FileEntity;
 using Cifra.FileSystem.FileEntity.Csv;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cifra.FileSystem.Mapping
 {
