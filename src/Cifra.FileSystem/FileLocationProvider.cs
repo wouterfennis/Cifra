@@ -2,6 +2,7 @@
 
 namespace Cifra.FileSystem
 {
+    /// <inheritdoc/>
     public class FileLocationProvider : IFileLocationProvider
     {
         private readonly Path _classRepositoryPath;
@@ -20,21 +21,25 @@ namespace Cifra.FileSystem
             _classesDirectoryPath = classesDirectoryPath;
         }
 
+        /// <inheritdoc/>
         public Path GetClassRepositoryPath()
         {
             return _classRepositoryPath;
         }
 
+        /// <inheritdoc/>
         public Path GetTestRepositoryPath()
         {
             return _testRepositoryPath;
         }
 
+        /// <inheritdoc/>
         public Path GetSpreadsheetDirectoryPath()
         {
             return _spreadsheetDirectoryPath;
         }
 
+        /// <inheritdoc/>
         public Path GetClassesDirectoryPath()
         {
             return _classesDirectoryPath;

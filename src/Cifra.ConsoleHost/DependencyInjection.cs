@@ -10,6 +10,8 @@ using Cifra.FileSystem;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Exceptions;
+using System.Reflection;
 
 namespace Cifra.ConsoleHost
 {
@@ -62,10 +64,11 @@ namespace Cifra.ConsoleHost
         {
             var seriLogger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .Enrich.WithExceptionDetails()
                 .CreateLogger();
             var logger = new LoggerFactory()
                 .AddSerilog(seriLogger)
-                .CreateLogger("");
+                .CreateLogger(Assembly.GetExecutingAssembly().FullName);
 
             containerBuilder.RegisterInstance(logger).AsImplementedInterfaces();
         }

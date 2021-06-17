@@ -46,7 +46,10 @@ namespace Cifra.ConsoleHost.Install
                     WriteTo = new dynamic[] {
                         new {
                         Name = "File",
-                        Args = new { path = $"{currentDirectory}{slash}logs.txt" }
+                        Args = new {
+                            path = $"{currentDirectory}{slash}logs.json",
+                            formatter = "Serilog.Formatting.Json.JsonFormatter, Serilog"
+                            }
                         }
                     },
                     Properties = new {
