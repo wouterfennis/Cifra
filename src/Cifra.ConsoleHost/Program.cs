@@ -26,7 +26,7 @@ namespace Cifra.ConsoleHost
             DependencyInjection.RegisterApplicationDependencies(containerBuilder, configuration.GetSection("Appsettings"));
             DependencyInjection.RegisterLogging(containerBuilder, configuration);
             IContainer container = containerBuilder.Build();
-            var _logger = container.Resolve<ILogger>();
+            _logger = container.Resolve<ILogger>();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
