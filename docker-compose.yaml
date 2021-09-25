@@ -12,3 +12,23 @@ services:
           - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
         volumes:
           - $USERPROFILE/.aspnet/https:/https:ro
+    db:
+        image: mysql:latest
+        ports: 
+          - "8070:3306"
+        environment:
+          - MYSQL_ROOT_PASSWORD=password
+          - MYSQL_USER=cifra-db-user
+          - MYSQL_PASSWORD=password
+        volumes:
+          - dbdata:/var/lib/mysql
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports: 
+          - "8090:80"
+        environment:
+          - MYSQL_ROOT_PASSWORD=password
+          - MYSQL_USER=cifra-db-user
+          - MYSQL_PASSWORD=password
+volumes:
+    dbdata:
