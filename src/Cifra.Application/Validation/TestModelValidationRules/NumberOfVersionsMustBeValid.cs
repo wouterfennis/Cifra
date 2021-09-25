@@ -1,17 +1,18 @@
-﻿using System;
-using Cifra.Application.Models.Test.Requests;
+﻿using Cifra.Application.Models.Test.Commands;
+using Cifra.Application.Models.Validation;
+using System;
 
 namespace Cifra.Application.Validation.TestModelValidationRules
 {
     /// <summary>
     /// Validates the name of a test
     /// </summary>
-    public class NumberOfVersionsMustBeValid : IValidationRule<CreateTestRequest>
+    public class NumberOfVersionsMustBeValid : IValidationRule<CreateTestCommand>
     {
         private const string Message = "Number of versions must be higher than zero";
 
         /// <inheritdoc/>
-        public ValidationMessage Validate(CreateTestRequest model)
+        public ValidationMessage Validate(CreateTestCommand model)
         {
             NullChecks(model);
 
@@ -22,7 +23,7 @@ namespace Cifra.Application.Validation.TestModelValidationRules
             return null;
         }
 
-        private void NullChecks(CreateTestRequest model)
+        private void NullChecks(CreateTestCommand model)
         {
             if (model == null)
             {

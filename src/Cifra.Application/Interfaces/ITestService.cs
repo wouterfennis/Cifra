@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Cifra.Application.Models.Test.Requests;
+﻿using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
+using System.Threading.Tasks;
 
 namespace Cifra.Application.Interfaces
 {
@@ -12,12 +12,12 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Creates a test.
         /// </summary>
-        Task<CreateTestResult> CreateTestAsync(CreateTestRequest model);
+        Task<CreateTestResult> CreateTestAsync(CreateTestCommand model);
 
         /// <summary>
         /// Adds an assignment to a test.
         /// </summary>
-        Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model);
+        Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentCommand model);
 
         /// <summary>
         /// Retrieves all tests currently available.

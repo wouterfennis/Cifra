@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test;
+using Cifra.Application.Models.Validation;
 using Cifra.Application.Validation;
 using Cifra.FileSystem.FileSystemInfo;
 using Cifra.FileSystem.Mapping;

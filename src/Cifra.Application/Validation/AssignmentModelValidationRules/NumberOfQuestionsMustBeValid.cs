@@ -1,17 +1,18 @@
-﻿using System;
-using Cifra.Application.Models.Test.Requests;
+﻿using Cifra.Application.Models.Test.Commands;
+using Cifra.Application.Models.Validation;
+using System;
 
 namespace Cifra.Application.Validation.AssignmentModelValidationRules
 {
     /// <summary>
     /// Validates the name of a test
     /// </summary>
-    public class NumberOfQuestionsMustBeValid : IValidationRule<AddAssignmentRequest>
+    public class NumberOfQuestionsMustBeValid : IValidationRule<AddAssignmentCommand>
     {
         private const string Message = "Number of questions must be higher than zero";
 
         /// <inheritdoc/>
-        public ValidationMessage Validate(AddAssignmentRequest model)
+        public ValidationMessage Validate(AddAssignmentCommand model)
         {
             NullChecks(model);
 
@@ -22,7 +23,7 @@ namespace Cifra.Application.Validation.AssignmentModelValidationRules
             return null;
         }
 
-        private void NullChecks(AddAssignmentRequest model)
+        private void NullChecks(AddAssignmentCommand model)
         {
             if (model == null)
             {

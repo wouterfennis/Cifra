@@ -1,4 +1,6 @@
-﻿namespace Cifra.Application.Validation
+﻿using Cifra.Application.Models.Validation;
+
+namespace Cifra.Application.Validation
 {
     /// <summary>
     /// Validation rule for <c>T</c>

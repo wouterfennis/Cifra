@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Cifra.Application.Models.Validation;
+using System;
 using System.Collections.Generic;
-using Cifra.Application.Validation;
 
 namespace Cifra.Application.Models.Test.Results
 {

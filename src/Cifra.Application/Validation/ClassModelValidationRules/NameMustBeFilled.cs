@@ -1,4 +1,5 @@
-﻿using Cifra.Application.Models.Class.Requests;
+﻿using Cifra.Application.Models.Class.Commands;
+using Cifra.Application.Models.Validation;
 using System;
 
 namespace Cifra.Application.Validation.ClassModelValidationRules
@@ -6,12 +7,12 @@ namespace Cifra.Application.Validation.ClassModelValidationRules
     /// <summary>
     /// Validation rule to check name of the class
     /// </summary>
-    public class NameMustBeFilled : IValidationRule<CreateClassRequest>
+    public class NameMustBeFilled : IValidationRule<CreateClassCommand>
     {
         private const string Message = "Name is required";
 
         /// <inheritdoc/>
-        public ValidationMessage Validate(CreateClassRequest model)
+        public ValidationMessage Validate(CreateClassCommand model)
         {
             NullChecks(model);
 
@@ -22,7 +23,7 @@ namespace Cifra.Application.Validation.ClassModelValidationRules
             return null;
         }
 
-        private void NullChecks(CreateClassRequest model)
+        private void NullChecks(CreateClassCommand model)
         {
             if (model == null)
             {

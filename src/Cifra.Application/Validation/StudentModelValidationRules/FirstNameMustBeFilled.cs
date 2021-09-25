@@ -1,4 +1,5 @@
-﻿using Cifra.Application.Models.Class.Requests;
+﻿using Cifra.Application.Models.Class.Commands;
+using Cifra.Application.Models.Validation;
 using System;
 
 namespace Cifra.Application.Validation.StudentModelValidationRules
@@ -6,12 +7,12 @@ namespace Cifra.Application.Validation.StudentModelValidationRules
     /// <summary>
     /// Validates the first name of a student
     /// </summary>
-    public class FirstNameMustBeFilled : IValidationRule<AddStudentRequest>
+    public class FirstNameMustBeFilled : IValidationRule<AddStudentCommand>
     {
         private const string Message = "First name is required";
 
         /// <inheritdoc/>
-        public ValidationMessage Validate(AddStudentRequest model)
+        public ValidationMessage Validate(AddStudentCommand model)
         {
             NullChecks(model);
 
@@ -22,7 +23,7 @@ namespace Cifra.Application.Validation.StudentModelValidationRules
             return null;
         }
 
-        private void NullChecks(AddStudentRequest model)
+        private void NullChecks(AddStudentCommand model)
         {
             if (model == null)
             {

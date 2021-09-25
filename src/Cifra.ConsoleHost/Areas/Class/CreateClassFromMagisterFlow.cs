@@ -1,5 +1,5 @@
 ﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
+using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.ConsoleHost.Utilities;
@@ -36,7 +36,8 @@ namespace Cifra.ConsoleHost.Areas.Class
             {
                 PrintAvailableFiles(files);
                 await CreateClassFromFile(files);
-            } else
+            }
+            else
             {
                 Console.WriteLine("No magister files present. Add a file into the folder:");
                 Console.WriteLine(_magisterDirectoryLocation.Value);
@@ -60,7 +61,7 @@ namespace Cifra.ConsoleHost.Areas.Class
         {
             byte chosenIndex = SharedConsoleFlows.AskForByte("What file should be used?");
             IFileInfoWrapper chosenFile = await GetFile(files, chosenIndex);
-            var request = new CreateMagisterClassRequest
+            var request = new CreateMagisterClassCommand
             {
                 MagisterFileLocation = chosenFile.FullName
             };

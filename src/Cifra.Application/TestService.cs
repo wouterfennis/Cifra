@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test;
-using Cifra.Application.Models.Test.Requests;
+using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Validation;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
@@ -14,15 +15,15 @@ namespace Cifra.Application
     public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
-        private readonly IValidator<CreateTestRequest> _testValidator;
-        private readonly IValidator<AddAssignmentRequest> _assignmentValidator;
+        private readonly IValidator<CreateTestCommand> _testValidator;
+        private readonly IValidator<AddAssignmentCommand> _assignmentValidator;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestService(ITestRepository testRepository,
-            IValidator<CreateTestRequest> testValidator,
-            IValidator<AddAssignmentRequest> assignmentValidator)
+            IValidator<CreateTestCommand> testValidator,
+            IValidator<AddAssignmentCommand> assignmentValidator)
         {
             _testRepository = testRepository;
             _testValidator = testValidator;
@@ -30,7 +31,7 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-        public async Task<CreateTestResult> CreateTestAsync(CreateTestRequest model)
+        public async Task<CreateTestResult> CreateTestAsync(CreateTestCommand model)
         {
             IEnumerable<ValidationMessage> validationMessages = _testValidator.ValidateRules(model);
             if (validationMessages.Any())
@@ -48,7 +49,7 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-        public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentRequest model)
+        public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentCommand model)
         {
             IEnumerable<ValidationMessage> validationMessages = _assignmentValidator.ValidateRules(model);
             if (validationMessages.Any())

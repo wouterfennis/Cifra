@@ -107,3 +107,19 @@ Open the spreadsheet menu --> Create a spreadsheet
 4. Fill in the name of the spreadsheet. This will also be the file name.
 
 5. The spreadsheet is created in `./Spreadsheets`
+
+## Api
+
+### Setup certificates
+
+```cmd
+dotnet dev-certs https --clean
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p password
+dotnet dev-certs https --trust
+```
+
+```bash
+dotnet dev-certs https --clean
+dotnet dev-certs https -ep "$USERPROFILE\.aspnet\https\aspnetapp.pfx" -p password
+dotnet dev-certs https --trust
+```

@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cifra.ConsoleHost\Cifra.ConsoleHost.csproj" />
-    <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

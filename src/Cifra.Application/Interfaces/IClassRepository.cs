@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Cifra.Application.Models.Class;
+using Cifra.Application.Models.Validation;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Validation;
 
 namespace Cifra.Application.Interfaces
 {

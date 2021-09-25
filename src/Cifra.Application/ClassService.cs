@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
+﻿using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class;
+using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Magister;
-using Cifra.Application.Models.Class.Requests;
 using Cifra.Application.Models.Class.Results;
+using Cifra.Application.Models.Validation;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
@@ -18,9 +19,9 @@ namespace Cifra.Application
     {
         private readonly IClassRepository _classRepository;
         private readonly IMagisterFileReader _magisterFileReader;
-        private readonly IValidator<CreateClassRequest> _classValidator;
-        private readonly IValidator<CreateMagisterClassRequest> _magisterClassValidator;
-        private readonly IValidator<AddStudentRequest> _studentValidator;
+        private readonly IValidator<CreateClassCommand> _classValidator;
+        private readonly IValidator<CreateMagisterClassCommand> _magisterClassValidator;
+        private readonly IValidator<AddStudentCommand> _studentValidator;
 
 
         /// <summary>
@@ -28,9 +29,9 @@ namespace Cifra.Application
         /// </summary>
         public ClassService(IClassRepository classRepository,
             IMagisterFileReader magisterFileReader,
-            IValidator<CreateClassRequest> classValidator,
-            IValidator<CreateMagisterClassRequest> magisterClassValidator,
-            IValidator<AddStudentRequest> studentValidator)
+            IValidator<CreateClassCommand> classValidator,
+            IValidator<CreateMagisterClassCommand> magisterClassValidator,
+            IValidator<AddStudentCommand> studentValidator)
         {
             _classRepository = classRepository;
             _magisterFileReader = magisterFileReader;
@@ -42,7 +43,7 @@ namespace Cifra.Application
         /// <summary>
         /// Creates a class
         /// </summary>
-        public async Task<CreateClassResult> CreateClassAsync(CreateClassRequest model)
+        public async Task<CreateClassResult> CreateClassAsync(CreateClassCommand model)
         {
             IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
             if (validationMessages.Any())
@@ -59,7 +60,7 @@ namespace Cifra.Application
         /// <summary>
         /// Creates a magister class
         /// </summary>
-        public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassRequest model)
+        public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassCommand model)
         {
             IEnumerable<ValidationMessage> validationMessages = _magisterClassValidator.ValidateRules(model);
             if (validationMessages.Any())
@@ -92,7 +93,7 @@ namespace Cifra.Application
         /// <summary>
         /// Adds a students to class
         /// </summary>
-        public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
+        public async Task<AddStudentResult> AddStudentAsync(AddStudentCommand model)
         {
             IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);
             if (validationMessages.Any())

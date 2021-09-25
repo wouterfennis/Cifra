@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test.Requests;
+﻿using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
 using Cifra.ConsoleHost.Utilities;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Test
 {
@@ -33,7 +33,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             byte minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
             byte standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
 
-            var createTestRequest = new CreateTestRequest()
+            var createTestRequest = new CreateTestCommand()
             {
                 Name = testName,
                 MinimumGrade = minimumGrade,
@@ -64,7 +64,7 @@ namespace Cifra.ConsoleHost.Areas.Test
         {
             byte numberOfQuestions = SharedConsoleFlows.AskForByte($"How many questions are there for assignment: {assignmentIndex + 1}?");
 
-            var addAssignmentRequest = new AddAssignmentRequest
+            var addAssignmentRequest = new AddAssignmentCommand
             {
                 TestId = testId,
                 NumberOfQuestions = numberOfQuestions
@@ -85,7 +85,7 @@ namespace Cifra.ConsoleHost.Areas.Test
 
             if (isBonusAssignmentNeeded)
             {
-                var addAssignmentRequest = new AddAssignmentRequest
+                var addAssignmentRequest = new AddAssignmentCommand
                 {
                     TestId = testId,
                     NumberOfQuestions = 1

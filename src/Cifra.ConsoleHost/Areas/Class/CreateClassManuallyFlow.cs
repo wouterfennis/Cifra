@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
+﻿using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
 using Cifra.ConsoleHost.Utilities;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost.Areas.Class
 {
@@ -29,7 +29,7 @@ namespace Cifra.ConsoleHost.Areas.Class
         {
             Console.WriteLine("What is the name of the class?");
             string className = Console.ReadLine();
-            var createClassRequest = new CreateClassRequest()
+            var createClassRequest = new CreateClassCommand()
             {
                 Name = className
             };
@@ -59,7 +59,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             string firstName = SharedConsoleFlows.AskForString("What is the first name of the student?");
             string infix = SharedConsoleFlows.AskForOptionalString("What is the infix of the student?");
             string lastName = SharedConsoleFlows.AskForString("What is the last name of the student?");
-            var model = new AddStudentRequest
+            var model = new AddStudentCommand
             {
                 ClassId = classId,
                 FirstName = firstName,

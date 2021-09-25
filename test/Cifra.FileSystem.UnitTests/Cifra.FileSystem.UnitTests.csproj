@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cifra.Application\Cifra.Application.csproj" />
     <ProjectReference Include="..\..\src\Cifra.FileSystem\Cifra.FileSystem.csproj" />
-    <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>
