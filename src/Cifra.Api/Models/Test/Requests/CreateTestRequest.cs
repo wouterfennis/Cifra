@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models.Test.Requests
+﻿namespace Cifra.Api.Models.Test.Requests
 {
     /// <summary>
     /// The request to create an test

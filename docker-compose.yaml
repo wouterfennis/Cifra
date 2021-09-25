@@ -4,11 +4,10 @@ services:
         build: ./src
         image: wouterfennis.cifra-api:latest
         ports:
-            - "8080:8080"
             - "8443:8443"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
-          - ASPNETCORE_URLS=https://+:8443;http://+:8080
+          - ASPNETCORE_URLS=https://+:8443;
           - ASPNETCORE_Kestrel__Certificates__Default__Password=password
           - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
         volumes:
