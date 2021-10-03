@@ -17,12 +17,12 @@ services:
     db:
         image: mysql:latest
         ports: 
-          - "3306:3306"
+          - "8070:3306"
         environment:
           - MYSQL_ROOT_PASSWORD=password
-          - MYSQL_USER=cifra-db-user
-          - MYSQL_PASSWORD=password
+        command: --init-file /data/application/init.sql      
         volumes:
+          - ./database/init.sql:/data/application/init.sql
           - dbdata:/var/lib/mysql
     phpmyadmin:
         image: phpmyadmin:latest

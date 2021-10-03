@@ -12,7 +12,7 @@ namespace Cifra.Api.Mapping
     /// <summary>
     /// Automapper profile for the <see cref="Test"/> entity.
     /// </summary>
-    public class TestProfile: Profile
+    public class TestProfile : Profile
     {
         /// <summary>
         /// Constructor.
@@ -23,6 +23,7 @@ namespace Cifra.Api.Mapping
             CreateMap<CreateTestRequest, CreateTestCommand>();
             CreateMap<CreateTestResult, CreateTestResponse>();
             CreateMap<Application.Models.Validation.ValidationMessage, ValidationMessage>();
+            CreateMap<Database.Schema.Test, Test>();
         }
     }
 }

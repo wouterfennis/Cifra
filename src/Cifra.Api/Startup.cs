@@ -17,6 +17,9 @@ namespace Cifra.Api
     {
         private IConfiguration _configuration { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;

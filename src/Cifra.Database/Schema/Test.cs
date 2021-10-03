@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cifra.Database.Schema
@@ -9,38 +8,36 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The Id.
         /// </summary>
-        [Key]
-
-        public Guid Id { get; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The Name.
         /// </summary>
         [Required]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The number of versions of the test that where made.
         /// </summary>
         [Required]
-        public int NumberOfVersions { get; }
+        public int NumberOfVersions { get; set; }
 
         /// <summary>
         /// The Assignments.
         /// </summary>
-        public List<Assignment> Assignments { get; }
+        public List<Assignment> Assignments { get; set; }
 
         /// <summary>
         /// The Standardization Factor.
         /// </summary>
         [Required]
 
-        public int StandardizationFactor { get; }
+        public int StandardizationFactor { get; set; }
 
         /// <summary>
         /// The Minimum Grade.
         /// </summary>
         [Required]
-        public int MinimumGrade { get; }
+        public int MinimumGrade { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace Cifra.Api.DI
             var connectionStringProvider = new ConnectionStringProvider(databaseConnectionString);
             services.AddSingleton<IConnectionStringProvider>(connectionStringProvider);
 
+            services.AddDbContext<Context>();
+
             var fileLocationProvider = new FileLocationProvider(null, null, null, null);
             services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
 
@@ -54,7 +56,7 @@ namespace Cifra.Api.DI
             services.AddScoped<IValidationRule<CreateMagisterClassCommand>, Application.Validation.MagisterClassModelValidationRules.FileLocationMustBeFilled>();
             services.AddScoped<IValidationRule<CreateClassCommand>, Application.Validation.ClassModelValidationRules.NameMustBeFilled>();
 
-            services.AddScoped<ITestRepository, TestFileRepository>();
+            services.AddScoped<ITestRepository, TestDatabaseRepository>();
             services.AddScoped<IClassRepository, ClassFileRepository>();
             services.AddScoped<IFileInfoWrapperFactory, FileInfoWrapperFactory>();
             services.AddScoped<IDirectoryInfoWrapperFactory, DirectoryInfoWrapperFactory>();

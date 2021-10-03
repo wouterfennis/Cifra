@@ -12,7 +12,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cifra.Api.Controllers
+namespace Cifra.Api.V1.Test
 {
     /// <summary>
     /// REST endpoint for the Test resource.
@@ -26,6 +26,9 @@ namespace Cifra.Api.Controllers
         private readonly ITestService _testService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public TestController(ILogger<TestController> logger, ITestService testService, IMapper mapper)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
