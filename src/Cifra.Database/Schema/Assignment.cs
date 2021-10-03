@@ -11,6 +11,7 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
+        [Key]
         public Guid Id { get; }
 
         /// <summary>

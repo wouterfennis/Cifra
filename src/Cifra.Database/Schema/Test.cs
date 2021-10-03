@@ -9,6 +9,7 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The Id.
         /// </summary>
+        [Key]
 
         public Guid Id { get; }
 

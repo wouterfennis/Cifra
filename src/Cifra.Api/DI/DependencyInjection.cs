@@ -2,9 +2,9 @@
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Test.Commands;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
 using Cifra.Application.Validation.AssignmentModelValidationRules;
+using Cifra.Database;
 using Cifra.FileSystem;
 using Cifra.FileSystem.FileReaders;
 using Cifra.FileSystem.FileSystemInfo;
@@ -30,17 +30,12 @@ namespace Cifra.Api.DI
         /// </summary>
         internal static void SetupDependencies(IServiceCollection services, IConfiguration configuration)
         {
-            string classRepositoryPath = configuration.GetValue<string>("ClassRepository");
-            string testRepositoryPath = configuration.GetValue<string>("TestRepository");
-            string spreadsheetDirectoryPath = configuration.GetValue<string>("SpreadsheetDirectory");
-            string magisterDirectoryPath = configuration.GetValue<string>("ClassesDirectory");
+            string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection");
 
-            var fileLocationProvider = new FileLocationProvider(
-                Path.CreateFromString(classRepositoryPath),
-                Path.CreateFromString(testRepositoryPath),
-                Path.CreateFromString(spreadsheetDirectoryPath),
-                Path.CreateFromString(magisterDirectoryPath)
-            );
+            var connectionStringProvider = new ConnectionStringProvider(databaseConnectionString);
+            services.AddSingleton<IConnectionStringProvider>(connectionStringProvider);
+
+            var fileLocationProvider = new FileLocationProvider(null, null, null, null);
             services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -13,7 +13,7 @@ COPY "Cifra.ConsoleHost.UnitTests/Cifra.ConsoleHost.UnitTests.csproj" "Cifra.Con
 COPY "Cifra.FileSystem/Cifra.FileSystem.csproj" "Cifra.FileSystem/"
 COPY "Cifra.FileSystem.UnitTests/Cifra.FileSystem.UnitTests.csproj" "Cifra.FileSystem.UnitTests/"
 COPY "Cifra.TestUtilities/Cifra.TestUtilities.csproj" "Cifra.TestUtilities/"
-COPY "Cifra.Api/Cifra.Api.csproj" "Cifra.Api/"
+COPY "Cifra.Database/Cifra.Database.csproj" "Cifra.Database/"
 COPY Cifra.sln .
 COPY NuGet.Config .
 RUN dotnet restore
