@@ -13,6 +13,7 @@ namespace Cifra.Database
         {
             _connectionStringProvider = connectionStringProvider;
             Database.EnsureCreatedAsync();
+            Database.MigrateAsync();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

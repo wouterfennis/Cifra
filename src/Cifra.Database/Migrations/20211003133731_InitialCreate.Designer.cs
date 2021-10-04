@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cifra.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211003125224_InitialCreate")]
+    [Migration("20211003133731_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

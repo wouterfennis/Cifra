@@ -1,3 +1,3 @@
 CREATE DATABASE IF NOT EXISTS cifra;
 CREATE USER IF NOT EXISTS svc_cifra IDENTIFIED BY 'password';
-GRANT INSERT, UPDATE, DELETE, CREATE ON `cifra`.* TO `svc_cifra`@`%`;
+GRANT DELETE, CREATE, INSERT, UPDATE, SELECT  ON `cifra`.* TO `svc_cifra`@`%`;
