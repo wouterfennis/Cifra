@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
 
 namespace Cifra.Database.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,12 +10,12 @@ namespace Cifra.Database.Migrations
                 name: "Tests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    NumberOfVersions = table.Column<int>(type: "int", nullable: false),
-                    StandardizationFactor = table.Column<int>(type: "int", nullable: false),
-                    MinimumGrade = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    NumberOfVersions = table.Column<int>(type: "INTEGER", nullable: false),
+                    StandardizationFactor = table.Column<int>(type: "INTEGER", nullable: false),
+                    MinimumGrade = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,10 +26,10 @@ namespace Cifra.Database.Migrations
                 name: "Assignment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    NumberOfQuestions = table.Column<int>(type: "int", nullable: false),
-                    TestId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NumberOfQuestions = table.Column<int>(type: "INTEGER", nullable: false),
+                    TestId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

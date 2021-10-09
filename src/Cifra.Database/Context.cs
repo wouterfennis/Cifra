@@ -19,7 +19,7 @@ namespace Cifra.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySQL(_connectionStringProvider.GetConnectionString());
+            optionsBuilder.UseSqlite(_connectionStringProvider.GetConnectionString());
         }
     }
 }

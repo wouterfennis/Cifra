@@ -1,8 +1,12 @@
 version: "3.9"
 services:
     cifra-api:
-        build: ./src
-        image: 192.168.0.184:5000/wouterfennis.cifra.api:arm32v7
+        build: 
+            context: ./src
+            #args:
+                #RUNTIME: win-x64
+             #   RUNTIME: linux-arm64
+        image: 192.168.0.184:5000/wouterfennis.cifra.api:linux-arm64
         ports:
             - "8443:8443"
         environment:
@@ -12,25 +16,4 @@ services:
           - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
         volumes:
           - $USERPROFILE/.aspnet/https:/https:ro
-        links:
-          - "db:database"
-    db:
-        image: mysql:latest
-        ports: 
-          - "8070:3306"
-        environment:
-          - MYSQL_ROOT_PASSWORD=password
-        command: --init-file /data/application/init.sql      
-        volumes:
-          - ./database/init.sql:/data/application/init.sql
-          - dbdata:/var/lib/mysql
-    phpmyadmin:
-        image: phpmyadmin:latest
-        ports: 
-          - "8090:80"
-        environment:
-          - MYSQL_ROOT_PASSWORD=password
-          - MYSQL_USER=cifra-db-user
-          - MYSQL_PASSWORD=password
-volumes:
-    dbdata:
+          - C:/Git/Cifra/data:/data:rw
