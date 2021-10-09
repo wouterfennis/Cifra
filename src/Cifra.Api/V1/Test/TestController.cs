@@ -69,7 +69,7 @@ namespace Cifra.Api.V1.Test
         ///<response code="200">Returns list of tests</response> 
         ///<response code="500">List could not be retrieved</response> 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetAllTestsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<GetAllTestsResponse> GetAllTestsAsync()
         {
