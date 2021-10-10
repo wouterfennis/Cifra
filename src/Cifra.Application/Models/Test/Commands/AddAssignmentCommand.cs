@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.Application.Models.Test.Commands
+﻿namespace Cifra.Application.Models.Test.Commands
 {
     /// <summary>
     /// The request to add an assignment
@@ -10,7 +8,7 @@ namespace Cifra.Application.Models.Test.Commands
         /// <summary>
         /// The Test Id where the assignment should be added
         /// </summary>
-        public Guid TestId { get; set; }
+        public int TestId { get; set; }
 
         /// <summary>
         /// The number of questions in this Assignment.

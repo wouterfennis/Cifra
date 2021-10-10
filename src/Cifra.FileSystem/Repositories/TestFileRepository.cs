@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Test;
+using Cifra.Application.Models.Validation;
+using Cifra.FileSystem.FileSystemInfo;
+using Cifra.FileSystem.Mapping;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.Validation;
-using Cifra.Application.Validation;
-using Cifra.FileSystem.FileSystemInfo;
-using Cifra.FileSystem.Mapping;
-using Newtonsoft.Json;
 
 namespace Cifra.FileSystem.Repositories
 {
@@ -36,7 +34,7 @@ namespace Cifra.FileSystem.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Test> GetAsync(Guid id)
+        public async Task<Test> GetAsync(int id)
         {
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();
             FileEntity.Test testEntity = tests.SingleOrDefault(x => x.Id == id);

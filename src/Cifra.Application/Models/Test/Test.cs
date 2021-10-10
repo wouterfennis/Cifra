@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Cifra.Application.Models.ValueTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cifra.Application.Models.ValueTypes;
 
 namespace Cifra.Application.Models.Test
 {
@@ -13,7 +13,7 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// The Id.
         /// </summary>
-        public Guid Id { get; }
+        public int Id { get; }
 
         /// <summary>
         /// The Name.
@@ -45,7 +45,6 @@ namespace Cifra.Application.Models.Test
         /// </summary>
         public Test(Name testName, StandardizationFactor standardizationFactor, Grade minimumGrade, int numberOfVersions)
         {
-            Id = Guid.NewGuid();
             Name = testName;
             Assignments = new List<Assignment>();
             StandardizationFactor = standardizationFactor;
@@ -56,7 +55,7 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// Constructor for existing tests.
         /// </summary>
-        public Test(Guid id,
+        public Test(int id,
             Name testName,
             StandardizationFactor standardizationFactor,
             Grade minimumGrade,
@@ -86,7 +85,7 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// Gets the assignment.
         /// </summary>
-        public Assignment GetAssignment(Guid assignmentId)
+        public Assignment GetAssignment(int assignmentId)
         {
             return Assignments.SingleOrDefault(x => x.Id == assignmentId);
         }

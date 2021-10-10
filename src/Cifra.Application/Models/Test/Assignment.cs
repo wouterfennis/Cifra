@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.Application.Models.Test
+﻿namespace Cifra.Application.Models.Test
 {
     /// <summary>
     /// The Assignment entity.
@@ -10,7 +8,7 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public Guid Id { get; }
+        public int Id { get; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
@@ -20,7 +18,7 @@ namespace Cifra.Application.Models.Test
         /// <summary>
         /// Constructor for existing assignment.
         /// </summary>
-        public Assignment(Guid id, int numberOfQuestions)
+        public Assignment(int id, int numberOfQuestions)
         {
             Id = id;
             NumberOfQuestions = numberOfQuestions;
@@ -31,7 +29,6 @@ namespace Cifra.Application.Models.Test
         /// </summary>
         public Assignment(int numberOfQuestions)
         {
-            Id = Guid.NewGuid();
             NumberOfQuestions = numberOfQuestions;
         }
     }

@@ -8,7 +8,7 @@ namespace Cifra.TestUtilities.FileSystem
     public class TestBuilder
     {
         private readonly Fixture _fixture;
-        private byte _minimumGrade;
+        private int _minimumGrade;
         private int _numberOfVersions;
         private readonly List<Assignment> _assignments;
 
@@ -45,10 +45,10 @@ namespace Cifra.TestUtilities.FileSystem
         public Test Build()
         {
             string testName = _fixture.Create<string>();
-            var standardizationFactor = _fixture.Create<byte>();
+            var standardizationFactor = _fixture.Create<int>();
             return new Test
             {
-                Id = Guid.NewGuid(),
+                Id = _fixture.Create<int>(),
                 Name = testName,
                 Assignments = _assignments,
                 MinimumGrade = _minimumGrade,

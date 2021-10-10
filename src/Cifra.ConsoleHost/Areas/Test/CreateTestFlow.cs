@@ -20,18 +20,18 @@ namespace Cifra.ConsoleHost.Areas.Test
         public async Task StartAsync()
         {
             Console.Clear();
-            Guid testId = await CreateTestFlowAsync();
+            int? testId = await CreateTestFlowAsync();
             Console.WriteLine("Adding assignments to the test");
             await AddAssignmentsFlowAsync(testId);
             await AddBonusAssignmentFlowAsync(testId);
         }
 
-        private async Task<Guid> CreateTestFlowAsync()
+        private async Task<int?> CreateTestFlowAsync()
         {
             string testName = SharedConsoleFlows.AskForString("What is the name of the test?");
-            byte numberOfVersions = SharedConsoleFlows.AskForByte("How many versions are there?");
-            byte minimumGrade = SharedConsoleFlows.AskForByte("What is the minimum grade?");
-            byte standardizationFactor = SharedConsoleFlows.AskForByte("What is the standardization factor?");
+            int numberOfVersions = SharedConsoleFlows.AskForInteger("How many versions are there?");
+            int minimumGrade = SharedConsoleFlows.AskForInteger("What is the minimum grade?");
+            int standardizationFactor = SharedConsoleFlows.AskForInteger("What is the standardization factor?");
 
             var createTestRequest = new CreateTestCommand()
             {
@@ -41,7 +41,7 @@ namespace Cifra.ConsoleHost.Areas.Test
                 NumberOfVersions = numberOfVersions
             };
             CreateTestResult createTestResponse = await _testController.CreateTestAsync(createTestRequest);
-            Guid testId = createTestResponse.TestId;
+            int? testId = createTestResponse.TestId;
             if (createTestResponse.ValidationMessages.Any())
             {
                 SharedConsoleFlows.PrintValidationMessages(createTestResponse.ValidationMessages);
@@ -50,9 +50,9 @@ namespace Cifra.ConsoleHost.Areas.Test
             return testId;
         }
 
-        private async Task AddAssignmentsFlowAsync(Guid testId)
+        private async Task AddAssignmentsFlowAsync(int? testId)
         {
-            byte numberOfAssignments = SharedConsoleFlows.AskForByte("How many normal assignments are there?");
+            int numberOfAssignments = SharedConsoleFlows.AskForInteger("How many normal assignments are there?");
 
             for (int assignmentIndex = 0; assignmentIndex < numberOfAssignments; assignmentIndex++)
             {
@@ -60,13 +60,13 @@ namespace Cifra.ConsoleHost.Areas.Test
             }
         }
 
-        private async Task AddAssignmentFlowAsync(Guid testId, int assignmentIndex)
+        private async Task AddAssignmentFlowAsync(int? testId, int assignmentIndex)
         {
-            byte numberOfQuestions = SharedConsoleFlows.AskForByte($"How many questions are there for assignment: {assignmentIndex + 1}?");
+            int numberOfQuestions = SharedConsoleFlows.AskForInteger($"How many questions are there for assignment: {assignmentIndex + 1}?");
 
             var addAssignmentRequest = new AddAssignmentCommand
             {
-                TestId = testId,
+                TestId = testId.Value,
                 NumberOfQuestions = numberOfQuestions
             };
 
@@ -79,7 +79,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             }
         }
 
-        private async Task AddBonusAssignmentFlowAsync(Guid testId)
+        private async Task AddBonusAssignmentFlowAsync(int? testId)
         {
             bool isBonusAssignmentNeeded = SharedConsoleFlows.AskForBool($"Is there a bonus question?");
 
@@ -87,7 +87,7 @@ namespace Cifra.ConsoleHost.Areas.Test
             {
                 var addAssignmentRequest = new AddAssignmentCommand
                 {
-                    TestId = testId,
+                    TestId = testId.Value,
                     NumberOfQuestions = 1
                 };
 

@@ -66,8 +66,8 @@ namespace Cifra.FileSystem.Mapping
             return new Application.Models.Test.Test(
                 input.Id,
                 Name.CreateFromString(input.Name),
-                StandardizationFactor.CreateFromByte(input.StandardizationFactor),
-                Grade.CreateFromByte(input.MinimumGrade),
+                StandardizationFactor.CreateFromInteger(input.StandardizationFactor),
+                Grade.CreateFromInteger(input.MinimumGrade),
                 input.Assignments.MapToModel(),
                 input.NumberOfVersions);
         }

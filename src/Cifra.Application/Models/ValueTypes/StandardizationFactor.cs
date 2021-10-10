@@ -7,13 +7,13 @@ namespace Cifra.Application.Models.ValueTypes
     /// </summary>
     public sealed class StandardizationFactor : ValueObject
     {
-        private StandardizationFactor(byte value)
+        private StandardizationFactor(int value)
         {
             Validate(value);
             Value = value;
         }
 
-        private void Validate(byte value)
+        private void Validate(int value)
         {
             // TODO: complete validation
         }
@@ -21,12 +21,12 @@ namespace Cifra.Application.Models.ValueTypes
         /// <summary>
         /// Gives raw value.
         /// </summary>
-        public byte Value { get; }
+        public int Value { get; }
 
         /// <summary>
-        /// Creates a StandardizationFactor from a byte
+        /// Creates a StandardizationFactor from a int
         /// </summary>
-        public static StandardizationFactor CreateFromByte(byte value) => new StandardizationFactor(value);
+        public static StandardizationFactor CreateFromInteger(int value) => new StandardizationFactor(value);
 
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }

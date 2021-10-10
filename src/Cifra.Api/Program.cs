@@ -3,13 +3,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.Api
 {
     /// <summary>
     /// Class for initial starting point.
     /// </summary>
-    public class Program
+    [ExcludeFromCodeCoverage]
+    public static class Program
     {
         /// <summary>
         /// Starting point of the Api.

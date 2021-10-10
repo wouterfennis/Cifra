@@ -40,8 +40,8 @@ namespace Cifra.Application
             }
 
             var test = new Test(Name.CreateFromString(model.Name),
-                StandardizationFactor.CreateFromByte(model.StandardizationFactor),
-                Grade.CreateFromByte(model.MinimumGrade),
+                StandardizationFactor.CreateFromInteger(model.StandardizationFactor),
+                Grade.CreateFromInteger(model.MinimumGrade),
                 model.NumberOfVersions);
             await _testRepository.CreateAsync(test);
 

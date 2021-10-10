@@ -68,8 +68,8 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         {
             return new Test(
                 Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromByte(5),
-                Grade.CreateFromByte(4),
+                StandardizationFactor.CreateFromInteger(5),
+                Grade.CreateFromInteger(4),
                 1);
         }
     }

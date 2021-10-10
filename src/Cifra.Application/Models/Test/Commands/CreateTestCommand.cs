@@ -18,11 +18,11 @@
         /// <summary>
         /// The standardization factor
         /// </summary>
-        public byte StandardizationFactor { get; set; }
+        public int StandardizationFactor { get; set; }
 
         /// <summary>
         /// The minimum grade
         /// </summary>
-        public byte MinimumGrade { get; set; }
+        public int MinimumGrade { get; set; }
     }
 }

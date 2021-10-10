@@ -8,16 +8,16 @@ namespace Cifra.Application.Models.ValueTypes
     /// </summary>
     public sealed class Grade : ValueObject
     {
-        private readonly byte _minimalValue = 0;
-        private readonly byte _maximalValue = 10;
+        private readonly int _minimalValue = 0;
+        private readonly int _maximalValue = 10;
 
-        private Grade(byte value)
+        private Grade(int value)
         {
             Validate(value);
             Value = value;
         }
 
-        private void Validate(byte value)
+        private void Validate(int value)
         {
             if (value < _minimalValue || value > _maximalValue)
             {
@@ -28,12 +28,12 @@ namespace Cifra.Application.Models.ValueTypes
         /// <summary>
         /// Gives raw value.
         /// </summary>
-        public byte Value { get; }
+        public int Value { get; }
 
         /// <summary>
-        /// Creates a Grade from a byte
+        /// Creates a Grade from a integer.
         /// </summary>
-        public static Grade CreateFromByte(byte value) => new Grade(value);
+        public static Grade CreateFromInteger(int value) => new Grade(value);
 
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }

@@ -5,6 +5,7 @@ using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Validation;
 using Cifra.Application.Validation.AssignmentModelValidationRules;
 using Cifra.Database;
+using Cifra.Database.Mapping;
 using Cifra.FileSystem;
 using Cifra.FileSystem.FileReaders;
 using Cifra.FileSystem.FileSystemInfo;
@@ -16,19 +17,21 @@ using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.EPPlus.File;
 using SpreadsheetWriter.EPPlus.Formula;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Cifra.Api.DI
+namespace Cifra.Api.Extensions
 {
     /// <summary>
     /// Static class for registering dependencies.
     /// </summary>
-    public static class DependencyInjection
+    [ExcludeFromCodeCoverage]
+    internal static class ServiceCollectionExtensions
     {
         /// <summary>
         /// Setup dependencies.
         /// </summary>
-        internal static void SetupDependencies(IServiceCollection services, IConfiguration configuration)
+        public static void SetupDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection");
 
@@ -40,7 +43,7 @@ namespace Cifra.Api.DI
             var fileLocationProvider = new FileLocationProvider(null, null, null, null);
             services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)));
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IValidator<CreateClassCommand>, Validator<CreateClassCommand>>();

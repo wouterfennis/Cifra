@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Cifra.FileSystem.FileEntity
 {
@@ -11,7 +10,7 @@ namespace Cifra.FileSystem.FileEntity
         /// <summary>
         /// The id.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The name of the <see cref="Test"/>.
@@ -26,12 +25,12 @@ namespace Cifra.FileSystem.FileEntity
         /// <summary>
         /// The minimum grade of the <see cref="Test"/>.
         /// </summary>
-        public byte MinimumGrade { get; set; }
+        public int MinimumGrade { get; set; }
 
         /// <summary>
         /// The standardization factor of the <see cref="Test"/>.
         /// </summary>
-        public byte StandardizationFactor { get; set; }
+        public int StandardizationFactor { get; set; }
 
         /// <summary>
         /// The number of versions that exist of the <see cref="Test"/>.

@@ -42,7 +42,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
 
             CreateTestResult result = await _sut.CreateTestAsync(input);
 
-            result.TestId.Should().NotBeEmpty();
+            result.TestId.Should().Be(default);
             result.ValidationMessages.Should().BeEmpty();
 
             _testRepository

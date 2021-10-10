@@ -55,7 +55,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             Class @class = _fixture.Create<Class>();
             Test test = new TestBuilder()
                 .WithNumberOfVersions(2)
-                .WithMinimumGrade(Grade.CreateFromByte(1))
+                .WithMinimumGrade(Grade.CreateFromInteger(1))
                 .WithRandomAssignments()
                 .Build();
 

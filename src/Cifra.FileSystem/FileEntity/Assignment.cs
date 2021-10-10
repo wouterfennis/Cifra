@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.FileSystem.FileEntity
+﻿namespace Cifra.FileSystem.FileEntity
 {
     /// <summary>
     /// The assignment entity.
@@ -10,7 +8,7 @@ namespace Cifra.FileSystem.FileEntity
         /// <summary>
         /// The id.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The number of questions of the <see cref="Assignment"/>.

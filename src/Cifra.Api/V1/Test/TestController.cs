@@ -37,6 +37,24 @@ namespace Cifra.Api.V1.Test
         }
 
         /// <summary>
+        /// Get a list of all tests.
+        /// </summary>
+        /// <returns>All tests that are present</returns>
+        ///<response code="200">Returns list of tests</response> 
+        ///<response code="500">List could not be retrieved</response> 
+        [HttpGet]
+        [ProducesResponseType(typeof(GetAllTestsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<GetAllTestsResponse> GetAllTestsAsync()
+        {
+            GetAllTestsResult getAllTestsResult = await _testService.GetTestsAsync();
+
+            var response = _mapper.Map<GetAllTestsResponse>(getAllTestsResult);
+
+            return response;
+        }
+
+        /// <summary>
         /// Create a new Test.
         /// </summary>
         /// <returns>Reference to newly created test</returns>
@@ -63,21 +81,36 @@ namespace Cifra.Api.V1.Test
         }
 
         /// <summary>
-        /// Get a list of all tests.
+        /// Adds an assignment to a test.
         /// </summary>
-        /// <returns>All tests that are present</returns>
-        ///<response code="200">Returns list of tests</response> 
-        ///<response code="500">List could not be retrieved</response> 
-        [HttpGet]
-        [ProducesResponseType(typeof(GetAllTestsResponse), StatusCodes.Status200OK)]
+        /// <param name="testId">The test id where the assignment should be added.</param>
+        /// <param name="request">The request containing details of the assignment.</param>
+        /// <returns>Reference to newly created assignment</returns>
+        /// <response code="201">Reference to newly created assignment.</response> 
+        /// <response code="400">Supplied assignment data was invalid.</response> 
+        /// <response code="500">The assignment could not be created.</response> 
+        [HttpPost]
+        [Route("{testId}/Assignment")]
+        [ProducesResponseType(typeof(AddAssignmentResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(AddAssignmentResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetAllTestsResponse> GetAllTestsAsync()
+        public async Task<ActionResult> AddAssignmentAsync(int testId, AddAssignmentRequest request)
         {
-            GetAllTestsResult getAllTestsResult = await _testService.GetTestsAsync();
+            var command = new AddAssignmentCommand
+            {
+                TestId = testId,
+                NumberOfQuestions = request.NumberOfQuestions
+            };
 
-            var response = _mapper.Map<GetAllTestsResponse>(getAllTestsResult);
+            AddAssignmentResult result = await _testService.AddAssignmentAsync(command);
 
-            return response;
+            var response = _mapper.Map<AddAssignmentResponse>(result);
+
+            if (response.ValidationMessages.Any())
+            {
+                return BadRequest(response);
+            }
+            return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
         }
     }
 }

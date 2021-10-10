@@ -1,5 +1,4 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.FileSystem.FileEntity;
 
 namespace Cifra.TestUtilities.FileSystem
@@ -24,7 +23,7 @@ namespace Cifra.TestUtilities.FileSystem
         {
             return new Assignment
             {
-                Id = Guid.NewGuid(),
+                Id = _fixture.Create<int>(),
                 NumberOfQuestions = _numberOfQuestions
             };
         }

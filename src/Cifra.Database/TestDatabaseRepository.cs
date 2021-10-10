@@ -20,9 +20,11 @@ namespace Cifra.Database
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public Task CreateAsync(Test newTest)
+        public async Task CreateAsync(Test newTest)
         {
-            throw new NotImplementedException();
+            Schema.Test mappedTest = _mapper.Map<Schema.Test>(newTest);
+            _dbContext.Add(mappedTest);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Test>> GetAllAsync()
@@ -31,14 +33,17 @@ namespace Cifra.Database
             return _mapper.Map<IEnumerable<Test>>(entities);
         }
 
-        public Task<Test> GetAsync(Guid id)
+        public async Task<Test> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            var findResult = await _dbContext.Tests.FindAsync(id);
+            return _mapper.Map<Test>(findResult);
         }
 
-        public Task<ValidationMessage> UpdateAsync(Test test)
+        public async Task<ValidationMessage> UpdateAsync(Test test)
         {
-            throw new NotImplementedException();
+            _dbContext.Update(test);
+            await _dbContext.SaveChangesAsync();
+            return new ValidationMessage(string.Empty, string.Empty);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Cifra.Api.Models.Test;
 using Cifra.Api.Models.Test.Requests;
 using Cifra.Api.Models.Test.Responses;
 using Cifra.Api.Models.Test.Results;
@@ -10,20 +9,19 @@ using Cifra.Application.Models.Test.Results;
 namespace Cifra.Api.Mapping
 {
     /// <summary>
-    /// Automapper profile for the <see cref="Test"/> entity.
+    /// Automapper profile for the <see cref="Api"/> assembly.
     /// </summary>
-    public class TestProfile : Profile
+    public class ApiProfile : Profile
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        public TestProfile()
+        public ApiProfile()
         {
             CreateMap<GetAllTestsResult, GetAllTestsResponse>();
             CreateMap<CreateTestRequest, CreateTestCommand>();
             CreateMap<CreateTestResult, CreateTestResponse>();
             CreateMap<Application.Models.Validation.ValidationMessage, ValidationMessage>();
-            CreateMap<Database.Schema.Test, Test>();
         }
     }
 }

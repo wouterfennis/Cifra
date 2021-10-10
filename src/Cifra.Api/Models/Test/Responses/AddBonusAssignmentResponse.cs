@@ -12,12 +12,12 @@ namespace Cifra.Api.Models.Test.Responses
         /// <summary>
         /// The test Id
         /// </summary>
-        public Guid? TestId { get; }
+        public int? TestId { get; }
 
         /// <summary>
         /// The assignment Id
         /// </summary>
-        public Guid? AssignmentId { get; }
+        public int? AssignmentId { get; }
 
         /// <summary>
         /// The validation messages
@@ -27,7 +27,7 @@ namespace Cifra.Api.Models.Test.Responses
         /// <summary>
         /// Ctor
         /// </summary>
-        public AddBonusAssignmentResponse(Guid testId, Guid assignmentId)
+        public AddBonusAssignmentResponse(int testId, int assignmentId)
         {
             TestId = testId;
             AssignmentId = assignmentId;

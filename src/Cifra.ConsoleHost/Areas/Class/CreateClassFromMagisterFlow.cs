@@ -59,7 +59,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         private async Task CreateClassFromFile(IFileInfoWrapper[] files)
         {
-            byte chosenIndex = SharedConsoleFlows.AskForByte("What file should be used?");
+            int chosenIndex = SharedConsoleFlows.AskForInteger("What file should be used?");
             IFileInfoWrapper chosenFile = await GetFile(files, chosenIndex);
             var request = new CreateMagisterClassCommand
             {
@@ -73,7 +73,7 @@ namespace Cifra.ConsoleHost.Areas.Class
             }
         }
 
-        private async Task<IFileInfoWrapper> GetFile(IFileInfoWrapper[] files, byte chosenIndex)
+        private async Task<IFileInfoWrapper> GetFile(IFileInfoWrapper[] files, int chosenIndex)
         {
             var chosenFile = files.ElementAtOrDefault(chosenIndex - 1);
             if (chosenFile == null)

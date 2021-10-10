@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Cifra.ConsoleHost.Areas.Class;
+using System;
 using System.Threading.Tasks;
-using Cifra.ConsoleHost.Areas.Class;
 
 namespace Cifra.ConsoleHost.Areas.Spreadsheet
 {
@@ -25,7 +25,7 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
 
         private async Task RedirectToSpreadsheetOption(string option)
         {
-            if (!byte.TryParse(option, out byte result))
+            if (!int.TryParse(option, out int result))
             {
                 await RetryMenu();
                 return;

@@ -1,4 +1,4 @@
-using Cifra.Api.DI;
+using Cifra.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,12 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.Api
 {
     /// <summary>
     /// Startup class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private IConfiguration _configuration { get; }
@@ -42,7 +44,7 @@ namespace Cifra.Api
                 options.ReportApiVersions = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
             });
-            DependencyInjection.SetupDependencies(services, _configuration);
+            services.SetupDependencies(_configuration);
         }
 
         /// <summary>

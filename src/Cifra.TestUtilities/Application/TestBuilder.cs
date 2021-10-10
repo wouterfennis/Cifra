@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
+using System.Collections.Generic;
 
 namespace Cifra.TestUtilities.Application
 {
@@ -27,7 +26,7 @@ namespace Cifra.TestUtilities.Application
 
         public TestBuilder WithValidMinimumGrade()
         {
-            _minimumGrade = Grade.CreateFromByte(1);
+            _minimumGrade = Grade.CreateFromInteger(1);
             return this;
         }
 
@@ -54,7 +53,7 @@ namespace Cifra.TestUtilities.Application
             Name testName = _fixture.Create<Name>();
             StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
             return new Test(
-                Guid.NewGuid(),
+                _fixture.Create<int>(),
                 testName,
                 standardizationFactor,
                 _minimumGrade,

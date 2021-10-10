@@ -33,5 +33,10 @@ namespace Cifra.Application.Models.ValueTypes
         public static Name CreateFromString(string value) => new Name(value);
 
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

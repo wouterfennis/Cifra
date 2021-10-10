@@ -1,7 +1,7 @@
-﻿using System;
-using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
@@ -9,31 +9,31 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
     public class GradeTests
     {
         [TestMethod]
-        public void CreateFromByte_WithValidMinimumGrade_ReturnsGrade()
+        public void CreateFromInteger_WithValidMinimumGrade_ReturnsGrade()
         {
-            byte input = 1;
+            int input = 1;
 
-            var result = Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromByte_WithValidMaximumGrade_ReturnsGrade()
+        public void CreateFromInteger_WithValidMaximumGrade_ReturnsGrade()
         {
-            byte input = 10;
+            int input = 10;
 
-            var result = Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromByte_WithTooHighGrade_ThrowsException()
+        public void CreateFromInteger_WithTooHighGrade_ThrowsException()
         {
-            byte input = 11;
+            int input = 11;
 
-            Action action = () => Grade.CreateFromByte(input);
+            Action action = () => Grade.CreateFromInteger(input);
 
             action.Should().Throw<ArgumentException>()
                 .WithMessage($"The value: {input} is not within 0 and 10");
@@ -42,10 +42,10 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         [TestMethod]
         public void Equals_TwoSeperateGradesWithSameValue_AreEqual()
         {
-            byte input = 10;
+            int input = 10;
 
-            var grade1 = Grade.CreateFromByte(input);
-            var grade2 = Grade.CreateFromByte(input);
+            var grade1 = Grade.CreateFromInteger(input);
+            var grade2 = Grade.CreateFromInteger(input);
 
             grade1.Should().Equals(grade2);
         }

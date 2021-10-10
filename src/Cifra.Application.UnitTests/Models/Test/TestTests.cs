@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using AutoFixture;
+﻿using AutoFixture;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 
 namespace Cifra.Application.UnitTests.Models.Test
 {
@@ -20,26 +20,13 @@ namespace Cifra.Application.UnitTests.Models.Test
         }
 
         [TestMethod]
-        public void Constructor_NewClass_GeneratesId()
-        {
-            var result = new Application.Models.Test.Test(
-                Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
-                Grade.CreateFromByte(5),
-                1);
-
-            result.Should().NotBeNull();
-            result.Id.Should().NotBe(Guid.Empty);
-        }
-
-        [TestMethod]
         public void Constructor_ExistingClassWithAssignmentsNull_ThrowsException()
         {
             Action action = () => new Application.Models.Test.Test(
-                _fixture.Create<Guid>(),
+                _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
-                Grade.CreateFromByte(5),
+                StandardizationFactor.CreateFromInteger(_fixture.Create<int>()),
+                Grade.CreateFromInteger(5),
                 null,
                 1);
 
@@ -62,10 +49,10 @@ namespace Cifra.Application.UnitTests.Models.Test
         private Application.Models.Test.Test CreateDefaultTest()
         {
             return new Application.Models.Test.Test(
-                _fixture.Create<Guid>(),
+                _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromByte(_fixture.Create<byte>()),
-                Grade.CreateFromByte(5),
+                StandardizationFactor.CreateFromInteger(_fixture.Create<int>()),
+                Grade.CreateFromInteger(5),
                 _fixture.CreateMany<Assignment>(0).ToList(),
                 1);
         }

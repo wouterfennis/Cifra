@@ -15,7 +15,7 @@ namespace Cifra.TestUtilities.Application
 
         public Assignment Build()
         {
-            return new Assignment(Guid.NewGuid(), _numberOfQuestions);
+            return new Assignment(1234, _numberOfQuestions);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Cifra.ConsoleHost.Areas.Class
 
         private async Task RedirectToClassOption(string option)
         {
-            if (!byte.TryParse(option, out byte result))
+            if (!int.TryParse(option, out int result))
             {
                 await RetryMenu();
                 return;

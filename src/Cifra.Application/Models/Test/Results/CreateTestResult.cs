@@ -12,7 +12,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// The Test Id
         /// </summary>
-        public Guid TestId { get; }
+        public int? TestId { get; }
 
         /// <summary>
         /// The validation messages
@@ -22,7 +22,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public CreateTestResult(Guid testId)
+        public CreateTestResult(int testId)
         {
             TestId = testId;
             ValidationMessages = new List<ValidationMessage>();
