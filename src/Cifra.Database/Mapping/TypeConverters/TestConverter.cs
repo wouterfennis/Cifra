@@ -1,18 +1,33 @@
 ﻿using AutoMapper;
 using Cifra.Application.Models.Test;
-using System;
+using Cifra.Application.Models.ValueTypes;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cifra.Database.Mapping.TypeConverters
 {
-    class TestConverter : ITypeConverter<Schema.Test, Test>
+    class TestConverter : ITypeConverter<Schema.Test, Test>, ITypeConverter<Test, Schema.Test>
     {
         public Test Convert(Schema.Test source, Test destination, ResolutionContext context)
         {
-            throw new NotImplementedException();
+            Name name = context.Mapper.Map<Name>(source.Name);
+            StandardizationFactor standardizationFactor = context.Mapper.Map<StandardizationFactor>(source.StandardizationFactor);
+            Grade minimumGrade = context.Mapper.Map<Grade>(source.MinimumGrade);
+            List<Assignment> assignments = context.Mapper.Map<List<Assignment>>(source.Assignments);
+            return new Test(source.Id, name, standardizationFactor, minimumGrade, assignments, source.NumberOfVersions);
+        }
+
+        public Schema.Test Convert(Test source, Schema.Test destination, ResolutionContext context)
+        {
+            List<Schema.Assignment> assignments = context.Mapper.Map<List<Schema.Assignment>>(source.Assignments);
+            return new Schema.Test
+            {
+                Id = source.Id,
+                Name = source.Name.Value,
+                MinimumGrade = source.MinimumGrade.Value,
+                StandardizationFactor = source.StandardizationFactor.Value,
+                NumberOfVersions = source.NumberOfVersions,
+                Assignments = assignments
+            };
         }
     }
 }

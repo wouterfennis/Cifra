@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cifra.Application.Models.Test;
 using Cifra.Application.Models.ValueTypes;
+using Cifra.Database.Mapping.TypeConverters;
 
 namespace Cifra.Database.Mapping
 {
@@ -14,10 +15,16 @@ namespace Cifra.Database.Mapping
         /// </summary>
         public DatabaseProfile()
         {
-            CreateMap<Schema.Test, Test>();
-            CreateMap<Test, Schema.Test>();
-            CreateMap<StandardizationFactor, int>().ReverseMap();
-            CreateMap<Grade, int>().ReverseMap();
+            CreateMap<Schema.Assignment, Assignment>().ConvertUsing<AssignmentConverter>();
+            CreateMap<Assignment, Schema.Assignment>().ConvertUsing<AssignmentConverter>();
+            CreateMap<Schema.Test, Test>().ConvertUsing<TestConverter>();
+            CreateMap<Test, Schema.Test>().ConvertUsing<TestConverter>();
+            CreateMap<StandardizationFactor, int>().ConvertUsing<StandardizationFactorConverter>();
+            CreateMap<int, StandardizationFactor>().ConvertUsing<StandardizationFactorConverter>();
+            CreateMap<Grade, int>().ConvertUsing<GradeConverter>();
+            CreateMap<int, Grade>().ConvertUsing<GradeConverter>();
+            CreateMap<Name, string>().ConvertUsing<NameConverter>();
+            CreateMap<string, Name>().ConvertUsing<NameConverter>();
         }
     }
 }

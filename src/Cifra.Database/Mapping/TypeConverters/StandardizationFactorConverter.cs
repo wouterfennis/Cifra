@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Cifra.Application.Models.ValueTypes;
 
-namespace Cifra.Application.Mapping.TypeConverters
+namespace Cifra.Database.Mapping.TypeConverters
 {
     /// <summary>
     /// Converter to convert <see cref="int"/> to <see cref="StandardizationFactor"/> and reverse.
