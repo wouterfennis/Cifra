@@ -4,7 +4,6 @@ EXPOSE 8080
 EXPOSE 8443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-#ARG RUNTIME=win-x64
 WORKDIR /src
 COPY "Cifra.Api/Cifra.Api.csproj" "Cifra.Api/"
 COPY "Cifra.Application/Cifra.Application.csproj" "Cifra.Application/"

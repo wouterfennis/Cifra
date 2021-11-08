@@ -3,9 +3,6 @@ services:
     cifra-api:
         build: 
             context: ./src
-            #args:
-                #RUNTIME: win-x64
-             #   RUNTIME: linux-arm64
         image: 192.168.0.184:5000/wouterfennis.cifra.api:linux-arm64
         ports:
             - "8443:8443"
