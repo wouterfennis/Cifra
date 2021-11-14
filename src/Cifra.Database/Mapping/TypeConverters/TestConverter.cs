@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Database.Mapping.TypeConverters
 {
-    class TestConverter : ITypeConverter<Schema.Test, Test>, ITypeConverter<Test, Schema.Test>
+    class TestConverter : ITypeConverter<Schema.Test, Test>
     {
         public Test Convert(Schema.Test source, Test destination, ResolutionContext context)
         {
@@ -14,20 +14,6 @@ namespace Cifra.Database.Mapping.TypeConverters
             Grade minimumGrade = context.Mapper.Map<Grade>(source.MinimumGrade);
             List<Assignment> assignments = context.Mapper.Map<List<Assignment>>(source.Assignments);
             return new Test(source.Id, name, standardizationFactor, minimumGrade, assignments, source.NumberOfVersions);
-        }
-
-        public Schema.Test Convert(Test source, Schema.Test destination, ResolutionContext context)
-        {
-            List<Schema.Assignment> assignments = context.Mapper.Map<List<Schema.Assignment>>(source.Assignments);
-            return new Schema.Test
-            {
-                Id = source.Id,
-                Name = source.Name.Value,
-                MinimumGrade = source.MinimumGrade.Value,
-                StandardizationFactor = source.StandardizationFactor.Value,
-                NumberOfVersions = source.NumberOfVersions,
-                Assignments = assignments
-            };
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Cifra.Api.Models.Test.Requests;
-using Cifra.Api.Models.Test.Responses;
-using Cifra.Api.Models.Test.Results;
-using Cifra.Api.Models.Validation;
+using Cifra.Api.V1.Models.Test.Requests;
+using Cifra.Api.V1.Models.Test.Responses;
+using Cifra.Api.V1.Models.Test.Results;
+using Cifra.Api.V1.Models.Validation;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
 
@@ -19,6 +19,8 @@ namespace Cifra.Api.Mapping
         public ApiProfile()
         {
             CreateMap<GetAllTestsResult, GetAllTestsResponse>();
+            CreateMap<Application.Models.Test.Test, V1.Models.Test.Test>();
+            CreateMap<Application.Models.Test.Assignment, V1.Models.Test.Assignment>();
             CreateMap<CreateTestRequest, CreateTestCommand>();
             CreateMap<CreateTestResult, CreateTestResponse>();
             CreateMap<Application.Models.Validation.ValidationMessage, ValidationMessage>();

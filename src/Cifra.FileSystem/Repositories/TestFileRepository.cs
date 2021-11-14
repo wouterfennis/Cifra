@@ -25,12 +25,13 @@ namespace Cifra.FileSystem.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task CreateAsync(Test newTest)
+        public async Task<int> CreateAsync(Test newTest)
         {
             FileEntity.Test testEntity = newTest.MapToFileEntity();
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();
             tests.Add(testEntity);
             await SaveChangesAsync(tests);
+            return -1;
         }
 
         /// <inheritdoc/>
@@ -59,10 +60,10 @@ namespace Cifra.FileSystem.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<Test>> GetAllAsync()
+        public async Task<List<Test>> GetAllAsync()
         {
             List<FileEntity.Test> tests = await RetrieveOrCreateTestsAsync();
-            return tests.Select(x => x.MapToModel());
+            return tests.Select(x => x.MapToModel()).ToList();
         }
 
         private async Task<List<FileEntity.Test>> RetrieveOrCreateTestsAsync()

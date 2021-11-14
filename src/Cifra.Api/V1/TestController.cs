@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Cifra.Api.Models.Test.Requests;
-using Cifra.Api.Models.Test.Responses;
-using Cifra.Api.Models.Test.Results;
+using Cifra.Api.V1.Models.Test.Requests;
+using Cifra.Api.V1.Models.Test.Responses;
+using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
@@ -12,14 +12,14 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cifra.Api.V1.Test
+namespace Cifra.Api.V1
 {
     /// <summary>
     /// REST endpoint for the Test resource.
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class TestController : ControllerBase
     {
         private readonly ILogger<TestController> _logger;

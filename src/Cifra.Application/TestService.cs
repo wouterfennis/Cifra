@@ -43,9 +43,9 @@ namespace Cifra.Application
                 StandardizationFactor.CreateFromInteger(model.StandardizationFactor),
                 Grade.CreateFromInteger(model.MinimumGrade),
                 model.NumberOfVersions);
-            await _testRepository.CreateAsync(test);
+            int id = await _testRepository.CreateAsync(test);
 
-            return new CreateTestResult(test.Id);
+            return new CreateTestResult(id);
         }
 
         /// <inheritdoc/>

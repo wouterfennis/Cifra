@@ -20,17 +20,18 @@ namespace Cifra.Database
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task CreateAsync(Test newTest)
+        public async Task<int> CreateAsync(Test newTest)
         {
             Schema.Test mappedTest = _mapper.Map<Schema.Test>(newTest);
             _dbContext.Add(mappedTest);
             await _dbContext.SaveChangesAsync();
+            return mappedTest.Id;
         }
 
-        public async Task<IEnumerable<Test>> GetAllAsync()
+        public async Task<List<Test>> GetAllAsync()
         {
             List<Schema.Test> entities = await _dbContext.Tests.ToListAsync();
-            return _mapper.Map<IEnumerable<Test>>(entities);
+            return _mapper.Map<List<Test>>(entities);
         }
 
         public async Task<Test> GetAsync(int id)

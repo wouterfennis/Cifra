@@ -18,7 +18,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Create a test 
         /// </summary>
-        Task CreateAsync(Test newTest);
+        Task<int> CreateAsync(Test newTest);
 
         /// <summary>
         /// Updates a test
@@ -28,6 +28,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Get all tests
         /// </summary>
-        Task<IEnumerable<Test>> GetAllAsync();
+        Task<List<Test>> GetAllAsync();
     }
 }

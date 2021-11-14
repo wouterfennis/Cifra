@@ -12,7 +12,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// The Test Id
         /// </summary>
-        public int? TestId { get; }
+        public int TestId { get; }
 
         /// <summary>
         /// The validation messages

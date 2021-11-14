@@ -35,6 +35,22 @@ namespace Cifra.Application.Models.ValueTypes
         /// </summary>
         public static Grade CreateFromInteger(int value) => new Grade(value);
 
+        /// <summary>
+        /// Implicit converts the <see cref="Grade"/> value to <see cref="int"/>.
+        /// </summary>
+        public static implicit operator int(Grade grade)
+        {
+            return grade.Value;
+        }
+
+        /// <summary>
+        /// Implicit converts the <see cref="int"/> value to <see cref="Grade"/>.
+        /// </summary>
+        public static implicit operator Grade(int gradeValue)
+        {
+            return CreateFromInteger(gradeValue);
+        }
+
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }
 }

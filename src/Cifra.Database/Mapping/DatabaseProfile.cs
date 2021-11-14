@@ -16,15 +16,9 @@ namespace Cifra.Database.Mapping
         public DatabaseProfile()
         {
             CreateMap<Schema.Assignment, Assignment>().ConvertUsing<AssignmentConverter>();
-            CreateMap<Assignment, Schema.Assignment>().ConvertUsing<AssignmentConverter>();
+            CreateMap<Assignment, Schema.Assignment>();
             CreateMap<Schema.Test, Test>().ConvertUsing<TestConverter>();
-            CreateMap<Test, Schema.Test>().ConvertUsing<TestConverter>();
-            CreateMap<StandardizationFactor, int>().ConvertUsing<StandardizationFactorConverter>();
-            CreateMap<int, StandardizationFactor>().ConvertUsing<StandardizationFactorConverter>();
-            CreateMap<Grade, int>().ConvertUsing<GradeConverter>();
-            CreateMap<int, Grade>().ConvertUsing<GradeConverter>();
-            CreateMap<Name, string>().ConvertUsing<NameConverter>();
-            CreateMap<string, Name>().ConvertUsing<NameConverter>();
+            CreateMap<Test, Schema.Test>();
         }
     }
 }

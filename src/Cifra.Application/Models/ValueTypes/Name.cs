@@ -32,6 +32,22 @@ namespace Cifra.Application.Models.ValueTypes
         /// </summary>
         public static Name CreateFromString(string value) => new Name(value);
 
+        /// <summary>
+        /// Implicit converts the <see cref="Name"/> value to <see cref="string"/>.
+        /// </summary>
+        public static implicit operator string(Name name)
+        {
+            return name.Value;
+        }
+
+        /// <summary>
+        /// Implicit converts the <see cref="string"/> value to <see cref="Name"/>.
+        /// </summary>
+        public static implicit operator Name(string nameValue)
+        {
+            return CreateFromString(nameValue);
+        }
+
         protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
 
         public override string ToString()

@@ -1,4 +1,5 @@
-﻿using Cifra.Application;
+﻿using Cifra.Api.Mapping;
+using Cifra.Application;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Test.Commands;
@@ -43,7 +44,7 @@ namespace Cifra.Api.Extensions
             var fileLocationProvider = new FileLocationProvider(null, null, null, null);
             services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)), Assembly.GetAssembly(typeof(ApiProfile)));
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IValidator<CreateClassCommand>, Validator<CreateClassCommand>>();

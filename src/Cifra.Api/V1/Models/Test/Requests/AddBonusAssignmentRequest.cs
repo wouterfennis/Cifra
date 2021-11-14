@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cifra.Api.Models.Test.Requests
+namespace Cifra.Api.V1.Models.Test.Requests
 {
     /// <summary>
     /// The request to add an assignment
