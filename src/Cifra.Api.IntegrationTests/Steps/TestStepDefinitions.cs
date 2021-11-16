@@ -56,7 +56,7 @@ namespace Cifra.Api.IntegrationTests.Steps
             _scenarioContext.Add(_getTestResponseKey, result.Tests);
         }
 
-        [Then(@"the previously created test is returned")]
+        [Then(@"the previously created test is displayed")]
         public void ThenThePreviouslyCreatedTestIsReturned()
         {
             TestDetails testDetails = _scenarioContext.Get<TestDetails>(_testDetailsKey);
@@ -83,15 +83,16 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             foreach (Assignment retrievedAssignment in retrievedAssignments)
             {
-                createdAssignments.Should().Contain(x => x.Id == retrievedAssignment.Id && x.NumberOfQuestions == retrievedAssignment.NumberOfQuestions);
+                createdAssignments.Should().Contain(x => x.Id == retrievedAssignment.Id && 
+                x.NumberOfQuestions == retrievedAssignment.NumberOfQuestions);
             }
         }
 
         private static ApiClient CreateApiClient()
         {
             IConfigurationRoot configuration = LoadConfiguration();
-            var apiConfiguration = configuration.GetSection("Cifra:Api");
-            return new ApiClient(apiConfiguration);
+            var testResource = configuration.GetSection("Cifra:Api:Test").Value;
+            return new ApiClient(testResource);
         }
 
         private static IConfigurationRoot LoadConfiguration()

@@ -75,6 +75,7 @@ namespace Cifra.Api.V1
 
             if (response.ValidationMessages.Any())
             {
+                _logger.LogInformation("Request is not valid");
                 return BadRequest(response);
             }
             return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
@@ -108,6 +109,7 @@ namespace Cifra.Api.V1
 
             if (response.ValidationMessages.Any())
             {
+                _logger.LogInformation("Request is not valid");
                 return BadRequest(response);
             }
             return Created(new Uri($"{response.TestId}", UriKind.Relative), response);

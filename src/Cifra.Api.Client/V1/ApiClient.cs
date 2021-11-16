@@ -15,11 +15,9 @@ namespace Cifra.Api.IntegrationTests.Api.V1
         /// <summary>
         /// Constructor
         /// </summary>
-        public ApiClient(IConfigurationSection apiConfiguration)
+        public ApiClient(string testResource)
         {
-            _apiConfiguration = apiConfiguration ?? throw new ArgumentNullException(nameof(apiConfiguration));
-            string testApiUrl = _apiConfiguration.GetSection("Test").Value;
-            _restClient = new RestClient(testApiUrl);
+            _restClient = new RestClient(testResource);
         }
 
         /// <summary>
