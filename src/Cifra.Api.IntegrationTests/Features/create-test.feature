@@ -24,9 +24,9 @@ Scenario: Creating a new test
 	When a request is made to create a new test with the following values:
 	Then the test is persisted
 	Examples: 	
-	| Name           | Number of versions | Standardization factor | Minimum grade |
-	| Math chapter 1 | 1                  | 3                      | 1             |
-	| Math chapter 1 | 2                  | 2                      | 10            |
+	| Name              | Number of versions | Standardization factor | Minimum grade |
+	| Math chapter 1    | 1                  | 3                      | 1             |
+	| History chapter 2 | 2                  | 2                      | 10            |
 
 Scenario: Creating a new test with invalid values
 	Given no tests have been created
