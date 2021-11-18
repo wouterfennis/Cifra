@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Cifra.Api.IntegrationTests.Features
+namespace Cifra.Api.IntegrationTests.Features.Test
 {
     using TechTalk.SpecFlow;
     using System;
@@ -48,23 +48,23 @@ namespace Cifra.Api.IntegrationTests.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Create test", @"As a teacher
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Test", "Create test", @"As a teacher
 I want to create a test
 So I can assign a score to different assignments 
 
 Definition of a test:
-A series of questions or exercises for measuring the knowledge, intelligence, ability etc. of an individual or group. 
+A series of questions or assignments for measuring the knowledge, intelligence, ability etc. of an individual or group. 
 
 - Name, a custom reference to a test
 - Number of versions, a test can have multiple versions. This is to prevent fraud during the execution of a test.
 - Standardization factor, the standard which is applied during the calculation of the grade
-- Minimum grade, the grade that is earned if no assignments where completed
+- Minimum grade, the grade that is earned if no assignments were completed
 
 Acceptance Criteria:
 - I can give a name to a test
 - I have to declare at least one version of the test
-- I cannot set a standardization factor lower then 1
-- I cannot set a minimum grade lower than 1 or higher than 10", ProgrammingLanguage.CSharp, ((string[])(null)));
+- I cannot set a standardization factor lower than 1
+- I cannot set a minimum grade lower than 0 or higher than 10", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ Acceptance Criteria:
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Create test")))
             {
-                global::Cifra.Api.IntegrationTests.Features.CreateTestFeature.FeatureSetup(null);
+                global::Cifra.Api.IntegrationTests.Features.Test.CreateTestFeature.FeatureSetup(null);
             }
         }
         
@@ -140,7 +140,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 24
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("a request is made to create a new test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 25
  testRunner.Then("the test is persisted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -150,45 +150,43 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: Variant 0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "3")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "1")]
-        public virtual void CreatingANewTest_Variant0()
+        public virtual void CreatingANewTest_MathChapter1()
         {
 #line 22
-this.CreatingANewTest("Math chapter 1", "1", "3", "1", ((string[])(null)));
+this.CreatingANewTest("Math chapter 1", "1", "9", "1", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: Variant 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: History chapter 2")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "History chapter 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "History chapter 2")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "10")]
-        public virtual void CreatingANewTest_Variant1()
+        public virtual void CreatingANewTest_HistoryChapter2()
         {
 #line 22
-this.CreatingANewTest("Math chapter 1", "2", "2", "10", ((string[])(null)));
+this.CreatingANewTest("History chapter 2", "2", "9", "10", ((string[])(null)));
 #line hidden
         }
         
-        public virtual void CreatingANewTestWithInvalidValues(string name, string numberOfVersions, string standardizationFactor, string minimumGrade, string failureReason, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test fails")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
+        public virtual void CreatingANewTestFails()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Name", name);
-            argumentsOfScenario.Add("Number of versions", numberOfVersions);
-            argumentsOfScenario.Add("Standardization factor", standardizationFactor);
-            argumentsOfScenario.Add("Minimum grade", minimumGrade);
-            argumentsOfScenario.Add("Failure reason", failureReason);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test with invalid values", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test fails", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -213,10 +211,56 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 33
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("a request is made to create a new test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 34
- testRunner.Then(string.Format("a validation message is returned containing \"{0}\"", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("the test cannot be saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 35
+ testRunner.Then("a message is displayed explaining to try again later", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        public virtual void CreatingANewTestWithInvalidValues(string name, string numberOfVersions, string standardizationFactor, string minimumGrade, string failureReason, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Name", name);
+            argumentsOfScenario.Add("Number of versions", numberOfVersions);
+            argumentsOfScenario.Add("Standardization factor", standardizationFactor);
+            argumentsOfScenario.Add("Minimum grade", minimumGrade);
+            argumentsOfScenario.Add("Failure reason", failureReason);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test with invalid values", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 37
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 38
+ testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 39
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 40
+ testRunner.Then(string.Format("a validation message is displayed containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -228,13 +272,13 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "3")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "No number of versions")]
         public virtual void CreatingANewTestWithInvalidValues_Variant0()
         {
-#line 31
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "0", "3", "1", "No number of versions", ((string[])(null)));
+#line 37
+this.CreatingANewTestWithInvalidValues("Math chapter 1", "0", "9", "1", "No number of versions", ((string[])(null)));
 #line hidden
         }
         
@@ -244,13 +288,13 @@ this.CreatingANewTestWithInvalidValues("Math chapter 1", "0", "3", "1", "No numb
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "3")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "-1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade is too low")]
         public virtual void CreatingANewTestWithInvalidValues_Variant1()
         {
-#line 31
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "3", "0", "Minimum grade is too low", ((string[])(null)));
+#line 37
+this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "9", "-1", "Minimum grade is too low", ((string[])(null)));
 #line hidden
         }
         
@@ -260,13 +304,13 @@ this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "3", "0", "Minimum
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 2")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "3")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "11")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade is too high")]
         public virtual void CreatingANewTestWithInvalidValues_Variant2()
         {
-#line 31
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "3", "11", "Minimum grade is too high", ((string[])(null)));
+#line 37
+this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "9", "11", "Minimum grade is too high", ((string[])(null)));
 #line hidden
         }
     }

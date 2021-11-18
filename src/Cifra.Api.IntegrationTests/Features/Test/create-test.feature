@@ -28,12 +28,18 @@ Scenario: Creating a new test
 	| Math chapter 1    | 1                  | 9                      | 1             |
 	| History chapter 2 | 2                  | 9                      | 10            |
 
+Scenario: Creating a new test fails
+	Given no tests have been created
+	When a request is made to create a new test
+	And the test cannot be saved
+	Then a message is displayed explaining to try again later
+	
 Scenario: Creating a new test with invalid values
 	Given no tests have been created
 	When a request is made to create a new test with the following values:
-	Then a validation message is returned containing "<Failure reason>"
+	Then a validation message is displayed containing '<Failure reason>'
 	Examples:
 	| Name           | Number of versions | Standardization factor | Minimum grade | Failure reason            |
 	| Math chapter 1 | 0                  | 9                      | 1             | No number of versions     |
-	| Math chapter 1 | 1                  | 9                      | -1             | Minimum grade is too low  |
+	| Math chapter 1 | 1                  | 9                      | -1            | Minimum grade is too low  |
 	| Math chapter 1 | 1                  | 9                      | 11            | Minimum grade is too high |
