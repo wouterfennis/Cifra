@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Cifra.Database
+namespace Cifra.Database.Repositories
 {
     public class TestDatabaseRepository : ITestRepository
     {
@@ -44,7 +44,7 @@ namespace Cifra.Database
         {
             _dbContext.Update(test);
             await _dbContext.SaveChangesAsync();
-            return new ValidationMessage(string.Empty, string.Empty);
+            return null;
         }
     }
 }

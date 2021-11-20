@@ -9,7 +9,6 @@ namespace Cifra.Api.IntegrationTests.Api.V1
 {
     public class ApiClient : IApiClient
     {
-        private readonly IConfigurationSection _apiConfiguration;
         private readonly RestClient _restClient;
 
         /// <summary>

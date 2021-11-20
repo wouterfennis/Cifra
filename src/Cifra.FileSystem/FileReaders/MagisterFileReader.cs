@@ -30,12 +30,12 @@ namespace Cifra.FileSystem.FileReaders
                 var magisterRecords = csv
                     .GetRecords<MagisterRecord>()
                     .ToList();
-                var students = magisterRecords.MapToMagisterStudents();
+                //var students = magisterRecords.MapToMagisterStudents();
 
                 return new MagisterClass
                 {
                     Name = magisterRecords.First().Klas,
-                    Students = students,
+                    Students = null, //TODO FIX
                 };
             }
         }

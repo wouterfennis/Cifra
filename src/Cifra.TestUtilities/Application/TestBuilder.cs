@@ -48,6 +48,20 @@ namespace Cifra.TestUtilities.Application
             return this;
         }
 
+        public Test BuildRandomTest()
+        {
+            Name testName = _fixture.Create<Name>();
+            StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
+            WithRandomAssignments();
+            return new Test(
+                _fixture.Create<int>(),
+                testName,
+                standardizationFactor,
+                Grade.CreateFromInteger(1),
+                _assignments,
+                _fixture.Create<int>());
+        }
+
         public Test Build()
         {
             Name testName = _fixture.Create<Name>();

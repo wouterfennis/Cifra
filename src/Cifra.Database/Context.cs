@@ -5,21 +5,11 @@ namespace Cifra.Database
 {
     public class Context : DbContext
     {
-        private readonly IConnectionStringProvider _connectionStringProvider;
-
         public DbSet<Test> Tests { get; set; }
 
-        public Context(IConnectionStringProvider connectionStringProvider)
+        public Context(DbContextOptions options) : base(options)
         {
-            _connectionStringProvider = connectionStringProvider;
             Database.EnsureCreatedAsync();
-            Database.MigrateAsync();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlite(_connectionStringProvider.GetConnectionString());
         }
     }
 }

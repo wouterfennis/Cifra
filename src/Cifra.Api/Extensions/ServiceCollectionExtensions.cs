@@ -7,11 +7,12 @@ using Cifra.Application.Validation;
 using Cifra.Application.Validation.AssignmentModelValidationRules;
 using Cifra.Database;
 using Cifra.Database.Mapping;
+using Cifra.Database.Repositories;
 using Cifra.FileSystem;
 using Cifra.FileSystem.FileReaders;
 using Cifra.FileSystem.FileSystemInfo;
-using Cifra.FileSystem.Repositories;
 using Cifra.FileSystem.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpreadsheetWriter.Abstractions.File;
@@ -34,12 +35,9 @@ namespace Cifra.Api.Extensions
         /// </summary>
         public static void SetupDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection");
+            string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("Sqlite");
 
-            var connectionStringProvider = new ConnectionStringProvider(databaseConnectionString);
-            services.AddSingleton<IConnectionStringProvider>(connectionStringProvider);
-
-            services.AddDbContext<Context>();
+            services.AddDbContext<Context>(options => options.UseSqlite(databaseConnectionString));
 
             var fileLocationProvider = new FileLocationProvider(null, null, null, null);
             services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
@@ -61,7 +59,6 @@ namespace Cifra.Api.Extensions
             services.AddScoped<IValidationRule<CreateClassCommand>, Application.Validation.ClassModelValidationRules.NameMustBeFilled>();
 
             services.AddScoped<ITestRepository, TestDatabaseRepository>();
-            services.AddScoped<IClassRepository, ClassFileRepository>();
             services.AddScoped<IFileInfoWrapperFactory, FileInfoWrapperFactory>();
             services.AddScoped<IDirectoryInfoWrapperFactory, DirectoryInfoWrapperFactory>();
             services.AddScoped<IMagisterFileReader, MagisterFileReader>();

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoFixture;
-using Cifra.FileSystem.FileEntity;
+using Cifra.Database.Schema;
 
-namespace Cifra.TestUtilities.FileSystem
+namespace Cifra.TestUtilities.Database
 {
     public class TestBuilder
     {
