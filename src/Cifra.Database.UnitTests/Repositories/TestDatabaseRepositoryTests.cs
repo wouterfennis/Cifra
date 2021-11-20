@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using Cifra.Application.Models.Test;
 using Cifra.Database.Repositories;
 using Cifra.TestUtilities.Application;
 using FluentAssertions;
@@ -64,13 +65,48 @@ namespace Cifra.Database.UnitTests.Repositories
         }
 
         [TestMethod]
+        public async Task CreateAsync_WithoutTest_ThrowsException()
+        {
+            // Arrange
+            Test test = null;
+
+            // Act
+            Func<Task> func = async () => { await _sut.CreateAsync(test); };
+
+            // Assert
+            await func.Should().ThrowAsync<ArgumentNullException>();
+        }
+
+        [TestMethod]
+        public async Task CreateAsync_WithTest_SavesTest()
+        {
+            // Arrange
+            var testBuilder = new TestBuilder ();
+            Test test = testBuilder.BuildRandomTest();
+
+            var schemaTest = _fixture.Create<Schema.Test>();
+            _mapper.Setup(x => x.Map<Schema.Test>(test))
+                .Returns(schemaTest);
+
+            // Act
+            int result = await _sut.CreateAsync(test);
+
+            // Assert
+            result.Should().Be(schemaTest.Id);
+
+            _context.Tests.Should().HaveCount(1);
+            var savedTest = _context.Tests.Single();
+            savedTest.Should().Be(schemaTest); 
+        }
+
+        [TestMethod]
         public async Task GetAsync_WithoutTest_ReturnsNull()
         {
             // Arrange
             int id = _fixture.Create<int>();
 
             // Act
-            var result = await _sut.GetAsync(id);
+            Test result = await _sut.GetAsync(id);
 
             // Assert
             result.Should().BeNull();
@@ -86,11 +122,11 @@ namespace Cifra.Database.UnitTests.Repositories
 
             var testBuilder = new TestBuilder();
             var mappedTest = testBuilder.BuildRandomTest();
-            _mapper.Setup(x => x.Map<Application.Models.Test.Test>(test))
+            _mapper.Setup(x => x.Map<Test>(test))
                 .Returns(mappedTest);
 
             // Act
-            Application.Models.Test.Test result = await _sut.GetAsync(test.Id);
+            Test result = await _sut.GetAsync(test.Id);
 
             // Assert
             AssertTest(mappedTest, result);
@@ -100,12 +136,12 @@ namespace Cifra.Database.UnitTests.Repositories
         public async Task GetAllAsync_WithoutTests_ReturnsEmptyList()
         {
             // Arrange
-            var expectedList = new List<Application.Models.Test.Test>();
-            _mapper.Setup(x => x.Map<List<Application.Models.Test.Test>>(It.Is<List<Schema.Test>>(x => x.Count == 0)))
+            var expectedList = new List<Test>();
+            _mapper.Setup(x => x.Map<List<Test>>(It.Is<List<Schema.Test>>(x => x.Count == 0)))
                 .Returns(expectedList);
 
             // Act
-            List<Application.Models.Test.Test> result = await _sut.GetAllAsync();
+            List<Test> result = await _sut.GetAllAsync();
 
             // Assert
             result.Should().BeEmpty();
@@ -122,24 +158,24 @@ namespace Cifra.Database.UnitTests.Repositories
             var testBuilder = new TestBuilder();
             var mappedTest1 = testBuilder.BuildRandomTest();
             var mappedTest2 = testBuilder.BuildRandomTest();
-            var mappedTests = new List<Application.Models.Test.Test> { mappedTest1, mappedTest2 };
-            _mapper.Setup(x => x.Map<List<Application.Models.Test.Test>>(tests))
+            var mappedTests = new List<Test> { mappedTest1, mappedTest2 };
+            _mapper.Setup(x => x.Map<List<Test>>(tests))
                 .Returns(mappedTests);
 
             // Act
-            List<Application.Models.Test.Test> result = await _sut.GetAllAsync();
+            List<Test> result = await _sut.GetAllAsync();
 
             // Assert
             AssertTests(mappedTests, result);
         }
 
-        private static void AssertTests(IEnumerable<Application.Models.Test.Test> mappedTests, IEnumerable<Application.Models.Test.Test> result)
+        private static void AssertTests(IEnumerable<Test> mappedTests, IEnumerable<Test> result)
         {
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(mappedTests);
         }
 
-        private static void AssertTest(Application.Models.Test.Test mappedTest, Application.Models.Test.Test result)
+        private static void AssertTest(Test mappedTest, Test result)
         {
             result.Should().NotBeNull();
             result.MinimumGrade.Should().Be(mappedTest.MinimumGrade);
@@ -149,7 +185,7 @@ namespace Cifra.Database.UnitTests.Repositories
             AssertAssignments(mappedTest.Assignments, result.Assignments);
         }
 
-        private static void AssertAssignments(IEnumerable <Application.Models.Test.Assignment> expectedAssignments, IEnumerable<Application.Models.Test.Assignment> resultAssignment)
+        private static void AssertAssignments(IEnumerable <Assignment> expectedAssignments, IEnumerable<Assignment> resultAssignment)
         {
             foreach (var expectedAssignment in expectedAssignments)
             {

@@ -22,9 +22,12 @@ namespace Cifra.Database.Repositories
 
         public async Task<int> CreateAsync(Test newTest)
         {
+            _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
             Schema.Test mappedTest = _mapper.Map<Schema.Test>(newTest);
+            
             _dbContext.Add(mappedTest);
             await _dbContext.SaveChangesAsync();
+            
             return mappedTest.Id;
         }
 
