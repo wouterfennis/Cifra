@@ -14,21 +14,21 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a <see cref="Class"/>.
         /// </summary>
-        Task<Class> GetAsync(Guid id);
+        Task<Class> GetAsync(int id);
 
         /// <summary>
         /// Create a <see cref="Class"/>.
         /// </summary>
-        Task CreateAsync(Class @newClass);
+        Task<int> CreateAsync(Class newClass);
 
         /// <summary>
         /// Updates a <see cref="Class"/>.
         /// </summary>
-        Task<ValidationMessage> UpdateAsync(Class @class);
+        Task<ValidationMessage> UpdateAsync(Class updatedClass);
 
         /// <summary>
         /// Get all a <see cref="Class"/>es.
         /// </summary>
-        Task<IEnumerable<Class>> GetAllAsync();
+        Task<List<Class>> GetAllAsync();
     }
 }

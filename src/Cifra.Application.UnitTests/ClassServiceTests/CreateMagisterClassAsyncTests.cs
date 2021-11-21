@@ -55,15 +55,19 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                 .Setup(x => x.ReadClass(It.Is<Path>(p => p.Value == input.MagisterFileLocation)))
                 .Returns(expectedMagisterClass);
 
+            int expectedId = _fixture.Create<int>();
+            _classRepository
+              .Setup(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == expectedMagisterClass.Name)))
+              .ReturnsAsync(expectedId);
+
             // Act
             CreateMagisterClassResult result = await _sut.CreateMagisterClassAsync(input);
 
             // Assert
-            result.ClassId.Should().NotBeEmpty();
+            result.ClassId.Should().Be(expectedId);
             result.ValidationMessages.Should().BeEmpty();
 
-            _classRepository
-               .Verify(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == expectedMagisterClass.Name)));
+           
         }
 
         [TestMethod]

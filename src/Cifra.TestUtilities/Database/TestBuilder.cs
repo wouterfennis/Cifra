@@ -8,8 +8,6 @@ namespace Cifra.TestUtilities.Database
     public class TestBuilder
     {
         private readonly Fixture _fixture;
-        private int _minimumGrade;
-        private int _numberOfVersions;
         private readonly List<Assignment> _assignments;
 
         public TestBuilder()
@@ -18,20 +16,26 @@ namespace Cifra.TestUtilities.Database
             _fixture = new Fixture();
         }
 
-        public TestBuilder WithValidMinimumGrade()
+        public Test BuildRandomTest()
         {
-            _minimumGrade = 1;
-            return this;
+            string testName = _fixture.Create<string>();
+            int standardizationFactor = _fixture.Create<int>();
+            int numberOfVersions = _fixture.Create<int>();
+            List<Assignment> assignments = CreateRandomAssignments();
+            return new Test
+            {
+                Id = _fixture.Create<int>(),
+                Name = testName,
+                Assignments = assignments,
+                MinimumGrade = 1,
+                NumberOfVersions = numberOfVersions,
+                StandardizationFactor = standardizationFactor
+            };
         }
 
-        public TestBuilder WithNumberOfVersions(int numberOfVersions)
+        private List<Assignment> CreateRandomAssignments()
         {
-            _numberOfVersions = numberOfVersions;
-            return this;
-        }
-
-        public TestBuilder WithRandomAssignments()
-        {
+            var assignments = new List<Assignment>();
             for (int i = 0; i < 3; i++)
             {
                 var assignment = new AssignmentBuilder()
@@ -39,22 +43,7 @@ namespace Cifra.TestUtilities.Database
                     .Build();
                 _assignments.Add(assignment);
             }
-            return this;
-        }
-
-        public Test Build()
-        {
-            string testName = _fixture.Create<string>();
-            var standardizationFactor = _fixture.Create<int>();
-            return new Test
-            {
-                Id = _fixture.Create<int>(),
-                Name = testName,
-                Assignments = _assignments,
-                MinimumGrade = _minimumGrade,
-                NumberOfVersions = _numberOfVersions,
-                StandardizationFactor = standardizationFactor
-            };
+            return assignments;
         }
     }
 }

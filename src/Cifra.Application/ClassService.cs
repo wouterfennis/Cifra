@@ -52,9 +52,9 @@ namespace Cifra.Application
             }
 
             var @class = new Class(Name.CreateFromString(model.Name));
-            await _classRepository.CreateAsync(@class);
+            int id = await _classRepository.CreateAsync(@class);
 
-            return new CreateClassResult(@class.Id);
+            return new CreateClassResult(id);
         }
 
         /// <summary>
@@ -68,17 +68,17 @@ namespace Cifra.Application
                 return new CreateMagisterClassResult(validationMessages);
             }
             MagisterClass magisterClass = _magisterFileReader.ReadClass(Path.CreateFromString(model.MagisterFileLocation));
-            var @class = new Class(Name.CreateFromString(magisterClass.Name));
+            var newClass = new Class(Name.CreateFromString(magisterClass.Name));
             foreach (var magisterStudent in magisterClass.Students)
             {
                 var student = new Student(Name.CreateFromString(magisterStudent.FirstName),
                     magisterStudent.Infix,
                     Name.CreateFromString(magisterStudent.LastName));
-                @class.AddStudent(student);
+                newClass.AddStudent(student);
             }
-            await _classRepository.CreateAsync(@class);
+            int id = await _classRepository.CreateAsync(newClass);
 
-            return new CreateMagisterClassResult(@class.Id);
+            return new CreateMagisterClassResult(id);
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace Cifra.Application
                 return new AddStudentResult(validationMessages);
             }
 
-            var @class = await _classRepository.GetAsync(model.ClassId);
-            if (@class == null)
+            var existingClass = await _classRepository.GetAsync(model.ClassId);
+            if (existingClass == null)
             {
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
             }
@@ -111,8 +111,8 @@ namespace Cifra.Application
                 model.Infix,
                 Name.CreateFromString(model.LastName));
 
-            @class.AddStudent(student);
-            ValidationMessage result = await _classRepository.UpdateAsync(@class);
+            existingClass.AddStudent(student);
+            ValidationMessage result = await _classRepository.UpdateAsync(existingClass);
 
             if (result != null)
             {

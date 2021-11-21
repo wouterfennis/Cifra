@@ -178,6 +178,7 @@ namespace Cifra.Database.UnitTests.Repositories
         private static void AssertTest(Test mappedTest, Test result)
         {
             result.Should().NotBeNull();
+            result.Id.Should().Be(mappedTest.Id);
             result.MinimumGrade.Should().Be(mappedTest.MinimumGrade);
             result.NumberOfVersions.Should().Be(mappedTest.NumberOfVersions);
             result.Name.Should().Be(mappedTest.Name);
@@ -185,11 +186,11 @@ namespace Cifra.Database.UnitTests.Repositories
             AssertAssignments(mappedTest.Assignments, result.Assignments);
         }
 
-        private static void AssertAssignments(IEnumerable <Assignment> expectedAssignments, IEnumerable<Assignment> resultAssignment)
+        private static void AssertAssignments(IEnumerable <Assignment> expectedAssignments, IEnumerable<Assignment> resultAssignments)
         {
             foreach (var expectedAssignment in expectedAssignments)
             {
-                resultAssignment.Should().Contain(x => x.Id == expectedAssignment.Id && x.NumberOfQuestions == expectedAssignment.NumberOfQuestions);
+                resultAssignments.Should().Contain(x => x.Id == expectedAssignment.Id && x.NumberOfQuestions == expectedAssignment.NumberOfQuestions);
             }
         }
     }

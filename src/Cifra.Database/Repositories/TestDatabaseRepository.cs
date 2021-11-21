@@ -25,7 +25,7 @@ namespace Cifra.Database.Repositories
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
             Schema.Test mappedTest = _mapper.Map<Schema.Test>(newTest);
             
-            _dbContext.Add(mappedTest);
+            _dbContext.Tests.Add(mappedTest);
             await _dbContext.SaveChangesAsync();
             
             return mappedTest.Id;
@@ -43,11 +43,13 @@ namespace Cifra.Database.Repositories
             return _mapper.Map<Test>(findResult);
         }
 
-        public async Task<ValidationMessage> UpdateAsync(Test test)
+        public async Task<ValidationMessage> UpdateAsync(Test updatedTest)
         {
-            _dbContext.Update(test);
+            Schema.Test mappedTest = _mapper.Map<Schema.Test>(updatedTest);
+
+            _dbContext.Tests.Update(mappedTest);
             await _dbContext.SaveChangesAsync();
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

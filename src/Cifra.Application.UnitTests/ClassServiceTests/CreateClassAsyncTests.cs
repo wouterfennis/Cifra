@@ -39,19 +39,24 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         [TestMethod]
         public async Task CreateClassAsync_WithValidRequest_CreatesClass()
         {
+            // Arrange
             var input = _fixture.Create<CreateClassCommand>();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
             _classValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(validationMessages);
 
+            int expectedId = _fixture.Create<int>();
+            _classRepository
+                .Setup(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == input.Name)))
+                .ReturnsAsync(expectedId);
+
+            // Act
             CreateClassResult result = await _sut.CreateClassAsync(input);
 
-            result.ClassId.Should().NotBeEmpty();
+            // Assert
+            result.ClassId.Should().Be(expectedId);
             result.ValidationMessages.Should().BeEmpty();
-
-            _classRepository
-               .Verify(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == input.Name)));
         }
 
         [TestMethod]

@@ -12,7 +12,7 @@ namespace Cifra.Application.Models.Class
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public Guid Id { get; }
+        public int Id { get; }
 
         /// <summary>
         /// The Name of the Class
@@ -29,7 +29,6 @@ namespace Cifra.Application.Models.Class
         /// </summary>
         internal Class(Name className)
         {
-            Id = Guid.NewGuid();
             Name = className;
             Students = new List<Student>();
         }
@@ -37,7 +36,7 @@ namespace Cifra.Application.Models.Class
         /// <summary>
         /// Constructor for existing tests
         /// </summary>
-        public Class(Guid id, Name className, List<Student> students)
+        public Class(int id, Name className, List<Student> students)
         {
             Id = id;
             Name = className;

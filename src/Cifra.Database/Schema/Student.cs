@@ -1,17 +1,19 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cifra.Application.Models.Class.Commands
+namespace Cifra.Database.Schema
 {
     /// <summary>
-    /// The request to add an student
+    /// The Student entity
     /// </summary>
-    public sealed class AddStudentCommand
+    public sealed class Student
     {
+        [Key]
         /// <summary>
-        /// The Id of the class
+        /// The id of the student
         /// </summary>
-        public int ClassId { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         /// <summary>
         /// The first name of the student
         /// </summary>
@@ -22,6 +24,7 @@ namespace Cifra.Application.Models.Class.Commands
         /// </summary>
         public string Infix { get; set; }
 
+        [Required]
         /// <summary>
         /// The last name of the student
         /// </summary>

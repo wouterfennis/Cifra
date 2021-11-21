@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cifra.Database.Mapping.TypeConverters
 {
-    class TestConverter : ITypeConverter<Schema.Test, Test>
+    internal class TestConverter : ITypeConverter<Schema.Test, Test>
     {
         public Test Convert(Schema.Test source, Test destination, ResolutionContext context)
         {

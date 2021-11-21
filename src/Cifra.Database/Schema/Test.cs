@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cifra.Database.Schema
 {
-    public class Test
+    public sealed class Test
     {
+        [Key]
         /// <summary>
         /// The Id.
         /// </summary>
