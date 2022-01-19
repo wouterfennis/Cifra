@@ -1,14 +1,15 @@
 ﻿using AutoFixture;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test;
+using AutoMapper;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
+using Cifra.Database.Repositories;
+using Cifra.Database.Schema;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cifra.Application.UnitTests.TestServiceTests
@@ -20,6 +21,8 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         private Mock<ITestRepository> _testRepository;
         private Mock<IValidator<CreateTestCommand>> _testValidator;
         private Mock<IValidator<AddAssignmentCommand>> _assignmentValidator;
+        private Mock<IMapper> _mapper;
+
         private TestService _sut;
 
         [TestInitialize]
@@ -29,17 +32,14 @@ namespace Cifra.Application.UnitTests.TestServiceTests
             _testRepository = new Mock<ITestRepository>();
             _testValidator = new Mock<IValidator<CreateTestCommand>>();
             _assignmentValidator = new Mock<IValidator<AddAssignmentCommand>>();
-            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object);
+            _mapper = new Mock<IMapper>();
+            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object, _mapper.Object);
         }
 
         [TestMethod]
         public async Task GetTestsAsync_WithTestsPresent_ReturnsTests()
         {
-            var expectedTests = new List<Test>
-            {
-                CreateDefaultTest(),
-                CreateDefaultTest()
-            };
+            var expectedTests = _fixture.CreateMany<Test>().ToList();
             _testRepository
                 .Setup(x => x.GetAllAsync())
                 .ReturnsAsync(expectedTests);
@@ -62,15 +62,6 @@ namespace Cifra.Application.UnitTests.TestServiceTests
 
             result.Should().NotBeNull();
             result.Tests.Should().BeEmpty();
-        }
-
-        private Test CreateDefaultTest()
-        {
-            return new Test(
-                Name.CreateFromString(_fixture.Create<string>()),
-                StandardizationFactor.CreateFromInteger(5),
-                Grade.CreateFromInteger(4),
-                1);
         }
     }
 }

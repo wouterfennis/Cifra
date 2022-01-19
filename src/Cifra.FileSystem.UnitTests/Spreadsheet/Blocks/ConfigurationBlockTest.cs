@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

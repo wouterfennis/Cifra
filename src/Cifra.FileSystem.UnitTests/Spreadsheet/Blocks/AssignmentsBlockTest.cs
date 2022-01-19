@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using AutoFixture;
-using Cifra.Application.Models.Test;
+using Cifra.Core.Models.Test;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,7 +14,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     {
         private string[,] _spreadsheet;
         private Point _startpoint;
-        private Fixture _fixture;
         private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
@@ -23,7 +21,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
-            _fixture = new Fixture();
             _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 

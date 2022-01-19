@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.Validation;
+﻿using Cifra.Core.Models.Validation;
+using Cifra.Database.Schema;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,47 +7,47 @@ using System.Threading.Tasks;
 
 namespace Cifra.Database.Repositories
 {
+    /// <inheritdoc/>
     public class TestDatabaseRepository : ITestRepository
     {
         private readonly Context _dbContext;
-        private readonly IMapper _mapper;
 
-        public TestDatabaseRepository(Context dbContext, IMapper mapper)
+        public TestDatabaseRepository(Context dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <inheritdoc/>
         public async Task<int> CreateAsync(Test newTest)
         {
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
-            Schema.Test mappedTest = _mapper.Map<Schema.Test>(newTest);
             
-            _dbContext.Tests.Add(mappedTest);
+            _dbContext.Tests.Add(newTest);
             await _dbContext.SaveChangesAsync();
             
-            return mappedTest.Id;
+            return newTest.Id;
         }
 
+        /// <inheritdoc/>
         public async Task<List<Test>> GetAllAsync()
         {
-            List<Schema.Test> entities = await _dbContext.Tests.ToListAsync();
-            return _mapper.Map<List<Test>>(entities);
+            List<Test> entities = await _dbContext.Tests.ToListAsync();
+            return entities;
         }
 
+        /// <inheritdoc/>
         public async Task<Test> GetAsync(int id)
         {
-            var findResult = await _dbContext.Tests.FindAsync(id);
-            return _mapper.Map<Test>(findResult);
+            Schema.Test findResult = await _dbContext.Tests.FindAsync(id);
+            return findResult;
         }
 
+        /// <inheritdoc/>
         public async Task<ValidationMessage> UpdateAsync(Test updatedTest)
         {
-            Schema.Test mappedTest = _mapper.Map<Schema.Test>(updatedTest);
-
-            _dbContext.Tests.Update(mappedTest);
+            _dbContext.Tests.Update(updatedTest);
             await _dbContext.SaveChangesAsync();
-            throw new NotImplementedException();
+            return new ValidationMessage("", "");
         }
     }
 }

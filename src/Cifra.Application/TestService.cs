@@ -1,10 +1,11 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test;
+﻿using AutoMapper;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.Validation;
-using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
+using Cifra.Core.Models.Test;
+using Cifra.Core.Models.Validation;
+using Cifra.Core.Models.ValueTypes;
+using Cifra.Database.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,17 +18,20 @@ namespace Cifra.Application
         private readonly ITestRepository _testRepository;
         private readonly IValidator<CreateTestCommand> _testValidator;
         private readonly IValidator<AddAssignmentCommand> _assignmentValidator;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestService(ITestRepository testRepository,
             IValidator<CreateTestCommand> testValidator,
-            IValidator<AddAssignmentCommand> assignmentValidator)
+            IValidator<AddAssignmentCommand> assignmentValidator,
+            IMapper mapper)
         {
             _testRepository = testRepository;
             _testValidator = testValidator;
             _assignmentValidator = assignmentValidator;
+            _mapper = mapper;
         }
 
         /// <inheritdoc/>
@@ -43,7 +47,10 @@ namespace Cifra.Application
                 StandardizationFactor.CreateFromInteger(model.StandardizationFactor),
                 Grade.CreateFromInteger(model.MinimumGrade),
                 model.NumberOfVersions);
-            int id = await _testRepository.CreateAsync(test);
+
+            var mappedTest = _mapper.Map<Database.Schema.Test>(test);
+
+            int id = await _testRepository.CreateAsync(mappedTest);
 
             return new CreateTestResult(id);
         }
@@ -57,16 +64,19 @@ namespace Cifra.Application
                 return new AddAssignmentResult(validationMessages);
             }
 
-            var test = await _testRepository.GetAsync(model.TestId);
+            Database.Schema.Test test = await _testRepository.GetAsync(model.TestId);
+            var mappedTest = _mapper.Map<Test>(test);
             if (test == null)
             {
                 return new AddAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
             }
-
+            
             var assignment = new Assignment(model.NumberOfQuestions);
+            mappedTest.AddAssignment(assignment);
 
-            test.AddAssignment(assignment);
-            ValidationMessage result = await _testRepository.UpdateAsync(test);
+            var updatedTest = _mapper.Map<Database.Schema.Test>(test);
+
+            ValidationMessage result = await _testRepository.UpdateAsync(updatedTest);
 
             if (result != null)
             {
@@ -79,8 +89,9 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<GetAllTestsResult> GetTestsAsync()
         {
-            var tests = await _testRepository.GetAllAsync();
-            return new GetAllTestsResult(tests);
+            List<Database.Schema.Test> tests = await _testRepository.GetAllAsync();
+            var mappedTests = _mapper.Map<List<Test>>(tests);
+            return new GetAllTestsResult(mappedTests);
         }
     }
 }

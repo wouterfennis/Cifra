@@ -1,4 +1,4 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Core.Models.ValueTypes;
 
 namespace Cifra.FileSystem
 {
@@ -21,10 +21,5 @@ namespace Cifra.FileSystem
         /// Path where spreadsheet files should be saved.
         /// </summary>
         Path GetSpreadsheetDirectoryPath();
-
-        /// <summary>
-        /// Path where magister files with raw information is stored
-        /// </summary>
-        Path GetClassesDirectoryPath();
     }
 }

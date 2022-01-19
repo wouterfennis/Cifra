@@ -1,14 +1,15 @@
 ﻿using AutoFixture;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Validation;
+using Cifra.Core.Models.Validation;
 using Cifra.Application.Validation;
+using Cifra.Database.Repositories;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
+using Cifra.Database.Schema;
+using AutoMapper;
 
 namespace Cifra.Application.UnitTests.ClassServiceTests
 {
@@ -18,6 +19,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         private Fixture _fixture;
         private Mock<IClassRepository> _classRepository;
         private Mock<IValidator<CreateClassCommand>> _classValidator;
+        private Mock<IMapper> _mapper;
         private ClassService _sut;
 
         [TestInitialize]
@@ -25,15 +27,13 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         {
             _fixture = new Fixture();
             _classRepository = new Mock<IClassRepository>();
-            var magisterFileReader = new Mock<IMagisterFileReader>();
             _classValidator = new Mock<IValidator<CreateClassCommand>>();
-            var magisterClassValidator = new Mock<IValidator<CreateMagisterClassCommand>>();
+            _mapper = new Mock<IMapper>();
             var studentValidator = new Mock<IValidator<AddStudentCommand>>();
             _sut = new ClassService(_classRepository.Object,
-                magisterFileReader.Object,
                 _classValidator.Object,
-                magisterClassValidator.Object,
-                studentValidator.Object);
+                studentValidator.Object,
+                _mapper.Object);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
 
             int expectedId = _fixture.Create<int>();
             _classRepository
-                .Setup(x => x.CreateAsync(It.Is<Class>(x => x.Name.Value == input.Name)))
+                .Setup(x => x.CreateAsync(It.Is<Class>(x => x.Name == input.Name)))
                 .ReturnsAsync(expectedId);
 
             // Act

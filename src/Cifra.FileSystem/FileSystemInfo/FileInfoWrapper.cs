@@ -1,11 +1,10 @@
-﻿using Cifra.Application.Models.ValueTypes;
-using System.IO;
+﻿using System.IO;
 
 namespace Cifra.FileSystem.FileSystemInfo
 {
     public class FileInfoWrapper : IFileInfoWrapper
     {
-        private readonly Application.Models.ValueTypes.Path _filePath;
+        private readonly Core.Models.ValueTypes.Path _filePath;
 
         public string Name { get => GetFileInfo().Name; }
 
@@ -13,7 +12,7 @@ namespace Cifra.FileSystem.FileSystemInfo
 
         public bool Exists { get => GetFileInfo().Exists; }
 
-        public FileInfoWrapper(Application.Models.ValueTypes.Path filePath)
+        public FileInfoWrapper(Core.Models.ValueTypes.Path filePath)
         {
             _filePath = filePath;
         }

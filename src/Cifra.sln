@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost", "Cifra.ConsoleHost\Cifra.ConsoleHost.csproj", "{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application", "Cifra.Application\Cifra.Application.csproj", "{DF459647-6414-4A50-9887-8B071713BC3D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem", "Cifra.FileSystem\Cifra.FileSystem.csproj", "{8468699C-C2AA-4325-B68D-9C88801C2FF7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application.UnitTests", "Cifra.Application.UnitTests\Cifra.Application.UnitTests.csproj", "{4F8B20BC-7EED-433F-98F0-11D40DC3EAA5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.ConsoleHost.UnitTests", "Cifra.ConsoleHost.UnitTests\Cifra.ConsoleHost.UnitTests.csproj", "{AA6B804A-E782-45A0-A78F-FB358BFFEB67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.FileSystem.UnitTests", "Cifra.FileSystem.UnitTests\Cifra.FileSystem.UnitTests.csproj", "{27402B66-EAE1-44F9-BBEC-92DD8E6250D0}"
 EndProject
@@ -23,11 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Database", "Cifra.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Database.UnitTests", "Cifra.Database.UnitTests\Cifra.Database.UnitTests.csproj", "{D115A782-43ED-4261-B2E7-B34294A88DF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Api.IntegrationTests", "Cifra.Api.IntegrationTests\Cifra.Api.IntegrationTests.csproj", "{C556E9F5-5159-4590-AE49-B9A1E2D423E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.IntegrationTests", "Cifra.Api.IntegrationTests\Cifra.Api.IntegrationTests.csproj", "{C556E9F5-5159-4590-AE49-B9A1E2D423E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Api.UnitTests", "Cifra.Api.UnitTests\Cifra.Api.UnitTests.csproj", "{46119806-68F2-4E62-8A34-B0382A02870A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.UnitTests", "Cifra.Api.UnitTests\Cifra.Api.UnitTests.csproj", "{46119806-68F2-4E62-8A34-B0382A02870A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Api.Client", "Cifra.Api.Client\Cifra.Api.Client.csproj", "{74587631-2501-446D-96FE-15B699A72B6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.Client", "Cifra.Api.Client\Cifra.Api.Client.csproj", "{74587631-2501-446D-96FE-15B699A72B6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Core", "Cifra.Core\Cifra.Core.csproj", "{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDA38197-1BF6-4BF6-9F80-62A7CAB0E366}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF459647-6414-4A50-9887-8B071713BC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF459647-6414-4A50-9887-8B071713BC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF459647-6414-4A50-9887-8B071713BC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,10 +45,6 @@ Global
 		{4F8B20BC-7EED-433F-98F0-11D40DC3EAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F8B20BC-7EED-433F-98F0-11D40DC3EAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F8B20BC-7EED-433F-98F0-11D40DC3EAA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA6B804A-E782-45A0-A78F-FB358BFFEB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA6B804A-E782-45A0-A78F-FB358BFFEB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA6B804A-E782-45A0-A78F-FB358BFFEB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA6B804A-E782-45A0-A78F-FB358BFFEB67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27402B66-EAE1-44F9-BBEC-92DD8E6250D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27402B66-EAE1-44F9-BBEC-92DD8E6250D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27402B66-EAE1-44F9-BBEC-92DD8E6250D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,6 +77,10 @@ Global
 		{74587631-2501-446D-96FE-15B699A72B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74587631-2501-446D-96FE-15B699A72B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74587631-2501-446D-96FE-15B699A72B6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

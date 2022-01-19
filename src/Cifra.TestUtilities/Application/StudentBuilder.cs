@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Class;
+using Cifra.Core.Models.ValueTypes;
 
-namespace Cifra.TestUtilities.Application
+namespace Cifra.TestUtilities.Core
 {
     public class StudentBuilder
     {

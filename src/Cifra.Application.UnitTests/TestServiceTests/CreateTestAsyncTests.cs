@@ -1,10 +1,11 @@
 ﻿using AutoFixture;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Test;
+using AutoMapper;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.Validation;
 using Cifra.Application.Validation;
+using Cifra.Core.Models.Validation;
+using Cifra.Database.Repositories;
+using Cifra.Database.Schema;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -19,6 +20,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         private Mock<ITestRepository> _testRepository;
         private Mock<IValidator<CreateTestCommand>> _testValidator;
         private Mock<IValidator<AddAssignmentCommand>> _assignmentValidator;
+        private Mock<IMapper> _mapper;
         private TestService _sut;
 
         [TestInitialize]
@@ -28,7 +30,11 @@ namespace Cifra.Application.UnitTests.TestServiceTests
             _testRepository = new Mock<ITestRepository>();
             _testValidator = new Mock<IValidator<CreateTestCommand>>();
             _assignmentValidator = new Mock<IValidator<AddAssignmentCommand>>();
-            _sut = new TestService(_testRepository.Object, _testValidator.Object, _assignmentValidator.Object);
+            _mapper = new Mock<IMapper>();
+            _sut = new TestService(_testRepository.Object, 
+                _testValidator.Object, 
+                _assignmentValidator.Object,
+                _mapper.Object);
         }
 
         [TestMethod]
@@ -46,7 +52,7 @@ namespace Cifra.Application.UnitTests.TestServiceTests
             result.ValidationMessages.Should().BeEmpty();
 
             _testRepository
-                .Verify(x => x.CreateAsync(It.Is<Test>(x => x.Name.Value == input.Name)));
+                .Verify(x => x.CreateAsync(It.Is<Test>(x => x.Name == input.Name)));
         }
 
         [TestMethod]

@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Test;
+using Cifra.Core.Models.ValueTypes;
 using System.Collections.Generic;
 
-namespace Cifra.TestUtilities.Application
+namespace Cifra.TestUtilities.Core
 {
     public class TestBuilder
     {

@@ -2,7 +2,7 @@
 using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
-using Cifra.Application.Interfaces;
+using Cifra.Application;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
 using Microsoft.AspNetCore.Http;

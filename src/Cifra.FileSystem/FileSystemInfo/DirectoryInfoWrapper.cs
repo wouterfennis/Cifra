@@ -5,10 +5,10 @@ namespace Cifra.FileSystem.FileSystemInfo
 {
     public class DirectoryInfoWrapper : IDirectoryInfoWrapper
     {
-        private readonly Application.Models.ValueTypes.Path _directoryPath;
+        private readonly Core.Models.ValueTypes.Path _directoryPath;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
-        public DirectoryInfoWrapper(Application.Models.ValueTypes.Path directoryPath, 
+        public DirectoryInfoWrapper(Core.Models.ValueTypes.Path directoryPath, 
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _directoryPath = directoryPath;
@@ -26,7 +26,7 @@ namespace Cifra.FileSystem.FileSystemInfo
         {
             return ToDirectoryInfo()
                 .GetFiles()
-                .Select(x => _fileInfoWrapperFactory.Create(Application.Models.ValueTypes.Path.CreateFromString(x.FullName)))
+                .Select(x => _fileInfoWrapperFactory.Create(Core.Models.ValueTypes.Path.CreateFromString(x.FullName)))
                 .ToArray();
         }
     }

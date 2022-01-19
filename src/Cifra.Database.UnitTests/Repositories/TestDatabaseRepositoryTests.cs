@@ -1,17 +1,15 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using Cifra.Application.Models.Test;
 using Cifra.Database.Repositories;
-using Cifra.TestUtilities.Application;
+using Cifra.Database.Schema;
+using Cifra.TestUtilities.Core;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.Database.UnitTests.Repositories
@@ -28,14 +26,13 @@ namespace Cifra.Database.UnitTests.Repositories
         public void Initialize()
         {
             _fixture = new Fixture();
-            _mapper = new Mock<IMapper>();
 
             var options = new DbContextOptionsBuilder<Context>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new Context(options);
 
-            _sut = new TestDatabaseRepository(_context, _mapper.Object);
+            _sut = new TestDatabaseRepository(_context);
         }
 
         [TestMethod]
@@ -45,7 +42,7 @@ namespace Cifra.Database.UnitTests.Repositories
             Context context = null;
 
             // Act
-            Action action = () => _ = new TestDatabaseRepository(context, _mapper.Object);
+            Action action = () => _ = new TestDatabaseRepository(context);
 
             // Assert
             action.Should().Throw<ArgumentNullException>();
@@ -58,7 +55,7 @@ namespace Cifra.Database.UnitTests.Repositories
             IMapper mapper = null;
 
             // Act
-            Action action = () => _ = new TestDatabaseRepository(_context, mapper);
+            Action action = () => _ = new TestDatabaseRepository(_context);
 
             // Assert
             action.Should().Throw<ArgumentNullException>();
@@ -81,15 +78,10 @@ namespace Cifra.Database.UnitTests.Repositories
         public async Task CreateAsync_WithTest_SavesTest()
         {
             // Arrange
-            var testBuilder = new TestBuilder ();
-            Test test = testBuilder.BuildRandomTest();
-
             var schemaTest = _fixture.Create<Schema.Test>();
-            _mapper.Setup(x => x.Map<Schema.Test>(test))
-                .Returns(schemaTest);
 
             // Act
-            int result = await _sut.CreateAsync(test);
+            int result = await _sut.CreateAsync(schemaTest);
 
             // Assert
             result.Should().Be(schemaTest.Id);
@@ -120,25 +112,17 @@ namespace Cifra.Database.UnitTests.Repositories
             _context.Tests.Add(test);
             _context.SaveChanges();
 
-            var testBuilder = new TestBuilder();
-            var mappedTest = testBuilder.BuildRandomTest();
-            _mapper.Setup(x => x.Map<Test>(test))
-                .Returns(mappedTest);
-
             // Act
             Test result = await _sut.GetAsync(test.Id);
 
             // Assert
-            AssertTest(mappedTest, result);
+            AssertTest(test, result);
         }
 
         [TestMethod]
         public async Task GetAllAsync_WithoutTests_ReturnsEmptyList()
         {
             // Arrange
-            var expectedList = new List<Test>();
-            _mapper.Setup(x => x.Map<List<Test>>(It.Is<List<Schema.Test>>(x => x.Count == 0)))
-                .Returns(expectedList);
 
             // Act
             List<Test> result = await _sut.GetAllAsync();
@@ -155,18 +139,11 @@ namespace Cifra.Database.UnitTests.Repositories
             _context.Tests.AddRange(tests);
             _context.SaveChanges();
 
-            var testBuilder = new TestBuilder();
-            var mappedTest1 = testBuilder.BuildRandomTest();
-            var mappedTest2 = testBuilder.BuildRandomTest();
-            var mappedTests = new List<Test> { mappedTest1, mappedTest2 };
-            _mapper.Setup(x => x.Map<List<Test>>(tests))
-                .Returns(mappedTests);
-
             // Act
             List<Test> result = await _sut.GetAllAsync();
 
             // Assert
-            AssertTests(mappedTests, result);
+            AssertTests(tests, result);
         }
 
         private static void AssertTests(IEnumerable<Test> mappedTests, IEnumerable<Test> result)

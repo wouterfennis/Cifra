@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using AutoFixture;
 using Cifra.Application.Models.Class;
+using Cifra.Core.Models.Class;
 
-namespace Cifra.TestUtilities.Application
+namespace Cifra.TestUtilities.Core
 {
     public class ClassBuilder
     {

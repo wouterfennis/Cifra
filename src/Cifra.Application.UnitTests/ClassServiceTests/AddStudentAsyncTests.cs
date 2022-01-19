@@ -1,10 +1,11 @@
 ﻿using AutoFixture;
-using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
+using AutoMapper;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Validation;
 using Cifra.Application.Validation;
+using Cifra.Core.Models.Validation;
+using Cifra.Database.Repositories;
+using Cifra.Database.Schema;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -19,6 +20,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         private Fixture _fixture;
         private Mock<IClassRepository> _classRepository;
         private Mock<IValidator<AddStudentCommand>> _studentValidator;
+        private Mock<IMapper> _mapper;
         private ClassService _sut;
 
         [TestInitialize]
@@ -26,16 +28,14 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         {
             _fixture = new Fixture();
             _classRepository = new Mock<IClassRepository>();
-            var magisterFileReader = new Mock<IMagisterFileReader>();
             var classValidator = new Mock<IValidator<CreateClassCommand>>();
-            var magisterClassValidator = new Mock<IValidator<CreateMagisterClassCommand>>();
             _studentValidator = new Mock<IValidator<AddStudentCommand>>();
+            _mapper = new Mock<IMapper>();
 
             _sut = new ClassService(_classRepository.Object,
-                magisterFileReader.Object,
                 classValidator.Object,
-                magisterClassValidator.Object,
-                _studentValidator.Object);
+                _studentValidator.Object,
+                _mapper.Object);
         }
 
         [TestMethod]

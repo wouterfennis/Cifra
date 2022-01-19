@@ -1,18 +1,15 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Test;
 using Cifra.Database.Repositories;
-using Cifra.TestUtilities.Application;
+using Cifra.Database.Schema;
+using Cifra.TestUtilities.Core;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cifra.Database.UnitTests.Repositories
@@ -20,7 +17,6 @@ namespace Cifra.Database.UnitTests.Repositories
     [TestClass]
     public class ClassDatabaseRepositoryTests
     {
-        private Mock<IMapper> _mapper;
         private Context _context;
         private ClassDatabaseRepository _sut;
         private Fixture _fixture;
@@ -29,14 +25,13 @@ namespace Cifra.Database.UnitTests.Repositories
         public void Initialize()
         {
             _fixture = new Fixture();
-            _mapper = new Mock<IMapper>();
 
             var options = new DbContextOptionsBuilder<Context>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new Context(options);
 
-            _sut = new ClassDatabaseRepository(_context, _mapper.Object);
+            _sut = new ClassDatabaseRepository(_context);
         }
 
         [TestMethod]
@@ -46,20 +41,7 @@ namespace Cifra.Database.UnitTests.Repositories
             Context context = null;
 
             // Act
-            Action action = () => _ = new ClassDatabaseRepository(context, _mapper.Object);
-
-            // Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [TestMethod]
-        public void Constructor_WithoutMapper_ThrowsException()
-        {
-            // Arrange
-            IMapper mapper = null;
-
-            // Act
-            Action action = () => _ = new TestDatabaseRepository(_context, mapper);
+            Action action = () => _ = new ClassDatabaseRepository(context);
 
             // Assert
             action.Should().Throw<ArgumentNullException>();
@@ -82,15 +64,10 @@ namespace Cifra.Database.UnitTests.Repositories
         public async Task CreateAsync_WithClass_SavesTest()
         {
             // Arrange
-            var classBuilder = new ClassBuilder();
-            Class newClass = classBuilder.BuildRandomClass();
-
-            var schemaClass = _fixture.Create<Schema.Class>();
-            _mapper.Setup(x => x.Map<Schema.Class>(newClass))
-                .Returns(schemaClass);
+            var schemaClass = _fixture.Create<Class>();
 
             // Act
-            int result = await _sut.CreateAsync(newClass);
+            int result = await _sut.CreateAsync(schemaClass);
 
             // Assert
             result.Should().Be(schemaClass.Id);
@@ -121,25 +98,17 @@ namespace Cifra.Database.UnitTests.Repositories
             _context.Classes.Add(savedClass);
             _context.SaveChanges();
 
-            var classBuilder = new ClassBuilder();
-            var mappedClass = classBuilder.BuildRandomClass();
-            _mapper.Setup(x => x.Map<Class>(savedClass))
-                .Returns(mappedClass);
-
             // Act
             Class result = await _sut.GetAsync(savedClass.Id);
 
             // Assert
-            AssertClass(mappedClass, result);
+            AssertClass(savedClass, result);
         }
 
         [TestMethod]
         public async Task GetAllAsync_WithoutClasses_ReturnsEmptyList()
         {
             // Arrange
-            var expectedList = new List<Class>();
-            _mapper.Setup(x => x.Map<List<Class>>(It.Is<List<Schema.Class>>(x => x.Count == 0)))
-                .Returns(expectedList);
 
             // Act
             List<Class> result = await _sut.GetAllAsync();
@@ -156,18 +125,11 @@ namespace Cifra.Database.UnitTests.Repositories
             _context.Classes.AddRange(classes);
             _context.SaveChanges();
 
-            var classBuilder = new ClassBuilder();
-            Class mappedClass1 = classBuilder.BuildRandomClass();
-            Class mappedClass2 = classBuilder.BuildRandomClass();
-            var mappedClasses = new List<Class> { mappedClass1, mappedClass2 };
-            _mapper.Setup(x => x.Map<List<Class>>(classes))
-                .Returns(mappedClasses);
-
             // Act
             List<Class> result = await _sut.GetAllAsync();
 
             // Assert
-            AssertClasses(mappedClasses, result);
+            AssertClasses(classes, result);
         }
 
         private static void AssertClasses(IEnumerable<Class> mappedClasses, IEnumerable<Class> result)

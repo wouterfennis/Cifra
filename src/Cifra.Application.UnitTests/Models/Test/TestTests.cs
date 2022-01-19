@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Test;
+using Cifra.Core.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -22,7 +22,7 @@ namespace Cifra.Application.UnitTests.Models.Test
         [TestMethod]
         public void Constructor_ExistingClassWithAssignmentsNull_ThrowsException()
         {
-            Action action = () => new Application.Models.Test.Test(
+            Action action = () => new Core.Models.Test.Test(
                 _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 StandardizationFactor.CreateFromInteger(_fixture.Create<int>()),
@@ -36,7 +36,7 @@ namespace Cifra.Application.UnitTests.Models.Test
         [TestMethod]
         public void AddAssignment_WithAssignment_AddsAssignmentToTest()
         {
-            Application.Models.Test.Test sut = CreateDefaultTest();
+            Core.Models.Test.Test sut = CreateDefaultTest();
 
             var expectedAssignment = new Assignment(1);
 
@@ -46,9 +46,9 @@ namespace Cifra.Application.UnitTests.Models.Test
             sut.Assignments.Single().Should().Be(expectedAssignment);
         }
 
-        private Application.Models.Test.Test CreateDefaultTest()
+        private Core.Models.Test.Test CreateDefaultTest()
         {
-            return new Application.Models.Test.Test(
+            return new Core.Models.Test.Test(
                 _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 StandardizationFactor.CreateFromInteger(_fixture.Create<int>()),

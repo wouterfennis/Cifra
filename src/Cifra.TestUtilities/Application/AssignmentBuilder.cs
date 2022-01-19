@@ -1,7 +1,6 @@
-﻿using System;
-using Cifra.Application.Models.Test;
+﻿using Cifra.Core.Models.Test;
 
-namespace Cifra.TestUtilities.Application
+namespace Cifra.TestUtilities.Core
 {
     public class AssignmentBuilder
     {

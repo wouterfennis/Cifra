@@ -1,13 +1,11 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Class;
+using Cifra.Core.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Cifra.Application.UnitTests.Models.Class
 {
@@ -31,7 +29,7 @@ namespace Cifra.Application.UnitTests.Models.Class
             List<Student> students = null;
 
             // Act
-            Action action = () => new Application.Models.Class.Class(id, name, students);
+            Action action = () => new Core.Models.Class.Class(id, name, students);
 
             // Assert
             action.Should().Throw<ArgumentNullException>();
@@ -41,7 +39,7 @@ namespace Cifra.Application.UnitTests.Models.Class
         public void AddStudent_WithStudent_AddStudentToClass()
         {
             // Arrange
-            var sut = new Application.Models.Class.Class(
+            var sut = new Core.Models.Class.Class(
                 _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 _fixture.CreateMany<Student>(0).ToList());
@@ -59,7 +57,7 @@ namespace Cifra.Application.UnitTests.Models.Class
         public void AddStudent_WithStudentNull_ThrowsException()
         {
             // Arrange
-            var sut = new Application.Models.Class.Class(
+            var sut = new Core.Models.Class.Class(
                 _fixture.Create<int>(),
                 Name.CreateFromString(_fixture.Create<string>()),
                 _fixture.CreateMany<Student>(0).ToList());

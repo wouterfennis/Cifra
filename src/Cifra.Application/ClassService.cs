@@ -1,14 +1,14 @@
-﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Class.Commands;
-using Cifra.Application.Models.Class.Magister;
+﻿using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Validation;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Validation;
+using Cifra.Core.Models.ValueTypes;
 using Cifra.Application.Validation;
+using Cifra.Database.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Core.Models.Class;
+using AutoMapper;
 
 namespace Cifra.Application
 {
@@ -18,26 +18,23 @@ namespace Cifra.Application
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
-        private readonly IMagisterFileReader _magisterFileReader;
         private readonly IValidator<CreateClassCommand> _classValidator;
-        private readonly IValidator<CreateMagisterClassCommand> _magisterClassValidator;
         private readonly IValidator<AddStudentCommand> _studentValidator;
+        private readonly IMapper _mapper;
 
 
         /// <summary>
         /// Ctor
         /// </summary>
         public ClassService(IClassRepository classRepository,
-            IMagisterFileReader magisterFileReader,
             IValidator<CreateClassCommand> classValidator,
-            IValidator<CreateMagisterClassCommand> magisterClassValidator,
-            IValidator<AddStudentCommand> studentValidator)
+            IValidator<AddStudentCommand> studentValidator,
+            IMapper mapper)
         {
             _classRepository = classRepository;
-            _magisterFileReader = magisterFileReader;
             _classValidator = classValidator;
-            _magisterClassValidator = magisterClassValidator;
             _studentValidator = studentValidator;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -51,34 +48,11 @@ namespace Cifra.Application
                 return new CreateClassResult(validationMessages);
             }
 
-            var @class = new Class(Name.CreateFromString(model.Name));
-            int id = await _classRepository.CreateAsync(@class);
+            var newClass = new Class(Name.CreateFromString(model.Name));
+            var mappedClass = _mapper.Map<Database.Schema.Class>(newClass);
+            int id = await _classRepository.CreateAsync(mappedClass);
 
             return new CreateClassResult(id);
-        }
-
-        /// <summary>
-        /// Creates a magister class
-        /// </summary>
-        public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassCommand model)
-        {
-            IEnumerable<ValidationMessage> validationMessages = _magisterClassValidator.ValidateRules(model);
-            if (validationMessages.Any())
-            {
-                return new CreateMagisterClassResult(validationMessages);
-            }
-            MagisterClass magisterClass = _magisterFileReader.ReadClass(Path.CreateFromString(model.MagisterFileLocation));
-            var newClass = new Class(Name.CreateFromString(magisterClass.Name));
-            foreach (var magisterStudent in magisterClass.Students)
-            {
-                var student = new Student(Name.CreateFromString(magisterStudent.FirstName),
-                    magisterStudent.Infix,
-                    Name.CreateFromString(magisterStudent.LastName));
-                newClass.AddStudent(student);
-            }
-            int id = await _classRepository.CreateAsync(newClass);
-
-            return new CreateMagisterClassResult(id);
         }
 
         /// <summary>
@@ -86,8 +60,9 @@ namespace Cifra.Application
         /// </summary>
         public async Task<GetAllClassesResult> GetClassesAsync()
         {
-            var classes = await _classRepository.GetAllAsync();
-            return new GetAllClassesResult(classes);
+            List<Database.Schema.Class> classes = await _classRepository.GetAllAsync();
+            var mappedClasses = _mapper.Map<List<Class>>(classes);
+            return new GetAllClassesResult(mappedClasses);
         }
 
         /// <summary>
@@ -102,6 +77,8 @@ namespace Cifra.Application
             }
 
             var existingClass = await _classRepository.GetAsync(model.ClassId);
+            var mappedClass = _mapper.Map<Class>(existingClass);
+
             if (existingClass == null)
             {
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
@@ -111,8 +88,9 @@ namespace Cifra.Application
                 model.Infix,
                 Name.CreateFromString(model.LastName));
 
-            existingClass.AddStudent(student);
-            ValidationMessage result = await _classRepository.UpdateAsync(existingClass);
+            mappedClass.AddStudent(student);
+            var updatedClass = _mapper.Map<Database.Schema.Class>(mappedClass);
+            ValidationMessage result = await _classRepository.UpdateAsync(updatedClass);
 
             if (result != null)
             {

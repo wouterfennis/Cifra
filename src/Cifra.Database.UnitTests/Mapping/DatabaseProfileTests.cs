@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Cifra.Database.Mapping;
+using Cifra.Application.Mapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Cifra.Database.UnitTests.Mapping

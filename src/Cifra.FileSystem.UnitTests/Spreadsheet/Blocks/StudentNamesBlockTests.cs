@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using AutoFixture;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.Class;
+using Cifra.Core.Models.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

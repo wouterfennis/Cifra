@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Core.Models.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

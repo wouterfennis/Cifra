@@ -1,7 +1,5 @@
-﻿using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Models.Validation;
-using Cifra.Application.Validation;
+﻿using Cifra.Application.Models.Test.Results;
+using Cifra.Core.Models.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

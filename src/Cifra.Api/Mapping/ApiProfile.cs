@@ -19,11 +19,11 @@ namespace Cifra.Api.Mapping
         public ApiProfile()
         {
             CreateMap<GetAllTestsResult, GetAllTestsResponse>();
-            CreateMap<Application.Models.Test.Test, V1.Models.Test.Test>();
-            CreateMap<Application.Models.Test.Assignment, V1.Models.Test.Assignment>();
+            CreateMap<Core.Models.Test.Test, V1.Models.Test.Test>();
+            CreateMap<Core.Models.Test.Assignment, V1.Models.Test.Assignment>();
             CreateMap<CreateTestRequest, CreateTestCommand>();
             CreateMap<CreateTestResult, CreateTestResponse>();
-            CreateMap<Application.Models.Validation.ValidationMessage, ValidationMessage>();
+            CreateMap<Core.Models.Validation.ValidationMessage, ValidationMessage>();
         }
     }
 }

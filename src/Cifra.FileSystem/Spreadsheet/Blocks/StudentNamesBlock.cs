@@ -1,4 +1,4 @@
-﻿using Cifra.Application.Models.Class;
+﻿using Cifra.Core.Models.Class;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Styling;
 using System.Collections.Generic;
