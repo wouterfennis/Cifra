@@ -5,12 +5,9 @@ services:
             context: ./src
         image: 192.168.0.184:5000/wouterfennis.cifra.api:linux-arm64
         ports:
-            - "8443:8443"
+            - "8080:8080"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
-          - ASPNETCORE_URLS=https://+:8443;
-          - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-          - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+          - ASPNETCORE_URLS=http://+:8080;
         volumes:
-          - $USERPROFILE/.aspnet/https:/https:ro
           - K:/Git/Cifra/data:/data:rw
