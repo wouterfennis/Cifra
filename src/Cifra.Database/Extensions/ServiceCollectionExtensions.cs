@@ -20,6 +20,7 @@ namespace Cifra.Database.Extensions
             string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("Sqlite");
             services.AddDbContext<Context>(options => options.UseSqlite(databaseConnectionString));
             services.AddScoped<ITestRepository, TestDatabaseRepository>();
+            services.AddScoped<IClassRepository, ClassDatabaseRepository>();
         }
     }
 }
