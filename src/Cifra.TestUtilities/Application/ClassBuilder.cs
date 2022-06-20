@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AutoFixture;
-using Cifra.Application.Models.Class;
 using Cifra.Core.Models.Class;
 
 namespace Cifra.TestUtilities.Core
 {
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class ClassBuilder
     {
         private readonly Fixture _fixture;

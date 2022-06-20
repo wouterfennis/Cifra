@@ -5,7 +5,7 @@ namespace Cifra.Core.Models.ValueTypes
     /// <summary>
     /// The standardization factor type
     /// </summary>
-    public sealed class StandardizationFactor : ValueObject
+    public sealed class StandardizationFactor
     {
         private StandardizationFactor(int value)
         {
@@ -44,7 +44,5 @@ namespace Cifra.Core.Models.ValueTypes
         {
             return CreateFromInteger(standardizationFactorValue);
         }
-
-        protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }
 }

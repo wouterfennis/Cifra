@@ -48,9 +48,8 @@ namespace Cifra.Application
                 return new CreateClassResult(validationMessages);
             }
 
-            var newClass = new Class(Name.CreateFromString(model.Name));
-            var mappedClass = _mapper.Map<Database.Schema.Class>(newClass);
-            int id = await _classRepository.CreateAsync(mappedClass);
+            var newClass = new Database.Schema.Class { Name = model.Name };
+            int id = await _classRepository.CreateAsync(newClass);
 
             return new CreateClassResult(id);
         }
@@ -77,20 +76,21 @@ namespace Cifra.Application
             }
 
             var existingClass = await _classRepository.GetAsync(model.ClassId);
-            var mappedClass = _mapper.Map<Class>(existingClass);
 
             if (existingClass == null)
             {
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
             }
 
-            var student = new Student(Name.CreateFromString(model.FirstName),
-                model.Infix,
-                Name.CreateFromString(model.LastName));
+            var student = new Database.Schema.Student
+            {
+                FirstName = model.FirstName,
+                Infix = model.Infix,
+                LastName = model.LastName
+            };
 
-            mappedClass.AddStudent(student);
-            var updatedClass = _mapper.Map<Database.Schema.Class>(mappedClass);
-            ValidationMessage result = await _classRepository.UpdateAsync(updatedClass);
+            existingClass.Students.Add(student);
+            ValidationMessage result = await _classRepository.UpdateAsync(existingClass);
 
             if (result != null)
             {

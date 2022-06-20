@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AutoFixture;
 using Cifra.Database.Schema;
 
 namespace Cifra.TestUtilities.Database
 {
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class TestBuilder
     {
         private readonly Fixture _fixture;

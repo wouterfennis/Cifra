@@ -6,7 +6,7 @@ namespace Cifra.Core.Models.ValueTypes
     /// <summary>
     /// The grade type
     /// </summary>
-    public sealed class Grade : ValueObject
+    public sealed class Grade
     {
         private readonly int _minimalValue = 0;
         private readonly int _maximalValue = 10;
@@ -50,7 +50,5 @@ namespace Cifra.Core.Models.ValueTypes
         {
             return CreateFromInteger(gradeValue);
         }
-
-        protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }
 }

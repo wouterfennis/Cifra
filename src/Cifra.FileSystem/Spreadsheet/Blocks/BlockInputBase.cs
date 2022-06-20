@@ -6,6 +6,9 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
     {
         public Point StartPoint { get; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public BlockInputBase(Point startPoint)
         {
             StartPoint = startPoint;

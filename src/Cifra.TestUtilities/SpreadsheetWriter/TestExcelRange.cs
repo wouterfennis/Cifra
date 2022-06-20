@@ -1,8 +1,10 @@
 ﻿using SpreadsheetWriter.Abstractions.Cell;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SpreadsheetWriter.Test
 {
     /// <inheritdoc/>
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class TestExcelRange : ICellRange
     {
         private readonly ICellAddress _address;

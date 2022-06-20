@@ -6,6 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Drivers\**" />
+    <Compile Remove="Support\**" />
+    <EmbeddedResource Remove="Drivers\**" />
+    <EmbeddedResource Remove="Support\**" />
+    <None Remove="Drivers\**" />
+    <None Remove="Support\**" />
+    <SpecFlowFeatureFiles Remove="Drivers\**" />
+    <SpecFlowFeatureFiles Remove="Support\**" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Drivers\**" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Support\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\create-test - Copy.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\get-tests - Copy.feature.cs" />
   </ItemGroup>
@@ -23,11 +36,6 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
     <PackageReference Include="FluentAssertions" Version="6.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Drivers\" />
-    <Folder Include="Support\" />
   </ItemGroup>
 
   <ItemGroup>

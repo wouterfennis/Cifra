@@ -40,14 +40,29 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void Equals_TwoSeperateGradesWithSameValue_AreEqual()
+        public void ImplicitFromInt_WithValidValue_ConvertsToGrade()
         {
+            // Arrange
             int input = 10;
 
-            var grade1 = Grade.CreateFromInteger(input);
-            var grade2 = Grade.CreateFromInteger(input);
+            // Act
+            Grade grade = input;
 
-            grade1.Should().Equals(grade2);
+            // Assert
+            grade.Value.Should().Be(input);
+        }
+
+        [TestMethod]
+        public void ImplicitFromGradeToInt_WithValidValue_ConvertsToInt()
+        {
+            // Arrange
+            Grade input = Grade.CreateFromInteger(10);
+
+            // Act
+            int value = input;
+
+            // Assert
+            value.Should().Be(input.Value);
         }
     }
 }

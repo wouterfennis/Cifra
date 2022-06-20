@@ -2,9 +2,11 @@
 using Cifra.Core.Models.Test;
 using Cifra.Core.Models.ValueTypes;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.TestUtilities.Core
 {
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class TestBuilder
     {
         private readonly Fixture _fixture;

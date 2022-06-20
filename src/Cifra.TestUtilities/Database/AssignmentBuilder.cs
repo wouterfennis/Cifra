@@ -1,8 +1,10 @@
 ﻿using AutoFixture;
 using Cifra.Database.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.TestUtilities.Database
 {
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class AssignmentBuilder
     {
         private int _numberOfQuestions;

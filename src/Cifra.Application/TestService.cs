@@ -65,18 +65,18 @@ namespace Cifra.Application
             }
 
             Database.Schema.Test test = await _testRepository.GetAsync(model.TestId);
-            var mappedTest = _mapper.Map<Test>(test);
             if (test == null)
             {
                 return new AddAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
             }
-            
-            var assignment = new Assignment(model.NumberOfQuestions);
-            mappedTest.AddAssignment(assignment);
 
-            var updatedTest = _mapper.Map<Database.Schema.Test>(test);
+            var assignment = new Database.Schema.Assignment
+            {
+                NumberOfQuestions = model.NumberOfQuestions,
+            };
+            test.Assignments.Add(assignment);
 
-            ValidationMessage result = await _testRepository.UpdateAsync(updatedTest);
+            ValidationMessage result = await _testRepository.UpdateAsync(test);
 
             if (result != null)
             {

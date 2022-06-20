@@ -40,19 +40,26 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         [TestMethod]
         public async Task CreateTestAsync_WithValidRequest_CreatesClass()
         {
+            // Arrange
             CreateTestCommand input = CreateDefaultTestRequest();
             var validationMessages = _fixture.CreateMany<ValidationMessage>(0);
             _testValidator
                 .Setup(x => x.ValidateRules(input))
                 .Returns(validationMessages);
 
+            var mappedTest = _fixture.Create<Test>();
+            _mapper.Setup(x => x.Map<Test>(It.Is<Core.Models.Test.Test>(x => x.Name == input.Name)))
+                .Returns(mappedTest);
+
+            // Act
             CreateTestResult result = await _sut.CreateTestAsync(input);
 
+            // Assert
             result.TestId.Should().Be(default);
             result.ValidationMessages.Should().BeEmpty();
 
             _testRepository
-                .Verify(x => x.CreateAsync(It.Is<Test>(x => x.Name == input.Name)));
+                .Verify(x => x.CreateAsync(mappedTest));
         }
 
         [TestMethod]

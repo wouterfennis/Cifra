@@ -6,7 +6,7 @@ namespace Cifra.Core.Models.ValueTypes
     /// <summary>
     /// The name type
     /// </summary>
-    public sealed class Name : ValueObject
+    public sealed class Name
     {
         private Name(string value)
         {
@@ -47,8 +47,6 @@ namespace Cifra.Core.Models.ValueTypes
         {
             return CreateFromString(nameValue);
         }
-
-        protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
 
         public override string ToString()
         {

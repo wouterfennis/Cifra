@@ -46,7 +46,7 @@ namespace Cifra.Database.Repositories
         {
             _dbContext.Classes.Update(updatedClass);
             await _dbContext.SaveChangesAsync();
-            return new ValidationMessage("", "");
+            return null;
         }
     }
 }

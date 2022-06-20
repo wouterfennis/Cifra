@@ -44,25 +44,15 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                 .Setup(x => x.GetAllAsync())
                 .ReturnsAsync(expectedClasses);
 
+            var mappedClasses = new List<Core.Models.Class.Class> { new Core.Models.Class.Class(null) };
+            _mapper.Setup(x => x.Map<List<Core.Models.Class.Class>>(expectedClasses))
+                .Returns(mappedClasses);
+
             GetAllClassesResult result = await _sut.GetClassesAsync();
 
             result.Should().NotBeNull();
             result.Classes.Should().NotBeNull();
-            result.Classes.Should().BeEquivalentTo(expectedClasses);
-        }
-
-        [TestMethod]
-        public async Task GetClassesAsync_WithoutClassesPresent_ReturnsEmptyList()
-        {
-            List<Class> expectedClasses = _fixture.CreateMany<Class>(0).ToList();
-            _classRepository
-                .Setup(x => x.GetAllAsync())
-                .ReturnsAsync(expectedClasses);
-
-            GetAllClassesResult result = await _sut.GetClassesAsync();
-
-            result.Should().NotBeNull();
-            result.Classes.Should().BeEmpty();
+            result.Classes.Should().BeEquivalentTo(mappedClasses);
         }
     }
 }

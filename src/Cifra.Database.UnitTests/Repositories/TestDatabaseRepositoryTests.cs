@@ -49,19 +49,6 @@ namespace Cifra.Database.UnitTests.Repositories
         }
 
         [TestMethod]
-        public void Constructor_WithoutMapper_ThrowsException()
-        {
-            // Arrange
-            IMapper mapper = null;
-
-            // Act
-            Action action = () => _ = new TestDatabaseRepository(_context);
-
-            // Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [TestMethod]
         public async Task CreateAsync_WithoutTest_ThrowsException()
         {
             // Arrange

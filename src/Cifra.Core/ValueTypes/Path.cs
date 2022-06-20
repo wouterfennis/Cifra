@@ -7,7 +7,7 @@ namespace Cifra.Core.Models.ValueTypes
     /// <summary>
     /// The path type
     /// </summary>
-    public sealed class Path : ValueObject
+    public sealed class Path
     {
         private Path(string value)
         {
@@ -17,7 +17,10 @@ namespace Cifra.Core.Models.ValueTypes
 
         private void Validate(string value)
         {
-            // TODO: complete validation
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException(nameof(value));
+            }
         }
 
         /// <summary>
@@ -45,7 +48,5 @@ namespace Cifra.Core.Models.ValueTypes
         {
             return CreateFromString(pathValue);
         }
-
-        protected override IEnumerable<object> GetEqualityComponents() => new object[] { Value };
     }
 }

@@ -3,6 +3,7 @@ using AutoMapper;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
 using Cifra.Application.Validation;
+using Cifra.Core.Models.ValueTypes;
 using Cifra.Database.Repositories;
 using Cifra.Database.Schema;
 using FluentAssertions;
@@ -37,31 +38,26 @@ namespace Cifra.Application.UnitTests.TestServiceTests
         }
 
         [TestMethod]
-        public async Task GetTestsAsync_WithTestsPresent_ReturnsTests()
+        public async Task GetTestsAsync_WithTestsPresent_ReturnsList()
         {
-            var expectedTests = _fixture.CreateMany<Test>().ToList();
-            _testRepository
-                .Setup(x => x.GetAllAsync())
-                .ReturnsAsync(expectedTests);
-
-            GetAllTestsResult result = await _sut.GetTestsAsync();
-
-            result.Should().NotBeNull();
-            result.Tests.Should().BeEquivalentTo(expectedTests);
-        }
-
-        [TestMethod]
-        public async Task GetTestsAsync_WithoutTestsPresent_ReturnsEmptyList()
-        {
+            // Arrange
             var expectedTests = new List<Test>();
             _testRepository
                 .Setup(x => x.GetAllAsync())
                 .ReturnsAsync(expectedTests);
 
+            var mappedTests = new List<Core.Models.Test.Test> {
+                new Core.Models.Test.Test(null, null, null, 1)
+            };
+            _mapper.Setup(x => x.Map<List<Core.Models.Test.Test>>(expectedTests))
+                .Returns(mappedTests);
+
+            // Act
             GetAllTestsResult result = await _sut.GetTestsAsync();
 
+            // Assert
             result.Should().NotBeNull();
-            result.Tests.Should().BeEmpty();
+            result.Tests.Should().BeEquivalentTo(mappedTests);
         }
     }
 }

@@ -92,6 +92,7 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
         [TestMethod]
         public async Task AddStudentAsync_UpdateFails_ReturnsValidationMessage()
         {
+            // Arrange
             var input = _fixture.Create<AddStudentCommand>();
             var studentValidationMessages = _fixture.CreateMany<ValidationMessage>(0);
             _studentValidator
@@ -108,8 +109,10 @@ namespace Cifra.Application.UnitTests.ClassServiceTests
                 .Setup(x => x.UpdateAsync(expectedClass))
                 .ReturnsAsync(classValidationMessage);
 
+            // Act
             AddStudentResult result = await _sut.AddStudentAsync(input);
 
+            // Assert
             result.ValidationMessages.Should().ContainSingle();
             result.ValidationMessages.Should().Contain(classValidationMessage);
         }

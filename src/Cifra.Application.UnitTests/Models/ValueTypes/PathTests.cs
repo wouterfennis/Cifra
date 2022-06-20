@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
     [TestClass]
-    public class NameTests
+    public class PathTests
     {
         private Fixture _fixture;
 
@@ -18,61 +18,51 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void CreateFromString_ValidName_ReturnsName()
+        public void CreateFromString_ValidPath_ReturnsPath()
         {
             var input = _fixture.Create<string>();
 
-            Name result = Name.CreateFromString(input);
+            Path result = Path.CreateFromString(input);
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsNull_ThrowsException()
+        public void CreateFromString_PathIsNull_ThrowsException()
         {
             string input = null;
 
-            Action action = () => Name.CreateFromString(input);
+            Action action = () => Path.CreateFromString(input);
 
             action.Should().Throw<ArgumentException>();
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsEmpty_ThrowsException()
+        public void CreateFromString_PathIsEmpty_ThrowsException()
         {
             string input = string.Empty;
 
-            Action action = () => Name.CreateFromString(input);
+            Action action = () => Path.CreateFromString(input);
 
             action.Should().Throw<ArgumentException>();
         }
 
         [TestMethod]
-        public void ImplicitFromString_WithValidValue_ConvertsToName()
+        public void ImplicitFromString_WithValidValue_ConvertsToPath()
         {
             string input = _fixture.Create<string>();
 
-            Name result = input;
+            Path result = input;
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void ImplicitFromNameToString_WithValidValue_ConvertsToString()
+        public void ImplicitFromPathToString_WithValidValue_ConvertsToString()
         {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
+            Path input = Path.CreateFromString(_fixture.Create<string>());
 
             string result = input;
-
-            result.Should().Be(input.Value);
-        }
-
-        [TestMethod]
-        public void ToString_WithValidValue_ReturnsString()
-        {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
-
-            string result = input.ToString();
 
             result.Should().Be(input.Value);
         }
