@@ -1,10 +1,12 @@
-﻿using Cifra.Core.Models.Spreadsheet;
+﻿using Cifra.Application.Models.Spreadsheet.Commands;
+using Cifra.Application.Models.Spreadsheet.Results;
+using Cifra.Core.Models.Spreadsheet;
 using System.Threading.Tasks;
 
 namespace Cifra.Application
 {
-    internal interface ITestResultsSpreadsheetService
+    public interface ITestResultsSpreadsheetService
     {
-        Task<SaveResult> CreateTestResultsSpreadsheetAsync(int classId, int testId, Metadata metadata);
+        Task<CreateTestResultsSpreadsheetResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetCommand command);
     }
 }

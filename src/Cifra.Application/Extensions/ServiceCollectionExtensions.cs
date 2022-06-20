@@ -21,6 +21,7 @@ namespace Cifra.Application.Extensions
         {
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<ITestResultsSpreadsheetService, TestResultsSpreadsheetService>();
             services.AddScoped<IValidator<CreateClassCommand>, Validator<CreateClassCommand>>();
             services.AddScoped<IValidator<AddStudentCommand>, Validator<AddStudentCommand>>();
             services.AddScoped<IValidator<CreateTestCommand>, Validator<CreateTestCommand>>();

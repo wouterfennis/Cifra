@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Cifra.Application.Models.Spreadsheet.Commands;
+using Cifra.Application.Models.Spreadsheet.Results;
 using Cifra.Core.Models.Spreadsheet;
 using Cifra.Database.Repositories;
 using Cifra.Database.Schema;
@@ -29,15 +31,17 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-        public async Task<SaveResult> CreateTestResultsSpreadsheetAsync(int classId, int testId, Metadata metadata)
+        public async Task<CreateTestResultsSpreadsheetResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetCommand command)
         {
-            Class pickedClass = await _classRepository.GetAsync(classId);
+            Class pickedClass = await _classRepository.GetAsync(command.ClassId);
             var mappedClass = _mapper.Map<Core.Models.Class.Class>(pickedClass);
 
-            Test pickedTest = await _testRepository.GetAsync(testId);
+            Test pickedTest = await _testRepository.GetAsync(command.TestId);
             var mappedTest = _mapper.Map<Core.Models.Test.Test>(pickedTest);
 
-            return await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, metadata);
+            await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, command.Metadata);
+
+            return new CreateTestResultsSpreadsheetResult("something");
         }
     }
 }
