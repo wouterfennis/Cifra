@@ -5,7 +5,7 @@ namespace Cifra.Database.Schema
     /// <summary>
     /// The Assignment entity.
     /// </summary>
-    public sealed class Assignment
+    public class Assignment
     {
         [Key]
         /// <summary>

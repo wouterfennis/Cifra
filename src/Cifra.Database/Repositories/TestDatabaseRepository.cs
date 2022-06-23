@@ -21,24 +21,28 @@ namespace Cifra.Database.Repositories
         public async Task<int> CreateAsync(Test newTest)
         {
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
-            
+
             _dbContext.Tests.Add(newTest);
             await _dbContext.SaveChangesAsync();
-            
+
             return newTest.Id;
         }
 
         /// <inheritdoc/>
         public async Task<List<Test>> GetAllAsync()
         {
-            List<Test> entities = await _dbContext.Tests.ToListAsync();
+            List<Test> entities = await _dbContext.Tests
+                .Include(x => x.Assignments)
+                .ToListAsync();
             return entities;
         }
 
         /// <inheritdoc/>
         public async Task<Test> GetAsync(int id)
         {
-            Schema.Test findResult = await _dbContext.Tests.FindAsync(id);
+            Test findResult = await _dbContext.Tests
+                .Include(x => x.Assignments)
+                .SingleOrDefaultAsync(x => x.Id == id);
             return findResult;
         }
 

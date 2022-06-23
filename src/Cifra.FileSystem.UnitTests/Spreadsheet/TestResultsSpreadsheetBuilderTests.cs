@@ -2,9 +2,11 @@
 using Cifra.Core.Models.Class;
 using Cifra.Core.Models.Test;
 using Cifra.Core.Models.ValueTypes;
+using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet;
 using Cifra.TestUtilities.Core;
 using Cifra.TestUtilities.SpreadsheetWriter;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
@@ -19,7 +21,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
     public class TestResultsSpreadsheetBuilderTests
     {
         private Fixture _fixture;
-        private Mock<IFileLocationProvider> _fileLocationProvider;
+        private Mock<IOptions<SpreadsheetOptions>> _spreadsheetOptions;
+        private SpreadsheetOptions _spreadsheetOptionsValues;
         private Mock<ISpreadsheetFileFactory> _spreadsheetFileFactory;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
         private Mock<IFormulaBuilder> _formulaBuilder;
@@ -30,7 +33,13 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         public void Initialize()
         {
             _fixture = new Fixture();
-            _fileLocationProvider = new Mock<IFileLocationProvider>();
+            _spreadsheetOptions = new Mock<IOptions<SpreadsheetOptions>>();
+            _spreadsheetOptionsValues = new SpreadsheetOptions();
+
+            _spreadsheetOptions
+                .SetupGet(x => x.Value)
+                .Returns(_spreadsheetOptionsValues);
+
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _formulaBuilder = new Mock<IFormulaBuilder>();
@@ -39,7 +48,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             SetupFormulaBuilderFactory();
 
             _sut = new TestResultsSpreadsheetBuilder(
-                _fileLocationProvider.Object,
+                _spreadsheetOptions.Object,
                 _spreadsheetFileFactory.Object,
                 _formulaBuilderFactory.Object);
         }
@@ -75,12 +84,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         private void SetupSpreadsheetFileBuilder()
         {
             var path = _fixture.Create<Path>();
-            _fileLocationProvider
-                .Setup(x => x.GetSpreadsheetDirectoryPath())
-                .Returns(path);
+            _spreadsheetOptionsValues.TestResultsDirectory = path.Value;
 
             var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
-
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile
                 .Setup(x => x.GetSpreadsheetWriter())

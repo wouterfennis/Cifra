@@ -8,11 +8,11 @@ namespace Cifra.Api.V1.Models.Class.Responses
         /// <summary>
         /// The Class Id
         /// </summary>
-        public int ClassId { get; }
+        public int ClassId { get; set; }
 
         /// <summary>
         /// The validation messages
         /// </summary>
-        public IEnumerable<ValidationMessage> ValidationMessages { get; }
+        public IEnumerable<ValidationMessage> ValidationMessages { get; set; }
     }
 }

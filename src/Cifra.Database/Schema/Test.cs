@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cifra.Database.Schema
 {
-    public sealed class Test
+    public class Test
     {
         [Key]
         /// <summary>
@@ -26,7 +26,7 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The Assignments.
         /// </summary>
-        public List<Assignment> Assignments { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
 
         /// <summary>
         /// The Standardization Factor.

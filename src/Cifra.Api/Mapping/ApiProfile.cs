@@ -34,12 +34,16 @@ namespace Cifra.Api.Mapping
             CreateMap<CreateTestResult, CreateTestResponse>();
             CreateMap<Core.Models.Validation.ValidationMessage, ValidationMessage>();
 
+            CreateMap<AddAssignmentResult, AddAssignmentResponse>();
+
             // Class
             CreateMap<GetAllClassesResult, GetAllClassesResponse>();
             CreateMap<Core.Models.Class.Class, V1.Models.Class.Class>();
             CreateMap<Core.Models.Class.Student, V1.Models.Class.Student>();
             CreateMap<CreateClassRequest, CreateClassCommand>();
             CreateMap<CreateClassResult, CreateClassResponse>();
+
+            CreateMap<AddStudentResult, AddStudentResponse>();
 
             // Spreadsheet
             CreateMap<CreateTestResultsSpreadsheetRequest, CreateTestResultsSpreadsheetCommand>();

@@ -1,4 +1,5 @@
 ﻿using Cifra.FileSystem.FileSystemInfo;
+using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ namespace Cifra.FileSystem.Extensions
     /// <summary>
     /// Static class for registering dependencies.
     /// </summary>
-    [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage] // DI setup
     public static class ServiceCollectionExtensions
     {
         /// <summary>
@@ -21,15 +22,18 @@ namespace Cifra.FileSystem.Extensions
         /// </summary>
         public static void SetupFileSystemDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            var fileLocationProvider = new FileLocationProvider(null, null, null, null);
-            services.AddSingleton<IFileLocationProvider>(fileLocationProvider);
-            services.AddScoped<IFileInfoWrapperFactory, FileInfoWrapperFactory>();
-            services.AddScoped<IDirectoryInfoWrapperFactory, DirectoryInfoWrapperFactory>();
-            services.AddScoped<ITestResultsSpreadsheetBuilder, TestResultsSpreadsheetBuilder>();
-            services.AddScoped<ISpreadsheetFileFactory, ExcelFileFactory>();
-            services.AddScoped<ISpreadsheetFileFactory, ExcelFileFactory>();
-            services.AddScoped<IFormulaBuilderFactory, FormulaBuilderFactory>();
-            services.AddScoped<IFormulaBuilder, FormulaBuilder>();
+            services
+                .Configure<SpreadsheetOptions>(options => configuration.GetSection(SpreadsheetOptions.Section)
+                .Bind(options));
+
+            services
+                .AddScoped<IFileInfoWrapperFactory, FileInfoWrapperFactory>()
+                .AddScoped<IDirectoryInfoWrapperFactory, DirectoryInfoWrapperFactory>()
+                .AddScoped<ITestResultsSpreadsheetBuilder, TestResultsSpreadsheetBuilder>()
+                .AddScoped<ISpreadsheetFileFactory, ExcelFileFactory>()
+                .AddScoped<ISpreadsheetFileFactory, ExcelFileFactory>()
+                .AddScoped<IFormulaBuilderFactory, FormulaBuilderFactory>()
+                .AddScoped<IFormulaBuilder, FormulaBuilder>();
         }
     }
 }

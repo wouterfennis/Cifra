@@ -6,11 +6,6 @@
     public sealed class AddStudentRequest
     {
         /// <summary>
-        /// The Id of the class
-        /// </summary>
-        public int ClassId { get; set; }
-
-        /// <summary>
         /// The first name of the student
         /// </summary>
         public string FirstName { get; set; }

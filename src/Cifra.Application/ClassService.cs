@@ -1,7 +1,6 @@
 ﻿using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Core.Models.Validation;
-using Cifra.Core.Models.ValueTypes;
 using Cifra.Application.Validation;
 using Cifra.Database.Repositories;
 using System.Collections.Generic;
@@ -75,7 +74,7 @@ namespace Cifra.Application
                 return new AddStudentResult(validationMessages);
             }
 
-            var existingClass = await _classRepository.GetAsync(model.ClassId);
+            Database.Schema.Class existingClass = await _classRepository.GetAsync(model.ClassId);
 
             if (existingClass == null)
             {

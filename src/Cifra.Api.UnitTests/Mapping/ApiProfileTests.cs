@@ -7,6 +7,16 @@ namespace Cifra.Api.UnitTests.Mapping
     [TestClass]
     public class ApiProfileTests
     {
+        private IMapper _sut;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            var profile = new ApiProfile();
+            var sut = new MapperConfiguration(cfg => cfg.AddProfile(profile));
+            _sut = sut.CreateMapper();
+        }
+
         [TestMethod]
         public void AssertConfigurationIsValid_WithApiProfile_NoMappingFaults()
         {
@@ -16,6 +26,17 @@ namespace Cifra.Api.UnitTests.Mapping
 
             // Act Assert
             sut.AssertConfigurationIsValid();
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            // Arrange
+
+            // Act
+            
+
+            // Assert
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Cifra.Core.Models.Validation;
+using Cifra.Database.Schema;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,21 +29,26 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<List<Schema.Class>> GetAllAsync()
+        public async Task<List<Class>> GetAllAsync()
         {
-            List<Schema.Class> entities = await _dbContext.Classes.ToListAsync();
+            List<Class> entities = await _dbContext.Classes
+                .Include(x => x.Students)
+                .ToListAsync();
             return entities;
         }
 
         /// <inheritdoc/>
-        public async Task<Schema.Class> GetAsync(int id)
+        public async Task<Class> GetAsync(int id)
         {
-            Schema.Class findResult = await _dbContext.Classes.FindAsync(id);
+            Class findResult = await _dbContext.Classes
+                .Include(x => x.Students)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
             return findResult;
         }
 
         /// <inheritdoc/>
-        public async Task<ValidationMessage> UpdateAsync(Schema.Class updatedClass)
+        public async Task<ValidationMessage> UpdateAsync(Class updatedClass)
         {
             _dbContext.Classes.Update(updatedClass);
             await _dbContext.SaveChangesAsync();

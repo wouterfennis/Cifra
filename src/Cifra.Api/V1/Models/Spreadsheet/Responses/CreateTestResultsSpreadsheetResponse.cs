@@ -8,11 +8,11 @@ namespace Cifra.Api.V1.Models.Spreadsheet.Responses
         /// <summary>
         /// The path to the spreadsheet
         /// </summary>
-        public string SpreadsheetPath { get; }
+        public string SpreadsheetPath { get; set; }
 
         /// <summary>
         /// The validation messages
         /// </summary>
-        public IEnumerable<ValidationMessage> ValidationMessages { get; }
+        public IEnumerable<ValidationMessage> ValidationMessages { get; set; }
     }
 }

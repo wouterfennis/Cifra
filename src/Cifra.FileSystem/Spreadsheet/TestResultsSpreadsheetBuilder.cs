@@ -1,10 +1,13 @@
 ﻿using Cifra.Core.Models.Class;
 using Cifra.Core.Models.Test;
 using Cifra.FileSystem.Mapping;
+using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet.Blocks;
+using Microsoft.Extensions.Options;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -12,23 +15,23 @@ namespace Cifra.FileSystem.Spreadsheet
 {
     public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetBuilder
     {
-        private readonly IFileLocationProvider _locationProvider;
+        private readonly SpreadsheetOptions _spreadsheetOptions;
         private readonly ISpreadsheetFileFactory _spreadsheetFileFactory;
         private readonly IFormulaBuilderFactory _formulaBuilderFactory;
 
-        public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
+        public TestResultsSpreadsheetBuilder(IOptions<SpreadsheetOptions> spreadsheetOptions,
             ISpreadsheetFileFactory spreadsheetFileFactory,
             IFormulaBuilderFactory formulaBuilderFactory)
         {
-            _locationProvider = locationProvider;
-            _spreadsheetFileFactory = spreadsheetFileFactory;
-            _formulaBuilderFactory = formulaBuilderFactory;
+            _spreadsheetOptions = spreadsheetOptions?.Value ?? throw new ArgumentNullException(nameof(spreadsheetOptions));
+            _spreadsheetFileFactory = spreadsheetFileFactory ?? throw new ArgumentNullException(nameof(spreadsheetFileFactory));
+            _formulaBuilderFactory = formulaBuilderFactory ?? throw new ArgumentNullException(nameof(formulaBuilderFactory));
         }
 
         public async Task<Core.Models.Spreadsheet.SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Core.Models.Spreadsheet.Metadata metadata)
         {
             var libraryMetadata = metadata.MapToLibraryModel();
-            ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_locationProvider.GetSpreadsheetDirectoryPath().Value, libraryMetadata);
+            ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_spreadsheetOptions.TestResultsDirectory, libraryMetadata);
             ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
 
             AddTitle(test, metadata, spreadsheetWriter);

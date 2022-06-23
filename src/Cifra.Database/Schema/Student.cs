@@ -5,7 +5,7 @@ namespace Cifra.Database.Schema
     /// <summary>
     /// The Student entity
     /// </summary>
-    public sealed class Student
+    public class Student
     {
         [Key]
         /// <summary>

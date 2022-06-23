@@ -64,7 +64,7 @@ namespace Cifra.Api.V1
         [ProducesResponseType(typeof(CreateClassResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(CreateClassResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateClassesAsync(CreateClassRequest request)
+        public async Task<ActionResult> CreateClassAsync(CreateClassRequest request)
         {
             var command = _mapper.Map<CreateClassCommand>(request);
 

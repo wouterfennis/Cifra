@@ -11,6 +11,6 @@ namespace Cifra.Api.V1.Models.Class.Responses
         /// <summary>
         /// The validation messages.
         /// </summary>
-        public IEnumerable<ValidationMessage> ValidationMessages { get; }
+        public IEnumerable<ValidationMessage> ValidationMessages { get; set; }
     }
 }

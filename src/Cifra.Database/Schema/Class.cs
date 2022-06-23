@@ -6,7 +6,7 @@ namespace Cifra.Database.Schema
     /// <summary>
     /// The Class entity
     /// </summary>
-    public sealed class Class
+    public class Class
     {
         [Key]
         /// <summary>
@@ -23,6 +23,6 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The Students of the Class
         /// </summary>
-        public List<Student> Students { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
