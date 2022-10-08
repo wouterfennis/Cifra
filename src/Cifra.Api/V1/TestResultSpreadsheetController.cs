@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,7 +60,18 @@ namespace Cifra.Api.V1
                 _logger.LogInformation("Request is not valid");
                 return BadRequest(result);
             }
-            return File(result.FileInfo.OpenRead(), "application/octet-stream", result.FileInfo.Name);
+            return base.File(CreateOneTimeStream(result), "application/octet-stream", result.FileInfo.Name);
+        }
+
+        private static FileStream CreateOneTimeStream(CreateTestResultsSpreadsheetResult result)
+        {
+            var fileStreamOptions = new FileStreamOptions
+            {
+                Access = FileAccess.Read,
+                Mode = FileMode.Open,
+                Options = FileOptions.DeleteOnClose,
+            };
+            return result.FileInfo.Open(fileStreamOptions);
         }
     }
 }
