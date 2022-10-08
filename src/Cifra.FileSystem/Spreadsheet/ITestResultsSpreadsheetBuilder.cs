@@ -1,6 +1,7 @@
 ﻿using Cifra.Core.Models.Class;
 using Cifra.Core.Models.Spreadsheet;
 using Cifra.Core.Models.Test;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
@@ -13,6 +14,6 @@ namespace Cifra.FileSystem.Spreadsheet
         /// <summary>
         /// Creates a test results spreadsheet
         /// </summary>
-        Task<SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
+        Task<FileInfo> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
     }
 }

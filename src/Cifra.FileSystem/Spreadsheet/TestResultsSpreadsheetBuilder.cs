@@ -9,6 +9,7 @@ using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
@@ -28,9 +29,10 @@ namespace Cifra.FileSystem.Spreadsheet
             _formulaBuilderFactory = formulaBuilderFactory ?? throw new ArgumentNullException(nameof(formulaBuilderFactory));
         }
 
-        public async Task<Core.Models.Spreadsheet.SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Core.Models.Spreadsheet.Metadata metadata)
+        public async Task<FileInfo> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Core.Models.Spreadsheet.Metadata metadata)
         {
             var libraryMetadata = metadata.MapToLibraryModel();
+            Directory.CreateDirectory(_spreadsheetOptions.TestResultsDirectory);
             ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_spreadsheetOptions.TestResultsDirectory, libraryMetadata);
             ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
 
@@ -45,8 +47,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter,
                 configurationBlock);
 
-            SaveResult saveResult = await spreadsheetFile.SaveAsync();
-            return saveResult.MapToModel();
+            await spreadsheetFile.SaveAsync();
+
+            return spreadsheetFile.FileInfo;
         }
 
         private static void AddTitle(Test test, Core.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)

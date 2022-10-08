@@ -59,9 +59,9 @@ namespace Cifra.Application
             var mappedClass = _mapper.Map<Core.Models.Class.Class>(pickedClass);
             var mappedTest = _mapper.Map<Core.Models.Test.Test>(pickedTest);
 
-            await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, command.Metadata);
+            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, command.Metadata);
 
-            return new CreateTestResultsSpreadsheetResult("something");
+            return new CreateTestResultsSpreadsheetResult(fileInfo);
         }
     }
 }

@@ -45,23 +45,21 @@ namespace Cifra.Api.V1
         ///<response code="400">Supplied test results spreadsheet data was invalid.</response> 
         ///<response code="500">The test results spreadsheet could not be created.</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateTestResultsSpreadsheetResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(CreateTestResultsSpreadsheetResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(CreateTestResultsSpreadsheetResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateClassesAsync(CreateTestResultsSpreadsheetRequest request)
+        public async Task<ActionResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetRequest request)
         {
             var command = _mapper.Map<CreateTestResultsSpreadsheetCommand>(request);
 
             CreateTestResultsSpreadsheetResult result = await _testResultsSpreadsheetService.CreateTestResultsSpreadsheetAsync(command);
 
-            var response = _mapper.Map<CreateTestResultsSpreadsheetResponse>(result);
-
-            if (response.ValidationMessages.Any())
+            if (result.ValidationMessages.Any())
             {
                 _logger.LogInformation("Request is not valid");
-                return BadRequest(response);
+                return BadRequest(result);
             }
-            return Created(new Uri($"{response.SpreadsheetPath}", UriKind.Relative), response);
+            return File(result.FileInfo.OpenRead(), "application/octet-stream", result.FileInfo.Name);
         }
     }
 }

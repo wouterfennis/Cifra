@@ -1,6 +1,7 @@
 ﻿using Cifra.Core.Models.Validation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Cifra.Application.Models.Spreadsheet.Results
 {
@@ -12,7 +13,7 @@ namespace Cifra.Application.Models.Spreadsheet.Results
         /// <summary>
         /// The path to the spreadsheet.
         /// </summary>
-        public string SpreadsheetPath { get; }
+        public FileInfo FileInfo { get; }
 
         /// <summary>
         /// The validation messages
@@ -22,9 +23,9 @@ namespace Cifra.Application.Models.Spreadsheet.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal CreateTestResultsSpreadsheetResult(string spreadsheetPath)
+        internal CreateTestResultsSpreadsheetResult(FileInfo fileInfo)
         {
-            SpreadsheetPath = spreadsheetPath;
+            FileInfo = fileInfo;
             ValidationMessages = new List<ValidationMessage>();
         }
 
