@@ -1,0 +1,925 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Cifra API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v{version}/Class": {
+      "get": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Get a list of all classes.",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns list of classes",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllClassesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllClassesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllClassesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "List could not be retrieved"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Create a new Class.",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reference to newly created class.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplied class data was invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The class could not be created."
+          }
+        }
+      }
+    },
+    "/api/v{version}/Class/{classId}/Student": {
+      "post": {
+        "tags": [
+          "Class"
+        ],
+        "summary": "Adds an student to a class.",
+        "parameters": [
+          {
+            "name": "classId",
+            "in": "path",
+            "description": "The class id where the student should be added.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request containing details of the student.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddStudentsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddStudentsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddStudentsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reference to newly created student.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplied student data was invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddStudentResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The student could not be created."
+          }
+        }
+      }
+    },
+    "/api/v{version}/Test": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Get a list of all tests.",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns list of tests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllTestsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllTestsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllTestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "List could not be retrieved"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Create a new Test.",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reference to newly created test.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplied test data was invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The test could not be created."
+          }
+        }
+      }
+    },
+    "/api/v{version}/Test/{testId}/Assignment": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "summary": "Adds an assignment to a test.",
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "path",
+            "description": "The test id where the assignment should be added.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request containing details of the assignment.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddAssignmentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddAssignmentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddAssignmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reference to newly created assignment.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplied assignment data was invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddAssignmentResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The assignment could not be created."
+          }
+        }
+      }
+    },
+    "/api/v{version}/TestResultSpreadsheet": {
+      "post": {
+        "tags": [
+          "TestResultSpreadsheet"
+        ],
+        "summary": "Create a new test results spreadsheet.",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestResultsSpreadsheetRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestResultsSpreadsheetRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestResultsSpreadsheetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplied test results spreadsheet data was invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTestResultsSpreadsheetResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The test results spreadsheet could not be created."
+          },
+          "201": {
+            "description": "Reference to newly created test results spreadsheet."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddAssignmentRequest": {
+        "type": "object",
+        "properties": {
+          "numberOfQuestions": {
+            "type": "integer",
+            "description": "The number of questions in this Assignment.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to add an assignment"
+      },
+      "AddAssignmentResponse": {
+        "type": "object",
+        "properties": {
+          "testId": {
+            "type": "integer",
+            "description": "The test Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "assignmentId": {
+            "type": "integer",
+            "description": "The assignment Id",
+            "format": "int32",
+            "nullable": true
+          },
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Result of the Add Assignment operation"
+      },
+      "AddStudentResponse": {
+        "type": "object",
+        "properties": {
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Result of the Add Student operation."
+      },
+      "AddStudentsRequest": {
+        "type": "object",
+        "properties": {
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to add an student"
+      },
+      "Assignment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The id of the Cifra.Api.V1.Models.Test.Assignment.",
+            "format": "int32"
+          },
+          "numberOfQuestions": {
+            "type": "integer",
+            "description": "The number of questions the Cifra.Api.V1.Models.Test.Assignment has.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Assignment entity."
+      },
+      "Class": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of the Class",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "The Name of the Class",
+            "nullable": true
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "description": "The Students of the Class",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Class entity."
+      },
+      "CreateClassRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the class.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to create a Class."
+      },
+      "CreateClassResponse": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "description": "The Class Id",
+            "format": "int32"
+          },
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateTestRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the test",
+            "nullable": true
+          },
+          "numberOfVersions": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The number of versions of this test that exist.",
+            "format": "int32"
+          },
+          "standardizationFactor": {
+            "type": "integer",
+            "description": "The standardization factor",
+            "format": "int32"
+          },
+          "minimumGrade": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The minimum grade",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to create an test"
+      },
+      "CreateTestResponse": {
+        "type": "object",
+        "properties": {
+          "testId": {
+            "type": "integer",
+            "description": "The Test Id",
+            "format": "int32"
+          },
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The result of the Create Test operation"
+      },
+      "CreateTestResultsSpreadsheetRequest": {
+        "type": "object",
+        "properties": {
+          "classId": {
+            "type": "integer",
+            "description": "The id of the class.",
+            "format": "int32"
+          },
+          "testId": {
+            "type": "integer",
+            "description": "The id of the test.",
+            "format": "int32"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to create a Class."
+      },
+      "CreateTestResultsSpreadsheetResponse": {
+        "type": "object",
+        "properties": {
+          "spreadsheetPath": {
+            "type": "string",
+            "description": "The path to the spreadsheet",
+            "nullable": true
+          },
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllClassesResponse": {
+        "type": "object",
+        "properties": {
+          "classes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Class"
+            },
+            "description": "The classes",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllTestsResponse": {
+        "type": "object",
+        "properties": {
+          "tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Test"
+            },
+            "description": "The tests",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The result of the Get All Tests operation"
+      },
+      "Metadata": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicationVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Student": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The id of the student",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the student",
+            "nullable": true
+          },
+          "infix": {
+            "type": "string",
+            "description": "The infix of the student",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the student",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Student entity."
+      },
+      "StudentDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the student",
+            "nullable": true
+          },
+          "infix": {
+            "type": "string",
+            "description": "The infix of the student",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the student",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Test": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "The Name.",
+            "nullable": true
+          },
+          "numberOfVersions": {
+            "type": "integer",
+            "description": "The number of versions of the test that where made.",
+            "format": "int32"
+          },
+          "assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Assignment"
+            },
+            "description": "The Assignments.",
+            "nullable": true
+          },
+          "standardizationFactor": {
+            "type": "integer",
+            "description": "The Standardization Factor.",
+            "format": "int32"
+          },
+          "minimumGrade": {
+            "type": "integer",
+            "description": "The Minimum Grade.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Test entity."
+      },
+      "ValidationMessage": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "The field where the validation took place",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "description": "The message of the validation result",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A validation message"
+      }
+    }
+  }
+}

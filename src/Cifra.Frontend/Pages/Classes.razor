@@ -1,0 +1,37 @@
+﻿@page "/"
+@using Cifra.Api.Client
+@inject ICifraApiClient Client
+
+<PageTitle>Classes</PageTitle>
+
+@if(RetrievedClasses != null){
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classDto in RetrievedClasses)
+            {
+                <tr>
+                    <td>@classDto.Name</td>
+                    <td><a href="class/@classDto.Id">Edit</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+@code{
+    private IEnumerable<Class> RetrievedClasses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.ClassGETAsync("1");
+        RetrievedClasses = response.Classes;
+        await base.OnInitializedAsync();
+    }
+}
