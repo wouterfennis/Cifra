@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cifra.Api.V1.Models.Class.Requests;
 using Cifra.Api.V1.Models.Class.Responses;
+using Cifra.Api.V1.Models.Validation;
 using Cifra.Application;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -94,26 +96,31 @@ namespace Cifra.Api.V1
         [ProducesResponseType(typeof(AddStudentResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(AddStudentResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> AddStudentAsync(int classId, AddStudentRequest request)
+        public async Task<ActionResult> AddStudentsAsync(int classId, AddStudentsRequest request)
         {
-            var command = new AddStudentCommand
+            var validationMessages = new List<ValidationMessage>();
+            foreach (var student in request.Students)
             {
-                ClassId = classId,
-                FirstName = request.FirstName,
-                Infix = request.Infix,
-                LastName = request.LastName
-            };
+                var command = new AddStudentCommand
+                {
+                    ClassId = classId,
+                    FirstName = student.FirstName,
+                    Infix = student.Infix,
+                    LastName = student.LastName
+                };
 
-            AddStudentResult result = await _classService.AddStudentAsync(command);
+                AddStudentResult result = await _classService.AddStudentAsync(command);
 
-            var response = _mapper.Map<AddStudentResponse>(result);
+                var response = _mapper.Map<AddStudentResponse>(result);
 
-            if (response.ValidationMessages.Any())
-            {
-                _logger.LogInformation("Request is not valid");
-                return BadRequest(response);
+                if (response.ValidationMessages.Any())
+                {
+                    _logger.LogInformation("Request is not valid");
+                    validationMessages.AddRange(response.ValidationMessages);
+                }
             }
-            return Created(new Uri($"{response.ValidationMessages}", UriKind.Relative), response);
+            
+            return Created(new Uri($"", UriKind.Relative), validationMessages);
         }
     }
 }

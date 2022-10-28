@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Cifra.Database.Extensions
 {
@@ -15,10 +17,9 @@ namespace Cifra.Database.Extensions
         /// <summary>
         /// Setup dependencies.
         /// </summary>
-        public static void SetupDatabaseDependencies(this IServiceCollection services, IConfiguration configuration)
+        public static void SetupDatabaseDependencies(this IServiceCollection services, string sqlitePath)
         {
-            string databaseConnectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("Sqlite");
-            services.AddDbContext<Context>(options => options.UseSqlite(databaseConnectionString));
+            services.AddDbContext<Context>(options => options.UseSqlite($"DataSource={sqlitePath}"));
             services.AddScoped<ITestRepository, TestDatabaseRepository>();
             services.AddScoped<IClassRepository, ClassDatabaseRepository>();
         }

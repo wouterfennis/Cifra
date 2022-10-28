@@ -22,7 +22,8 @@ namespace Cifra.Api.Extensions
         public static void SetupDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.SetupApplicationDependencies(configuration);
-            services.SetupDatabaseDependencies(configuration);
+            string databasename = configuration.GetSection("ConnectionStrings").GetValue<string>("Sqlite");
+            services.SetupDatabaseDependencies(databasename);
             services.SetupFileSystemDependencies(configuration);
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)), Assembly.GetAssembly(typeof(ApiProfile)));

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.UnitTests", "Cifr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.Client", "Cifra.Api.Client\Cifra.Api.Client.csproj", "{74587631-2501-446D-96FE-15B699A72B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Core", "Cifra.Core\Cifra.Core.csproj", "{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Core", "Cifra.Core\Cifra.Core.csproj", "{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,7 +10,7 @@ namespace Cifra.Database
 
         public Context(DbContextOptions options) : base(options)
         {
-            Database.EnsureCreatedAsync();
+            Database.EnsureCreated();
         }
     }
 }
