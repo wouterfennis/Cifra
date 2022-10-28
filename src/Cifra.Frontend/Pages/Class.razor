@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/class/{classId:int}"
 @using Cifra.Api.Client
 @inject ICifraApiClient Client
 
@@ -13,25 +13,24 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var classDto in RetrievedClasses)
-            {
                 <tr>
-                    <td>@classDto.Name</td>
-                    <td><a href="class/@classDto.Id">Edit</a></td>
+                <td>@RetrievedClass.Name</td>
+                    <td><a href="class/@RetrievedClass.Id">Edit</a></td>
                 </tr>
-            }
-
         </tbody>
     </table>
 }
 
 @code{
-    private Class RetrievedClass;
+    [Parameter]
+    public int ClassId { get; set; }
+
+    private Api.Client.Class RetrievedClass;
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Client.ClassGETAsync("1");
-        RetrievedClasses = response.Classes;
+        var response = await Client.ClassGET2Async(ClassId, "1");
+        RetrievedClass = response.Class;
         await base.OnInitializedAsync();
     }
 }

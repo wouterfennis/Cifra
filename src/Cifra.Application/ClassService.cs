@@ -64,6 +64,16 @@ namespace Cifra.Application
         }
 
         /// <summary>
+        /// Retrieve a specific class.
+        /// </summary>
+        public async Task<GetClassResult> GetClassAsync(int id)
+        {
+            Database.Schema.Class retrievedClass = await _classRepository.GetAsync(id);
+            var mappedClass = _mapper.Map<Class>(retrievedClass);
+            return new GetClassResult(mappedClass);
+        }
+
+        /// <summary>
         /// Adds a students to class
         /// </summary>
         public async Task<AddStudentResult> AddStudentAsync(AddStudentCommand model)

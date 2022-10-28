@@ -38,6 +38,7 @@ namespace Cifra.Api.Mapping
 
             // Class
             CreateMap<GetAllClassesResult, GetAllClassesResponse>();
+            CreateMap<GetClassResult, GetClassResponse>();
             CreateMap<Core.Models.Class.Class, V1.Models.Class.Class>();
             CreateMap<Core.Models.Class.Student, V1.Models.Class.Student>();
             CreateMap<CreateClassRequest, CreateClassCommand>();

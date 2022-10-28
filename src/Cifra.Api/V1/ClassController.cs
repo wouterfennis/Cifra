@@ -56,6 +56,24 @@ namespace Cifra.Api.V1
         }
 
         /// <summary>
+        /// Get a class.
+        /// </summary>
+        /// <returns>The requested class</returns>
+        ///<response code="200">Returns class</response> 
+        ///<response code="500">List could not be retrieved</response> 
+        [HttpGet("{classId}")]
+        [ProducesResponseType(typeof(GetClassResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<GetClassResponse> GetClassAsync(int classId)
+        {
+            GetClassResult getClassResult = await _classService.GetClassAsync(classId);
+
+            var response = _mapper.Map<GetClassResponse>(getClassResult);
+
+            return response;
+        }
+
+        /// <summary>
         /// Create a new Class.
         /// </summary>
         /// <returns>Reference to newly created class</returns>

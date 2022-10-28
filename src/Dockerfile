@@ -19,7 +19,6 @@ COPY "Cifra.FileSystem.UnitTests/Cifra.FileSystem.UnitTests.csproj" "Cifra.FileS
 COPY "Cifra.TestUtilities/Cifra.TestUtilities.csproj" "Cifra.TestUtilities/"
 COPY "Cifra.Database/Cifra.Database.csproj" "Cifra.Database/"
 COPY "Cifra.Database.UnitTests/Cifra.Database.UnitTests.csproj" "Cifra.Database.UnitTests/"
-COPY "Cifra.Database.UnitTests/Cifra.Database.UnitTests.csproj" "Cifra.Database.UnitTests/"
 COPY "Cifra.Frontend/Cifra.Frontend.csproj" "Cifra.Frontend/"
 COPY Cifra.sln .
 COPY NuGet.Config .

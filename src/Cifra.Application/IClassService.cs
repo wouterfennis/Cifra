@@ -9,5 +9,6 @@ namespace Cifra.Application
         Task<AddStudentResult> AddStudentAsync(AddStudentCommand model);
         Task<CreateClassResult> CreateClassAsync(CreateClassCommand model);
         Task<GetAllClassesResult> GetClassesAsync();
+        Task<GetClassResult> GetClassAsync(int id);
     }
 }
