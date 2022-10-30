@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <PackageId>Cifra.Api.Client</PackageId>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <Authors>Wouter Fennis</Authors>
+    <Description>Generated NSwag client to use the Cifra.Api</Description>
+    <RepositoryUrl>https://github.com/wouterfennis/Cifra</RepositoryUrl>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
