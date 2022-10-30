@@ -46,8 +46,8 @@ namespace Cifra.Api.V1
         ///<response code="400">Supplied test results spreadsheet data was invalid.</response> 
         ///<response code="500">The test results spreadsheet could not be created.</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateTestResultsSpreadsheetResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(CreateTestResultsSpreadsheetResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetRequest request)
         {
