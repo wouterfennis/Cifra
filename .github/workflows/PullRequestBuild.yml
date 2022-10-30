@@ -14,13 +14,15 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
         source-url: https://nuget.pkg.github.com/wouterfennis/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: Restore dependencies of project
-      run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore ./src/Cifra.Api.Client/Cifra.Api.Client.csproj
     - name: Build project
-      run: dotnet build --no-restore --configuration Release
-    - name: Run tests
-      run: dotnet test --no-restore
+      run: dotnet build ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-restore --configuration Release
+    - name: Pack
+      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{GITHUB_RUN_ID
+      - name: Publish
+      run: dotnet nuget push "./src/Cifra.Api.Client/bin/Release/Cifra.Api.Client.*.nupkg" --source https://nuget.pkg.github.com/wouterfennis/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate}}

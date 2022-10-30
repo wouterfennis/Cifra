@@ -1,0 +1,117 @@
+﻿@page "/class/{classId:int}"
+@using Cifra.Api.Client
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+@inject IWebHostEnvironment Environment
+
+<div class="container">
+    @if (retrievedClass != null)
+    {
+        <PageTitle>Class @retrievedClass.Name</PageTitle>
+        <div class="row">
+            <div class="col-3">
+                <h1>Class @retrievedClass.Name</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table col">
+                <thead>
+                    <tr>
+                        <th>FirstName</th>
+                        <th>Infix</th>
+                        <th>Lastname</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Student student in retrievedClass.Students)
+                    {
+                        <tr>
+                            <td>
+                                @student.FirstName
+                            </td>
+                            <td>
+                                @student.Infix
+                            </td>
+                            <td>
+                                @student.LastName
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="row">
+        <EditForm Model="@addStudentsRequest" OnValidSubmit="@HandleValidSubmit" class="col">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <InputFile OnChange="@LoadFiles" />
+
+            <div class="row mt-2">
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public int ClassId { get; set; }
+
+    private Api.Client.Class retrievedClass;
+    private AddStudentsRequest addStudentsRequest = new AddStudentsRequest();
+
+    protected override async Task OnInitializedAsync()
+    {
+        addStudentsRequest.Students = new List<StudentDto>();
+        var response = await Client.ClassGET2Async(ClassId, "1");
+        retrievedClass = response.RetrievedClass;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await Client.StudentAsync(ClassId, "1", addStudentsRequest);
+
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
+    }
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        addStudentsRequest.Students.Clear();
+        var trustedFileNameForFileStorage = Path.GetTempFileName();
+
+        await using FileStream fs = new(trustedFileNameForFileStorage, FileMode.Create);
+        await e.File.OpenReadStream().CopyToAsync(fs);
+        fs.Close();
+        using var sr = new StreamReader(File.OpenRead(trustedFileNameForFileStorage));
+        var t = await sr.ReadLineAsync();
+        while (!sr.EndOfStream)
+        {
+            string line = await sr.ReadLineAsync();
+            var content = line.Split(',', StringSplitOptions.TrimEntries);
+            var student = new StudentDto
+                {
+                    FirstName = content[0],
+                    Infix = content[1],
+                    LastName = content[2]
+                };
+            addStudentsRequest.Students.Add(student);
+        }
+        sr.Close();
+        File.Delete(trustedFileNameForFileStorage);
+    }
+}
+

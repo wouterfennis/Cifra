@@ -1,0 +1,27 @@
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8443
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY "Cifra.Api/Cifra.Api.csproj" "Cifra.Api/"
+COPY "Cifra.Api.Client/Cifra.Api.Client.csproj" "Cifra.Api.Client/"
+COPY "Cifra.Application/Cifra.Application.csproj" "Cifra.Application/"
+COPY "Cifra.Core/Cifra.Core.csproj" "Cifra.Core/"
+COPY "Cifra.ConsoleHost/Cifra.ConsoleHost.csproj" "Cifra.ConsoleHost/"
+COPY "Cifra.FileSystem/Cifra.FileSystem.csproj" "Cifra.FileSystem/"
+COPY "Cifra.FileSystem.UnitTests/Cifra.FileSystem.UnitTests.csproj" "Cifra.FileSystem.UnitTests/"
+COPY "Cifra.Database/Cifra.Database.csproj" "Cifra.Database/"
+COPY NuGet.Config .
+RUN dotnet restore "Cifra.Api/Cifra.Api.csproj"
+COPY . .
+RUN dotnet build "Cifra.Api/Cifra.Api.csproj" -c Debug -o /app/build --no-restore
+
+FROM build AS publish
+RUN dotnet publish "Cifra.Api/Cifra.Api.csproj" -c Release -o /app/publish --no-restore
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Cifra.Api.dll"]

@@ -44,7 +44,7 @@ namespace Cifra.Api.Mapping
             CreateMap<CreateClassRequest, CreateClassCommand>();
             CreateMap<CreateClassResult, CreateClassResponse>();
 
-            CreateMap<AddStudentResult, AddStudentResponse>();
+            CreateMap<AddStudentResult, AddStudentsResponse>();
 
             // Spreadsheet
             CreateMap<CreateTestResultsSpreadsheetRequest, CreateTestResultsSpreadsheetCommand>();

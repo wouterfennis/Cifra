@@ -1,0 +1,50 @@
+﻿@page "/class"
+@using Cifra.Api.Client
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+
+<PageTitle>Create class</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h1>Create class</h1>
+        </div>
+    </div>
+    <div class="row">
+        <EditForm Model="@CreateClassRequest" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label for="name">Name</label>
+                    <InputText id="name" class="form-control" placeholder="H1a" @bind-Value="CreateClassRequest.Name" />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Api.Client.CreateClassRequest CreateClassRequest = new Api.Client.CreateClassRequest();
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await Client.ClassPOSTAsync("1", CreateClassRequest);
+
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/class/{response.ClassId}");
+    }
+}

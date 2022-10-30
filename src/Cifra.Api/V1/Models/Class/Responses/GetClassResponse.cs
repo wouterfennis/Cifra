@@ -6,6 +6,6 @@ namespace Cifra.Api.V1.Models.Class.Responses
         /// <summary>
         /// The class
         /// </summary>
-        public Class Class { get; set; }
+        public Class RetrievedClass { get; set; }
     }
 }

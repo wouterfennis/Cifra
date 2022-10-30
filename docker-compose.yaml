@@ -3,7 +3,8 @@ services:
     cifra-api:
         build: 
             context: ./src
-        image: 192.168.0.184:5000/wouterfennis.cifra.api:linux-arm64
+            dockerfile: Dockerfile.Api
+        image: 192.168.0.184:5000/cifra.api:dev
         ports:
             - "8080:8080"
         environment:
@@ -11,3 +12,14 @@ services:
           - ASPNETCORE_URLS=http://+:8080;
         volumes:
           - K:/Git/Cifra/data:/data:rw
+
+    cifra-front-end:
+        build: 
+            context: ./src/Cifra.Frontend
+            dockerfile: Dockerfile.Frontend
+        image: 192.168.0.184:5000/cifra.frontend:dev
+        ports:
+            - "8080:8090"
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://+:8080;

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Cifra.Api.V1.Models.Class.Responses
 {
     /// <summary>
-    /// Result of the Add Student operation.
+    /// Result of the Add Students operation.
     /// </summary>
-    public class AddStudentResponse
+    public class AddStudentsResponse
     {
         /// <summary>
         /// The validation messages.

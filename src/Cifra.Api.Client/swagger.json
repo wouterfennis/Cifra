@@ -185,12 +185,12 @@
         "tags": [
           "Class"
         ],
-        "summary": "Adds an student to a class.",
+        "summary": "Adds an students to a class.",
         "parameters": [
           {
             "name": "classId",
             "in": "path",
-            "description": "The class id where the student should be added.",
+            "description": "The class id where the students should be added.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -207,7 +207,7 @@
           }
         ],
         "requestBody": {
-          "description": "The request containing details of the student.",
+          "description": "The request containing details of the students.",
           "content": {
             "application/json": {
               "schema": {
@@ -232,17 +232,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               }
             }
@@ -252,17 +252,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddStudentResponse"
+                  "$ref": "#/components/schemas/AddStudentsResponse"
                 }
               }
             }
@@ -616,21 +616,6 @@
         "additionalProperties": false,
         "description": "Result of the Add Assignment operation"
       },
-      "AddStudentResponse": {
-        "type": "object",
-        "properties": {
-          "validationMessages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ValidationMessage"
-            },
-            "description": "The validation messages.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "Result of the Add Student operation."
-      },
       "AddStudentsRequest": {
         "type": "object",
         "properties": {
@@ -644,6 +629,21 @@
         },
         "additionalProperties": false,
         "description": "The request to add an student"
+      },
+      "AddStudentsResponse": {
+        "type": "object",
+        "properties": {
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationMessage"
+            },
+            "description": "The validation messages.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Result of the Add Students operation."
       },
       "Assignment": {
         "type": "object",
@@ -840,7 +840,7 @@
       "GetClassResponse": {
         "type": "object",
         "properties": {
-          "class": {
+          "retrievedClass": {
             "$ref": "#/components/schemas/Class"
           }
         },
