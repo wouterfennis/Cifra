@@ -1,0 +1,99 @@
+﻿@page "/test/{testId:int}"
+@using Cifra.Api.Client
+@using System.Text.RegularExpressions
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+@inject IWebHostEnvironment Environment
+
+<div class="container">
+    @if (retrievedTest != null)
+    {
+        <PageTitle>Class @retrievedTest.Name</PageTitle>
+        <div class="row">
+            <div class="col-4">
+                <h1>Class @retrievedTest.Name</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table col">
+                <thead>
+                    <tr>
+                        <th class="col-3">Assignment</th>
+                        <th class="col-3">NumberOfQuestions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Assignment assignment in retrievedTest.Assignments)
+                    {
+                        <tr>
+                            <td>
+                                @{counter++;}
+                                @counter
+                            </td>
+                            <td>
+                                @assignment.NumberOfQuestions
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-4">
+            <h2>Add Assignment</h2>
+        </div>
+    </div>
+    <div class="row">
+        <EditForm Model="@addAssignmentRequest" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label for="name">Name</label>
+                    <InputNumber id="name" class="form-control" @bind-Value="addAssignmentRequest.NumberOfQuestions" />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public int TestId { get; set; }
+
+    private Api.Client.Test retrievedTest;
+    private AddAssignmentRequest addAssignmentRequest = new AddAssignmentRequest();
+    private int counter = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.TestGET2Async(TestId, "1");
+        retrievedTest = response.Test;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await Client.AssignmentAsync(TestId, "1", addAssignmentRequest);
+
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/test/{TestId}", forceLoad: true);
+    }
+}
+

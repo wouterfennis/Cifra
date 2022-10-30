@@ -41,6 +41,12 @@
     }
 
     <div class="row">
+        <div class="col-4">
+            <h2>Add students</h2>
+        </div>
+    </div>
+
+    <div class="row">
         <EditForm Model="@addStudentsRequest" OnValidSubmit="@HandleValidSubmit" class="col">
             <DataAnnotationsValidator />
             <ValidationSummary />
