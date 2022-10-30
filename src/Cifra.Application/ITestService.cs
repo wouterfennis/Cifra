@@ -23,5 +23,10 @@ namespace Cifra.Application
         /// Retrieves all tests currently available.
         /// </summary>
         Task<GetAllTestsResult> GetTestsAsync();
+
+        /// <summary>
+        /// Retrieves test.
+        /// </summary>
+        Task<GetTestResult> GetTestAsync(int id);
     }
 }

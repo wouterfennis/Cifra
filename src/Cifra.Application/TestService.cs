@@ -93,5 +93,13 @@ namespace Cifra.Application
             var mappedTests = _mapper.Map<List<Test>>(tests);
             return new GetAllTestsResult(mappedTests);
         }
+
+        /// <inheritdoc/>
+        public async Task<GetTestResult> GetTestAsync(int id)
+        {
+            Database.Schema.Test test = await _testRepository.GetAsync(id);
+            var mappedTests = _mapper.Map<Test>(test);
+            return new GetTestResult(mappedTests);
+        }
     }
 }

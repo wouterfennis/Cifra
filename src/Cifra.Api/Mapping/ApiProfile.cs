@@ -28,6 +28,7 @@ namespace Cifra.Api.Mapping
         {
             // Test
             CreateMap<GetAllTestsResult, GetAllTestsResponse>();
+            CreateMap<GetTestResult, GetTestResponse>();
             CreateMap<Core.Models.Test.Test, V1.Models.Test.Test>();
             CreateMap<Core.Models.Test.Assignment, V1.Models.Test.Assignment>();
             CreateMap<CreateTestRequest, CreateTestCommand>();

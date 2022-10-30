@@ -55,6 +55,24 @@ namespace Cifra.Api.V1
         }
 
         /// <summary>
+        /// Get a test.
+        /// </summary>
+        /// <returns>The requested test</returns>
+        ///<response code="200">Returns test</response> 
+        ///<response code="500">Test could not be retrieved</response> 
+        [HttpGet("{testId}")]
+        [ProducesResponseType(typeof(GetTestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<GetTestResponse> GetTestAsync(int testId)
+        {
+            GetTestResult getTestResult = await _testService.GetTestAsync(testId);
+
+            var response = _mapper.Map<GetTestResponse>(getTestResult);
+
+            return response;
+        }
+
+        /// <summary>
         /// Create a new Test.
         /// </summary>
         /// <returns>Reference to newly created test</returns>
