@@ -1,5 +1,6 @@
 ﻿@page "/class/{classId:int}"
 @using Cifra.Api.Client
+@using System.Text.RegularExpressions
 @inject ICifraApiClient Client
 @inject NavigationManager NavManager
 @inject IWebHostEnvironment Environment
@@ -9,7 +10,7 @@
     {
         <PageTitle>Class @retrievedClass.Name</PageTitle>
         <div class="row">
-            <div class="col-3">
+            <div class="col-4">
                 <h1>Class @retrievedClass.Name</h1>
             </div>
         </div>
@@ -18,9 +19,8 @@
             <table class="table col">
                 <thead>
                     <tr>
-                        <th>FirstName</th>
-                        <th>Infix</th>
-                        <th>Lastname</th>
+                        <th class="col-3">FirstName</th>
+                        <th class="col-3">Lastname</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,9 +29,6 @@
                         <tr>
                             <td>
                                 @student.FirstName
-                            </td>
-                            <td>
-                                @student.Infix
                             </td>
                             <td>
                                 @student.LastName
@@ -66,6 +63,7 @@
 
     private Api.Client.Class retrievedClass;
     private AddStudentsRequest addStudentsRequest = new AddStudentsRequest();
+    private Regex nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<lastName>\w.*)$");
 
     protected override async Task OnInitializedAsync()
     {
@@ -105,10 +103,12 @@
                 break;
             }
 
-            var content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
+            var nameParts = nameRegex.Match(content).Groups;
             var student = new StudentDto
                 {
-                    FirstName = content[0],
+                    FirstName = nameParts.GetValueOrDefault("firstName").Value,
+                    LastName = nameParts.GetValueOrDefault("lastName").Value
                 };
             addStudentsRequest.Students.Add(student);
         }
