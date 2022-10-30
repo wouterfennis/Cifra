@@ -23,6 +23,6 @@ jobs:
     - name: Build project
       run: dotnet build ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-restore --configuration Release
     - name: Pack
-      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{GITHUB_RUN_ID
+      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{GITHUB_RUN_ID}}
     - name: Publish
       run: dotnet nuget push "./src/Cifra.Api.Client/bin/Release/Cifra.Api.Client.*.nupkg" --source https://nuget.pkg.github.com/wouterfennis/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
