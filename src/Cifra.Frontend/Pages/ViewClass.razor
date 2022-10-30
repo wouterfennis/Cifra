@@ -100,13 +100,15 @@
         var t = await sr.ReadLineAsync();
         while (!sr.EndOfStream)
         {
-            string line = await sr.ReadLineAsync();
-            var content = line.Split(',', StringSplitOptions.TrimEntries);
+            string? line = await sr.ReadLineAsync();
+            if(line == null){
+                break;
+            }
+
+            var content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             var student = new StudentDto
                 {
                     FirstName = content[0],
-                    Infix = content[1],
-                    LastName = content[2]
                 };
             addStudentsRequest.Students.Add(student);
         }

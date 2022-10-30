@@ -15,11 +15,14 @@ services:
 
     cifra-front-end:
         build: 
-            context: ./src/Cifra.Frontend
+            context: ./src
             dockerfile: Dockerfile.Frontend
         image: 192.168.0.184:5000/cifra.frontend:dev
         ports:
-            - "8080:8090"
+            - "8090:8090"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
-          - ASPNETCORE_URLS=http://+:8080;
+          - ASPNETCORE_URLS=http://+:8090;
+          - CifraApiBaseAddress=http://cifra-api:8080
+        links:
+            - cifra-api
