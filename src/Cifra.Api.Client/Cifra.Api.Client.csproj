@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Cifra.Api\Cifra.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <OpenApiReference Include="swagger.json" CodeGenerator="NSwagCSharp" Namespace="Cifra.Api.Client" ClassName="CifraApiClient">
+      <Options>/UseBaseUrl:false /GenerateClientInterfaces:true</Options>
+    </OpenApiReference>
+  </ItemGroup>
+
 </Project>
