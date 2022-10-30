@@ -18,7 +18,11 @@ jobs:
         source-url: https://nuget.pkg.github.com/wouterfennis/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: Restore dependencies
+    - name: Restore dependencies Api
+      run: dotnet restore ./src/Cifra.Api/Cifra.Api.csproj
+    - name: Build project
+      run: dotnet build ./src/Cifra.Api/Cifra.Api.csproj --no-restore --configuration Release
+    - name: Restore dependencies Api Client
       run: dotnet restore ./src/Cifra.Api.Client/Cifra.Api.Client.csproj
     - name: Build project
       run: dotnet build ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-restore --configuration Release
