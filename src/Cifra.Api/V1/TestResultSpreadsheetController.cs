@@ -58,6 +58,7 @@ namespace Cifra.Api.V1
             if (result.ValidationMessages.Any())
             {
                 _logger.LogInformation("Request is not valid");
+                _logger.LogInformation(result.ValidationMessages.Select( x=> x.Message).First());
                 return BadRequest(result);
             }
             return base.File(CreateOneTimeStream(result), "application/octet-stream", result.FileInfo.Name);
