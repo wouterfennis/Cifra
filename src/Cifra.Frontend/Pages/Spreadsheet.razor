@@ -19,8 +19,9 @@
 
             <div class="row">
                 <div class="form-group col-3">
-                    <label for="name">Class</label>
-                    <InputSelect class="form-select" @bind-Value="createTestResultsSpreadsheetRequest.ClassId">
+                    <label for="class">Class</label>
+                    <InputSelect class="form-select" @bind-Value="chosenClass" DisplayName="class" name="class" id="class">
+                        <option value="">Choose a class</option>
                         @foreach (var retrievedClass in classes)
                         {
                             <option value="@retrievedClass.Id">@retrievedClass.Name</option>
@@ -31,8 +32,9 @@
 
             <div class="row">
                 <div class="form-group col-3">
-                    <label for="name">Test</label>
-                    <InputSelect class="form-select" @bind-Value="createTestResultsSpreadsheetRequest.TestId">
+                    <label for="test">Test</label>
+                    <InputSelect class="form-select" @bind-Value="chosenTest" DisplayName="test" name="test" id="test">
+                        <option value="">Choose a test</option>
                         @foreach (var retrievedTest in tests)
                         {
                             <option value="@retrievedTest.Id">@retrievedTest.Name</option>
@@ -68,6 +70,8 @@
     private Api.Client.CreateTestResultsSpreadsheetRequest createTestResultsSpreadsheetRequest = new Api.Client.CreateTestResultsSpreadsheetRequest();
     private IEnumerable<Api.Client.Class> classes = new List<Class>();
     private IEnumerable<Api.Client.Test> tests = new List<Test>();
+    private string chosenClass = string.Empty;
+    private string chosenTest = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -86,11 +90,12 @@
 
     private async Task HandleValidSubmit()
     {
-        Console.WriteLine(createTestResultsSpreadsheetRequest.ClassId);
-        Console.WriteLine(createTestResultsSpreadsheetRequest.TestId);
+        Console.WriteLine(chosenClass);
+        Console.WriteLine(chosenTest);
+        createTestResultsSpreadsheetRequest.ClassId = int.Parse(chosenClass);
+        createTestResultsSpreadsheetRequest.TestId = int.Parse(chosenTest);
         var response = await Client.TestResultSpreadsheetAsync("1", createTestResultsSpreadsheetRequest);
-        var fileName = "log.bin";
-
+        string fileName = $"{createTestResultsSpreadsheetRequest.Metadata.FileName}.xlsx";
         using var streamRef = new DotNetStreamReference(stream: response.Stream);
 
         await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
