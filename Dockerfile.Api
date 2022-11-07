@@ -12,7 +12,7 @@ COPY "./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj" "Cifra.ConsoleHost/"
 COPY "./src/Cifra.FileSystem/Cifra.FileSystem.csproj" "Cifra.FileSystem/"
 COPY "./src/Cifra.FileSystem.UnitTests/Cifra.FileSystem.UnitTests.csproj" "Cifra.FileSystem.UnitTests/"
 COPY "./src/Cifra.Database/Cifra.Database.csproj" "Cifra.Database/"
-COPY ./src/NuGet.Config .
+COPY "./src/NuGet.Config" .
 RUN dotnet restore "Cifra.Api/Cifra.Api.csproj"
 COPY . .
 RUN dotnet build "Cifra.Api/Cifra.Api.csproj" -c Debug -o /app/build --no-restore
