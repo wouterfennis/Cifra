@@ -6,7 +6,7 @@ on:
 
 env:
   NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  NUGET_AUTH_USERNAME: ${{github.GITHUB_REPOSITORY_OWNER}}
+  NUGET_AUTH_USERNAME: token
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
         dotnet-version: 6.0.x
         source-url: https://nuget.pkg.github.com/wouterfennis/index.json
       env:
-        NUGET_AUTH_USERNAME: ${{github.GITHUB_REPOSITORY_OWNER}}
+        NUGET_AUTH_USERNAME: token
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore dependencies Api
       run: dotnet restore ./src/Cifra.Api/Cifra.Api.csproj
