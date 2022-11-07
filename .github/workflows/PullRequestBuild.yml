@@ -43,6 +43,7 @@ jobs:
           context: .
           file: ./Dockerfile.Frontend
           push: true
+          arguments: Nuget_CustomFeedUsername=token,Nuget_CustomFeedPassword=${{secrets.GITHUB_TOKEN}}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:dev
@@ -53,6 +54,7 @@ jobs:
           context: .
           file: ./Dockerfile.Api
           push: true
+          arguments: Nuget_CustomFeedUsername=token,Nuget_CustomFeedPassword=${{secrets.GITHUB_TOKEN}}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:dev

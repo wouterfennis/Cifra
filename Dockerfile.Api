@@ -3,6 +3,9 @@ WORKDIR /app
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ARG Nuget_CustomFeedUsername
+ARG Nuget_CustomFeedPassword
+
 WORKDIR /src
 COPY "./src/Cifra.Api/Cifra.Api.csproj" "Cifra.Api/"
 COPY "./src/Cifra.Api.Client/Cifra.Api.Client.csproj" "Cifra.Api.Client/"
