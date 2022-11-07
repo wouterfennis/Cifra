@@ -3,8 +3,8 @@ WORKDIR /app
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-ARG Nuget_CustomFeedUsername
-ARG Nuget_CustomFeedPassword 
+ARG NUGET_AUTH_USERNAME
+ARG NUGET_AUTH_TOKEN 
 
 WORKDIR /src
 COPY "./src/Cifra.Frontend/Cifra.Frontend.csproj" "Cifra.Frontend/"
