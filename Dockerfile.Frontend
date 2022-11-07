@@ -5,7 +5,7 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY "./src/Cifra.Frontend/Cifra.Frontend.csproj" "Cifra.Frontend/"
-COPY ./src/NuGet.Config .
+COPY "./NuGet.Config" .
 RUN dotnet restore "Cifra.Frontend/Cifra.Frontend.csproj"
 COPY . .
 RUN dotnet build "Cifra.Frontend/Cifra.Frontend.csproj" -c Debug -o /app/build --no-restore
