@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  NUGET_AUTH_USERNAME: ${{github.GITHUB_REPOSITORY_OWNER}}
+
 jobs:
   build:
 
