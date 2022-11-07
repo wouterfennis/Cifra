@@ -41,7 +41,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
           context: .
-          file: ./src/Dockerfile.Frontend
+          file: ./Dockerfile.Frontend
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:${{GITHUB.RUN_ID}}
@@ -51,7 +51,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
           context: .
-          file: ./src/Dockerfile.Api
+          file: ./Dockerfile.Api
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:${{GITHUB.RUN_ID}}

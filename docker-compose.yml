@@ -2,8 +2,8 @@ version: "3.9"
 services:
     cifra-api:
         build: 
-            context: ./src
-            dockerfile: Dockerfile.Api
+            context: .
+            dockerfile: ./Dockerfile.Api
         image: wouterfennis/cifra-api:dev
         expose:
             - "8090"
@@ -15,8 +15,8 @@ services:
 
     cifra-front-end:
         build: 
-            context: ./src
-            dockerfile: Dockerfile.Frontend
+            context: .
+            dockerfile: ./Dockerfile.Frontend
         image: wouterfennis/cifra-frontend:dev
         ports:
             - "8080:8080"
