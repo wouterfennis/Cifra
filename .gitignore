@@ -350,6 +350,6 @@ MigrationBackup/
 
 # Custom
 Cifra.Api.xml
-NuGet.Config
+/src/NuGet.Config
 *.db
 *.db-*
