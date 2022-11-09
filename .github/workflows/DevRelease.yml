@@ -1,0 +1,15 @@
+name: Continuous Deployment Dev release
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        template: ./azure/main.bicep
+        failOnStdErr: true
