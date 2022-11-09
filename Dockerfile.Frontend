@@ -8,10 +8,10 @@ ARG NUGET_AUTH_TOKEN
 
 WORKDIR /src
 COPY "./src/Cifra.Frontend/Cifra.Frontend.csproj" "Cifra.Frontend/"
-COPY "./NuGet.Config" .
+COPY "./NuGet.Config.Template" "./NuGet.Config"
 RUN dotnet restore "Cifra.Frontend/Cifra.Frontend.csproj"
-COPY . .
-RUN dotnet build "Cifra.Frontend/Cifra.Frontend.csproj" -c Debug -o /app/build --no-restore
+COPY "./src/" .
+RUN dotnet build "Cifra.Frontend/Cifra.Frontend.csproj" -c Debug -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Cifra.Frontend/Cifra.Frontend.csproj" -c Release -o /app/publish --no-restore
