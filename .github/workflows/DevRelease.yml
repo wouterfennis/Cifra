@@ -1,5 +1,10 @@
 name: Continuous Deployment Dev release
 
+on:
+  pull_request:
+    branches:    
+      - main
+
 jobs:
   build:
 
