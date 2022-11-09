@@ -43,7 +43,7 @@ jobs:
           context: .
           file: ./Dockerfile.Frontend
           push: true
-          arguments: --build-arg NUGET_AUTH_USERNAME=${{secrets.NUGET_USERNAME}} --build-arg NUGET_AUTH_TOKEN=${{secrets.NUGET_TOKEN}}
+          build-args: NUGET_AUTH_USERNAME=${{secrets.NUGET_USERNAME}},NUGET_AUTH_TOKEN=${{secrets.NUGET_TOKEN}}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:dev
@@ -54,7 +54,7 @@ jobs:
           context: .
           file: ./Dockerfile.Api
           push: true
-          arguments: --build-arg NUGET_AUTH_USERNAME=${{secrets.NUGET_USERNAME}} --build-arg NUGET_AUTH_TOKEN=${{secrets.NUGET_TOKEN}}
+          build-args: NUGET_AUTH_USERNAME=${{secrets.NUGET_USERNAME}},NUGET_AUTH_TOKEN=${{secrets.NUGET_TOKEN}}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:dev
