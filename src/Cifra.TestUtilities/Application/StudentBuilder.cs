@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
-using Cifra.Core.Models.Class;
-using Cifra.Core.Models.ValueTypes;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Cifra.TestUtilities.Core
+namespace Cifra.TestUtilities.Domain
 {
     [ExcludeFromCodeCoverage] // Part of test project.
     public class StudentBuilder

@@ -10,12 +10,12 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// The tests
         /// </summary>
-        public List<Core.Models.Test.Test> Tests { get; }
+        public List<Domain.Test> Tests { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public GetAllTestsResult(List<Core.Models.Test.Test> tests)
+        public GetAllTestsResult(List<Domain.Test> tests)
         {
             Tests = tests;
         }

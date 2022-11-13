@@ -27,7 +27,6 @@ namespace Cifra.Api.Extensions
             services.SetupFileSystemDependencies(configuration);
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)), Assembly.GetAssembly(typeof(ApiProfile)));
-
         }
     }
 }

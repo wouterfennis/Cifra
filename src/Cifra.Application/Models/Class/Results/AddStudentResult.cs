@@ -1,5 +1,5 @@
 ﻿
-using Cifra.Core.Models.Validation;
+using Cifra.Domain.Validation;
 using System;
 using System.Collections.Generic;
 

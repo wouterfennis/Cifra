@@ -29,19 +29,19 @@ namespace Cifra.Api.Mapping
             // Test
             CreateMap<GetAllTestsResult, GetAllTestsResponse>();
             CreateMap<GetTestResult, GetTestResponse>();
-            CreateMap<Core.Models.Test.Test, V1.Models.Test.Test>();
-            CreateMap<Core.Models.Test.Assignment, V1.Models.Test.Assignment>();
+            CreateMap<Domain.Test, V1.Models.Test.Test>();
+            CreateMap<Domain.Assignment, V1.Models.Test.Assignment>();
             CreateMap<CreateTestRequest, CreateTestCommand>();
             CreateMap<CreateTestResult, CreateTestResponse>();
-            CreateMap<Core.Models.Validation.ValidationMessage, ValidationMessage>();
+            CreateMap<Domain.Validation.ValidationMessage, ValidationMessage>();
 
             CreateMap<AddAssignmentResult, AddAssignmentResponse>();
 
             // Class
             CreateMap<GetAllClassesResult, GetAllClassesResponse>();
             CreateMap<GetClassResult, GetClassResponse>();
-            CreateMap<Core.Models.Class.Class, V1.Models.Class.Class>();
-            CreateMap<Core.Models.Class.Student, V1.Models.Class.Student>();
+            CreateMap<Domain.Class, V1.Models.Class.Class>();
+            CreateMap<Domain.Student, V1.Models.Class.Student>();
             CreateMap<CreateClassRequest, CreateClassCommand>();
             CreateMap<CreateClassResult, CreateClassResponse>();
 
@@ -49,6 +49,7 @@ namespace Cifra.Api.Mapping
 
             // Spreadsheet
             CreateMap<CreateTestResultsSpreadsheetRequest, CreateTestResultsSpreadsheetCommand>();
+            CreateMap<Metadata, Domain.Spreadsheet.Metadata>();
             CreateMap<CreateTestResultsSpreadsheetResult, CreateTestResultsSpreadsheetResponse>();
         }
     }

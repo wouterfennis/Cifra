@@ -1,4 +1,4 @@
-﻿using Cifra.Core.Models.ValueTypes;
+﻿using Cifra.Domain.ValueTypes;
 
 namespace Cifra.FileSystem.FileSystemInfo
 {

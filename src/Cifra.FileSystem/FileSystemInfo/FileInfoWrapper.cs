@@ -7,7 +7,7 @@ namespace Cifra.FileSystem.FileSystemInfo
     [ExcludeFromCodeCoverage] // wrapper around filesystem.
     public class FileInfoWrapper : IFileInfoWrapper
     {
-        private readonly Core.Models.ValueTypes.Path _filePath;
+        private readonly Domain.ValueTypes.Path _filePath;
 
         /// <inheritdoc/>
         public string Name { get => GetFileInfo().Name; }
@@ -21,7 +21,7 @@ namespace Cifra.FileSystem.FileSystemInfo
         /// <summary>
         /// Constructor.
         /// </summary>
-        public FileInfoWrapper(Core.Models.ValueTypes.Path filePath)
+        public FileInfoWrapper(Domain.ValueTypes.Path filePath)
         {
             _filePath = filePath;
         }

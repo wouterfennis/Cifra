@@ -27,16 +27,5 @@ namespace Cifra.Api.UnitTests.Mapping
             // Act Assert
             sut.AssertConfigurationIsValid();
         }
-
-        [TestMethod]
-        public void MyTestMethod()
-        {
-            // Arrange
-
-            // Act
-            
-
-            // Assert
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cifra.Database.Repositories;
+﻿using Cifra.Application.Interfaces;
+using Cifra.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

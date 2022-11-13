@@ -22,7 +22,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
         public void MapToLibraryModel_WithMetadataNullInput_ThrowsException()
         {
             // Arrange
-            Core.Models.Spreadsheet.Metadata model = null;
+            Domain.Spreadsheet.Metadata model = null;
 
             // Act
             Action action = () => model.MapToLibraryModel();
@@ -35,7 +35,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
         public void MapToLibraryModel_WithValidMetadataModel_MapsToLibraryModel()
         {
             // Arrange
-            Core.Models.Spreadsheet.Metadata model = _fixture.Create<Core.Models.Spreadsheet.Metadata>();
+            Domain.Spreadsheet.Metadata model = _fixture.Create<Domain.Spreadsheet.Metadata>();
 
             // Act
             SpreadsheetWriter.Abstractions.Metadata result = model.MapToLibraryModel();
@@ -70,7 +70,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
             SaveResult model = _fixture.Create<SaveResult>();
 
             // Act
-            Core.Models.Spreadsheet.SaveResult result = model.MapToModel();
+            Domain.Spreadsheet.SaveResult result = model.MapToModel();
 
             // Assert
             result.Should().NotBeNull();

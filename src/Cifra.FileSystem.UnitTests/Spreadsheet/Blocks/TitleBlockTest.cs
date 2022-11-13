@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using Cifra.Core.Models.ValueTypes;
+using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -8,12 +8,12 @@
         /// <summary>
         /// The test
         /// </summary>
-        public Core.Models.Test.Test Test { get; }
+        public Domain.Test Test { get; }
         
         /// <summary>
         /// Ctor
         /// </summary>
-        public GetTestResult(Core.Models.Test.Test test)
+        public GetTestResult(Domain.Test test)
         {
             Test = test;
         }

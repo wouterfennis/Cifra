@@ -11,12 +11,12 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// The classes
         /// </summary>
-        public IEnumerable<Core.Models.Class.Class> Classes { get; }
+        public IEnumerable<Domain.Class> Classes { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        internal GetAllClassesResult(IEnumerable<Core.Models.Class.Class> classes)
+        internal GetAllClassesResult(IEnumerable<Domain.Class> classes)
         {
             Classes = classes ?? throw new ArgumentNullException(nameof(classes));
         }

@@ -1,6 +1,4 @@
-﻿using Cifra.Core.Models.Spreadsheet;
-
-namespace Cifra.Api.V1.Models.Spreadsheet.Requests
+﻿namespace Cifra.Api.V1.Models.Spreadsheet.Requests
 {
     /// <summary>
     /// The request to create a Class.

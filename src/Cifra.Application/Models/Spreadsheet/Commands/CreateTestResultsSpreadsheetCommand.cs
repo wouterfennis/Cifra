@@ -1,5 +1,5 @@
 ﻿
-using Cifra.Core.Models.Spreadsheet;
+using Cifra.Domain.Spreadsheet;
 
 namespace Cifra.Application.Models.Spreadsheet.Commands
 {

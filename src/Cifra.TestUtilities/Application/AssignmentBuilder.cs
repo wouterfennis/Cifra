@@ -1,6 +1,6 @@
-﻿using Cifra.Core.Models.Test;
+﻿using Cifra.Domain;
 
-namespace Cifra.TestUtilities.Core
+namespace Cifra.TestUtilities.Domain
 {
     public class AssignmentBuilder
     {

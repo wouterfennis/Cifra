@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
-using Cifra.Core.Models.Test;
-using Cifra.Core.Models.ValueTypes;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Cifra.TestUtilities.Core
+namespace Cifra.TestUtilities.Domain
 {
     [ExcludeFromCodeCoverage] // Part of test project.
     public class TestBuilder

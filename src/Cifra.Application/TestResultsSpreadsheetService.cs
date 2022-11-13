@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using Cifra.Application.Models.Spreadsheet.Commands;
 using Cifra.Application.Models.Spreadsheet.Results;
-using Cifra.Core.Models.Spreadsheet;
-using Cifra.Core.Models.Validation;
-using Cifra.Database.Repositories;
-using Cifra.Database.Schema;
-using Cifra.FileSystem.Spreadsheet;
+using Cifra.Domain.Validation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cifra.Application.Interfaces;
+using Cifra.Domain;
 
 namespace Cifra.Application
 {
@@ -56,8 +54,8 @@ namespace Cifra.Application
                 return new CreateTestResultsSpreadsheetResult(validationMessages);
             }
 
-            var mappedClass = _mapper.Map<Core.Models.Class.Class>(pickedClass);
-            var mappedTest = _mapper.Map<Core.Models.Test.Test>(pickedTest);
+            var mappedClass = _mapper.Map<Domain.Class>(pickedClass);
+            var mappedTest = _mapper.Map<Domain.Test>(pickedTest);
 
             var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, command.Metadata);
 

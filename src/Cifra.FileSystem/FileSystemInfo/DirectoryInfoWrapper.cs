@@ -8,13 +8,13 @@ namespace Cifra.FileSystem.FileSystemInfo
     [ExcludeFromCodeCoverage] // wrapper around filesystem.
     public class DirectoryInfoWrapper : IDirectoryInfoWrapper
     {
-        private readonly Core.Models.ValueTypes.Path _directoryPath;
+        private readonly Domain.ValueTypes.Path _directoryPath;
         private readonly IFileInfoWrapperFactory _fileInfoWrapperFactory;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public DirectoryInfoWrapper(Core.Models.ValueTypes.Path directoryPath, 
+        public DirectoryInfoWrapper(Domain.ValueTypes.Path directoryPath, 
             IFileInfoWrapperFactory fileInfoWrapperFactory)
         {
             _directoryPath = directoryPath;
@@ -34,7 +34,7 @@ namespace Cifra.FileSystem.FileSystemInfo
         {
             return ToDirectoryInfo()
                 .GetFiles()
-                .Select(x => _fileInfoWrapperFactory.Create(Core.Models.ValueTypes.Path.CreateFromString(x.FullName)))
+                .Select(x => _fileInfoWrapperFactory.Create(Domain.ValueTypes.Path.CreateFromString(x.FullName)))
                 .ToArray();
         }
     }

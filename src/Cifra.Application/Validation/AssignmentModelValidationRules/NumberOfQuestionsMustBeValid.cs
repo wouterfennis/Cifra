@@ -1,5 +1,5 @@
 ﻿using Cifra.Application.Models.Test.Commands;
-using Cifra.Core.Models.Validation;
+using Cifra.Domain.Validation;
 using System;
 
 namespace Cifra.Application.Validation.AssignmentModelValidationRules

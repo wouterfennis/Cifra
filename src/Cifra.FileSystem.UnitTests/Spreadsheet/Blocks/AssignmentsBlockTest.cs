@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Cifra.Core.Models.Test;
+using Cifra.Domain;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

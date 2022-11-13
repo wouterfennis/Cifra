@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AutoFixture;
-using Cifra.Core.Models.Class;
+using Cifra.Domain;
 
-namespace Cifra.TestUtilities.Core
+namespace Cifra.TestUtilities.Domain
 {
     [ExcludeFromCodeCoverage] // Part of test project.
     public class ClassBuilder

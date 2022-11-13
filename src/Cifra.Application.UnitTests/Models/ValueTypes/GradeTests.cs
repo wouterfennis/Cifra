@@ -1,4 +1,4 @@
-﻿using Cifra.Core.Models.ValueTypes;
+﻿using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

@@ -22,8 +22,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Cifra.Database\Cifra.Database.csproj" />
-	  <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+	  <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
+	  <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

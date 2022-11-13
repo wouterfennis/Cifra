@@ -1,10 +1,9 @@
 ﻿using AutoFixture;
-using Cifra.Core.Models.Class;
-using Cifra.Core.Models.Test;
-using Cifra.Core.Models.ValueTypes;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet;
-using Cifra.TestUtilities.Core;
+using Cifra.TestUtilities.Domain;
 using Cifra.TestUtilities.SpreadsheetWriter;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -57,7 +56,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         public async Task CreateTestResultsSpreadsheetAsync_WithValidInput_CreatesSpreadsheet()
         {
             // Arrange
-            var metadata = _fixture.Create<Core.Models.Spreadsheet.Metadata>();
+            var metadata = _fixture.Create<Domain.Spreadsheet.Metadata>();
             SetupSpreadsheetFileBuilder();
             FormulaBuilderTestUtilities.SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
 

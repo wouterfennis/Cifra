@@ -9,7 +9,7 @@ namespace Cifra.FileSystem.Mapping
         /// <summary>
         /// Maps to library metadata model.
         /// </summary>
-        public static Metadata MapToLibraryModel(this Core.Models.Spreadsheet.Metadata input)
+        public static Metadata MapToLibraryModel(this Domain.Spreadsheet.Metadata input)
         {
             ValidateNullInput(input);
 
@@ -27,11 +27,11 @@ namespace Cifra.FileSystem.Mapping
         /// <summary>
         /// Maps to save result model.
         /// </summary>
-        public static Core.Models.Spreadsheet.SaveResult MapToModel(this  SaveResult input)
+        public static Domain.Spreadsheet.SaveResult MapToModel(this  SaveResult input)
         {
             ValidateNullInput(input);
 
-            return new Core.Models.Spreadsheet.SaveResult
+            return new Domain.Spreadsheet.SaveResult
             {
                 IsSuccess = input.IsSuccess,
                 Exception = input.Exception,

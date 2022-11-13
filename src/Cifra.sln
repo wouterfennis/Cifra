@@ -24,10 +24,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.UnitTests", "Cifra.Api.UnitTests\Cifra.Api.UnitTests.csproj", "{46119806-68F2-4E62-8A34-B0382A02870A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.Client", "Cifra.Api.Client\Cifra.Api.Client.csproj", "{74587631-2501-446D-96FE-15B699A72B6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1880C4D3-C0E2-476C-83C3-1FC257846ABA} = {1880C4D3-C0E2-476C-83C3-1FC257846ABA}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Core", "Cifra.Core\Cifra.Core.csproj", "{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Frontend", "Cifra.Frontend\Cifra.Frontend.csproj", "{86F23D5A-C86B-4941-9D72-5CB9F461CE54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Frontend", "Cifra.Frontend\Cifra.Frontend.csproj", "{86F23D5A-C86B-4941-9D72-5CB9F461CE54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Domain", "Cifra.Domain\Cifra.Domain.csproj", "{14CFD3AE-6AEA-4002-939A-2F7678485119}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,14 +82,14 @@ Global
 		{74587631-2501-446D-96FE-15B699A72B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74587631-2501-446D-96FE-15B699A72B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74587631-2501-446D-96FE-15B699A72B6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01CAFFE7-73D1-4253-8A78-31FD13BD14FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86F23D5A-C86B-4941-9D72-5CB9F461CE54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86F23D5A-C86B-4941-9D72-5CB9F461CE54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F23D5A-C86B-4941-9D72-5CB9F461CE54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F23D5A-C86B-4941-9D72-5CB9F461CE54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14CFD3AE-6AEA-4002-939A-2F7678485119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14CFD3AE-6AEA-4002-939A-2F7678485119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14CFD3AE-6AEA-4002-939A-2F7678485119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14CFD3AE-6AEA-4002-939A-2F7678485119}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

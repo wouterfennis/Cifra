@@ -4,6 +4,9 @@ services:
         build: 
             context: .
             dockerfile: ./Dockerfile.Api
+            args: 
+              NUGET_AUTH_USERNAME: ${NUGET_AUTH_USERNAME}
+              NUGET_AUTH_TOKEN: ${NUGET_AUTH_PASSWORD}
         image: wouterfennis/cifra-api:dev
         expose:
             - "8090"
@@ -17,6 +20,9 @@ services:
         build: 
             context: .
             dockerfile: ./Dockerfile.Frontend
+            args: 
+              NUGET_AUTH_USERNAME: ${NUGET_AUTH_USERNAME}
+              NUGET_AUTH_TOKEN: ${NUGET_AUTH_PASSWORD}
         image: wouterfennis/cifra-frontend:dev
         ports:
             - "8080:8080"

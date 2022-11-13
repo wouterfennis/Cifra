@@ -1,13 +1,14 @@
 ﻿using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Core.Models.Validation;
+using Cifra.Domain.Validation;
 using Cifra.Application.Validation;
-using Cifra.Database.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cifra.Core.Models.Class;
 using AutoMapper;
+using Cifra.Application.Interfaces;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Application
 {
@@ -19,7 +20,6 @@ namespace Cifra.Application
         private readonly IClassRepository _classRepository;
         private readonly IValidator<CreateClassCommand> _classValidator;
         private readonly IValidator<AddStudentCommand> _studentValidator;
-        private readonly IMapper _mapper;
 
 
         /// <summary>
@@ -27,13 +27,11 @@ namespace Cifra.Application
         /// </summary>
         public ClassService(IClassRepository classRepository,
             IValidator<CreateClassCommand> classValidator,
-            IValidator<AddStudentCommand> studentValidator,
-            IMapper mapper)
+            IValidator<AddStudentCommand> studentValidator)
         {
             _classRepository = classRepository;
             _classValidator = classValidator;
             _studentValidator = studentValidator;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace Cifra.Application
                 return new CreateClassResult(validationMessages);
             }
 
-            var newClass = new Database.Schema.Class { Name = model.Name };
+            var newClass = new Class(Name.CreateFromString(model.Name));
             int id = await _classRepository.CreateAsync(newClass);
 
             return new CreateClassResult(id);
@@ -58,9 +56,8 @@ namespace Cifra.Application
         /// </summary>
         public async Task<GetAllClassesResult> GetClassesAsync()
         {
-            List<Database.Schema.Class> classes = await _classRepository.GetAllAsync();
-            var mappedClasses = _mapper.Map<List<Class>>(classes);
-            return new GetAllClassesResult(mappedClasses);
+            List<Class> classes = await _classRepository.GetAllAsync();
+            return new GetAllClassesResult(classes);
         }
 
         /// <summary>
@@ -68,9 +65,8 @@ namespace Cifra.Application
         /// </summary>
         public async Task<GetClassResult> GetClassAsync(int id)
         {
-            Database.Schema.Class retrievedClass = await _classRepository.GetAsync(id);
-            var mappedClass = _mapper.Map<Class>(retrievedClass);
-            return new GetClassResult(mappedClass);
+            Class retrievedClass = await _classRepository.GetAsync(id);
+            return new GetClassResult(retrievedClass);
         }
 
         /// <summary>
@@ -84,27 +80,17 @@ namespace Cifra.Application
                 return new AddStudentResult(validationMessages);
             }
 
-            Database.Schema.Class existingClass = await _classRepository.GetAsync(model.ClassId);
+            Class existingClass = await _classRepository.GetAsync(model.ClassId);
 
             if (existingClass == null)
             {
                 return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
             }
 
-            var student = new Database.Schema.Student
-            {
-                FirstName = model.FirstName,
-                Infix = model.Infix,
-                LastName = model.LastName
-            };
+            var student = new Student(Name.CreateFromString(model.FirstName), model.Infix, Name.CreateFromString(model.LastName));
 
             existingClass.Students.Add(student);
-            ValidationMessage result = await _classRepository.UpdateAsync(existingClass);
-
-            if (result != null)
-            {
-                return new AddStudentResult(result);
-            }
+            await _classRepository.UpdateAsync(existingClass);
 
             return new AddStudentResult();
         }

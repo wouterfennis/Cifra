@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using Cifra.Application.Validation;
-using Cifra.Core.Models.Validation;
+using Cifra.Domain.Validation;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

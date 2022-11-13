@@ -10,7 +10,7 @@ WORKDIR /src
 COPY "./src/Cifra.Api/Cifra.Api.csproj" "Cifra.Api/"
 COPY "./src/Cifra.Api.Client/Cifra.Api.Client.csproj" "Cifra.Api.Client/"
 COPY "./src/Cifra.Application/Cifra.Application.csproj" "Cifra.Application/"
-COPY "./src/Cifra.Core/Cifra.Core.csproj" "Cifra.Core/"
+COPY "./src/Cifra.Domain/Cifra.Domain.csproj" "Cifra.Domain/"
 COPY "./src/Cifra.ConsoleHost/Cifra.ConsoleHost.csproj" "Cifra.ConsoleHost/"
 COPY "./src/Cifra.FileSystem/Cifra.FileSystem.csproj" "Cifra.FileSystem/"
 COPY "./src/Cifra.Database/Cifra.Database.csproj" "Cifra.Database/"
@@ -18,10 +18,10 @@ COPY "./NuGet.Config.Template" "./NuGet.Config"
 
 RUN dotnet restore "Cifra.Api/Cifra.Api.csproj"
 COPY "./src/" .
-RUN dotnet build "Cifra.Api/Cifra.Api.csproj" -c Release -o /app/build
+RUN dotnet build "Cifra.Api/Cifra.Api.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Cifra.Api/Cifra.Api.csproj" -c Release -o /app/publish --no-restore
+RUN dotnet publish "Cifra.Api/Cifra.Api.csproj" -c Debug -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
