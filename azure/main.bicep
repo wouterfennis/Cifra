@@ -3,33 +3,33 @@ param location string = 'westeurope'
 
 targetScope = 'subscription'
 
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource cifraResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: 'cifra-rg'
   location: location
 }
 
 module appservicePlan 'appservicePlan.bicep' = {
   name: 'appservicePlan'
-  scope: resourceGroup
+  scope: resourceGroup(cifraResourceGroup.id)
   params: {
-    location: resourceGroup.location
+    location: location
   }
 }
 
 module apiAppservice 'appservice.bicep' = {
   name: 'apiAppservice'
-  scope: resourceGroup
+  scope: resourceGroup(cifraResourceGroup.id)
   params: {
     webSiteName: 'cifra-api'
-    location: resourceGroup.location
+    location: location
   }
 }
 
 module frontendAppservice 'appservice.bicep' = {
   name: 'frontendAppservice'
-  scope: resourceGroup
+  scope: resourceGroup(cifraResourceGroup.id)
   params: {
     webSiteName: 'cifra'
-    location: resourceGroup.location
+    location: location
   }
 }
