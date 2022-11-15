@@ -14,7 +14,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-01' = {
   tags: {}
   properties: {
     siteConfig: {
-      linuxFxVersion: 'DOCKER|wouterfennis/cifra-api:dev'
+      linuxFxVersion: 'DOCKER'
     }
     serverFarmId: appServicePlan.id
   }

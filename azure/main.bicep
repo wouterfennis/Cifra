@@ -25,7 +25,7 @@ module frontendAppservice 'appservice.bicep' = {
   name: 'frontendAppservice'
   scope: resourceGroup(resourceGroupName)
   params: {
-    webSiteName: 'cifra'
+    webSiteName: 'cifra-dev'
     location: location
   }
 }
