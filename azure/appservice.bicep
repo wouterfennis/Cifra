@@ -25,5 +25,3 @@ resource webApp 'Microsoft.Web/sites@2021-01-01' = {
   }
   identity: userAssignedIdentity
 }
-
-output url string = first(webApp.properties.hostNames)
