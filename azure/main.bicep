@@ -27,12 +27,5 @@ module frontendAppservice 'appservice.bicep' = {
   params: {
     webSiteName: 'cifra-dev'
     location: location
-    appSettings: { appSettings: [
-        {
-          name: 'CifraApiBaseAddress'
-          value: apiAppservice.outputs.url
-        }
-      ]
-    }
   }
 }

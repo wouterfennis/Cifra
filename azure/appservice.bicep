@@ -1,14 +1,6 @@
 param webAppName string = uniqueString(resourceGroup().id) // Generate unique String for web app name
 param location string = resourceGroup().location // Location for all resources
 param webSiteName string
-param appSettings object = { 
-  appSettings: [
-    {
-    name: '' 
-    value: ''
-    }
-  ]  
-}
 
 var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 
@@ -28,7 +20,6 @@ resource webApp 'Microsoft.Web/sites@2021-01-01' = {
   properties: {
     siteConfig: {
       linuxFxVersion: 'DOCKER'
-      appSettings: appSettings.appSettings
     }
     serverFarmId: appServicePlan.id
   }
