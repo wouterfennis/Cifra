@@ -34,10 +34,10 @@ jobs:
 
     - uses: azure/webapps-deploy@v2
       with:
-        app-name: 'cifra-api'
+        app-name: 'cifraApi2023'
         images: 'wouterfennis/cifra-api:dev'
 
     - uses: azure/webapps-deploy@v2
       with:
-        app-name: 'cifra-dev'
+        app-name: 'cifraFrontend2023'
         images: 'wouterfennis/cifra-frontend:dev'
