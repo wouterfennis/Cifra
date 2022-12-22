@@ -2,11 +2,9 @@
 param location string = 'westeurope'
 
 @description('The name of the resource group.')
-param resourceGroupName string = 'cifra-rg'
 
 module appservicePlan 'appservicePlan.bicep' = {
   name: 'appservicePlan'
-  scope: resourceGroup(resourceGroupName)
   params: {
     location: location
   }
@@ -14,18 +12,18 @@ module appservicePlan 'appservicePlan.bicep' = {
 
 module apiAppservice 'appservice.bicep' = {
   name: 'apiAppservice'
-  scope: resourceGroup(resourceGroupName)
   params: {
     webSiteName: 'cifra-api'
     location: location
+    appServicePlanName: appservicePlan.outputs.appServicePlanName
   }
 }
 
 module frontendAppservice 'appservice.bicep' = {
   name: 'frontendAppservice'
-  scope: resourceGroup(resourceGroupName)
   params: {
     webSiteName: 'cifra-dev'
     location: location
+    appServicePlanName: appservicePlan.outputs.appServicePlanName
   }
 }
