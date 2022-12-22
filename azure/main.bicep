@@ -22,7 +22,6 @@ resource webApi 'Microsoft.Web/sites@2021-01-01' = {
   properties: {
     siteConfig: {
       linuxFxVersion: 'DOCKER'
-      appSettings: {}
     }
     serverFarmId: appServicePlan.id
   }
