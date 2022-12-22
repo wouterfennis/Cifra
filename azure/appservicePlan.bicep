@@ -1,18 +1,15 @@
-param sku string = 'F1' // The SKU of App Service Plan
 param location string
 
-var appServicePlanName = toLower('AppServicePlan')
-
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
-  name: appServicePlanName
+  name: 'AppServicePlan'
   location: location
   properties: {
     reserved: true
   }
   sku: {
-    name: sku
+    name: 'F1'
   }
   kind: 'linux'
 }
 
-output appServicePlanName string = appServicePlanName
+output appServicePlanName string = appServicePlan.name

@@ -3,11 +3,16 @@ param location string = 'westeurope'
 
 @description('The name of the resource group.')
 
-module appservicePlan 'appservicePlan.bicep' = {
-  name: 'appservicePlan'
-  params: {
-    location: location
+resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
+  name: 'AppServicePlan'
+  location: location
+  properties: {
+    reserved: true
   }
+  sku: {
+    name: 'F1'
+  }
+  kind: 'linux'
 }
 
 module apiAppservice 'appservice.bicep' = {
@@ -15,7 +20,7 @@ module apiAppservice 'appservice.bicep' = {
   params: {
     webSiteName: 'cifra-api'
     location: location
-    appServicePlanName: appservicePlan.outputs.appServicePlanName
+    appServicePlanName: appServicePlan.name
   }
 }
 
@@ -24,6 +29,6 @@ module frontendAppservice 'appservice.bicep' = {
   params: {
     webSiteName: 'cifra-dev'
     location: location
-    appServicePlanName: appservicePlan.outputs.appServicePlanName
+    appServicePlanName: appServicePlan.name
   }
 }
