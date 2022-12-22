@@ -18,7 +18,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
 module apiAppservice 'appservice.bicep' = {
   name: 'apiAppservice'
   params: {
-    webSiteName: 'cifra-api'
+    webSiteName: 'cifraApi'
     location: location
     appServicePlanName: appServicePlan.name
   }
@@ -27,7 +27,7 @@ module apiAppservice 'appservice.bicep' = {
 module frontendAppservice 'appservice.bicep' = {
   name: 'frontendAppservice'
   params: {
-    webSiteName: 'cifra-dev'
+    webSiteName: 'cifraFrontend'
     location: location
     appServicePlanName: appServicePlan.name
   }

@@ -2,12 +2,12 @@ using Cifra.Api.Client.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var cifraApiBaseAddress = new Uri(builder.Configuration["CifraApiBaseAddress"]);
+var cifraApiBaseUrl = new Uri(builder.Configuration["CifraApiBaseUrl"]);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddCifraApiClient(cifraApiBaseAddress);
+builder.Services.AddCifraApiClient(cifraApiBaseUrl);
 
 var app = builder.Build();
 
