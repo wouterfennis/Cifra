@@ -1,7 +1,5 @@
 @description('Specifies the location for resources.')
-param location string = 'westeurope'
-
-@description('The name of the resource group.')
+param location string = resourceGroup().location
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: 'AppServicePlan'
@@ -16,7 +14,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
 }
 
 resource webApi 'Microsoft.Web/sites@2021-01-01' = {
-  name: 'apiAppservice'
+  name: 'cifraApi2023'
   location: location
   tags: {}
   properties: {
@@ -28,12 +26,18 @@ resource webApi 'Microsoft.Web/sites@2021-01-01' = {
 }
 
 resource webApp 'Microsoft.Web/sites@2021-01-01' = {
-  name: 'frontendAppservice'
+  name: 'cifraFrontend2023'
   location: location
   tags: {}
   properties: {
     siteConfig: {
       linuxFxVersion: 'DOCKER'
+      appSettings:  [
+        {
+          name: 'CifraApiBaseUrl'
+          value: 'https://${webApi.properties.defaultHostName}'
+        }
+      ]
     }
     serverFarmId: appServicePlan.id
   }
