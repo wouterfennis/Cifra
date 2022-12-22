@@ -15,20 +15,27 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
   kind: 'linux'
 }
 
-module apiAppservice 'appservice.bicep' = {
+resource webApi 'Microsoft.Web/sites@2021-01-01' = {
   name: 'apiAppservice'
-  params: {
-    webSiteName: 'cifraApi'
-    location: location
-    appServicePlanName: appServicePlan.name
+  location: location
+  tags: {}
+  properties: {
+    siteConfig: {
+      linuxFxVersion: 'DOCKER'
+      appSettings: {}
+    }
+    serverFarmId: appServicePlan.id
   }
 }
 
-module frontendAppservice 'appservice.bicep' = {
+resource webApp 'Microsoft.Web/sites@2021-01-01' = {
   name: 'frontendAppservice'
-  params: {
-    webSiteName: 'cifraFrontend'
-    location: location
-    appServicePlanName: appServicePlan.name
+  location: location
+  tags: {}
+  properties: {
+    siteConfig: {
+      linuxFxVersion: 'DOCKER'
+    }
+    serverFarmId: appServicePlan.id
   }
 }
