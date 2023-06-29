@@ -5,7 +5,6 @@ using Cifra.Application.Validation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Cifra.Application.Interfaces;
 using Cifra.Domain;
 using Cifra.Domain.ValueTypes;

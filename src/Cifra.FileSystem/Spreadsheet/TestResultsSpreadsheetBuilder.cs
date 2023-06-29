@@ -47,9 +47,9 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter,
                 configurationBlock);
 
-            await spreadsheetFile.SaveAsync();
+            var result = await spreadsheetFile.SaveAsync();
 
-            return spreadsheetFile.FileInfo;
+            return result.FileInfo;
         }
 
         private static void AddTitle(Test test, Domain.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)

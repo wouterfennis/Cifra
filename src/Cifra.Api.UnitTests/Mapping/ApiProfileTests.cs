@@ -7,7 +7,7 @@ namespace Cifra.Api.UnitTests.Mapping
     [TestClass]
     public class ApiProfileTests
     {
-        private IMapper _sut;
+        private IMapper _sut = default!;
 
         [TestInitialize]
         public void Initialize()

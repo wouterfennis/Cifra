@@ -30,7 +30,7 @@ namespace Cifra.Database.Repositories
             _dbContext.Classes.Add(entity);
             await _dbContext.SaveChangesAsync();
 
-            return newClass.Id;
+            return entity.Id;
         }
 
         /// <inheritdoc/>
