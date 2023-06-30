@@ -3,7 +3,7 @@
 namespace Cifra.Api.V1.Models.Test.Requests
 {
     /// <summary>
-    /// The request to create an test
+    /// The request to create a test
     /// </summary>
     public sealed class CreateTestRequest
     {

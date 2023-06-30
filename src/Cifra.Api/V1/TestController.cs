@@ -132,5 +132,36 @@ namespace Cifra.Api.V1
             }
             return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
         }
+
+        /// <summary>
+        /// Adds an assignment to a test.
+        /// </summary>
+        /// <param name="request">The request containing details of the test.</param>
+        /// <returns>Reference to newly created assignment</returns>
+        /// <response code="201">Reference to newly created assignment.</response> 
+        /// <response code="400">Supplied assignment data was invalid.</response> 
+        /// <response code="500">The assignment could not be created.</response> 
+        [HttpPut]
+        [ProducesResponseType(typeof(UpdateTestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UpdateTestResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateTestAsync(UpdateTestRequest request)
+        {
+            var command = new UpdateTestCommand
+            {
+                Test = _mapper.Map<Domain.Test>(request.Test)
+            };
+
+            UpdateTestResult result = await _testService.UpdateTestAsync(command);
+
+            var response = _mapper.Map<UpdateTestResponse>(result);
+
+            if (response.ValidationMessages.Any())
+            {
+                _logger.LogInformation("Request is not valid");
+                return BadRequest(response);
+            }
+            return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
+        }
     }
 }

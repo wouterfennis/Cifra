@@ -15,25 +15,28 @@ namespace Cifra.Application
     public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
-        private readonly IValidator<CreateTestCommand> _testValidator;
+        private readonly IValidator<CreateTestCommand> _createTestValidator;
+        private readonly IValidator<UpdateTestCommand> _updateTestValidator;
         private readonly IValidator<AddAssignmentCommand> _assignmentValidator;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestService(ITestRepository testRepository,
-            IValidator<CreateTestCommand> testValidator,
+            IValidator<CreateTestCommand> createTestValidator,
+            IValidator<UpdateTestCommand> updateTestValidator,
             IValidator<AddAssignmentCommand> assignmentValidator)
         {
             _testRepository = testRepository;
-            _testValidator = testValidator;
+            _createTestValidator = createTestValidator;
+            _updateTestValidator = updateTestValidator;
             _assignmentValidator = assignmentValidator;
         }
 
         /// <inheritdoc/>
         public async Task<CreateTestResult> CreateTestAsync(CreateTestCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _testValidator.ValidateRules(model);
+            IEnumerable<ValidationMessage> validationMessages = _createTestValidator.ValidateRules(model);
             if (validationMessages.Any())
             {
                 return new CreateTestResult(validationMessages);
@@ -70,6 +73,20 @@ namespace Cifra.Application
             await _testRepository.UpdateAsync(test);
 
             return new AddAssignmentResult(test.Id, assignment.Id);
+        }
+
+        /// <inheritdoc/>
+        public async Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model)
+        {
+            IEnumerable<ValidationMessage> validationMessages = _updateTestValidator.ValidateRules(model);
+            if (validationMessages.Any())
+            {
+                return new UpdateTestResult(validationMessages);
+            }
+
+            int id = await _testRepository.UpdateAsync(model.Test);
+
+            return new UpdateTestResult(id);
         }
 
         /// <inheritdoc/>

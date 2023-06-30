@@ -11,13 +11,13 @@ namespace Cifra.Application.UnitTests.Validation.TestModelValidationRules
     public class NameMustBeFilledTests
     {
         private Fixture _fixture;
-        private Application.Validation.TestModelValidationRules.NameMustBeFilled _sut;
+        private Application.Validation.CreateTestModelValidationRules.NameMustBeFilled _sut;
 
         [TestInitialize]
         public void Initialize()
         {
             _fixture = new Fixture();
-            _sut = new Application.Validation.TestModelValidationRules.NameMustBeFilled();
+            _sut = new Application.Validation.CreateTestModelValidationRules.NameMustBeFilled();
         }
 
         [TestMethod]

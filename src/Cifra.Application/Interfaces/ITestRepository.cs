@@ -22,7 +22,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Updates a test
         /// </summary>
-        Task UpdateAsync(Test test);
+        Task<int> UpdateAsync(Test test);
 
         /// <summary>
         /// Get all tests

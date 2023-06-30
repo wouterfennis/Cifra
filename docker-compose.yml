@@ -10,6 +10,8 @@ services:
         image: wouterfennis/cifra-api:dev
         expose:
             - "8090"
+        ports:
+            - "8090:8090"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
           - ASPNETCORE_URLS=http://+:8090;

@@ -1,6 +1,7 @@
 ﻿@page "/test/{testId:int}"
 @using Cifra.Api.Client
 @using System.Text.RegularExpressions
+@using Cifra.Frontend.Extensions;
 @inject ICifraApiClient Client
 @inject NavigationManager NavManager
 @inject IWebHostEnvironment Environment
@@ -15,30 +16,36 @@
             </div>
         </div>
 
-        <div class="row">
-            <table class="table col">
-                <thead>
-                    <tr>
-                        <th class="col-3">Assignment</th>
-                        <th class="col-3">NumberOfQuestions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Assignment assignment in retrievedTest.Assignments)
-                    {
+        <EditForm Model="@retrievedTest" OnValidSubmit="@HandleUpdateTest">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="row">
+                <table class="table col">
+                    <thead>
                         <tr>
-                            <td>
-                                @{counter++;}
-                                @counter
-                            </td>
-                            <td>
-                                @assignment.NumberOfQuestions
-                            </td>
+                            <th class="col-3">Assignment</th>
+                            <th class="col-3">@nameof(Assignment.NumberOfQuestions).ToDisplayFormat()</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach (Assignment assignment in retrievedTest.Assignments)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                                        counter++;
+                                    }
+                                    @counter
+                                </td>
+                                <td>
+                                    <InputNumber id="numberOfVersions" class="form-control" @bind-Value="assignment.NumberOfQuestions" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </EditForm>
     }
 
     <div class="row">
@@ -47,7 +54,7 @@
         </div>
     </div>
     <div class="row">
-        <EditForm Model="@addAssignmentRequest" OnValidSubmit="@HandleValidSubmit">
+        <EditForm Model="@addAssignmentRequest" OnValidSubmit="@HandleAddAssignment">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -72,7 +79,7 @@
     [Parameter]
     public int TestId { get; set; }
 
-    private Api.Client.Test retrievedTest;
+    private Api.Client.Test? retrievedTest;
     private AddAssignmentRequest addAssignmentRequest = new AddAssignmentRequest();
     private int counter = 0;
 
@@ -83,9 +90,27 @@
         await base.OnInitializedAsync();
     }
 
-    private async Task HandleValidSubmit()
+    private async Task HandleAddAssignment()
     {
         var response = await Client.AssignmentAsync(TestId, "1", addAssignmentRequest);
+
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/test/{TestId}", forceLoad: true);
+    }
+
+    private async Task HandleUpdateTest()
+    {
+        var request = new UpdateTestRequest
+        {
+            Test = retrievedTest
+        };
+
+        var response = await Client.TestPUTAsync("1", request);
 
         if (response.ValidationMessages.Any())
         {

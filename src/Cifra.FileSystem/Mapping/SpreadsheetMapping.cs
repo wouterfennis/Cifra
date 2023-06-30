@@ -24,20 +24,6 @@ namespace Cifra.FileSystem.Mapping
             };
         }
 
-        /// <summary>
-        /// Maps to save result model.
-        /// </summary>
-        public static Domain.Spreadsheet.SaveResult MapToModel(this  SaveResult input)
-        {
-            ValidateNullInput(input);
-
-            return new Domain.Spreadsheet.SaveResult
-            {
-                IsSuccess = input.IsSuccess,
-                Exception = input.Exception,
-            };
-        }
-
         private static void ValidateNullInput(object input)
         {
             if (input == null)

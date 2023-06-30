@@ -20,6 +20,11 @@ namespace Cifra.Application
         Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentCommand model);
 
         /// <summary>
+        /// Updates a test.
+        /// </summary>
+        Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model);
+
+        /// <summary>
         /// Retrieves all tests currently available.
         /// </summary>
         Task<GetAllTestsResult> GetTestsAsync();

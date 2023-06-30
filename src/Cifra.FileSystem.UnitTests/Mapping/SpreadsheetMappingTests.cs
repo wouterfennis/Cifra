@@ -2,7 +2,6 @@
 using Cifra.FileSystem.Mapping;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SpreadsheetWriter.Abstractions.File;
 using System;
 
 namespace Cifra.FileSystem.UnitTests.Mapping
@@ -48,34 +47,6 @@ namespace Cifra.FileSystem.UnitTests.Mapping
             result.Subject.Should().Be(model.Subject);
             result.Title.Should().Be(model.Title);
             result.ApplicationVersion.Should().Be(model.ApplicationVersion);
-        }
-
-        [TestMethod]
-        public void MapToModel_WithSaveResultNullInput_ThrowsException()
-        {
-            // Arrange
-            SaveResult model = null;
-
-            // Act
-            Action action = () => model.MapToModel();
-
-            // Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [TestMethod]
-        public void MapToModel_WithValidSaveResultLibraryModel_MapsToModel()
-        {
-            // Arrange
-            SaveResult model = _fixture.Create<SaveResult>();
-
-            // Act
-            Domain.Spreadsheet.SaveResult result = model.MapToModel();
-
-            // Assert
-            result.Should().NotBeNull();
-            result.IsSuccess.Should().Be(model.IsSuccess);
-            result.Exception.Should().Be(model.Exception);
         }
     }
 }

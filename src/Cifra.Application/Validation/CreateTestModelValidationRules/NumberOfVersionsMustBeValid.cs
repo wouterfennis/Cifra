@@ -2,7 +2,7 @@
 using Cifra.Domain.Validation;
 using System;
 
-namespace Cifra.Application.Validation.TestModelValidationRules
+namespace Cifra.Application.Validation.CreateTestModelValidationRules
 {
     /// <summary>
     /// Validates the name of a test

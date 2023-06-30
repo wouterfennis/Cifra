@@ -25,12 +25,15 @@ namespace Cifra.Application.Extensions
             services.AddScoped<IValidator<CreateClassCommand>, Validator<CreateClassCommand>>();
             services.AddScoped<IValidator<AddStudentCommand>, Validator<AddStudentCommand>>();
             services.AddScoped<IValidator<CreateTestCommand>, Validator<CreateTestCommand>>();
+            services.AddScoped<IValidator<UpdateTestCommand>, Validator<UpdateTestCommand>>();
             services.AddScoped<IValidator<AddAssignmentCommand>, Validator<AddAssignmentCommand>>();
             services.AddScoped<IValidationRule<AddAssignmentCommand>, NumberOfQuestionsMustBeValid>();
             services.AddScoped<IValidationRule<AddStudentCommand>, Validation.StudentModelValidationRules.FirstNameMustBeFilled>();
             services.AddScoped<IValidationRule<AddStudentCommand>, Validation.StudentModelValidationRules.LastNameMustBeFilled>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.TestModelValidationRules.NameMustBeFilled>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.TestModelValidationRules.NumberOfVersionsMustBeValid>();
+            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NameMustBeFilled>();
+            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NumberOfVersionsMustBeValid>();
+            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NameMustBeFilled>();
+            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NumberOfVersionsMustBeValid>();
             services.AddScoped<IValidationRule<CreateClassCommand>, Validation.ClassModelValidationRules.NameMustBeFilled>();
         }
     }

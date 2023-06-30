@@ -54,12 +54,14 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(Domain.Test updatedTest)
+        public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
             var entity = _mapper.Map<Test>(updatedTest);
 
             _dbContext.Attach(entity);
             await _dbContext.SaveChangesAsync();
+
+            return entity.Id;
         }
     }
 }
