@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Cifra.Application.Interfaces;
+using System.Linq;
 
 namespace Cifra.Database.Repositories
 {
@@ -56,9 +57,11 @@ namespace Cifra.Database.Repositories
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
-            var entity = _mapper.Map<Test>(updatedTest);
+            Test findResult = await _dbContext.Tests
+                .Include(x => x.Assignments)
+                .SingleOrDefaultAsync(x => x.Id == id);
 
-            _dbContext.Attach(entity);
+            _dbContext.Tests.Update(entity);
             await _dbContext.SaveChangesAsync();
 
             return entity.Id;

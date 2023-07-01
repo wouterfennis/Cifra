@@ -25,6 +25,7 @@
                         <tr>
                             <th class="col-3">Assignment</th>
                             <th class="col-3">@nameof(Assignment.NumberOfQuestions).ToDisplayFormat()</th>
+                            <th class="col-3">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,8 +41,12 @@
                                 <td>
                                     <InputNumber id="numberOfVersions" class="form-control" @bind-Value="assignment.NumberOfQuestions" />
                                 </td>
+                                <td>
+                                    <div class="btn btn-outline-danger" @onclick="(() => RemoveAssignment(assignment))">Delete</div>
+                                </td>
                             </tr>
                         }
+                        @{ counter = 0; }
                     </tbody>
                 </table>
             </div>
@@ -124,6 +129,11 @@
 
         // Redirect to class view
         NavManager.NavigateTo($"/test/{TestId}", forceLoad: true);
+    }
+
+    private void RemoveAssignment(Assignment assignment)
+    {
+        retrievedTest!.Assignments.Remove(assignment);
     }
 }
 
