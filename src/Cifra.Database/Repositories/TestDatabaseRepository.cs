@@ -50,6 +50,7 @@ namespace Cifra.Database.Repositories
             Test findResult = await _dbContext.Tests
                 .AsNoTracking()
                 .Include(x => x.Assignments)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<Domain.Test>(findResult); 
         }
@@ -57,14 +58,15 @@ namespace Cifra.Database.Repositories
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
-            Test findResult = await _dbContext.Tests
-                .Include(x => x.Assignments)
-                .SingleOrDefaultAsync(x => x.Id == id);
+            var updatedEntity = _mapper.Map<Test>(updatedTest);
+            var updatedAssignmentsIds = updatedEntity.Assignments.Select(x => x.Id).ToList();
 
-            _dbContext.Tests.Update(entity);
+            _dbContext.Tests.Update(updatedEntity);
+            _dbContext.Assignments.RemoveRange(_dbContext.Assignments.Where(x => !updatedAssignmentsIds.Contains(x.Id)));
+
             await _dbContext.SaveChangesAsync();
 
-            return entity.Id;
+            return updatedEntity.Id;
         }
     }
 }

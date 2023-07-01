@@ -6,17 +6,19 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Cifra.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211009114611_IntialCreate")]
-    partial class IntialCreate
+    [Migration("20230701135310_InitialCreate")]
+    partial class InitialCreate
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
 
             modelBuilder.Entity("Cifra.Database.Schema.Assignment", b =>
                 {
@@ -34,7 +36,49 @@ namespace Cifra.Database.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Assignment");
+                    b.ToTable("Assignments");
+                });
+
+            modelBuilder.Entity("Cifra.Database.Schema.Class", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("Cifra.Database.Schema.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ClassId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Infix")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Cifra.Database.Schema.Test", b =>
@@ -66,6 +110,18 @@ namespace Cifra.Database.Migrations
                     b.HasOne("Cifra.Database.Schema.Test", null)
                         .WithMany("Assignments")
                         .HasForeignKey("TestId");
+                });
+
+            modelBuilder.Entity("Cifra.Database.Schema.Student", b =>
+                {
+                    b.HasOne("Cifra.Database.Schema.Class", null)
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId");
+                });
+
+            modelBuilder.Entity("Cifra.Database.Schema.Class", b =>
+                {
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("Cifra.Database.Schema.Test", b =>

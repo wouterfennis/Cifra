@@ -26,7 +26,7 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The Assignments.
         /// </summary>
-        public virtual ICollection<Assignment> Assignments { get; set; }
+        public virtual List<Assignment> Assignments { get; set; }
 
         /// <summary>
         /// The Standardization Factor.
