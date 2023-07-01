@@ -45,6 +45,11 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Update test</button>
+                </div>
+            </div>
         </EditForm>
     }
 
@@ -60,8 +65,8 @@
 
             <div class="row">
                 <div class="form-group col-3">
-                    <label for="name">Name</label>
-                    <InputNumber id="name" class="form-control" @bind-Value="addAssignmentRequest.NumberOfQuestions" />
+                    <label for="@nameof(Assignment.NumberOfQuestions)">@nameof(Assignment.NumberOfQuestions).ToDisplayFormat()</label>
+                    <InputNumber id="@nameof(Assignment.NumberOfQuestions)" class="form-control" @bind-Value="addAssignmentRequest.NumberOfQuestions" />
                 </div>
             </div>
 

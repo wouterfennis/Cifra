@@ -85,7 +85,7 @@ namespace Cifra.Domain
         /// <summary>
         /// Gets the assignment.
         /// </summary>
-        public Assignment GetAssignment(int assignmentId)
+        public Assignment? GetAssignment(int assignmentId)
         {
             return Assignments.SingleOrDefault(x => x.Id == assignmentId);
         }

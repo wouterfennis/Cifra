@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
+using Cifra.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -147,11 +149,7 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateTestAsync(UpdateTestRequest request)
         {
-            var command = new UpdateTestCommand
-            {
-                Test = _mapper.Map<Domain.Test>(request.Test)
-            };
-
+            var command = request.Map();
             UpdateTestResult result = await _testService.UpdateTestAsync(command);
 
             var response = _mapper.Map<UpdateTestResponse>(result);
@@ -161,7 +159,7 @@ namespace Cifra.Api.V1
                 _logger.LogInformation("Request is not valid");
                 return BadRequest(response);
             }
-            return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
+            return Ok(response);
         }
     }
 }

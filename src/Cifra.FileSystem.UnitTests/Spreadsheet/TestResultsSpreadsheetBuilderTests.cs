@@ -93,7 +93,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
             spreadsheetFile
                 .Setup(x => x.SaveAsync())
-                .ReturnsAsync(_fixture.Create<SaveResult>());
+                .ReturnsAsync(new SaveResult());
 
             _spreadsheetFileFactory
                 .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))
