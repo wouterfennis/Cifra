@@ -9,10 +9,10 @@
 <div class="container">
     @if (retrievedTest != null)
     {
-        <PageTitle>Class @retrievedTest.Name</PageTitle>
+        <PageTitle>Test: @retrievedTest.Name</PageTitle>
         <div class="row">
             <div class="col-4">
-                <h1>Class @retrievedTest.Name</h1>
+                <h1>Test: @retrievedTest.Name</h1>
             </div>
         </div>
 
@@ -34,19 +34,35 @@
                             <tr>
                                 <td>
                                     @{
-                                        counter++;
+                                        _counter++;
                                     }
-                                    @counter
+                                    @_counter
                                 </td>
                                 <td>
-                                    <InputNumber id="numberOfVersions" class="form-control" @bind-Value="assignment.NumberOfQuestions" />
+                                    <InputNumber id="@assignment.Id" class="form-control" @bind-Value="assignment.NumberOfQuestions" />
                                 </td>
                                 <td>
                                     <div class="btn btn-outline-danger" @onclick="(() => RemoveAssignment(assignment))">Delete</div>
                                 </td>
                             </tr>
                         }
-                        @{ counter = 0; }
+                        <tr>
+                            <td>
+                                @{
+                                    _counter++;
+                                }
+                                @_counter
+                            </td>
+                            @{
+                                _counter = 0;
+                            }
+                            <td>
+                                <input id="newAssignment" class="form-control" type="number" @bind="_numberOfQuestions" />
+                            </td>
+                            <td>
+                                <div class="btn btn-outline-success" @onclick="(() => AddAssignment())">Add</div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -58,7 +74,7 @@
         </EditForm>
     }
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-4">
             <h2>Add Assignment</h2>
         </div>
@@ -91,7 +107,8 @@
 
     private Api.Client.Test? retrievedTest;
     private AddAssignmentRequest addAssignmentRequest = new AddAssignmentRequest();
-    private int counter = 0;
+    private int _counter = 0;
+    private int _numberOfQuestions = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -134,6 +151,16 @@
     private void RemoveAssignment(Assignment assignment)
     {
         retrievedTest!.Assignments.Remove(assignment);
+    }
+
+    private void AddAssignment()
+    {
+        if(_numberOfQuestions == 0)
+        {
+            // do validation
+        }
+        retrievedTest!.Assignments.Add(new Assignment { NumberOfQuestions = _numberOfQuestions });
+        _numberOfQuestions = 0;
     }
 }
 

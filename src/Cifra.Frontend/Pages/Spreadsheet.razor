@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="form-group col-3">
                     <label for="class">Class</label>
-                    <InputSelect class="form-select" @bind-Value="chosenClass" DisplayName="class" name="class" id="class">
+                    <InputSelect class="form-select" @bind-Value="chosenClass" @onchange="(() => UpdateName())" DisplayName="class" name="class" id="class">
                         <option value="">Choose a class</option>
                         @foreach (var retrievedClass in classes)
                         {
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="form-group col-3">
                     <label for="test">Test</label>
-                    <InputSelect class="form-select" @bind-Value="chosenTest" DisplayName="test" name="test" id="test">
+                    <InputSelect class="form-select" @bind-Value="chosenTest" @onchange="(() => UpdateName())" DisplayName="test" name="test" id="test">
                         <option value="">Choose a test</option>
                         @foreach (var retrievedTest in tests)
                         {
@@ -99,5 +99,13 @@
         using var streamRef = new DotNetStreamReference(stream: response.Stream);
 
         await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    }
+
+    private void UpdateName()
+    {
+        string name = $"{chosenTest} - {chosenClass}";
+
+        createTestResultsSpreadsheetRequest.Metadata.Title = name;
+        createTestResultsSpreadsheetRequest.Metadata.FileName = name;
     }
 }

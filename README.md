@@ -13,16 +13,17 @@ By filling in a just few parameters, a spreadsheet can be automatically generate
 
 Currently, Cifra is a console application with a basic user interface.
 
-## Install
-Cifra can automatically install itself. Put the executable somewhere on your computer and Cifra will create all the neccessary files and folders on the first startup.
-To start Cifra, double click on the executable or use one of the following commands.
+## Build
+With Docker Compose the build can be easily started
 
 ```powershell
-./Cifra.exe
+docker-compose build --build-arg NUGET_AUTH_USERNAME=token --build-arg NUGET_AUTH_TOKEN=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
 ```
 
-```bash
-./Cifra
+## Start
+
+```powershell
+docker-compose up
 ```
 
 ## Tutorial
@@ -122,4 +123,13 @@ dotnet dev-certs https --trust
 dotnet dev-certs https --clean
 dotnet dev-certs https -ep "$USERPROFILE\.aspnet\https\aspnetapp.pfx" -p password
 dotnet dev-certs https --trust
+```
+
+
+## Database
+
+### Generate migration
+
+```powershell
+dotnet ef migrations add InitialCreate --project src/Cifra.Database/Cifra.Database.csproj --output-dir Migrations --context Context --startup-project src/Cifra.Api/Cifra.Api.csproj
 ```
