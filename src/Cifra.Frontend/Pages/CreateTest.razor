@@ -1,5 +1,6 @@
 ﻿@page "/test"
 @using Cifra.Api.Client
+@using Cifra.Frontend.Extensions;
 @inject ICifraApiClient Client
 @inject NavigationManager NavManager
 
@@ -23,17 +24,17 @@
                 </div>
 
                 <div class="form-group col-3">
-                    <label for="name">NumberOfVersions</label>
+                    <label for="name">@nameof(Test.NumberOfVersions).ToDisplayFormat()</label>
                     <InputNumber id="numberOfVersions" class="form-control" placeholder="2" @bind-Value="CreateTestRequest.NumberOfVersions" />
                 </div>
 
                 <div class="form-group col-3">
-                    <label for="name">StandardizationFactor</label>
+                    <label for="name">@nameof(Test.StandardizationFactor).ToDisplayFormat()</label>
                     <InputNumber id="standardizationFactor" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.StandardizationFactor" />
                 </div>
 
                 <div class="form-group col-3">
-                    <label for="name">MinimumGrade</label>
+                    <label for="name">@nameof(Test.MinimumGrade).ToDisplayFormat()</label>
                     <InputNumber id="minimumGrade" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.MinimumGrade" />
                 </div>
             </div>

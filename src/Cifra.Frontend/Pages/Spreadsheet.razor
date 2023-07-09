@@ -24,13 +24,13 @@
                         <option value="">Choose a class</option>
                         @foreach (var retrievedClass in classes)
                         {
-                            <option value="@retrievedClass.Id">@retrievedClass.Name</option>
+                            <option value="@retrievedClass.Id" >@retrievedClass.Name</option>
                         }
                     </InputSelect>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="test">Test</label>
                     <InputSelect class="form-select" @bind-Value="chosenTest" @onchange="(() => UpdateName())" DisplayName="test" name="test" id="test">
@@ -43,14 +43,18 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="title">Title</label>
                     <InputText id="title" class="form-control" @bind-Value="createTestResultsSpreadsheetRequest.Metadata.Title" />
                 </div>
+
+                <div class="form-group col-3">
+                    <div class="btn btn-primary" @onclick="(() => UpdateName())">Auto-fill</div>
+                </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="filename">FileName</label>
                     <InputText id="filename" class="form-control" @bind-Value="createTestResultsSpreadsheetRequest.Metadata.FileName" />
@@ -103,7 +107,7 @@
 
     private void UpdateName()
     {
-        string name = $"{chosenTest} - {chosenClass}";
+        string name = $"{tests.Single(x => x.Id == int.Parse(chosenTest)).Name} - {classes.Single(x => x.Id == int.Parse(chosenClass)).Name}";
 
         createTestResultsSpreadsheetRequest.Metadata.Title = name;
         createTestResultsSpreadsheetRequest.Metadata.FileName = name;
