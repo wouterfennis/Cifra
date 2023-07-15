@@ -22,7 +22,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Updates a <see cref="Class"/>.
         /// </summary>
-        Task UpdateAsync(Class updatedClass);
+        Task<int> UpdateAsync(Class updatedClass);
 
         /// <summary>
         /// Get all a <see cref="Class"/>es.

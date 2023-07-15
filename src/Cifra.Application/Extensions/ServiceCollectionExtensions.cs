@@ -26,6 +26,7 @@ namespace Cifra.Application.Extensions
             services.AddScoped<IValidator<AddStudentCommand>, Validator<AddStudentCommand>>();
             services.AddScoped<IValidator<CreateTestCommand>, Validator<CreateTestCommand>>();
             services.AddScoped<IValidator<UpdateTestCommand>, Validator<UpdateTestCommand>>();
+            services.AddScoped<IValidator<UpdateClassCommand>, Validator<UpdateClassCommand>>();
             services.AddScoped<IValidator<AddAssignmentCommand>, Validator<AddAssignmentCommand>>();
             services.AddScoped<IValidationRule<AddAssignmentCommand>, NumberOfQuestionsMustBeValid>();
             services.AddScoped<IValidationRule<AddStudentCommand>, Validation.StudentModelValidationRules.FirstNameMustBeFilled>();
@@ -34,7 +35,8 @@ namespace Cifra.Application.Extensions
             services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NumberOfVersionsMustBeValid>();
             services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NameMustBeFilled>();
             services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NumberOfVersionsMustBeValid>();
-            services.AddScoped<IValidationRule<CreateClassCommand>, Validation.ClassModelValidationRules.NameMustBeFilled>();
+            services.AddScoped<IValidationRule<CreateClassCommand>, Validation.CreateClassModelValidationRules.NameMustBeFilled>();
+            services.AddScoped<IValidationRule<UpdateClassCommand>, Validation.UpdateClassModelValidationRules.NameMustBeFilled>();
         }
     }
 }

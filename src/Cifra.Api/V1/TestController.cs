@@ -136,13 +136,13 @@ namespace Cifra.Api.V1
         }
 
         /// <summary>
-        /// Adds an assignment to a test.
+        /// Update a test.
         /// </summary>
         /// <param name="request">The request containing details of the test.</param>
         /// <returns>Reference to newly created assignment</returns>
-        /// <response code="201">Reference to newly created assignment.</response> 
-        /// <response code="400">Supplied assignment data was invalid.</response> 
-        /// <response code="500">The assignment could not be created.</response> 
+        /// <response code="201">Reference to updated test.</response> 
+        /// <response code="400">Supplied test data was invalid.</response> 
+        /// <response code="500">The test could not be updated.</response> 
         [HttpPut]
         [ProducesResponseType(typeof(UpdateTestResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UpdateTestResponse), StatusCodes.Status400BadRequest)]

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Class.Requests;
 using Cifra.Api.V1.Models.Class.Responses;
 using Cifra.Api.V1.Models.Validation;
 using Cifra.Application;
 using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
+using Cifra.Application.Models.Test.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -139,6 +141,33 @@ namespace Cifra.Api.V1
             }
             
             return Created(new Uri($"", UriKind.Relative), new AddStudentsResponse { ValidationMessages = validationMessages});
+        }
+
+        /// <summary>
+        /// Update a class.
+        /// </summary>
+        /// <param name="request">The request containing details of the class.</param>
+        /// <returns>Reference to updated class</returns>
+        /// <response code="201">Reference to newly created class.</response> 
+        /// <response code="400">Supplied class data was invalid.</response> 
+        /// <response code="500">The class could not be updated.</response> 
+        [HttpPut]
+        [ProducesResponseType(typeof(UpdateClassResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UpdateClassResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateClassAsync(UpdateClassRequest request)
+        {
+            var command = request.Map();
+            UpdateClassResult result = await _classService.UpdateClassAsync(command);
+
+            var response = _mapper.Map<UpdateClassResponse>(result);
+
+            if (response.ValidationMessages.Any())
+            {
+                _logger.LogInformation("Request is not valid");
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
     }
 }

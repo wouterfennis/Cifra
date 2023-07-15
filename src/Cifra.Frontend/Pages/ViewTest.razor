@@ -79,26 +79,6 @@
             <h2>Add Assignment</h2>
         </div>
     </div>
-    <div class="row">
-        <EditForm Model="@addAssignmentRequest" OnValidSubmit="@HandleAddAssignment">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-
-            <div class="row">
-                <div class="form-group col-3">
-                    <label for="@nameof(Assignment.NumberOfQuestions)">@nameof(Assignment.NumberOfQuestions).ToDisplayFormat()</label>
-                    <InputNumber id="@nameof(Assignment.NumberOfQuestions)" class="form-control" @bind-Value="addAssignmentRequest.NumberOfQuestions" />
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-1">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </EditForm>
-    </div>
-
 </div>
 
 @code {
@@ -115,19 +95,6 @@
         var response = await Client.TestGET2Async(TestId, "1");
         retrievedTest = response.Test;
         await base.OnInitializedAsync();
-    }
-
-    private async Task HandleAddAssignment()
-    {
-        var response = await Client.AssignmentAsync(TestId, "1", addAssignmentRequest);
-
-        if (response.ValidationMessages.Any())
-        {
-            // Show validation messages
-        }
-
-        // Redirect to class view
-        NavManager.NavigateTo($"/test/{TestId}", forceLoad: true);
     }
 
     private async Task HandleUpdateTest()

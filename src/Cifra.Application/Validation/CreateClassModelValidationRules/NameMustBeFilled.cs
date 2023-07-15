@@ -2,7 +2,7 @@
 using Cifra.Domain.Validation;
 using System;
 
-namespace Cifra.Application.Validation.ClassModelValidationRules
+namespace Cifra.Application.Validation.CreateClassModelValidationRules
 {
     /// <summary>
     /// Validation rule to check name of the class

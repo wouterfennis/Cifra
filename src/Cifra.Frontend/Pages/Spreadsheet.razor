@@ -49,7 +49,7 @@
                     <InputText id="title" class="form-control" @bind-Value="createTestResultsSpreadsheetRequest.Metadata.Title" />
                 </div>
 
-                <div class="form-group col-3">
+                <div class="col-3 mt-4">
                     <div class="btn btn-primary" @onclick="(() => UpdateName())">Auto-fill</div>
                 </div>
             </div>
@@ -107,7 +107,12 @@
 
     private void UpdateName()
     {
-        string name = $"{tests.Single(x => x.Id == int.Parse(chosenTest)).Name} - {classes.Single(x => x.Id == int.Parse(chosenClass)).Name}";
+        if(string.IsNullOrEmpty(chosenTest) || string.IsNullOrEmpty(chosenClass))
+        {
+            return;
+        }
+
+        string name = $"{tests.Single(x => x.Id == int.Parse(chosenTest)).Name}-{classes.Single(x => x.Id == int.Parse(chosenClass)).Name}";
 
         createTestResultsSpreadsheetRequest.Metadata.Title = name;
         createTestResultsSpreadsheetRequest.Metadata.FileName = name;

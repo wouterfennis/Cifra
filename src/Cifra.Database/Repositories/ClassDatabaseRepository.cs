@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Cifra.Application.Interfaces;
+using System.Linq;
 
 namespace Cifra.Database.Repositories
 {
@@ -55,11 +56,17 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(Domain.Class updatedClass)
+        public async Task<int> UpdateAsync(Domain.Class updatedClass)
         {
-            var entity = _mapper.Map<Class>(updatedClass);
-            _dbContext.Attach(entity);
+            var updatedEntity = _mapper.Map<Class>(updatedClass);
+            var updatedStudentsIds = updatedEntity.Students.Select(x => x.Id).ToList();
+
+            _dbContext.Classes.Update(updatedEntity);
+            _dbContext.Students.RemoveRange(_dbContext.Students.Where(x => !updatedStudentsIds.Contains(x.Id)));
+
             await _dbContext.SaveChangesAsync();
+
+            return updatedEntity.Id;
         }
     }
 }

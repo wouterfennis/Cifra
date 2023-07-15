@@ -17,6 +17,7 @@ namespace Cifra.Application
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
+        private readonly IValidator<UpdateClassCommand> _updateClassValidator;
         private readonly IValidator<CreateClassCommand> _classValidator;
         private readonly IValidator<AddStudentCommand> _studentValidator;
 
@@ -26,10 +27,12 @@ namespace Cifra.Application
         /// </summary>
         public ClassService(IClassRepository classRepository,
             IValidator<CreateClassCommand> classValidator,
+            IValidator<UpdateClassCommand> updateClassValidator,
             IValidator<AddStudentCommand> studentValidator)
         {
             _classRepository = classRepository;
             _classValidator = classValidator;
+            _updateClassValidator = updateClassValidator;
             _studentValidator = studentValidator;
         }
 
@@ -92,6 +95,20 @@ namespace Cifra.Application
             await _classRepository.UpdateAsync(existingClass);
 
             return new AddStudentResult();
+        }
+
+        /// <inheritdoc/>
+        public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
+        {
+            IEnumerable<ValidationMessage> validationMessages = _updateClassValidator.ValidateRules(model);
+            if (validationMessages.Any())
+            {
+                return new UpdateClassResult(validationMessages);
+            }
+
+            int id = await _classRepository.UpdateAsync(model.UpdatedClass);
+
+            return new UpdateClassResult(id);
         }
     }
 }
