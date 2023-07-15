@@ -120,20 +120,20 @@
 
     private async Task HandleUpdateClass()
     {
-        //var request = new UpdateClassRequest
-        //    {
-        //        Class = retrievedClass
-        //    };
+        var request = new UpdateClassRequest
+            {
+                UpdatedClass = retrievedClass
+            };
 
-        //var response = await Client.ClassPUTAsync("1", request);
+        var response = await Client.ClassPUTAsync("1", request);
 
-        //if (response.ValidationMessages.Any())
-        //{
-        //    // Show validation messages
-        //}
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
 
-        //// Redirect to class view
-        //NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
+        // Redirect to class view
+        NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
     }
 
     private async Task HandleAddStudents()
