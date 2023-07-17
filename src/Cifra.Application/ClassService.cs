@@ -19,7 +19,6 @@ namespace Cifra.Application
         private readonly IClassRepository _classRepository;
         private readonly IValidator<UpdateClassCommand> _updateClassValidator;
         private readonly IValidator<CreateClassCommand> _classValidator;
-        private readonly IValidator<AddStudentCommand> _studentValidator;
 
 
         /// <summary>
@@ -27,13 +26,11 @@ namespace Cifra.Application
         /// </summary>
         public ClassService(IClassRepository classRepository,
             IValidator<CreateClassCommand> classValidator,
-            IValidator<UpdateClassCommand> updateClassValidator,
-            IValidator<AddStudentCommand> studentValidator)
+            IValidator<UpdateClassCommand> updateClassValidator)
         {
             _classRepository = classRepository;
             _classValidator = classValidator;
             _updateClassValidator = updateClassValidator;
-            _studentValidator = studentValidator;
         }
 
         /// <summary>
@@ -69,32 +66,6 @@ namespace Cifra.Application
         {
             Class retrievedClass = await _classRepository.GetAsync(id);
             return new GetClassResult(retrievedClass);
-        }
-
-        /// <summary>
-        /// Adds a students to class
-        /// </summary>
-        public async Task<AddStudentResult> AddStudentAsync(AddStudentCommand model)
-        {
-            IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);
-            if (validationMessages.Any())
-            {
-                return new AddStudentResult(validationMessages);
-            }
-
-            Class existingClass = await _classRepository.GetAsync(model.ClassId);
-
-            if (existingClass == null)
-            {
-                return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
-            }
-
-            var student = new Student(Name.CreateFromString(model.FirstName), model.Infix, Name.CreateFromString(model.LastName));
-
-            existingClass.Students.Add(student);
-            await _classRepository.UpdateAsync(existingClass);
-
-            return new AddStudentResult();
         }
 
         /// <inheritdoc/>

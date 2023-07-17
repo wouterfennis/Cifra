@@ -103,47 +103,6 @@ namespace Cifra.Api.V1
         }
 
         /// <summary>
-        /// Adds an students to a class.
-        /// </summary>
-        /// <param name="classId">The class id where the students should be added.</param>
-        /// <param name="request">The request containing details of the students.</param>
-        /// <returns>Reference to newly created student</returns>
-        /// <response code="201">Reference to newly created student.</response> 
-        /// <response code="400">Supplied student data was invalid.</response> 
-        /// <response code="500">The student could not be created.</response> 
-        [HttpPost]
-        [Route("{classId}/Student")]
-        [ProducesResponseType(typeof(AddStudentsResponse), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(AddStudentsResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> AddStudentsAsync(int classId, AddStudentsRequest request)
-        {
-            var validationMessages = new List<ValidationMessage>();
-            foreach (var student in request.Students)
-            {
-                var command = new AddStudentCommand
-                {
-                    ClassId = classId,
-                    FirstName = student.FirstName,
-                    Infix = student.Infix,
-                    LastName = student.LastName
-                };
-
-                AddStudentResult result = await _classService.AddStudentAsync(command);
-
-                var response = _mapper.Map<AddStudentsResponse>(result);
-
-                if (response.ValidationMessages.Any())
-                {
-                    _logger.LogInformation("Request is not valid");
-                    validationMessages.AddRange(response.ValidationMessages);
-                }
-            }
-            
-            return Created(new Uri($"", UriKind.Relative), new AddStudentsResponse { ValidationMessages = validationMessages});
-        }
-
-        /// <summary>
         /// Update a class.
         /// </summary>
         /// <param name="request">The request containing details of the class.</param>

@@ -6,7 +6,6 @@ using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application;
 using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -92,40 +91,6 @@ namespace Cifra.Api.V1
             CreateTestResult result = await _testService.CreateTestAsync(command);
 
             var response = _mapper.Map<CreateTestResponse>(result);
-
-            if (response.ValidationMessages.Any())
-            {
-                _logger.LogInformation("Request is not valid");
-                return BadRequest(response);
-            }
-            return Created(new Uri($"{response.TestId}", UriKind.Relative), response);
-        }
-
-        /// <summary>
-        /// Adds an assignment to a test.
-        /// </summary>
-        /// <param name="testId">The test id where the assignment should be added.</param>
-        /// <param name="request">The request containing details of the assignment.</param>
-        /// <returns>Reference to newly created assignment</returns>
-        /// <response code="201">Reference to newly created assignment.</response> 
-        /// <response code="400">Supplied assignment data was invalid.</response> 
-        /// <response code="500">The assignment could not be created.</response> 
-        [HttpPost]
-        [Route("{testId}/Assignment")]
-        [ProducesResponseType(typeof(AddAssignmentResponse), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(AddAssignmentResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> AddAssignmentAsync(int testId, AddAssignmentRequest request)
-        {
-            var command = new AddAssignmentCommand
-            {
-                TestId = testId,
-                NumberOfQuestions = request.NumberOfQuestions
-            };
-
-            AddAssignmentResult result = await _testService.AddAssignmentAsync(command);
-
-            var response = _mapper.Map<AddAssignmentResponse>(result);
 
             if (response.ValidationMessages.Any())
             {

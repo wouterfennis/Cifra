@@ -36,8 +36,6 @@ namespace Cifra.Api.Mapping
             CreateMap<UpdateTestResult, UpdateTestResponse>();
             CreateMap<Domain.Validation.ValidationMessage, ValidationMessage>();
 
-            CreateMap<AddAssignmentResult, AddAssignmentResponse>();
-
             // Class
             CreateMap<GetAllClassesResult, GetAllClassesResponse>();
             CreateMap<GetClassResult, GetClassResponse>();
@@ -45,7 +43,7 @@ namespace Cifra.Api.Mapping
             CreateMap<Domain.Student, V1.Models.Class.Student>();
             CreateMap<CreateClassRequest, CreateClassCommand>();
             CreateMap<CreateClassResult, CreateClassResponse>();
-            CreateMap<AddStudentResult, AddStudentsResponse>();
+            CreateMap<UpdateClassResult, UpdateClassResponse>();
 
             // Spreadsheet
             CreateMap<CreateTestResultsSpreadsheetRequest, CreateTestResultsSpreadsheetCommand>();

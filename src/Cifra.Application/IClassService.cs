@@ -6,7 +6,6 @@ namespace Cifra.Application
 {
     public interface IClassService
     {
-        Task<AddStudentResult> AddStudentAsync(AddStudentCommand model);
         Task<CreateClassResult> CreateClassAsync(CreateClassCommand model);
         Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model);
         Task<GetAllClassesResult> GetClassesAsync();

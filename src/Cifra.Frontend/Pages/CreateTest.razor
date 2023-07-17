@@ -22,17 +22,20 @@
                     <label for="name">Name</label>
                     <InputText id="name" class="form-control" @bind-Value="CreateTestRequest.Name" />
                 </div>
-
+            </div>
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="name">@nameof(Test.NumberOfVersions).ToDisplayFormat()</label>
                     <InputNumber id="numberOfVersions" class="form-control" placeholder="2" @bind-Value="CreateTestRequest.NumberOfVersions" />
                 </div>
-
+            </div>
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="name">@nameof(Test.StandardizationFactor).ToDisplayFormat()</label>
                     <InputNumber id="standardizationFactor" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.StandardizationFactor" />
                 </div>
-
+            </div>
+            <div class="row mt-2">
                 <div class="form-group col-3">
                     <label for="name">@nameof(Test.MinimumGrade).ToDisplayFormat()</label>
                     <InputNumber id="minimumGrade" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.MinimumGrade" />

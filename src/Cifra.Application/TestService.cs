@@ -17,20 +17,17 @@ namespace Cifra.Application
         private readonly ITestRepository _testRepository;
         private readonly IValidator<CreateTestCommand> _createTestValidator;
         private readonly IValidator<UpdateTestCommand> _updateTestValidator;
-        private readonly IValidator<AddAssignmentCommand> _assignmentValidator;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestService(ITestRepository testRepository,
             IValidator<CreateTestCommand> createTestValidator,
-            IValidator<UpdateTestCommand> updateTestValidator,
-            IValidator<AddAssignmentCommand> assignmentValidator)
+            IValidator<UpdateTestCommand> updateTestValidator)
         {
             _testRepository = testRepository;
             _createTestValidator = createTestValidator;
             _updateTestValidator = updateTestValidator;
-            _assignmentValidator = assignmentValidator;
         }
 
         /// <inheritdoc/>
@@ -50,29 +47,6 @@ namespace Cifra.Application
             int id = await _testRepository.CreateAsync(test);
 
             return new CreateTestResult(id);
-        }
-
-        /// <inheritdoc/>
-        public async Task<AddAssignmentResult> AddAssignmentAsync(AddAssignmentCommand model)
-        {
-            IEnumerable<ValidationMessage> validationMessages = _assignmentValidator.ValidateRules(model);
-            if (validationMessages.Any())
-            {
-                return new AddAssignmentResult(validationMessages);
-            }
-
-            Test test = await _testRepository.GetAsync(model.TestId);
-            if (test == null)
-            {
-                return new AddAssignmentResult(new ValidationMessage(nameof(model.TestId), "No test was found"));
-            }
-
-            var assignment = new Assignment(model.NumberOfQuestions);
-            test.Assignments.Add(assignment);
-
-            await _testRepository.UpdateAsync(test);
-
-            return new AddAssignmentResult(test.Id, assignment.Id);
         }
 
         /// <inheritdoc/>

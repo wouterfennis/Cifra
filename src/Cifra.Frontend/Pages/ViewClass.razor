@@ -7,16 +7,16 @@
 @inject IWebHostEnvironment Environment
 
 <div class="container">
-    @if (retrievedClass != null)
+    @if (_retrievedClass != null)
     {
-        <PageTitle>Class: @retrievedClass.Name</PageTitle>
+        <PageTitle>Class: @_retrievedClass.Name</PageTitle>
         <div class="row">
             <div class="col-4">
-                <h1>Class: @retrievedClass.Name</h1>
+                <h1>Class: @_retrievedClass.Name</h1>
             </div>
         </div>
 
-        <EditForm Model="@retrievedClass" OnValidSubmit="@HandleUpdateClass">
+        <EditForm Model="@_retrievedClass" OnValidSubmit="@HandleUpdateClass">
             <DataAnnotationsValidator />
             <ValidationSummary />
                 <div class="row">
@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Student student in retrievedClass.Students)
+                            @foreach (Student student in _retrievedClass.Students)
                             {
                                 <tr>
                                     <td>
@@ -73,48 +73,32 @@
                         </tbody>
                     </table>
                 </div>
-        </EditForm>
-    }
-
-    <div class="row">
-        <div class="col-4">
-            <h2>Add students</h2>
-        </div>
-    </div>
-
-    <div class="row">
-        <EditForm Model="@addStudentsRequest" OnValidSubmit="@HandleAddStudents" class="col">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
 
             <InputFile OnChange="@LoadFiles" />
 
             <div class="row mt-2">
-                <div class="col-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Update class</button>
                 </div>
             </div>
         </EditForm>
-    </div>
-
+    }
 </div>
 
 @code {
     [Parameter]
     public int ClassId { get; set; }
 
-    private Api.Client.Class retrievedClass;
-    private AddStudentsRequest addStudentsRequest = new AddStudentsRequest();
-    private Regex nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<lastName>\w.*)$");
+    private Api.Client.Class? _retrievedClass;
+    private Regex _nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<lastName>\w.*)$");
     private int _counter = 0;
     private string? _firstName = null;
     private string? _lastName = null;
 
     protected override async Task OnInitializedAsync()
     {
-        addStudentsRequest.Students = new List<StudentDto>();
         var response = await Client.ClassGET2Async(ClassId, "1");
-        retrievedClass = response.RetrievedClass;
+        _retrievedClass = response.RetrievedClass;
         await base.OnInitializedAsync();
     }
 
@@ -122,7 +106,7 @@
     {
         var request = new UpdateClassRequest
             {
-                UpdatedClass = retrievedClass
+                UpdatedClass = _retrievedClass
             };
 
         var response = await Client.ClassPUTAsync("1", request);
@@ -136,22 +120,9 @@
         NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
     }
 
-    private async Task HandleAddStudents()
-    {
-        var response = await Client.StudentAsync(ClassId, "1", addStudentsRequest);
-
-        if (response.ValidationMessages.Any())
-        {
-            // Show validation messages
-        }
-
-        // Redirect to class view
-        NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
-    }
-
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
-        addStudentsRequest.Students.Clear();
+        _retrievedClass!.Students.Clear();
         var trustedFileNameForFileStorage = Path.GetTempFileName();
 
         await using FileStream fs = new(trustedFileNameForFileStorage, FileMode.Create);
@@ -167,13 +138,13 @@
             }
 
             string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
-            var nameParts = nameRegex.Match(content).Groups;
-            var student = new StudentDto
+            var nameParts = _nameRegex.Match(content).Groups;
+            var student = new Student
                 {
                     FirstName = nameParts.GetValueOrDefault("firstName").Value,
                     LastName = nameParts.GetValueOrDefault("lastName").Value
                 };
-            addStudentsRequest.Students.Add(student);
+            _retrievedClass.Students.Add(student);
         }
         sr.Close();
         File.Delete(trustedFileNameForFileStorage);
@@ -181,7 +152,7 @@
 
     private void RemoveStudent(Student student)
     {
-        retrievedClass!.Students.Remove(student);
+        _retrievedClass!.Students.Remove(student);
     }
 
     private void AddStudent()
@@ -191,11 +162,13 @@
             // Do validation
         }
 
-        retrievedClass!.Students.Remove(new Student{
+        _retrievedClass!.Students.Add(new Student{
             FirstName = _firstName,
             LastName = _lastName 
         });
 
+        _firstName = null;
+        _lastName = null;
         _counter = 0;
     }
 }
