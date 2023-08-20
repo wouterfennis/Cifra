@@ -30,6 +30,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
                 .SetFontSize(TitleSize)
+                .SetBackgroundColor(Color.White)
                 .Write(TestName.Value)
                 .ResetStyling()
                 .NewLine()
