@@ -17,7 +17,7 @@ Currently, Cifra is a console application with a basic user interface.
 With Docker Compose the build can be easily started
 
 ```powershell
-docker-compose build --build-arg NUGET_AUTH_USERNAME=token --build-arg NUGET_AUTH_TOKEN=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
+docker-compose build --build-arg NUGET_AUTH_USERNAME=token --build-arg NUGET_AUTH_TOKEN=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
 ```
 
 ## Start
