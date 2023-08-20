@@ -354,3 +354,4 @@ Cifra.Api.xml
 *.db
 *.db-*
 *.sqlite
+*.sqlite-*
