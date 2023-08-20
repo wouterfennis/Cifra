@@ -353,3 +353,4 @@ Cifra.Api.xml
 /src/NuGet.Config
 *.db
 *.db-*
+*.sqlite
