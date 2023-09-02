@@ -34,7 +34,6 @@ namespace Cifra.Api
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

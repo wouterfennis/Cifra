@@ -72,7 +72,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddColon()
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
-                .AddCriteria("<5,5")
+                .AddCriteria("<5.5")
                 .AddClosingParenthesis();
 
             spreadsheetWriter
@@ -91,7 +91,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddColon()
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
-                .AddCriteria("<5,5")
+                .AddCriteria("<5.5")
                 .AddClosingParenthesis()
                 .AddMultiplicationSign()
                 .AddValue(100.0)
