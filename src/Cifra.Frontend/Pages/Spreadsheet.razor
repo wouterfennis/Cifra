@@ -111,8 +111,10 @@
         {
             return;
         }
+        var testName = tests.Single(x => x.Id == int.Parse(chosenTest)).Name;
+        var className = classes.Single(x => x.Id == int.Parse(chosenClass)).Name;
 
-        string name = $"{tests.Single(x => x.Id == int.Parse(chosenTest)).Name}-{classes.Single(x => x.Id == int.Parse(chosenClass)).Name}";
+        string name = $"{className}-{testName}";
 
         createTestResultsSpreadsheetRequest.Metadata.Title = name;
         createTestResultsSpreadsheetRequest.Metadata.FileName = name;

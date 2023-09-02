@@ -36,7 +36,7 @@ namespace Cifra.FileSystem.Spreadsheet
             ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_spreadsheetOptions.TestResultsDirectory, libraryMetadata);
             ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
 
-            AddTitle(test, metadata, spreadsheetWriter);
+            AddTitle(metadata, spreadsheetWriter);
             spreadsheetWriter.NewLine();
 
             var configurationBlock = AddConfiguration(test, spreadsheetWriter);
@@ -52,10 +52,10 @@ namespace Cifra.FileSystem.Spreadsheet
             return result.FileInfo;
         }
 
-        private static void AddTitle(Test test, Domain.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
+        private static void AddTitle(Domain.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
         {
             var titleBlock = new TitleBlock(spreadsheetWriter.CurrentPosition,
-                test.Name,
+                metadata.FileName,
                 metadata.Created,
                 metadata.ApplicationVersion);
             titleBlock

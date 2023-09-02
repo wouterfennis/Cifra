@@ -6,13 +6,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="7.0.1" />
+		<PackageReference Include="Autofac" Version="7.1.0" />
 		<PackageReference Include="CsvHelper" Version="30.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.18" />
+		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.20" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using SpreadsheetWriter.Abstractions;
+using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
+using SpreadsheetWriter.EPPlus.Formula;
 using System.Drawing;
 
 namespace Cifra.FileSystem.Spreadsheet.Blocks
@@ -56,7 +58,57 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .Write("Gemiddelde cijfer")
                 .SetFontBold(false)
                 .MoveRight()
-                .PlaceStandardFormula(gradesStartPosition, gradesEndPosition, FormulaType.AVERAGE);
+                .PlaceStandardFormula(gradesStartPosition, gradesEndPosition, FormulaType.AVERAGE)
+                .NewLine();
+
+            ICellRange gradeStartCell = spreadsheetWriter.GetCellRange(gradesStartPosition);
+            ICellRange gradeEndCell = spreadsheetWriter.GetCellRange(gradesEndPosition);
+
+            var numberOfBadGradesFormula = new FormulaBuilder()
+                .AddEqualsSign()
+                .AddFormulaType(FormulaType.COUNTIF)
+                .AddOpenParenthesis()
+                .AddCellAddress(gradeStartCell.Address)
+                .AddColon()
+                .AddCellAddress(gradeEndCell.Address)
+                .AddComma()
+                .AddCriteria("<5,5")
+                .AddClosingParenthesis();
+
+            spreadsheetWriter
+                .SetFontBold(true)
+                .Write("Aantal onvoldoendes")
+                .SetFontBold(false)
+                .MoveRight()
+                .PlaceCustomFormula(numberOfBadGradesFormula)
+                .NewLine();
+
+            var percentageOfTotalBadGradesFormula = new FormulaBuilder()
+                .AddEqualsSign()
+                .AddFormulaType(FormulaType.COUNTIF)
+                .AddOpenParenthesis()
+                .AddCellAddress(gradeStartCell.Address)
+                .AddColon()
+                .AddCellAddress(gradeEndCell.Address)
+                .AddComma()
+                .AddCriteria("<5,5")
+                .AddClosingParenthesis()
+                .AddMultiplicationSign()
+                .AddValue(100.0)
+                .AddDivisionSign()
+                .AddFormulaType(FormulaType.COUNT)
+                .AddOpenParenthesis()
+                .AddCellAddress(gradeStartCell.Address)
+                .AddColon()
+                .AddCellAddress(gradeEndCell.Address)
+                .AddClosingParenthesis();
+
+            spreadsheetWriter
+                .SetFontBold(true)
+                .Write("Percentage onvoldoendes van totaal")
+                .SetFontBold(false)
+                .MoveRight()
+                .PlaceCustomFormula(percentageOfTotalBadGradesFormula);
         }
     }
 }
