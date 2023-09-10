@@ -1,6 +1,6 @@
 ﻿using Cifra.Api.Mapping;
 using Cifra.Application.Extensions;
-using Cifra.Application.Mapping;
+using Cifra.Database.Mapping;
 using Cifra.Database.Extensions;
 using Cifra.FileSystem.Extensions;
 using Microsoft.Extensions.Configuration;

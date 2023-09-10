@@ -2,7 +2,7 @@
 using Cifra.Application.Mapping.TypeConverters;
 using Cifra.Domain;
 
-namespace Cifra.Application.Mapping
+namespace Cifra.Database.Mapping
 {
     /// <summary>
     /// Automapper profile for the <see cref="Database"/> assembly.

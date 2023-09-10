@@ -6,15 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.1.0" />
     <PackageReference Include="AutoFixture" Version="4.18.0" />
     <PackageReference Include="Moq" Version="4.20.69" />
+    <PackageReference Include="SpreadsheetWriter.Abstractions" Version="1.0.21" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-    <ProjectReference Include="..\Cifra.Database\Cifra.Database.csproj" />
-    <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
-    <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Database\Cifra.Database.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Domain\Cifra.Domain.csproj" />
   </ItemGroup>
 
 </Project>

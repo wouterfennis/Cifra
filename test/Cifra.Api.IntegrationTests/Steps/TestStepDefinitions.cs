@@ -1,13 +1,6 @@
-﻿using Cifra.Api.IntegrationTests.Api.V1;
+﻿using Cifra.Api.Client;
 using Cifra.Api.IntegrationTests.Builders;
-using Cifra.Api.IntegrationTests.Models;
-using Cifra.Api.V1.Models.Test;
-using Cifra.Api.V1.Models.Test.Requests;
-using Cifra.Api.V1.Models.Test.Responses;
-using Cifra.Api.V1.Models.Test.Results;
 using FluentAssertions;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,15 +11,15 @@ namespace Cifra.Api.IntegrationTests.Steps
     [Binding]
     public sealed class TestStepDefinitions
     {
-        private readonly ApiClient _apiClient;
+        private readonly ICifraApiClient _apiClient;
         private readonly ScenarioContext _scenarioContext;
         private readonly TestBuilder _testRequestBuilder;
         private const string _testDetailsKey = "testDetails";
         private const string _getTestResponseKey = "getTestResponseKey";
 
-        public TestStepDefinitions(ScenarioContext scenarioContext, TestBuilder testBuilder)
+        public TestStepDefinitions(ScenarioContext scenarioContext, TestBuilder testBuilder, ICifraApiClient cifraApiClient)
         {
-            _apiClient = CreateApiClient();
+            _apiClient = cifraApiClient;
             _scenarioContext = scenarioContext;
             _testRequestBuilder = testBuilder;
         }
@@ -35,7 +28,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         public async Task GivenATestIsPreviouslyCreatedAsync()
         {
             CreateTestRequest createTestRequest = _testRequestBuilder.BuildRandomCreateTestRequest();
-            CreateTestResponse createTestResponse = await _apiClient.CreateTestAsync(createTestRequest);
+            CreateTestResponse createTestResponse = await _apiClient.TestPOSTAsync("1", createTestRequest);
 
             createTestResponse.TestId.Should().NotBe(0, "No Id was assigned to the test.");
             createTestResponse.ValidationMessages.Should().BeEmpty("No validation messages should be returned during a successfull creation of a test.");
@@ -52,7 +45,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         [When(@"a request is made to retrieve all tests")]
         public async Task WhenARequestIsMadeToRetrieveAllTestsAsync()
         {
-            GetAllTestsResponse result = await _apiClient.GetAllTestsAsync();
+            GetAllTestsResponse result = await _apiClient.TestGETAsync("1");
             _scenarioContext.Add(_getTestResponseKey, result.Tests);
         }
 
@@ -86,22 +79,6 @@ namespace Cifra.Api.IntegrationTests.Steps
                 createdAssignments.Should().Contain(x => x.Id == retrievedAssignment.Id && 
                 x.NumberOfQuestions == retrievedAssignment.NumberOfQuestions);
             }
-        }
-
-        private static ApiClient CreateApiClient()
-        {
-            IConfigurationRoot configuration = LoadConfiguration();
-            var testResource = configuration.GetSection("Cifra:Api:Test").Value;
-            return new ApiClient(testResource);
-        }
-
-        private static IConfigurationRoot LoadConfiguration()
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Environment.CurrentDirectory)
-                .AddJsonFile(path: "./appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
-            return configuration;
         }
     }
 }

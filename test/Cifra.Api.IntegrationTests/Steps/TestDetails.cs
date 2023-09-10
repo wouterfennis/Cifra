@@ -1,7 +1,6 @@
-﻿using Cifra.Api.V1.Models.Test.Requests;
-using Cifra.Api.V1.Models.Test.Responses;
+﻿using Cifra.Api.Client;
 
-namespace Cifra.Api.IntegrationTests.Models
+namespace Cifra.Api.IntegrationTests.Steps
 {
     internal class TestDetails
     {

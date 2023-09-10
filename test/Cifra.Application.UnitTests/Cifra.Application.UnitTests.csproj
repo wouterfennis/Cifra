@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.18.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="Moq" Version="4.20.69" />
@@ -20,10 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-    <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
-    <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
-    <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Application\Cifra.Application.csproj" />
+    <ProjectReference Include="..\..\src\Cifra.Domain\Cifra.Domain.csproj" />
   </ItemGroup>
 
 </Project>

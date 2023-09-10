@@ -34,10 +34,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
-		<ProjectReference Include="..\Cifra.Database\Cifra.Database.csproj" />
-		<ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
-		<ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
+	  <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
+	  <ProjectReference Include="..\Cifra.Database\Cifra.Database.csproj" />
+	  <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
 	</ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
-using AutoFixture.Kernel;
-using Cifra.Api.V1.Models.Test.Requests;
+using Cifra.Api.Client;
 
 namespace Cifra.Api.IntegrationTests.Builders
 {
