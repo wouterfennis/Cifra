@@ -1,14 +1,10 @@
 ﻿using AutoFixture;
 using Cifra.Api.Mapping;
-using Cifra.Api.V1.Models.Class;
-using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Application.Models.Class.Results;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,8 +34,8 @@ namespace Cifra.Api.UnitTests.Mapping
             // Assert
             foreach (var actualClass in result.Classes)
             {
-                var expectedClass = input.Classes.Single(x => x.Id == actualClass.Id);
-                expectedClass.Name.Should().Be(actualClass.Name);
+                var expectedClass = input.Classes.Single(x => x.Name == actualClass.Name);
+                expectedClass.Name.Value.Should().Be(actualClass.Name);
                 expectedClass.Id.Should().Be(actualClass.Id);
                 AssertStudents(actualClass.Students, expectedClass.Students);
             }
@@ -100,7 +96,17 @@ namespace Cifra.Api.UnitTests.Mapping
 
             // Assert
             result.Tests.Should().NotBeNull();
-            result.Tests.Should().BeEquivalentTo(input.Tests);
+
+            foreach (var test in result.Tests)
+            {
+                var expectedTest = input.Tests.Single(x => x.Name.Value == test.Name);
+                expectedTest.Id.Should().Be(test.Id);
+                expectedTest.Name.Value.Should().Be(test.Name);
+                expectedTest.MinimumGrade.Value.Should().Be(test.MinimumGrade);
+                expectedTest.NumberOfVersions.Should().Be(test.NumberOfVersions);
+                expectedTest.StandardizationFactor.Value.Should().Be(test.StandardizationFactor);
+                AssertAssignments(test.Assignments, expectedTest.Assignments);
+            }
         }
 
         [TestMethod]
@@ -154,11 +160,21 @@ namespace Cifra.Api.UnitTests.Mapping
         {
             foreach (var student in students)
             {
-                var expectedStudent = expectedStudents.Single(x => x.Id == student.Id);
+                var expectedStudent = expectedStudents.Single(x => x.FirstName == student.FirstName);
                 student.FirstName.Should().Be(expectedStudent.FirstName);
                 student.Infix.Should().Be(expectedStudent.Infix);
                 student.LastName.Should().Be(expectedStudent.LastName);
                 student.Id.Should().Be(expectedStudent.Id);
+            }
+        }
+
+        private void AssertAssignments(IEnumerable<V1.Models.Test.Assignment> assignments, IEnumerable<Domain.Assignment> expectedAssignments)
+        {
+            foreach (var assignment in assignments)
+            {
+                var expectedTest = expectedAssignments.Single(x => x.Id == assignment.Id);
+                assignment.NumberOfQuestions.Should().Be(expectedTest.NumberOfQuestions);
+                assignment.Id.Should().Be(expectedTest.Id);
             }
         }
     }
