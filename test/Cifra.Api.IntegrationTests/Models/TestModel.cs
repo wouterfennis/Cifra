@@ -1,27 +1,26 @@
-﻿namespace Cifra.Api.V1.Models.Test.Requests
+﻿
+namespace Cifra.Api.IntegrationTests.Models
 {
-    /// <summary>
-    /// The request to create a test
-    /// </summary>
-    public sealed class CreateTestRequest
+    internal class TestModel
     {
         /// <summary>
-        /// The name of the test
+        /// The Name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The number of versions of this test that exist.
+        /// The number of versions of the test that where made.
         /// </summary>
         public int NumberOfVersions { get; set; }
 
         /// <summary>
-        /// The standardization factor
+        /// The Standardization Factor.
         /// </summary>
+
         public int StandardizationFactor { get; set; }
 
         /// <summary>
-        /// The minimum grade
+        /// The Minimum Grade.
         /// </summary>
         public int MinimumGrade { get; set; }
     }

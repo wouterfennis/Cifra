@@ -1,10 +1,13 @@
 ﻿using Cifra.Api.Client;
 using Cifra.Api.IntegrationTests.Builders;
+using Cifra.Api.IntegrationTests.Models;
 using FluentAssertions;
+using Mapster;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace Cifra.Api.IntegrationTests.Steps
 {
@@ -16,6 +19,9 @@ namespace Cifra.Api.IntegrationTests.Steps
         private readonly TestBuilder _testRequestBuilder;
         private const string _testDetailsKey = "testDetails";
         private const string _getTestResponseKey = "getTestResponseKey";
+        private const string _getTestResponseStatusCode = "getTestResponseStatusCode";
+        private const string _getTestResponseMessage = "getTestResponseMessage";
+        private const string _createTestResponseException = "createTestResponseException";
 
         public TestStepDefinitions(ScenarioContext scenarioContext, TestBuilder testBuilder, ICifraApiClient cifraApiClient)
         {
@@ -27,7 +33,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         [Given(@"a test is previously created")]
         public async Task GivenATestIsPreviouslyCreatedAsync()
         {
-            CreateTestRequest createTestRequest = _testRequestBuilder.BuildRandomCreateTestRequest();
+            Client.CreateTestRequest createTestRequest = _testRequestBuilder.BuildRandomCreateTestRequest();
             CreateTestResponse createTestResponse = await _apiClient.TestPOSTAsync("1", createTestRequest);
 
             createTestResponse.TestId.Should().NotBe(0, "No Id was assigned to the test.");
@@ -42,11 +48,62 @@ namespace Cifra.Api.IntegrationTests.Steps
             _scenarioContext.Add(_testDetailsKey, testDetails);
         }
 
+        [Given(@"no tests are previously created")]
+        public void GivenNoTestsArePreviouslyCreated()
+        {
+            // No implementation needed.
+        }
+
+        [When(@"a request is made to create a new test with the following values:")]
+        public async Task WhenARequestIsMadeToCreateANewTestWithTheFollowingValuesAsync(Table table)
+        {
+            var test = table.CreateInstance<TestModel>();
+
+            var request = test.Adapt<Client.CreateTestRequest>();
+
+            try
+            {
+                var result = await _apiClient.TestPOSTAsync("1", request);
+                _scenarioContext.Add(_getTestResponseKey, result);
+            }
+            catch (ApiException<CreateTestResponse> exception)
+            {
+                _scenarioContext.Add(_createTestResponseException, exception);
+            }
+        }
+
+        [Then(@"the test is persisted with the following values:")]
+        public async Task ThenTheTestIsPersistedWithTheFollowingValuesAsync(Table table)
+        {
+            var tests = table.CreateSet<TestModel>();
+
+            var result = await _apiClient.TestGETAsync("1");
+
+            var actualTests = result.Tests.Adapt<IEnumerable<TestModel>>();
+            actualTests.Should().BeEquivalentTo(tests);
+        }
+
+        [Then(@"a validation message is displayed containing the following message")]
+        public void ThenAValidationMessageIsDisplayedContainingTheFollowingMessage(Table table)
+        {
+            var expectedValidationMessage = table.CreateInstance<ValidationMessageModel>();
+            var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_createTestResponseException);
+            exception.Result.ValidationMessages.Single().Message.Should().Be(expectedValidationMessage.FailureReason);
+        }
+
         [When(@"a request is made to retrieve all tests")]
         public async Task WhenARequestIsMadeToRetrieveAllTestsAsync()
         {
-            GetAllTestsResponse result = await _apiClient.TestGETAsync("1");
-            _scenarioContext.Add(_getTestResponseKey, result.Tests);
+            try
+            {
+                GetAllTestsResponse result = await _apiClient.TestGETAsync("1");
+                _scenarioContext.Add(_getTestResponseKey, result.Tests);
+            }
+            catch (ApiException exception)
+            {
+                _scenarioContext.Add(_getTestResponseStatusCode, exception.StatusCode);
+                _scenarioContext.Add(_getTestResponseMessage, exception.Message);
+            }
         }
 
         [Then(@"the previously created test is displayed")]
@@ -58,6 +115,13 @@ namespace Cifra.Api.IntegrationTests.Steps
             retrievedTests.Should().ContainSingle();
             var retrievedTest = retrievedTests.Single();
             AssertTest(testDetails, retrievedTest);
+        }
+
+        [Then(@"a message is displayed explaining that no tests are present")]
+        public void ThenAMessageIsDisplayedExplainingThatNoTestsArePresent()
+        {
+            List<Test> retrievedTests = _scenarioContext.Get<List<Test>>(_getTestResponseKey);
+            retrievedTests.Should().BeEmpty();
         }
 
         private void AssertTest(TestDetails testDetails, Test retrievedTest)
@@ -76,7 +140,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             foreach (Assignment retrievedAssignment in retrievedAssignments)
             {
-                createdAssignments.Should().Contain(x => x.Id == retrievedAssignment.Id && 
+                createdAssignments.Should().Contain(x => x.Id == retrievedAssignment.Id &&
                 x.NumberOfQuestions == retrievedAssignment.NumberOfQuestions);
             }
         }

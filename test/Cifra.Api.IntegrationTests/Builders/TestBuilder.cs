@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using Cifra.Api.Client;
+using System;
 
 namespace Cifra.Api.IntegrationTests.Builders
 {
@@ -14,16 +15,13 @@ namespace Cifra.Api.IntegrationTests.Builders
 
         public CreateTestRequest BuildRandomCreateTestRequest()
         {
-            //var rangedNumberGenerator = new RangedNumberGenerator();
-            //var rangeNumberRequest = new RangedNumberRequest(typeof(int), 1, 10);
-            //return new CreateTestRequest { 
-            //Name = _fixture.Create<string>(),
-            //MinimumGrade = rangedNumberGenerator.Create(rangeNumberRequest),
-            //NumberOfVersions = _fixture.Create<int>(),
-            //StandardizationFactor = _fixture.Create<int>()
-            //};
-
-            return _fixture.Create<CreateTestRequest>();
+            return new CreateTestRequest
+            {
+                Name = _fixture.Create<string>(),
+                MinimumGrade = Random.Shared.Next(1, 10),
+                NumberOfVersions = Random.Shared.Next(1, 3),
+                StandardizationFactor = _fixture.Create<int>()
+            };
         }
     }
 }

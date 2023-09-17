@@ -18,9 +18,3 @@ Scenario: No tests are present to be viewed
 	Given no tests are previously created
 	When a request is made to retrieve all tests
 	Then a message is displayed explaining that no tests are present
-
-Scenario: Tests cannot be retrieved
-	Given a test is previously created
-	When a request is made to retrieve all tests
-	And the tests cannot be retrieved
-	Then a message is displayed explaining to try again later

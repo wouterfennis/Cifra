@@ -107,14 +107,13 @@ Acceptance Criteria:
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void CreatingANewTest(string name, string numberOfVersions, string standardizationFactor, string minimumGrade, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
+        public void CreatingANewTest()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Name", name);
-            argumentsOfScenario.Add("Number of versions", numberOfVersions);
-            argumentsOfScenario.Add("Standardization factor", standardizationFactor);
-            argumentsOfScenario.Add("Minimum grade", minimumGrade);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 22
 this.ScenarioInitialize(scenarioInfo);
@@ -127,56 +126,46 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 23
- testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table1.AddRow(new string[] {
+                            "Math chapter 1",
+                            "1",
+                            "9",
+                            "1"});
 #line 24
- testRunner.When("a request is made to create a new test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table1, "When ");
 #line hidden
-#line 25
- testRunner.Then("the test is persisted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table2.AddRow(new string[] {
+                            "Math chapter 1",
+                            "1",
+                            "9",
+                            "1"});
+#line 27
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table2, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: Math chapter 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("No number of versions supplied")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Math chapter 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "1")]
-        public void CreatingANewTest_MathChapter1()
-        {
-#line 22
-this.CreatingANewTest("Math chapter 1", "1", "9", "1", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test: History chapter 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "History chapter 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "History chapter 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "10")]
-        public void CreatingANewTest_HistoryChapter2()
-        {
-#line 22
-this.CreatingANewTest("History chapter 2", "2", "9", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test fails")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        public void CreatingANewTestFails()
+        public void NoNumberOfVersionsSupplied()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test fails", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No number of versions supplied", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -188,32 +177,41 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 32
- testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table3.AddRow(new string[] {
+                            "Math chapter 1",
+                            "0",
+                            "9",
+                            "1"});
 #line 33
- testRunner.When("a request is made to create a new test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table3, "When ");
 #line hidden
-#line 34
- testRunner.And("the test cannot be saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 35
- testRunner.Then("a message is displayed explaining to try again later", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Failure reason"});
+                table4.AddRow(new string[] {
+                            "Number of versions must be higher than zero"});
+#line 36
+ testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        public virtual void CreatingANewTestWithInvalidValues(string name, string numberOfVersions, string standardizationFactor, string minimumGrade, string failureReason, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too low")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
+        public void MinimumGradeIsTooLow()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Name", name);
-            argumentsOfScenario.Add("Number of versions", numberOfVersions);
-            argumentsOfScenario.Add("Standardization factor", standardizationFactor);
-            argumentsOfScenario.Add("Minimum grade", minimumGrade);
-            argumentsOfScenario.Add("Failure reason", failureReason);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new test with invalid values", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too low", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 40
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -223,65 +221,76 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 38
- testRunner.Given("no tests have been created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 41
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 39
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table5.AddRow(new string[] {
+                            "Math chapter 2",
+                            "1",
+                            "9",
+                            "-1"});
+#line 42
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table5, "When ");
 #line hidden
-#line 40
- testRunner.Then(string.Format("a validation message is displayed containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Failure reason"});
+                table6.AddRow(new string[] {
+                            "Minimum grade must be between 1 and 10"});
+#line 45
+ testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table6, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test with invalid values: Variant 0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too high")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "No number of versions")]
-        public void CreatingANewTestWithInvalidValues_Variant0()
+        public void MinimumGradeIsTooHigh()
         {
-#line 37
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "0", "9", "1", "No number of versions", ((string[])(null)));
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too high", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 49
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test with invalid values: Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "-1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade is too low")]
-        public void CreatingANewTestWithInvalidValues_Variant1()
-        {
-#line 37
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "9", "-1", "Minimum grade is too low", ((string[])(null)));
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 50
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Creating a new test with invalid values: Variant 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Name", "Math chapter 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Number of versions", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Standardization factor", "9")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Minimum grade", "11")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade is too high")]
-        public void CreatingANewTestWithInvalidValues_Variant2()
-        {
-#line 37
-this.CreatingANewTestWithInvalidValues("Math chapter 1", "1", "9", "11", "Minimum grade is too high", ((string[])(null)));
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table7.AddRow(new string[] {
+                            "Math chapter 3",
+                            "1",
+                            "9",
+                            "11"});
+#line 51
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table7, "When ");
 #line hidden
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Failure reason"});
+                table8.AddRow(new string[] {
+                            "Minimum grade must be between 1 and 10"});
+#line 54
+ testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table8, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
         }
     }
 }

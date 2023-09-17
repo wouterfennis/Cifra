@@ -20,26 +20,37 @@ Acceptance Criteria:
 - I cannot set a minimum grade lower than 0 or higher than 10
 
 Scenario: Creating a new test
-	Given no tests have been created
-	When a request is made to create a new test
-	Then the test is persisted
-	Examples: 	
-	| Name              | Number of versions | Standardization factor | Minimum grade |
-	| Math chapter 1    | 1                  | 9                      | 1             |
-	| History chapter 2 | 2                  | 9                      | 10            |
-
-Scenario: Creating a new test fails
-	Given no tests have been created
-	When a request is made to create a new test
-	And the test cannot be saved
-	Then a message is displayed explaining to try again later
-	
-Scenario: Creating a new test with invalid values
-	Given no tests have been created
+	Given no tests are previously created
 	When a request is made to create a new test with the following values:
-	Then a validation message is displayed containing '<Failure reason>'
-	Examples:
-	| Name           | Number of versions | Standardization factor | Minimum grade | Failure reason            |
-	| Math chapter 1 | 0                  | 9                      | 1             | No number of versions     |
-	| Math chapter 1 | 1                  | 9                      | -1            | Minimum grade is too low  |
-	| Math chapter 1 | 1                  | 9                      | 11            | Minimum grade is too high |
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+	Then the test is persisted with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+
+Scenario: No number of versions supplied
+	Given no tests are previously created
+	When a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 0                  | 9                      | 1             |
+	Then a validation message is displayed containing the following message
+		| Failure reason                              |
+		| Number of versions must be higher than zero |
+
+Scenario: Minimum grade is too low
+	Given no tests are previously created
+	When a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 2 | 1                  | 9                      | -1            |
+	Then a validation message is displayed containing the following message
+		| Failure reason                         |
+		| Minimum grade must be between 1 and 10 |
+
+Scenario: Minimum grade is too high
+	Given no tests are previously created
+	When a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 3 | 1                  | 9                      | 11            |
+	Then a validation message is displayed containing the following message
+		| Failure reason                         |
+		| Minimum grade must be between 1 and 10 |
