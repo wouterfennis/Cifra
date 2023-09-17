@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Cifra.Api.Mapping;
+﻿using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application;
-using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +23,14 @@ namespace Cifra.Api.V1
     {
         private readonly ILogger<TestController> _logger;
         private readonly ITestService _testService;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public TestController(ILogger<TestController> logger, ITestService testService, IMapper mapper)
+        public TestController(ILogger<TestController> logger, ITestService testService)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _testService = testService ?? throw new ArgumentNullException(nameof(testService));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger;
+            _testService = testService;
         }
 
         /// <summary>
@@ -50,7 +46,7 @@ namespace Cifra.Api.V1
         {
             GetAllTestsResult getAllTestsResult = await _testService.GetTestsAsync();
 
-            var response = _mapper.Map<GetAllTestsResponse>(getAllTestsResult);
+            var response = getAllTestsResult.MapToResponse();
 
             return response;
         }
@@ -68,7 +64,7 @@ namespace Cifra.Api.V1
         {
             GetTestResult getTestResult = await _testService.GetTestAsync(testId);
 
-            var response = _mapper.Map<GetTestResponse>(getTestResult);
+            var response = getTestResult.MapToResponse();
 
             return response;
         }
@@ -86,11 +82,11 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateTestAsync(CreateTestRequest request)
         {
-            var command = _mapper.Map<CreateTestCommand>(request);
+            var command = request.MapToCommand();
 
             CreateTestResult result = await _testService.CreateTestAsync(command);
 
-            var response = _mapper.Map<CreateTestResponse>(result);
+            var response = result.MapToResponse();
 
             if (response.ValidationMessages.Any())
             {
@@ -117,7 +113,7 @@ namespace Cifra.Api.V1
             var command = request.Map();
             UpdateTestResult result = await _testService.UpdateTestAsync(command);
 
-            var response = _mapper.Map<UpdateTestResponse>(result);
+            var response = result.MapToResponse();
 
             if (response.ValidationMessages.Any())
             {

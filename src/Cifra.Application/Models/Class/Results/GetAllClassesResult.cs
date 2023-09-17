@@ -16,7 +16,7 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal GetAllClassesResult(IEnumerable<Domain.Class> classes)
+        public GetAllClassesResult(IEnumerable<Domain.Class> classes)
         {
             Classes = classes ?? throw new ArgumentNullException(nameof(classes));
         }

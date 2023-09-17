@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Cifra.Application.Models.Spreadsheet.Commands;
+﻿using Cifra.Application.Models.Spreadsheet.Commands;
 using Cifra.Application.Models.Spreadsheet.Results;
 using Cifra.Domain.Validation;
 using System.Collections.Generic;
@@ -15,20 +14,17 @@ namespace Cifra.Application
         private readonly IClassRepository _classRepository;
         private readonly ITestRepository _testRepository;
         private readonly ITestResultsSpreadsheetBuilder _testResultsSpreadsheetBuilder;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public TestResultsSpreadsheetService(IClassRepository classRepository,
             ITestRepository testRepository,
-            ITestResultsSpreadsheetBuilder testResultsSpreadsheetBuilder,
-            IMapper mapper)
+            ITestResultsSpreadsheetBuilder testResultsSpreadsheetBuilder)
         {
             _classRepository = classRepository;
             _testRepository = testRepository;
             _testResultsSpreadsheetBuilder = testResultsSpreadsheetBuilder;
-            _mapper = mapper;
         }
 
         /// <inheritdoc/>
@@ -54,10 +50,7 @@ namespace Cifra.Application
                 return new CreateTestResultsSpreadsheetResult(validationMessages);
             }
 
-            var mappedClass = _mapper.Map<Domain.Class>(pickedClass);
-            var mappedTest = _mapper.Map<Domain.Test>(pickedTest);
-
-            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(mappedClass, mappedTest, command.Metadata);
+            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(pickedClass, pickedTest, command.Metadata);
 
             return new CreateTestResultsSpreadsheetResult(fileInfo);
         }

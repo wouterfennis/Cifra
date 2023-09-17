@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Cifra.Application.Interfaces;
 using System.Linq;
+using Cifra.Database.Mapping;
 
 namespace Cifra.Database.Repositories
 {
@@ -13,12 +13,10 @@ namespace Cifra.Database.Repositories
     public class TestDatabaseRepository : ITestRepository
     {
         private readonly Context _dbContext;
-        private readonly IMapper _mapper;
 
-        public TestDatabaseRepository(Context dbContext, IMapper mapper)
+        public TestDatabaseRepository(Context dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         /// <inheritdoc/>
@@ -26,7 +24,7 @@ namespace Cifra.Database.Repositories
         {
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
 
-            var entity = _mapper.Map<Test>(newTest);
+            var entity = newTest.MapToSchema();
 
             _dbContext.Tests.Add(entity);
             await _dbContext.SaveChangesAsync();
@@ -41,7 +39,7 @@ namespace Cifra.Database.Repositories
                 .AsNoTracking()
                 .Include(x => x.Assignments)
                 .ToListAsync();
-            return _mapper.Map<List<Domain.Test>>(entities); 
+            return entities.MapToDomain();
         }
 
         /// <inheritdoc/>
@@ -52,13 +50,13 @@ namespace Cifra.Database.Repositories
                 .Include(x => x.Assignments)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<Domain.Test>(findResult); 
+            return findResult.MapToDomain();
         }
 
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
-            var updatedEntity = _mapper.Map<Test>(updatedTest);
+            var updatedEntity = updatedTest.MapToSchema();
             var updatedAssignmentsIds = updatedEntity.Assignments.Select(x => x.Id).ToList();
 
             _dbContext.Tests.Update(updatedEntity);

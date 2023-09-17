@@ -15,7 +15,7 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal GetClassResult(Domain.Class retrievedClass)
+        public GetClassResult(Domain.Class retrievedClass)
         {
             RetrievedClass = retrievedClass ?? throw new ArgumentNullException(nameof(retrievedClass));
         }

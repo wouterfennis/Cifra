@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using Cifra.Api.Mapping;
+﻿using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Class.Requests;
 using Cifra.Api.V1.Models.Class.Responses;
-using Cifra.Api.V1.Models.Validation;
 using Cifra.Application;
-using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,16 +22,14 @@ namespace Cifra.Api.V1
     {
         private readonly ILogger<ClassController> _logger;
         private readonly IClassService _classService;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ClassController(ILogger<ClassController> logger, IClassService classService, IMapper mapper)
+        public ClassController(ILogger<ClassController> logger, IClassService classService)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _classService = classService ?? throw new ArgumentNullException(nameof(classService));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger;
+            _classService = classService;
         }
 
         /// <summary>
@@ -52,7 +45,7 @@ namespace Cifra.Api.V1
         {
             GetAllClassesResult getAllClassesResult = await _classService.GetClassesAsync();
 
-            var response = _mapper.Map<GetAllClassesResponse>(getAllClassesResult);
+            var response = getAllClassesResult.MapToResponse();
 
             return response;
         }
@@ -70,7 +63,7 @@ namespace Cifra.Api.V1
         {
             GetClassResult getClassResult = await _classService.GetClassAsync(classId);
 
-            var response = _mapper.Map<GetClassResponse>(getClassResult);
+            var response = getClassResult.MapToResponse();
 
             return response;
         }
@@ -88,11 +81,11 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateClassAsync(CreateClassRequest request)
         {
-            var command = _mapper.Map<CreateClassCommand>(request);
+            var command = request.MapToCommand();
 
             CreateClassResult result = await _classService.CreateClassAsync(command);
 
-            var response = _mapper.Map<CreateClassResponse>(result);
+            var response = result.MapToResponse();
 
             if (response.ValidationMessages.Any())
             {
@@ -119,7 +112,7 @@ namespace Cifra.Api.V1
             var command = request.Map();
             UpdateClassResult result = await _classService.UpdateClassAsync(command);
 
-            var response = _mapper.Map<UpdateClassResponse>(result);
+            var response = result.MapToResponse();
 
             if (response.ValidationMessages.Any())
             {

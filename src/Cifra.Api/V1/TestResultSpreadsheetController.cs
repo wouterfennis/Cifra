@@ -1,12 +1,10 @@
-﻿using AutoMapper;
+﻿using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Spreadsheet.Requests;
 using Cifra.Application;
-using Cifra.Application.Models.Spreadsheet.Commands;
 using Cifra.Application.Models.Spreadsheet.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,18 +21,15 @@ namespace Cifra.Api.V1
     {
         private readonly ILogger<TestResultSpreadsheetController> _logger;
         private readonly ITestResultsSpreadsheetService _testResultsSpreadsheetService;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public TestResultSpreadsheetController(ILogger<TestResultSpreadsheetController> logger, 
-            ITestResultsSpreadsheetService testResultsSpreadsheetService, 
-            IMapper mapper)
+            ITestResultsSpreadsheetService testResultsSpreadsheetService)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _testResultsSpreadsheetService = testResultsSpreadsheetService ?? throw new ArgumentNullException(nameof(testResultsSpreadsheetService));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger;
+            _testResultsSpreadsheetService = testResultsSpreadsheetService;
         }
 
         /// <summary>
@@ -50,7 +45,7 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetRequest request)
         {
-            var command = _mapper.Map<CreateTestResultsSpreadsheetCommand>(request);
+            var command = request.MapToCommand();
 
             CreateTestResultsSpreadsheetResult result = await _testResultsSpreadsheetService.CreateTestResultsSpreadsheetAsync(command);
 

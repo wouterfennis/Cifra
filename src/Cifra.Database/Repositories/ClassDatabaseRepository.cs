@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Cifra.Application.Interfaces;
 using System.Linq;
+using Cifra.Database.Mapping;
 
 namespace Cifra.Database.Repositories
 {
@@ -13,12 +13,10 @@ namespace Cifra.Database.Repositories
     public class ClassDatabaseRepository : IClassRepository
     {
         private readonly Context _dbContext;
-        private readonly IMapper _mapper;
 
-        public ClassDatabaseRepository(Context dbContext, IMapper mapper)
+        public ClassDatabaseRepository(Context dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         /// <inheritdoc/>
@@ -26,7 +24,7 @@ namespace Cifra.Database.Repositories
         {
             _ = newClass ?? throw new ArgumentNullException(nameof(newClass));
 
-            var entity = _mapper.Map<Class>(newClass);
+            var entity = newClass.MapToSchema();
 
             _dbContext.Classes.Add(entity);
             await _dbContext.SaveChangesAsync();
@@ -41,7 +39,7 @@ namespace Cifra.Database.Repositories
                 .AsNoTracking()
                 .Include(x => x.Students)
                 .ToListAsync();
-            return _mapper.Map<List<Domain.Class>>(entities);
+            return entities.MapToDomain();
         }
 
         /// <inheritdoc/>
@@ -52,13 +50,13 @@ namespace Cifra.Database.Repositories
                 .Include(x => x.Students)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            return _mapper.Map<Domain.Class>(findResult);
+            return findResult.MapToDomain();
         }
 
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Class updatedClass)
         {
-            var updatedEntity = _mapper.Map<Class>(updatedClass);
+            var updatedEntity = updatedClass.MapToSchema();
             var updatedStudentsIds = updatedEntity.Students.Select(x => x.Id).ToList();
 
             _dbContext.Classes.Update(updatedEntity);

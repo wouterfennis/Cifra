@@ -1,12 +1,9 @@
-﻿using Cifra.Api.Mapping;
-using Cifra.Application.Extensions;
-using Cifra.Database.Mapping;
+﻿using Cifra.Application.Extensions;
 using Cifra.Database.Extensions;
 using Cifra.FileSystem.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace Cifra.Api.Extensions
 {
@@ -25,8 +22,6 @@ namespace Cifra.Api.Extensions
             string databasename = configuration.GetSection("ConnectionStrings").GetValue<string>("Sqlite");
             services.SetupDatabaseDependencies(databasename);
             services.SetupFileSystemDependencies(configuration);
-
-            services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(DatabaseProfile)), Assembly.GetAssembly(typeof(ApiProfile)));
         }
     }
 }

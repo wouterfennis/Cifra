@@ -34,7 +34,7 @@ namespace Cifra.Domain
         }
 
         /// <summary>
-        /// Constructor for existing tests
+        /// Constructor for existing classes
         /// </summary>
         public Class(int id, Name className, List<Student> students)
         {

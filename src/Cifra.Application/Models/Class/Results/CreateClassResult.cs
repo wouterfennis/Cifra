@@ -22,7 +22,7 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal CreateClassResult(int classId)
+        public CreateClassResult(int classId)
         {
             ClassId = classId;
             ValidationMessages = new List<ValidationMessage>();
@@ -31,7 +31,7 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal CreateClassResult(IEnumerable<ValidationMessage> validationMessages)
+        public CreateClassResult(IEnumerable<ValidationMessage> validationMessages)
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
