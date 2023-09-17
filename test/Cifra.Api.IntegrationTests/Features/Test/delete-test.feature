@@ -9,12 +9,11 @@ Acceptance Criteria:
 - I can delete a test
 
 Scenario: Deleting a test
-	Given a test is already created
+	Given a test is previously created
 	When a request is made to delete the test
-	Then the test is deleted
+	Then a message is displayed explaining that no tests are present
 
-Scenario: Deleting a test fails
-	Given a test is already created
+Scenario: Test cannot be found
+	Given no tests are previously created
 	When a request is made to delete the test
-	And the deletion fails
 	Then a message is displayed explaining to try again later

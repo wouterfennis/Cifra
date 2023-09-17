@@ -19,9 +19,10 @@ namespace Cifra.Api.IntegrationTests.Steps
         private readonly TestBuilder _testRequestBuilder;
         private const string _testDetailsKey = "testDetails";
         private const string _getTestResponseKey = "getTestResponseKey";
-        private const string _getTestResponseStatusCode = "getTestResponseStatusCode";
         private const string _getTestResponseMessage = "getTestResponseMessage";
-        private const string _createTestResponseException = "createTestResponseException";
+        private const string _createTestResponseKey = "createTestResponseKey";
+        private const string _responseException = "responseException";
+        private const string _updateTestResponseKey = "updateTestResponseKey";
 
         public TestStepDefinitions(ScenarioContext scenarioContext, TestBuilder testBuilder, ICifraApiClient cifraApiClient)
         {
@@ -54,6 +55,13 @@ namespace Cifra.Api.IntegrationTests.Steps
             // No implementation needed.
         }
 
+        [When(@"a request is made to delete the test")]
+        public void WhenARequestIsMadeToDeleteTheTest()
+        {
+            throw new PendingStepException();
+        }
+
+        [Given(@"a request is made to create a new test with the following values:")]
         [When(@"a request is made to create a new test with the following values:")]
         public async Task WhenARequestIsMadeToCreateANewTestWithTheFollowingValuesAsync(Table table)
         {
@@ -64,11 +72,47 @@ namespace Cifra.Api.IntegrationTests.Steps
             try
             {
                 var result = await _apiClient.TestPOSTAsync("1", request);
-                _scenarioContext.Add(_getTestResponseKey, result);
+                _scenarioContext.Add(_createTestResponseKey, result.TestId);
             }
             catch (ApiException<CreateTestResponse> exception)
             {
-                _scenarioContext.Add(_createTestResponseException, exception);
+                _scenarioContext.Add(_responseException, exception);
+            }
+        }
+
+        [When(@"the name is changed to '([^']*)'")]
+        public async Task WhenTheNameIsChangedToAsync(string newName)
+        {
+            var id = _scenarioContext.Get<int>(_createTestResponseKey);
+            var result = await _apiClient.TestGET2Async(id, "1");
+            result.Test.Name = newName;
+            var request = result.Adapt<UpdateTestRequest>();
+
+            await UpdateTest(request);
+        }
+
+        [When(@"the number of versions is changed to '([^']*)'")]
+        public async Task WhenTheNumberOfVersionsIsChangedToAsync(int newNumberOfVersions)
+        {
+            GetTestResponse result = await GetCurrentTest();
+            result.Test.NumberOfVersions = newNumberOfVersions;
+
+            var request = result.Adapt<UpdateTestRequest>();
+
+            await UpdateTest(request);
+        }
+
+        [When(@"a request is made to retrieve all tests")]
+        public async Task WhenARequestIsMadeToRetrieveAllTestsAsync()
+        {
+            try
+            {
+                GetAllTestsResponse result = await _apiClient.TestGETAsync("1");
+                _scenarioContext.Add(_getTestResponseKey, result.Tests);
+            }
+            catch (ApiException exception)
+            {
+                _scenarioContext.Add(_getTestResponseMessage, exception.Message);
             }
         }
 
@@ -87,23 +131,8 @@ namespace Cifra.Api.IntegrationTests.Steps
         public void ThenAValidationMessageIsDisplayedContainingTheFollowingMessage(Table table)
         {
             var expectedValidationMessage = table.CreateInstance<ValidationMessageModel>();
-            var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_createTestResponseException);
+            var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_responseException);
             exception.Result.ValidationMessages.Single().Message.Should().Be(expectedValidationMessage.FailureReason);
-        }
-
-        [When(@"a request is made to retrieve all tests")]
-        public async Task WhenARequestIsMadeToRetrieveAllTestsAsync()
-        {
-            try
-            {
-                GetAllTestsResponse result = await _apiClient.TestGETAsync("1");
-                _scenarioContext.Add(_getTestResponseKey, result.Tests);
-            }
-            catch (ApiException exception)
-            {
-                _scenarioContext.Add(_getTestResponseStatusCode, exception.StatusCode);
-                _scenarioContext.Add(_getTestResponseMessage, exception.Message);
-            }
         }
 
         [Then(@"the previously created test is displayed")]
@@ -122,6 +151,26 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             List<Test> retrievedTests = _scenarioContext.Get<List<Test>>(_getTestResponseKey);
             retrievedTests.Should().BeEmpty();
+        }
+
+        private async Task<GetTestResponse> GetCurrentTest()
+        {
+            var id = _scenarioContext.Get<int>(_createTestResponseKey);
+            var result = await _apiClient.TestGET2Async(id, "1");
+            return result;
+        }
+
+        private async Task UpdateTest(UpdateTestRequest request)
+        {
+            try
+            {
+                var response = await _apiClient.TestPUTAsync("1", request);
+                _scenarioContext.Add(_updateTestResponseKey, response);
+            }
+            catch (ApiException<CreateTestResponse> exception)
+            {
+                _scenarioContext.Add(_responseException, exception);
+            }
         }
 
         private void AssertTest(TestDetails testDetails, Test retrievedTest)

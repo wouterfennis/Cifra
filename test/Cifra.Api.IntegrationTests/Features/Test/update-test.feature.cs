@@ -120,76 +120,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table9.AddRow(new string[] {
+                            "Math chapter 1"});
 #line 18
- testRunner.Given("a test is already created with the name \'Math chapter 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table9, "Given ");
 #line hidden
-#line 19
+#line 21
  testRunner.When("the name is changed to \'Math chapter 1 revision\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 20
- testRunner.Then("the test is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table10.AddRow(new string[] {
+                            "Math chapter 1 revision"});
+#line 22
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table10, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
-        }
-        
-        public virtual void UpdatingTheNameOfATestWithAInvalidName(string invalidTestName, string failureReason, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Invalid test name", invalidTestName);
-            argumentsOfScenario.Add("Failure reason", failureReason);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the name of a test with a invalid name", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 22
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 23
- testRunner.Given("a test is already created with the name \'Math chapter 1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 24
- testRunner.When(string.Format("the name is changed to \'{0}\'", invalidTestName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 25
- testRunner.Then(string.Format("a validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 26
- testRunner.And("the test not updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Updating the name of a test with a invalid name: Variant 0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid test name", "\"\"")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The name of the test should have content")]
-        public void UpdatingTheNameOfATestWithAInvalidName_Variant0()
-        {
-#line 22
-this.UpdatingTheNameOfATestWithAInvalidName("\"\"", "The name of the test should have content", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Updating the name of a test with a invalid name: Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid test name", "\" \"")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The name of the test should have content")]
-        public void UpdatingTheNameOfATestWithAInvalidName_Variant1()
-        {
-#line 22
-this.UpdatingTheNameOfATestWithAInvalidName("\" \"", "The name of the test should have content", ((string[])(null)));
-#line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
@@ -200,7 +149,7 @@ this.UpdatingTheNameOfATestWithAInvalidName("\" \"", "The name of the test shoul
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the number of versions of a test", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -210,14 +159,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 33
- testRunner.Given("a test is already created with \'2\' versions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Number of versions"});
+                table11.AddRow(new string[] {
+                            "1"});
+#line 27
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table11, "Given ");
 #line hidden
-#line 34
- testRunner.When("the number of versions is changed to \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
+ testRunner.When("the number of versions is changed to \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 35
- testRunner.Then("the test is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Number of versions"});
+                table12.AddRow(new string[] {
+                            "2"});
+#line 31
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table12, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -230,7 +187,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("Invalid number of versions", invalidNumberOfVersions);
             argumentsOfScenario.Add("Failure reason", failureReason);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the number of versions of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -240,16 +197,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 38
+#line 36
  testRunner.Given("a test is already created with the number of versions of \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 39
+#line 37
  testRunner.When(string.Format("the number of versions is changed to \'{0}\'", invalidNumberOfVersions), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 40
+#line 38
  testRunner.Then(string.Format("a validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 41
+#line 39
  testRunner.And("the test not updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -264,7 +221,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The number of versions should be higher than zero")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_1()
         {
-#line 37
+#line 35
 this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "The number of versions should be higher than zero", ((string[])(null)));
 #line hidden
         }
@@ -277,7 +234,7 @@ this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "The number of v
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The number of versions should be higher than zero")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_0()
         {
-#line 37
+#line 35
 this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "The number of versions should be higher than zero", ((string[])(null)));
 #line hidden
         }
@@ -290,7 +247,7 @@ this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "The number of ve
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the standardization factor of a test", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 47
+#line 45
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -300,13 +257,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 48
+#line 46
  testRunner.Given("a test is already created with the standization factor of \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 49
+#line 47
  testRunner.When("the standardization factor is changed to \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 50
+#line 48
  testRunner.Then("the test is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -320,7 +277,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("Invalid standardization factor", invalidStandardizationFactor);
             argumentsOfScenario.Add("Failure reason", failureReason);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the standardization factor of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 52
+#line 50
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -330,16 +287,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 53
+#line 51
  testRunner.Given("a test is already created with the standization factor of \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 54
+#line 52
  testRunner.When(string.Format("the standardization factor is changed to \'{0}\'", invalidStandardizationFactor), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 55
+#line 53
  testRunner.Then(string.Format("a validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 56
+#line 54
  testRunner.And("the test not updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -354,7 +311,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The standardization factor should be higher than zero")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_1()
         {
-#line 52
+#line 50
 this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "The standardization factor should be higher than zero", ((string[])(null)));
 #line hidden
         }
@@ -367,7 +324,7 @@ this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "The standa
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The standardization factor should be higher than zero")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_0()
         {
-#line 52
+#line 50
 this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "The standardization factor should be higher than zero", ((string[])(null)));
 #line hidden
         }
@@ -380,7 +337,7 @@ this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "The standar
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the minimum grade of a test", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 62
+#line 60
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -390,13 +347,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 63
+#line 61
  testRunner.Given("a test is already created with the minimum grade of \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 64
+#line 62
  testRunner.When("the minimum grade is changed to \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 65
+#line 63
  testRunner.Then("the test is updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -410,7 +367,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("Invalid minimum grade", invalidMinimumGrade);
             argumentsOfScenario.Add("Failure reason", failureReason);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the minimum grade of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 67
+#line 65
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -420,16 +377,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 68
+#line 66
  testRunner.Given("a test is already created with the minimum grade of \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 69
+#line 67
  testRunner.When(string.Format("the minimum grade is changed to \'{0}\'", invalidMinimumGrade), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 70
+#line 68
  testRunner.Then(string.Format("a validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 71
+#line 69
  testRunner.And("the test not updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -444,7 +401,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The minimum grade should be higher than zero")]
         public void UpdatingTheMinimumGradeOfATestWithAInvalidNumber_1()
         {
-#line 67
+#line 65
 this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("-1", "The minimum grade should be higher than zero", ((string[])(null)));
 #line hidden
         }
@@ -457,7 +414,7 @@ this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("-1", "The minimum grade s
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "The minimum grade should be higher than zero")]
         public void UpdatingTheMinimumGradeOfATestWithAInvalidNumber_0()
         {
-#line 67
+#line 65
 this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("0", "The minimum grade should be higher than zero", ((string[])(null)));
 #line hidden
         }
