@@ -28,9 +28,11 @@ namespace Cifra.Application.Extensions
             services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NameMustBeFilled>();
             services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NumberOfVersionsMustBeValid>();
             services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.MinimumGradeMustBeValid>();
+            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.StandardizationFactorMustBeValid>();
             services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NameMustBeFilled>();
             services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NumberOfVersionsMustBeValid>();
             services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.MinimumGradeMustBeValid>();
+            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.StandardizationFactorMustBeValid>();
             services.AddScoped<IValidationRule<CreateClassCommand>, Validation.CreateClassModelValidationRules.NameMustBeFilled>();
             services.AddScoped<IValidationRule<UpdateClassCommand>, Validation.UpdateClassModelValidationRules.NameMustBeFilled>();
         }

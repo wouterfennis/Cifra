@@ -5,20 +5,20 @@ using System;
 namespace Cifra.Application.Validation.UpdateTestModelValidationRules
 {
     /// <summary>
-    /// Validates the name of a test
+    /// Validates the standardization factor of a test
     /// </summary>
-    public class NumberOfVersionsMustBeValid : IValidationRule<UpdateTestCommand>
+    public class StandardizationFactorMustBeValid : IValidationRule<UpdateTestCommand>
     {
-        private const string Message = "Number of versions must be higher than zero";
+        private const string Message = "Standardization factor must be higher than zero";
 
         /// <inheritdoc/>
         public ValidationMessage Validate(UpdateTestCommand model)
         {
             NullChecks(model);
 
-            if (model.Test.NumberOfVersions <= 0)
+            if (model.Test.StandardizationFactor <= 0)
             {
-                return new ValidationMessage(nameof(model.Test.NumberOfVersions), Message);
+                return new ValidationMessage(nameof(model.Test.StandardizationFactor), Message);
             }
             return null;
         }

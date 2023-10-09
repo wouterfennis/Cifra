@@ -5,7 +5,7 @@ using System;
 namespace Cifra.Application.Validation.CreateTestModelValidationRules
 {
     /// <summary>
-    /// Validates the name of a test
+    /// Validates the number of versions of a test
     /// </summary>
     public class NumberOfVersionsMustBeValid : IValidationRule<CreateTestCommand>
     {
@@ -18,7 +18,7 @@ namespace Cifra.Application.Validation.CreateTestModelValidationRules
 
             if (model.NumberOfVersions <= 0)
             {
-                return new ValidationMessage(nameof(model.Name), Message);
+                return new ValidationMessage(nameof(model.NumberOfVersions), Message);
             }
             return null;
         }

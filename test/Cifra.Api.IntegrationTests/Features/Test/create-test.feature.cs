@@ -64,7 +64,7 @@ Acceptance Criteria:
 - I can give a name to a test
 - I have to declare at least one version of the test
 - I cannot set a standardization factor lower than 1
-- I cannot set a minimum grade lower than 0 or higher than 10", ProgrammingLanguage.CSharp, featureTags);
+- I cannot set a minimum grade lower than 1 or higher than 10", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -159,13 +159,13 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("No number of versions supplied")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("No name is supplied")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        public void NoNumberOfVersionsSupplied()
+        public void NoNameIsSupplied()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No number of versions supplied", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No name is supplied", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -185,8 +185,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "Standardization factor",
                             "Minimum grade"});
                 table3.AddRow(new string[] {
-                            "Math chapter 1",
-                            "0",
+                            "",
+                            "1",
                             "9",
                             "1"});
 #line 33
@@ -195,22 +195,22 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table4.AddRow(new string[] {
-                            "Number of versions must be higher than zero"});
+                            "Name is required"});
 #line 36
- testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too low")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("No number of versions supplied")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        public void MinimumGradeIsTooLow()
+        public void NoNumberOfVersionsSupplied()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too low", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No number of versions supplied", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 40
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -230,32 +230,32 @@ this.ScenarioInitialize(scenarioInfo);
                             "Standardization factor",
                             "Minimum grade"});
                 table5.AddRow(new string[] {
-                            "Math chapter 2",
-                            "1",
+                            "Math chapter 1",
+                            "0",
                             "9",
-                            "-1"});
+                            "1"});
 #line 42
  testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table5, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table6.AddRow(new string[] {
-                            "Minimum grade must be between 1 and 10"});
+                            "Number of versions must be higher than zero"});
 #line 45
- testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table6, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table6, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too high")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Standardization factor is too low")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
-        public void MinimumGradeIsTooHigh()
+        public void StandardizationFactorIsTooLow()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too high", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Standardization factor is too low", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 49
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -275,19 +275,109 @@ this.ScenarioInitialize(scenarioInfo);
                             "Standardization factor",
                             "Minimum grade"});
                 table7.AddRow(new string[] {
-                            "Math chapter 3",
+                            "Math chapter 1",
                             "1",
-                            "9",
-                            "11"});
+                            "0",
+                            "1"});
 #line 51
  testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table7, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table8.AddRow(new string[] {
-                            "Minimum grade must be between 1 and 10"});
+                            "Standardization factor must be higher than zero"});
 #line 54
- testRunner.Then("a validation message is displayed containing the following message", ((string)(null)), table8, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table8, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too low")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
+        public void MinimumGradeIsTooLow()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too low", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 58
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 59
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table9.AddRow(new string[] {
+                            "Math chapter 2",
+                            "1",
+                            "9",
+                            "0"});
+#line 60
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table9, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Failure reason"});
+                table10.AddRow(new string[] {
+                            "Minimum grade must be from 1 to 10"});
+#line 63
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table10, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Minimum grade is too high")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Create test")]
+        public void MinimumGradeIsTooHigh()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Minimum grade is too high", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 67
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 68
+ testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table11.AddRow(new string[] {
+                            "Math chapter 3",
+                            "1",
+                            "9",
+                            "11"});
+#line 69
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table11, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Failure reason"});
+                table12.AddRow(new string[] {
+                            "Minimum grade must be from 1 to 10"});
+#line 72
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table12, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

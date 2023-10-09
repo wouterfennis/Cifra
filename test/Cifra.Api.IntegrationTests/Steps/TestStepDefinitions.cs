@@ -84,6 +84,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         public async Task WhenTheNameIsChangedToAsync(string newName)
         {
             var id = _scenarioContext.Get<int>(_createTestResponseKey);
+
             var result = await _apiClient.TestGET2Async(id, "1");
             result.Test.Name = newName;
             var request = result.Adapt<UpdateTestRequest>();
@@ -101,6 +102,30 @@ namespace Cifra.Api.IntegrationTests.Steps
 
             await UpdateTest(request);
         }
+
+        [When(@"the standardization factor is changed to '([^']*)'")]
+        public async Task WhenTheStandardizationFactorIsChangedTo(int newMinimumGrade)
+        {
+            GetTestResponse result = await GetCurrentTest();
+            result.Test.StandardizationFactor = newMinimumGrade;
+
+            var request = result.Adapt<UpdateTestRequest>();
+
+            await UpdateTest(request);
+        }
+
+        [When(@"the minimum grade is changed to '([^']*)'")]
+        public async Task WhenTheMinimumGradeIsChangedTo(int newMinimumGrade)
+        {
+            GetTestResponse result = await GetCurrentTest();
+            result.Test.MinimumGrade = newMinimumGrade;
+
+            var request = result.Adapt<UpdateTestRequest>();
+
+            await UpdateTest(request);
+        }
+
+
 
         [When(@"a request is made to retrieve all tests")]
         public async Task WhenARequestIsMadeToRetrieveAllTestsAsync()
@@ -127,12 +152,26 @@ namespace Cifra.Api.IntegrationTests.Steps
             actualTests.Should().BeEquivalentTo(tests);
         }
 
-        [Then(@"a validation message is displayed containing the following message")]
+        [Then(@"a create test validation message is displayed containing the following message")]
         public void ThenAValidationMessageIsDisplayedContainingTheFollowingMessage(Table table)
         {
             var expectedValidationMessage = table.CreateInstance<ValidationMessageModel>();
             var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_responseException);
             exception.Result.ValidationMessages.Single().Message.Should().Be(expectedValidationMessage.FailureReason);
+        }
+
+        [Then(@"a create test validation message is returned containing '([^']*)'")]
+        public void ThenACreateTestValidationMessageIsReturnedContaining(string message)
+        {
+            var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_responseException);
+            exception.Result.ValidationMessages.Single().Message.Should().Be(message);
+        }
+
+        [Then(@"a update test validation message is returned containing '([^']*)'")]
+        public void ThenAUpdateTestValidationMessageIsReturnedContaining(string message)
+        {
+            var exception = _scenarioContext.Get<ApiException<UpdateTestResponse>>(_responseException);
+            exception.Result.ValidationMessages.Single().Message.Should().Be(message);
         }
 
         [Then(@"the previously created test is displayed")]
@@ -167,7 +206,7 @@ namespace Cifra.Api.IntegrationTests.Steps
                 var response = await _apiClient.TestPUTAsync("1", request);
                 _scenarioContext.Add(_updateTestResponseKey, response);
             }
-            catch (ApiException<CreateTestResponse> exception)
+            catch (ApiException<UpdateTestResponse> exception)
             {
                 _scenarioContext.Add(_responseException, exception);
             }

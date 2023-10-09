@@ -18,7 +18,7 @@ namespace Cifra.Application.Validation.UpdateTestModelValidationRules
 
             if (model.Test.MinimumGrade < 1 || model.Test.MinimumGrade > 10)
             {
-                return new ValidationMessage(nameof(model.Test.Name), Message);
+                return new ValidationMessage(nameof(model.Test.MinimumGrade), Message);
             }
             return null;
         }

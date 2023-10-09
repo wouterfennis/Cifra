@@ -5,20 +5,20 @@ using System;
 namespace Cifra.Application.Validation.CreateTestModelValidationRules
 {
     /// <summary>
-    /// Validates the minimum grade of a test
+    /// Validates the standardization factor of a test
     /// </summary>
-    public class MinimumGradeMustBeValid : IValidationRule<CreateTestCommand>
+    public class StandardizationFactorMustBeValid : IValidationRule<CreateTestCommand>
     {
-        private const string Message = "Minimum grade must be from 1 to 10";
+        private const string Message = "Standardization factor must be higher than zero";
 
         /// <inheritdoc/>
         public ValidationMessage Validate(CreateTestCommand model)
         {
             NullChecks(model);
 
-            if (model.MinimumGrade < 1 || model.MinimumGrade > 10)
+            if (model.StandardizationFactor <= 0)
             {
-                return new ValidationMessage(nameof(model.MinimumGrade), Message);
+                return new ValidationMessage(nameof(model.StandardizationFactor), Message);
             }
             return null;
         }

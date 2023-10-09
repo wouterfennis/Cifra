@@ -32,42 +32,61 @@ Scenario: Updating the number of versions of a test
 		| Number of versions |
 		| 2                  |
 
-Scenario: Updating the number of versions of a test with a invalid number
-	Given a test is already created with the number of versions of '2'
-	When the number of versions is changed to '<Invalid number of versions>'
-	Then a validation message is returned containing '<Failure reason>'
-	And the test not updated
-Examples:
-	| Invalid number of versions | Failure reason                                    |
-	| -1                         | The number of versions should be higher than zero |
-	| 0                          | The number of versions should be higher than zero |
-
 Scenario: Updating the standardization factor of a test
-	Given a test is already created with the standization factor of '2'
-	When the standardization factor is changed to '1'
-	Then the test is updated
-
-Scenario: Updating the standardization factor of a test with a invalid number
-	Given a test is already created with the standization factor of '2'
-	When the standardization factor is changed to '<Invalid standardization factor>'
-	Then a validation message is returned containing '<Failure reason>'
-	And the test not updated
-Examples:
-	| Invalid standardization factor | Failure reason                                        |
-	| -1                             | The standardization factor should be higher than zero |
-	| 0                              | The standardization factor should be higher than zero |
+	Given a request is made to create a new test with the following values:
+		| Standardization factor |
+		| 1                      |
+	When the standardization factor is changed to '2'
+	Then the test is persisted with the following values:
+		| Standardization factor |
+		| 2                      |
 
 Scenario: Updating the minimum grade of a test
-	Given a test is already created with the minimum grade of '2'
-	When the minimum grade is changed to '1'
-	Then the test is updated
+	Given a request is made to create a new test with the following values:
+		| Minimum grade |
+		| 1             |
+	When the minimum grade is changed to '2'
+	Then the test is persisted with the following values:
+		| Minimum grade |
+		| 2             |
+
+Scenario: Updating the standardization factor of a test with a invalid number
+	Given a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+	When the standardization factor is changed to '<Invalid standardization factor>'
+	Then a update test validation message is returned containing '<Failure reason>'
+	Then the test is persisted with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+Examples:
+	| Invalid standardization factor | Failure reason                                  |
+	| -1                             | Standardization factor must be higher than zero |
+	| 0                              | Standardization factor must be higher than zero |
+
+Scenario: Updating the number of versions of a test with a invalid number
+	Given a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+	When the number of versions is changed to '<Invalid number of versions>'
+	Then a update test validation message is returned containing '<Failure reason>'
+	Then the test is persisted with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
+Examples:
+	| Invalid number of versions | Failure reason                              |
+	| -1                         | Number of versions must be higher than zero |
+	| 0                          | Number of versions must be higher than zero |
 
 Scenario: Updating the minimum grade of a test with a invalid number
-	Given a test is already created with the minimum grade of '2'
+	Given a request is made to create a new test with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
 	When the minimum grade is changed to '<Invalid minimum grade>'
-	Then a validation message is returned containing '<Failure reason>'
-	And the test not updated
+	Then a update test validation message is returned containing '<Failure reason>'
+	Then the test is persisted with the following values:
+		| Name           | Number of versions | Standardization factor | Minimum grade |
+		| Math chapter 1 | 1                  | 9                      | 1             |
 Examples:
-	| Invalid minimum grade | Failure reason                               |
-	| -1                    | The minimum grade should be higher than zero |
-	| 0                     | The minimum grade should be higher than zero |
+	| Invalid minimum grade | Failure reason                         |
+	| 0                     | Minimum grade must be between 1 and 10 |
