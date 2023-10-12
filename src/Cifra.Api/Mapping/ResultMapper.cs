@@ -48,5 +48,10 @@ namespace Cifra.Api.Mapping
         {
             return input.Adapt<UpdateTestResponse>();
         }
+
+        public static DeleteTestResponse MapToResponse(this DeleteTestResult input)
+        {
+            return input.Adapt<DeleteTestResponse>();
+        }
     }
 }

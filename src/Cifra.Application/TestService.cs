@@ -76,5 +76,12 @@ namespace Cifra.Application
             Test test = await _testRepository.GetAsync(id);
             return new GetTestResult(test);
         }
+
+        /// <inheritdoc/>
+        public async Task<DeleteTestResult> DeleteTestAsync(DeleteTestCommand command)
+        {
+            await _testRepository.DeleteAsync(command.TestId);
+            return new DeleteTestResult();
+        }
     }
 }

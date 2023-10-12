@@ -24,5 +24,10 @@ namespace Cifra.Api.Mapping
         {
             return input.Adapt<CreateTestResultsSpreadsheetCommand>();
         }
+        
+        public static DeleteTestCommand MapToCommand(this DeleteTestRequest input)
+        {
+            return input.Adapt<DeleteTestCommand>();
+        }
     }
 }

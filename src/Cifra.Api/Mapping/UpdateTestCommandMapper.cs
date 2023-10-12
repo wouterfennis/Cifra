@@ -6,7 +6,7 @@ namespace Cifra.Api.Mapping
 {
     public static class UpdateTestCommandMapper
     {
-        public static UpdateTestCommand Map(this UpdateTestRequest input)
+        public static UpdateTestCommand MapToCommand(this UpdateTestRequest input)
         {
             var assignments = input.Test.Assignments
                 .Select(x => new Domain.Assignment(x.Id, x.NumberOfQuestions))

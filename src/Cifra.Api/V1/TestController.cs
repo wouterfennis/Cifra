@@ -100,7 +100,6 @@ namespace Cifra.Api.V1
         /// Update a test.
         /// </summary>
         /// <param name="request">The request containing details of the test.</param>
-        /// <returns>Reference to newly created assignment</returns>
         /// <response code="201">Reference to updated test.</response> 
         /// <response code="400">Supplied test data was invalid.</response> 
         /// <response code="500">The test could not be updated.</response> 
@@ -110,8 +109,34 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateTestAsync(UpdateTestRequest request)
         {
-            var command = request.Map();
+            var command = request.MapToCommand();
             UpdateTestResult result = await _testService.UpdateTestAsync(command);
+
+            var response = result.MapToResponse();
+
+            if (response.ValidationMessages.Any())
+            {
+                _logger.LogInformation("Request is not valid");
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Delete a test.
+        /// </summary>
+        /// <param name="request">The request containing details of the test.</param>
+        /// <response code="201">Reference to updated test.</response> 
+        /// <response code="400">Supplied test data was invalid.</response> 
+        /// <response code="500">The test could not be updated.</response> 
+        [HttpDelete]
+        [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteTestAsync(DeleteTestRequest request)
+        {
+            var command = request.MapToCommand();
+            DeleteTestResult result = await _testService.DeleteTestAsync(command);
 
             var response = result.MapToResponse();
 

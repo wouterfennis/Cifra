@@ -56,9 +56,23 @@ namespace Cifra.Api.IntegrationTests.Steps
         }
 
         [When(@"a request is made to delete the test")]
-        public void WhenARequestIsMadeToDeleteTheTest()
+        public async Task WhenARequestIsMadeToDeleteTheTestAsync()
         {
-            throw new PendingStepException();
+            var test = _scenarioContext.Get<TestDetails>(_testDetailsKey);
+
+            var request = new DeleteTestRequest()
+            {
+                TestId = test.CreateTestResponse.TestId
+            };
+
+            try
+            {
+                var result = await _apiClient.TestDELETEAsync("1", request);
+            }
+            catch (ApiException<DeleteTestResponse> exception)
+            {
+                _scenarioContext.Add(_responseException, exception);
+            }
         }
 
         [Given(@"a request is made to create a new test with the following values:")]
@@ -183,6 +197,14 @@ namespace Cifra.Api.IntegrationTests.Steps
             retrievedTests.Should().ContainSingle();
             var retrievedTest = retrievedTests.Single();
             AssertTest(testDetails, retrievedTest);
+        }
+
+        [Then(@"the test no longer exists")]
+        public async Task ThenTheTestNoLongerExistsAsync()
+        {
+            await WhenARequestIsMadeToRetrieveAllTestsAsync();
+            List<Test> retrievedTests = _scenarioContext.Get<List<Test>>(_getTestResponseKey);
+            retrievedTests.Should().BeEmpty();
         }
 
         [Then(@"a message is displayed explaining that no tests are present")]

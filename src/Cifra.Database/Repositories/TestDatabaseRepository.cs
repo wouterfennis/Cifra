@@ -54,6 +54,15 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
+        public async Task DeleteAsync(int id)
+        {
+            var test = await _dbContext.Tests.SingleAsync(x => x.Id == id);
+            _dbContext.Tests.Remove(test);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
             var updatedEntity = updatedTest.MapToSchema();

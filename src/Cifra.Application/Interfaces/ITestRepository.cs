@@ -28,5 +28,10 @@ namespace Cifra.Application.Interfaces
         /// Get all tests
         /// </summary>
         Task<List<Test>> GetAllAsync();
+
+        /// <summary>
+        /// Get all tests
+        /// </summary>
+        Task DeleteAsync(int id);
     }
 }

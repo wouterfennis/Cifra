@@ -12,12 +12,12 @@ namespace Cifra.Application
         /// <summary>
         /// Creates a test.
         /// </summary>
-        Task<CreateTestResult> CreateTestAsync(CreateTestCommand model);
+        Task<CreateTestResult> CreateTestAsync(CreateTestCommand command);
 
         /// <summary>
         /// Updates a test.
         /// </summary>
-        Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model);
+        Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand command);
 
         /// <summary>
         /// Retrieves all tests currently available.
@@ -28,5 +28,10 @@ namespace Cifra.Application
         /// Retrieves test.
         /// </summary>
         Task<GetTestResult> GetTestAsync(int id);
+
+        /// <summary>
+        /// Deletes a test.
+        /// </summary>
+        Task<DeleteTestResult> DeleteTestAsync(DeleteTestCommand command);
     }
 }
