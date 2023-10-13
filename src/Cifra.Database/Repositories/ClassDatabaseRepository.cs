@@ -56,11 +56,18 @@ namespace Cifra.Database.Repositories
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Class updatedClass)
         {
-            var updatedEntity = updatedClass.MapToSchema();
-            var updatedStudentsIds = updatedEntity.Students.Select(x => x.Id).ToList();
+            var updatedEntity = updatedClass.MapToSchema(); 
+            var existingEntity = await _dbContext.Classes
+                .AsNoTracking()
+                .Include(x => x.Students)
+                .SingleOrDefaultAsync(x => x.Id == updatedClass.Id);
+            var studentsToRemove = existingEntity.Students
+                .Where(x => !updatedEntity.Students.Select(y => y.Id)
+                .Contains(x.Id))
+                .ToList();
 
             _dbContext.Classes.Update(updatedEntity);
-            _dbContext.Students.RemoveRange(_dbContext.Students.Where(x => !updatedStudentsIds.Contains(x.Id)));
+            _dbContext.Students.RemoveRange(studentsToRemove);
 
             await _dbContext.SaveChangesAsync();
 

@@ -22,7 +22,7 @@ namespace Cifra.Database.Schema
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string Infix { get; set; }
+        public string? Infix { get; set; }
 
         [Required]
         /// <summary>

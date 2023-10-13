@@ -2,6 +2,7 @@
 @using Cifra.Api.Client
 @using System.Text.RegularExpressions
 @using Cifra.Frontend.Extensions;
+@using Cifra.Frontend.Models;
 @inject ICifraApiClient Client
 @inject NavigationManager NavManager
 @inject IWebHostEnvironment Environment
@@ -90,7 +91,7 @@
     public int ClassId { get; set; }
 
     private Api.Client.Class? _retrievedClass;
-    private Regex _nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<lastName>\w.*)$");
+    private Regex _nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<completeLastName>\w.*)$");
     private int _counter = 0;
     private string? _firstName = null;
     private string? _lastName = null;
@@ -139,15 +140,23 @@
 
             string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
             var nameParts = _nameRegex.Match(content).Groups;
+            var firstName = nameParts.GetValueOrDefault("firstName").Value;
+            var lastNameParts = GetLastNameParts(nameParts.GetValueOrDefault("completeLastName").Value);
             var student = new Student
                 {
-                    FirstName = nameParts.GetValueOrDefault("firstName").Value,
-                    LastName = nameParts.GetValueOrDefault("lastName").Value
+                    FirstName = firstName,
+                    Infix = lastNameParts.Infix,
+                    LastName = lastNameParts.LastName
                 };
             _retrievedClass.Students.Add(student);
         }
         sr.Close();
         File.Delete(trustedFileNameForFileStorage);
+    }
+
+    private LastNameParts GetLastNameParts(string completeLastName)
+    {
+        return LastNameParts.Create(completeLastName);
     }
 
     private void RemoveStudent(Student student)

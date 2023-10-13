@@ -18,7 +18,7 @@
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string Infix { get; set; }
+        public string? Infix { get; set; }
 
         /// <summary>
         /// The last name of the student

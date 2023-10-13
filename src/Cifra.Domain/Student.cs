@@ -20,7 +20,7 @@ namespace Cifra.Domain
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string Infix { get; }
+        public string? Infix { get; }
 
         /// <summary>
         /// The last name of the student
@@ -30,7 +30,7 @@ namespace Cifra.Domain
         /// <summary>
         /// Constructor without id
         /// </summary>
-        public Student(Name firstName, string infix, Name lastName)
+        public Student(Name firstName, string? infix, Name lastName)
         {
             FirstName = firstName;
             Infix = infix;
@@ -40,7 +40,7 @@ namespace Cifra.Domain
         /// <summary>
         /// Constructor with id
         /// </summary>
-        public Student(int id, Name firstName, string infix, Name lastName)
+        public Student(int id, Name firstName, string? infix, Name lastName)
         {
             Id = id;
             FirstName = firstName;
