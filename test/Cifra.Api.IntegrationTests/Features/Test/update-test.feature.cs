@@ -128,7 +128,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table13, "Given ");
 #line hidden
 #line 21
- testRunner.When("the name is changed to \'Math chapter 1 revision\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the test name is changed to \'Math chapter 1 revision\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});

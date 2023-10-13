@@ -6,7 +6,7 @@ namespace Cifra.Api.IntegrationTests.Models
         /// <summary>
         /// The Name.
         /// </summary>
-        public string Name { get; init; } = DefaultValues.DefaultName;
+        public string Name { get; init; } = DefaultValues.DefaultTestName;
 
         /// <summary>
         /// The number of versions of the test that where made.

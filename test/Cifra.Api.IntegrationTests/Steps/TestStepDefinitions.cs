@@ -94,7 +94,7 @@ namespace Cifra.Api.IntegrationTests.Steps
             }
         }
 
-        [When(@"the name is changed to '([^']*)'")]
+        [When(@"the test name is changed to '([^']*)'")]
         public async Task WhenTheNameIsChangedToAsync(string newName)
         {
             var id = _scenarioContext.Get<int>(_createTestResponseKey);

@@ -18,7 +18,7 @@ Scenario: Updating the name of a test
 	Given a request is made to create a new test with the following values:
 		| Name           |
 		| Math chapter 1 |
-	When the name is changed to 'Math chapter 1 revision'
+	When the test name is changed to 'Math chapter 1 revision'
 	Then the test is persisted with the following values:
 		| Name                    |
 		| Math chapter 1 revision |
