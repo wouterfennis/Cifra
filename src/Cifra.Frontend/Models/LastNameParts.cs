@@ -20,19 +20,28 @@ namespace Cifra.Frontend.Models
 
         public static LastNameParts Create(string completeLastName)
         {
-            // Check if the last name has an infix
-            foreach (string infix in DutchInfixes.AllInfixes)
-            {
-                int infixIndex = completeLastName.IndexOf(infix);
-                if (infixIndex != -1)
-                {
-                    var lastName = completeLastName.Substring(0, infixIndex) + completeLastName.Substring(infixIndex + infix.Length);
+            string[] parts = completeLastName.Split(' ');
 
-                    return new LastNameParts(infix, lastName);
+            string? infix = null;
+            foreach (var part in parts)
+            {
+                if (DutchInfixes.AllInfixes.Contains(part))
+                {
+                    infix += $" {part}";
                 }
             }
 
-            return new LastNameParts(completeLastName);
+            if (infix == null)
+            {
+                return new LastNameParts(completeLastName);
+            }
+            
+            infix = infix.TrimStart();
+            string lastName = completeLastName
+                .Replace(infix, string.Empty)
+                .TrimStart();
+
+            return new LastNameParts(infix, lastName);
         }
     }
 }
