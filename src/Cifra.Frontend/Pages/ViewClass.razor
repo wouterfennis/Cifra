@@ -17,6 +17,13 @@
             </div>
         </div>
 
+        @if (_validationMessage != null)
+        {
+            <div class="alert alert-warning" role="alert">
+                @_validationMessage
+            </div>
+        }
+
         <EditForm Model="@_retrievedClass" OnValidSubmit="@HandleUpdateClass">
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -26,6 +33,7 @@
                         <tr>
                             <th class="col-3">@nameof(Student).ToDisplayFormat()</th>
                             <th class="col-3">@nameof(Student.FirstName).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.Infix).ToDisplayFormat()</th>
                             <th class="col-3">@nameof(Student.LastName).ToDisplayFormat()</th>
                             <th class="col-3">Remove</th>
                         </tr>
@@ -44,6 +52,11 @@
                                     <InputText id="@{
                                 student.Id + student.FirstName
  }" class="form-control" @bind-Value="student.FirstName" />
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.Infix
+ }" class="form-control" @bind-Value="student.Infix" />
                                 </td>
                                 <td>
                                     <InputText id="@{
@@ -69,7 +82,10 @@
                                 <input id="newFirstName" type="text" class="form-control" @bind="_firstName" />
                             </td>
                             <td>
-                                <input id="newFirstName" type="text" class="form-control" @bind="_lastName" />
+                                <input id="newInfix" type="text" class="form-control" @bind="_infix" />
+                            </td>
+                            <td>
+                                <input id="newLastName" type="text" class="form-control" @bind="_lastName" />
                             </td>
                             <td>
                                 <div class="btn btn-outline-success" @onclick="(() => AddStudent())">Add</div>
@@ -95,8 +111,10 @@
     public int ClassId { get; set; }
 
     private Api.Client.Class? _retrievedClass;
+    private string? _validationMessage = null;
     private int _counter = 0;
     private string? _firstName = null;
+    private string? _infix = null;
     private string? _lastName = null;
 
     protected override async Task OnInitializedAsync()
@@ -117,7 +135,8 @@
 
         if (response.ValidationMessages.Any())
         {
-            // Show validation messages
+            string message = "Updating class failed because of:";
+            _validationMessage = message += response.ValidationMessages.Select(x => $"Field: {x.Field} Message: {x.Message}{System.Environment.NewLine}");
         }
 
         // Redirect to class view
@@ -146,7 +165,7 @@
 
             if (!isValidName || nameParts == null)
             {
-                // warning that the file is not perfect
+                _validationMessage = $"CSV contains invalid student: {content}";
                 break;
             }
 
@@ -184,7 +203,7 @@
     {
         if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrEmpty(_lastName))
         {
-            // Do validation
+            _validationMessage = "First name and last name are required";
         }
 
         _retrievedClass!.Students.Add(new Student

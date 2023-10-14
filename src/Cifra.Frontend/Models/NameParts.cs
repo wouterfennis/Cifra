@@ -19,6 +19,11 @@ namespace Cifra.Frontend.Models
         {
             nameParts = null;
 
+            if(string.IsNullOrWhiteSpace(completeName))
+            {
+                return false;
+            }
+
             string[] parts = completeName.Split(' ');
             string firstName = parts.First();
 
