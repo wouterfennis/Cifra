@@ -20,38 +20,42 @@
         <EditForm Model="@_retrievedClass" OnValidSubmit="@HandleUpdateClass">
             <DataAnnotationsValidator />
             <ValidationSummary />
-                <div class="row">
-                    <table class="table col">
-                        <thead>
+            <div class="row">
+                <table class="table col">
+                    <thead>
+                        <tr>
+                            <th class="col-3">@nameof(Student).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.FirstName).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.LastName).ToDisplayFormat()</th>
+                            <th class="col-3">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Student student in _retrievedClass.Students)
+                        {
                             <tr>
-                                <th class="col-3">@nameof(Student).ToDisplayFormat()</th>
-                                <th class="col-3">@nameof(Student.FirstName).ToDisplayFormat()</th>
-                                <th class="col-3">@nameof(Student.LastName).ToDisplayFormat()</th>
-                                <th class="col-3">Remove</th>
+                                <td>
+                                    @{
+                                        _counter++;
+                                    }
+                                    @_counter
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.FirstName
+ }" class="form-control" @bind-Value="student.FirstName" />
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.LastName
+ }" class="form-control" @bind-Value="student.LastName" />
+                                </td>
+                                <td>
+                                    <div class="btn btn-outline-danger" @onclick="(() => RemoveStudent(student))">Delete</div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Student student in _retrievedClass.Students)
-                            {
-                                <tr>
-                                    <td>
-                                        @{
-                                            _counter++;
-                                        }
-                                        @_counter
-                                    </td>
-                                    <td>
-                                        <InputText id="@{ student.Id + student.FirstName }" class="form-control" @bind-Value="student.FirstName" />
-                                    </td>
-                                    <td>
-                                        <InputText id="@{ student.Id + student.LastName }" class="form-control" @bind-Value="student.LastName" />
-                                    </td>
-                                    <td>
-                                        <div class="btn btn-outline-danger" @onclick="(() => RemoveStudent(student))">Delete</div>
-                                    </td>
-                                </tr>
-                            }
-                            <tr>
+                        }
+                        <tr>
                             <td>
                                 @{
                                     _counter++;
@@ -61,19 +65,19 @@
                                     _counter = 0;
                                 }
                             </td>
-                                <td>
+                            <td>
                                 <input id="newFirstName" type="text" class="form-control" @bind="_firstName" />
-                                </td>
-                                <td>
+                            </td>
+                            <td>
                                 <input id="newFirstName" type="text" class="form-control" @bind="_lastName" />
-                                </td>
-                                <td>
+                            </td>
+                            <td>
                                 <div class="btn btn-outline-success" @onclick="(() => AddStudent())">Add</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <InputFile OnChange="@LoadFiles" />
 
@@ -120,20 +124,19 @@
         NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
     }
 
-    private async Task LoadFiles(InputFileChangeEventArgs e)
+    private async Task LoadFiles(InputFileChangeEventArgs eventArguments)
     {
         _retrievedClass!.Students.Clear();
-        var trustedFileNameForFileStorage = Path.GetTempFileName();
 
-        await using FileStream fs = new(trustedFileNameForFileStorage, FileMode.Create);
-        await e.File.OpenReadStream().CopyToAsync(fs);
-        fs.Close();
-        using var sr = new StreamReader(File.OpenRead(trustedFileNameForFileStorage));
+        string filePath = await UploadFileToTemporaryStorageAsync(eventArguments);
+
+        using var sr = new StreamReader(File.OpenRead(filePath));
         await sr.ReadLineAsync();
         while (!sr.EndOfStream)
         {
             string? line = await sr.ReadLineAsync();
-            if(line == null){
+            if (line == null)
+            {
                 break;
             }
 
@@ -148,7 +151,18 @@
             _retrievedClass.Students.Add(student);
         }
         sr.Close();
-        File.Delete(trustedFileNameForFileStorage);
+
+        File.Delete(filePath);
+    }
+
+    private async Task<string> UploadFileToTemporaryStorageAsync(InputFileChangeEventArgs eventArguments)
+    {
+        var temporaryFileLocation = Path.GetTempFileName();
+
+        await using FileStream fs = new(temporaryFileLocation, FileMode.Create);
+        await eventArguments.File.OpenReadStream().CopyToAsync(fs);
+
+        return temporaryFileLocation;
     }
 
     private void RemoveStudent(Student student)
@@ -158,15 +172,16 @@
 
     private void AddStudent()
     {
-        if(string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrEmpty(_lastName))
+        if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrEmpty(_lastName))
         {
             // Do validation
         }
 
-        _retrievedClass!.Students.Add(new Student{
-            FirstName = _firstName,
-            LastName = _lastName 
-        });
+        _retrievedClass!.Students.Add(new Student
+            {
+                FirstName = _firstName,
+                LastName = _lastName
+            });
 
         _firstName = null;
         _lastName = null;
