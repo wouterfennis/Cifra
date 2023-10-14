@@ -91,7 +91,6 @@
     public int ClassId { get; set; }
 
     private Api.Client.Class? _retrievedClass;
-    private Regex _nameRegex = new Regex(@"^(?<firstName>\w+)\ (?<completeLastName>\w.*)$");
     private int _counter = 0;
     private string? _firstName = null;
     private string? _lastName = null;
@@ -130,7 +129,7 @@
         await e.File.OpenReadStream().CopyToAsync(fs);
         fs.Close();
         using var sr = new StreamReader(File.OpenRead(trustedFileNameForFileStorage));
-        var t = await sr.ReadLineAsync();
+        await sr.ReadLineAsync();
         while (!sr.EndOfStream)
         {
             string? line = await sr.ReadLineAsync();
@@ -139,24 +138,17 @@
             }
 
             string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
-            var nameParts = _nameRegex.Match(content).Groups;
-            var firstName = nameParts.GetValueOrDefault("firstName").Value;
-            var lastNameParts = GetLastNameParts(nameParts.GetValueOrDefault("completeLastName").Value);
+            var nameParts = NameParts.Create(content);
             var student = new Student
                 {
-                    FirstName = firstName,
-                    Infix = lastNameParts.Infix,
-                    LastName = lastNameParts.LastName
+                    FirstName = nameParts.FirstName,
+                    Infix = nameParts.Infix,
+                    LastName = nameParts.LastName
                 };
             _retrievedClass.Students.Add(student);
         }
         sr.Close();
         File.Delete(trustedFileNameForFileStorage);
-    }
-
-    private LastNameParts GetLastNameParts(string completeLastName)
-    {
-        return LastNameParts.Create(completeLastName);
     }
 
     private void RemoveStudent(Student student)
