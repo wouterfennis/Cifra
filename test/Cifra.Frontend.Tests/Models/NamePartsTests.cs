@@ -12,7 +12,7 @@ namespace Cifra.Frontend.Tests.Extensions
         public void Create_WithNoDutchInfix_ReturnsFirstnameAndLastnameSeparate(string completeName, string expectedFirstName, string expectedLastName)
         {
             // Act
-            var result = NameParts.Create(completeName);
+            var result = NameParts.TryCreate(completeName);
 
             // Assert
             result.FirstName.Should().Be(expectedFirstName);
@@ -26,7 +26,7 @@ namespace Cifra.Frontend.Tests.Extensions
         public void Create_WithOneWordDutchInfix_ReturnsFirstnameInfixAndLastnameSeparate(string completeLastName, string expectedFirstName, string expectedInfix, string expectedLastName)
         {
             // Act
-            var result = NameParts.Create(completeLastName);
+            var result = NameParts.TryCreate(completeLastName);
 
             // Assert
             result.FirstName.Should().Be(expectedFirstName);
@@ -40,7 +40,7 @@ namespace Cifra.Frontend.Tests.Extensions
         public void Create_WithTwoWordsDutchInfix_ReturnsInfixAndLastnameSeparate(string completeLastName, string expectedFirstName, string expectedInfix, string expectedLastName)
         {
             // Act
-            var result = NameParts.Create(completeLastName);
+            var result = NameParts.TryCreate(completeLastName);
 
             // Assert
             result.FirstName.Should().Be(expectedFirstName);

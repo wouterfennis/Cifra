@@ -127,6 +127,7 @@
     private async Task LoadFiles(InputFileChangeEventArgs eventArguments)
     {
         _retrievedClass!.Students.Clear();
+        var newStudents = new List<Student>();
 
         string filePath = await UploadFileToTemporaryStorageAsync(eventArguments);
 
@@ -141,15 +142,24 @@
             }
 
             string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
-            var nameParts = NameParts.Create(content);
+            bool isValidName = NameParts.TryCreate(content, out NameParts? nameParts);
+
+            if (!isValidName || nameParts == null)
+            {
+                // warning that the file is not perfect
+                break;
+            }
+
             var student = new Student
                 {
                     FirstName = nameParts.FirstName,
                     Infix = nameParts.Infix,
                     LastName = nameParts.LastName
                 };
-            _retrievedClass.Students.Add(student);
+            newStudents.Add(student);
         }
+        _retrievedClass.Students = newStudents;
+
         sr.Close();
 
         File.Delete(filePath);

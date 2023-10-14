@@ -15,8 +15,10 @@ namespace Cifra.Frontend.Models
             LastName = lastName;
         }
 
-        public static NameParts Create(string completeName)
+        public static bool TryCreate(string completeName, out NameParts? nameParts)
         {
+            nameParts = null;
+
             string[] parts = completeName.Split(' ');
             string firstName = parts.First();
 
@@ -32,17 +34,23 @@ namespace Cifra.Frontend.Models
                 }
             }
 
-            if (infix == null)
+            if (infix != null)
             {
-                return new NameParts(firstName, infix, lastName);
+                infix = infix.TrimStart();
+                lastName = lastName
+                    .Replace(infix, string.Empty)
+                    .TrimStart();
             }
 
-            infix = infix.TrimStart();
-            lastName = lastName
-                .Replace(infix, string.Empty)
-                .TrimStart();
+            bool isValid = !string.IsNullOrWhiteSpace(firstName) &&
+                           !string.IsNullOrWhiteSpace(lastName);
 
-            return new NameParts(firstName, infix, lastName);
+            if (isValid)
+            {
+                nameParts = new NameParts(firstName, infix, lastName);
+            }
+
+            return isValid;
         }
     }
 }
