@@ -28,7 +28,7 @@ services:
               NUGET_AUTH_TOKEN: ${NUGET_AUTH_PASSWORD}
         image: wouterfennis/cifra-frontend:dev
         ports:
-            - "8080:8080"
+            - "80:8080"
         environment:
           - ASPNETCORE_ENVIRONMENT=Development
           - ASPNETCORE_URLS=http://+:8080;
