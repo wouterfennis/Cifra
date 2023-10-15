@@ -1,4 +1,5 @@
 ﻿using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,6 +33,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Get all tests
         /// </summary>
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Name Name);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cifra.Domain.ValueTypes;
+﻿using Cifra.Domain.Validation;
+using Cifra.Domain.ValueTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,22 +53,37 @@ namespace Cifra.Domain
             NumberOfVersions = numberOfVersions;
         }
 
-        /// <summary>
-        /// Constructor for existing tests.
-        /// </summary>
-        public Test(int id,
-            Name testName,
-            StandardizationFactor standardizationFactor,
-            Grade minimumGrade,
-            List<Assignment> assignments,
-            int numberOfVersions)
+        public static Result<Test> TryCreate(string testName, int standardizationFactor, int minimumGrade, int numberOfVerions)
         {
-            Id = id;
-            Name = testName;
-            Assignments = assignments ?? throw new ArgumentNullException(nameof(assignments));
-            StandardizationFactor = standardizationFactor;
-            MinimumGrade = minimumGrade;
-            NumberOfVersions = numberOfVersions;
+            Result<Name> testNameResult = Name.CreateFromString(testName);
+            Result<StandardizationFactor> standardizationFactorResult = StandardizationFactor.CreateFromInteger(standardizationFactor);
+            Result<Grade> minimumGradeResult = Grade.CreateFromInteger(minimumGrade);
+
+            if (!testNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), "Testname is not valid");
+                return Result<Test>.Fail<Test>(validationMessage);
+            }
+
+            if (!standardizationFactorResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), standardizationFactorResult.ValidationMessage!);
+                return Result<Test>.Fail<Test>(validationMessage);
+            }
+
+            if (!minimumGradeResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(minimumGrade), minimumGradeResult.ValidationMessage!);
+                return Result<Test>.Fail<Test>(validationMessage);
+            }
+
+            if (numberOfVerions <= 0)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfVerions), "There should be at least one version of the test");
+                return Result<Test>.Fail<Test>(validationMessage);
+            }
+
+            return Result<Test>.Ok<Test>(new Test(testNameResult.Value!, standardizationFactorResult.Value!, minimumGradeResult.Value!, numberOfVerions));
         }
 
         /// <summary>

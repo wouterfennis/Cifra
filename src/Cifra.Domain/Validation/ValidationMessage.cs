@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Cifra.Domain.Validation
 {
     /// <summary>
@@ -20,7 +19,7 @@ namespace Cifra.Domain.Validation
         /// <summary>
         /// Ctor
         /// </summary>
-        public ValidationMessage(string field, string message)
+        public ValidationMessage(string field, string message) // TODO make private
         {
             Field = field;
             Message = message;
@@ -32,6 +31,14 @@ namespace Cifra.Domain.Validation
         public static ValidationMessage Create(string field, string message)
         {
             return new ValidationMessage(field, message);
+        }
+
+        /// <summary>
+        /// Static way to create <see cref="ValidationMessage"/>.
+        /// </summary>
+        public static ValidationMessage Create(string field, ValidationMessage validationMessage)
+        {
+            return new ValidationMessage(field, validationMessage.Message);
         }
     }
 }

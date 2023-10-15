@@ -35,5 +35,13 @@ namespace Cifra.Application.Models.Class.Results
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        public UpdateClassResult(ValidationMessage validationMessage)
+        {
+            ValidationMessages = new List<ValidationMessage> { validationMessage };
+        }
     }
 }

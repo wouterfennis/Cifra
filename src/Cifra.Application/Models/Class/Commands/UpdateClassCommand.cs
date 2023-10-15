@@ -7,8 +7,8 @@ namespace Cifra.Application.Models.Class.Commands
     public sealed class UpdateClassCommand
     {
         /// <summary>
-        /// The updated class.
+        /// The name of the class
         /// </summary>
-        public Domain.Class UpdatedClass { get; set; }
+        public string Name { get; set; }
     }
 }

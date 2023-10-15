@@ -1,11 +1,10 @@
-﻿using Cifra.Database.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using System.Linq;
-using Cifra.Database.Mapping;
+using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Database.Repositories
 {
@@ -24,39 +23,35 @@ namespace Cifra.Database.Repositories
         {
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
 
-            var entity = newTest.MapToSchema();
-
-            _dbContext.Tests.Add(entity);
+            _dbContext.Tests.Add(newTest);
             await _dbContext.SaveChangesAsync();
 
-            return entity.Id;
+            return newTest.Id;
         }
 
         /// <inheritdoc/>
         public async Task<List<Domain.Test>> GetAllAsync()
         {
-            List<Test> entities = await _dbContext.Tests
-                .AsNoTracking()
-                .Include(x => x.Assignments)
-                .ToListAsync();
-            return entities.MapToDomain();
+            return await _dbContext.Tests
+                 .AsNoTracking()
+                 .Include(x => x.Assignments)
+                 .ToListAsync();
         }
 
         /// <inheritdoc/>
         public async Task<Domain.Test> GetAsync(int id)
         {
-            Test findResult = await _dbContext.Tests
+            return await _dbContext.Tests
                 .AsNoTracking()
                 .Include(x => x.Assignments)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
-            return findResult.MapToDomain();
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Name name)
         {
-            var test = await _dbContext.Tests.SingleAsync(x => x.Id == id);
+            var test = await _dbContext.Tests.SingleAsync(x => x.Name == name);
             _dbContext.Tests.Remove(test);
 
             await _dbContext.SaveChangesAsync();
@@ -65,15 +60,14 @@ namespace Cifra.Database.Repositories
         /// <inheritdoc/>
         public async Task<int> UpdateAsync(Domain.Test updatedTest)
         {
-            var updatedEntity = updatedTest.MapToSchema();
-            var updatedAssignmentsIds = updatedEntity.Assignments.Select(x => x.Id).ToList();
+            var updatedAssignmentsIds = updatedTest.Assignments.Select(x => x.Id).ToList();
 
-            _dbContext.Tests.Update(updatedEntity);
+            _dbContext.Tests.Update(updatedTest);
             _dbContext.Assignments.RemoveRange(_dbContext.Assignments.Where(x => !updatedAssignmentsIds.Contains(x.Id)));
 
             await _dbContext.SaveChangesAsync();
 
-            return updatedEntity.Id;
+            return updatedTest.Id;
         }
     }
 }

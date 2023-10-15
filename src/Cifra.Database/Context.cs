@@ -1,4 +1,4 @@
-﻿using Cifra.Database.Schema;
+﻿using Cifra.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cifra.Database

@@ -1,12 +1,10 @@
 ﻿using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.Test.Results;
-using Cifra.Application.Validation;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
-using Cifra.Domain.Validation;
 using Cifra.Domain;
+using System.Reflection;
 using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Application
@@ -15,36 +13,26 @@ namespace Cifra.Application
     public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
-        private readonly IValidator<CreateTestCommand> _createTestValidator;
-        private readonly IValidator<UpdateTestCommand> _updateTestValidator;
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public TestService(ITestRepository testRepository,
-            IValidator<CreateTestCommand> createTestValidator,
-            IValidator<UpdateTestCommand> updateTestValidator)
+        public TestService(ITestRepository testRepository)
         {
             _testRepository = testRepository;
-            _createTestValidator = createTestValidator;
-            _updateTestValidator = updateTestValidator;
         }
 
         /// <inheritdoc/>
         public async Task<CreateTestResult> CreateTestAsync(CreateTestCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _createTestValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var test = Test.TryCreate(model.Name, model.StandardizationFactor, model.MinimumGrade, model.NumberOfVersions);
+
+            if (!test.IsSuccess)
             {
-                return new CreateTestResult(validationMessages);
+                return new CreateTestResult(test.ValidationMessage);
             }
 
-            var test = new Test(Name.CreateFromString(model.Name),
-                StandardizationFactor.CreateFromInteger(model.StandardizationFactor),
-                Grade.CreateFromInteger(model.MinimumGrade),
-                model.NumberOfVersions);
-
-            int id = await _testRepository.CreateAsync(test);
+            int id = await _testRepository.CreateAsync(test.Value);
 
             return new CreateTestResult(id);
         }
@@ -52,13 +40,14 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _updateTestValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var test = Test.TryCreate(model.Name, model.StandardizationFactor, model.MinimumGrade, model.NumberOfVersions);
+
+            if (!test.IsSuccess)
             {
-                return new UpdateTestResult(validationMessages);
+                return new UpdateTestResult(test.ValidationMessage);
             }
 
-            int id = await _testRepository.UpdateAsync(model.Test);
+            int id = await _testRepository.UpdateAsync(test.Value);
 
             return new UpdateTestResult(id);
         }
@@ -80,7 +69,14 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<DeleteTestResult> DeleteTestAsync(DeleteTestCommand command)
         {
-            await _testRepository.DeleteAsync(command.TestId);
+            var name = Name.CreateFromString(command.Name);
+
+            if (!name.IsSuccess)
+            {
+                return new DeleteTestResult(name.ValidationMessage);
+            }
+
+            await _testRepository.DeleteAsync(name.Value);
             return new DeleteTestResult();
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace Cifra.Domain
+﻿using Cifra.Domain.Validation;
+
+namespace Cifra.Domain
 {
     /// <summary>
     /// The Assignment entity.
@@ -16,20 +18,22 @@
         public int NumberOfQuestions { get; }
 
         /// <summary>
-        /// Constructor for existing assignment.
-        /// </summary>
-        public Assignment(int id, int numberOfQuestions)
-        {
-            Id = id;
-            NumberOfQuestions = numberOfQuestions;
-        }
-
-        /// <summary>
         /// Constructor for new assignment.
         /// </summary>
         public Assignment(int numberOfQuestions)
         {
             NumberOfQuestions = numberOfQuestions;
+        }
+
+        public static Result<Assignment> TryCreate(int numberOfQuestions)
+        {
+            if (numberOfQuestions <= 0)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfQuestions), "There should be at least one question on a assignment");
+                return Result<Assignment>.Fail<Assignment>(validationMessage);
+            }
+
+            return Result<Assignment>.Ok<Assignment>(new Assignment(numberOfQuestions));
         }
     }
 }

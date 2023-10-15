@@ -1,4 +1,5 @@
-﻿using Cifra.Domain.ValueTypes;
+﻿using Cifra.Domain.Validation;
+using Cifra.Domain.ValueTypes;
 using System;
 using System.Collections.Generic;
 
@@ -12,35 +13,38 @@ namespace Cifra.Domain
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public int Id { get; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// The Name of the Class
         /// </summary>
-        public Name Name { get; }
+        public Name Name { get; private set; }
 
         /// <summary>
         /// The Students of the Class
         /// </summary>
-        public List<Student> Students { get; }
+        public List<Student> Students { get; private set; }
 
         /// <summary>
         /// Constructor for a new class
         /// </summary>
-        public Class(Name className)
+        private Class(Name className)
         {
             Name = className;
             Students = new List<Student>();
         }
 
-        /// <summary>
-        /// Constructor for existing classes
-        /// </summary>
-        public Class(int id, Name className, List<Student> students)
+        public static Result<Class> TryCreate(string className)
         {
-            Id = id;
-            Name = className;
-            Students = students ?? throw new ArgumentNullException(nameof(students));
+            var nameResult = Name.CreateFromString(className);
+
+            if (!nameResult.IsSuccess)
+            {
+                var validationMessage = ValidationMessage.Create(nameof(className), "Class name cannot be null");
+                return Result<Class>.Fail<Class>(validationMessage);
+            }
+
+            return Result<Class>.Ok<Class>(new Class(nameResult.Value!));
         }
 
         /// <summary>

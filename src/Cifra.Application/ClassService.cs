@@ -1,13 +1,9 @@
 ﻿using Cifra.Application.Models.Class.Commands;
 using Cifra.Application.Models.Class.Results;
-using Cifra.Domain.Validation;
-using Cifra.Application.Validation;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Application
 {
@@ -17,20 +13,14 @@ namespace Cifra.Application
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
-        private readonly IValidator<UpdateClassCommand> _updateClassValidator;
-        private readonly IValidator<CreateClassCommand> _classValidator;
 
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public ClassService(IClassRepository classRepository,
-            IValidator<CreateClassCommand> classValidator,
-            IValidator<UpdateClassCommand> updateClassValidator)
+        public ClassService(IClassRepository classRepository)
         {
             _classRepository = classRepository;
-            _classValidator = classValidator;
-            _updateClassValidator = updateClassValidator;
         }
 
         /// <summary>
@@ -38,14 +28,14 @@ namespace Cifra.Application
         /// </summary>
         public async Task<CreateClassResult> CreateClassAsync(CreateClassCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var newClassResult = Class.TryCreate(model.Name);
+
+            if (newClassResult.IsSuccess!)
             {
-                return new CreateClassResult(validationMessages);
+                return new CreateClassResult(newClassResult.ValidationMessage);
             }
 
-            var newClass = new Class(Name.CreateFromString(model.Name));
-            int id = await _classRepository.CreateAsync(newClass);
+            int id = await _classRepository.CreateAsync(newClassResult.Value);
 
             return new CreateClassResult(id);
         }
@@ -71,13 +61,14 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _updateClassValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var updatedClassResult = Class.TryCreate(model.Name);
+
+            if (updatedClassResult.IsSuccess!)
             {
-                return new UpdateClassResult(validationMessages);
+                return new UpdateClassResult(updatedClassResult.ValidationMessage);
             }
 
-            int id = await _classRepository.UpdateAsync(model.UpdatedClass);
+            int id = await _classRepository.UpdateAsync(updatedClassResult.Value);
 
             return new UpdateClassResult(id);
         }

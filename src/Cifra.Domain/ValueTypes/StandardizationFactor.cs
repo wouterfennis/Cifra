@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Cifra.Domain.Validation;
 
 namespace Cifra.Domain.ValueTypes
 {
@@ -9,13 +9,7 @@ namespace Cifra.Domain.ValueTypes
     {
         private StandardizationFactor(int value)
         {
-            Validate(value);
             Value = value;
-        }
-
-        private void Validate(int value)
-        {
-            // TODO: complete validation
         }
 
         /// <summary>
@@ -24,10 +18,12 @@ namespace Cifra.Domain.ValueTypes
         public int Value { get; }
 
         /// <summary>
-        /// Creates a StandardizationFactor from a int
+        /// Creates a StandardizationFactor from a integer
         /// </summary>
-        public static StandardizationFactor CreateFromInteger(int value) => new StandardizationFactor(value);
-
+        public static Result<StandardizationFactor> CreateFromInteger(int value)
+        {
+            return Result<StandardizationFactor>.Ok<StandardizationFactor>(new StandardizationFactor(value));
+        }
 
         /// <summary>
         /// Implicit converts the <see cref="StandardizationFactor"/> value to <see cref="int"/>.
@@ -35,14 +31,6 @@ namespace Cifra.Domain.ValueTypes
         public static implicit operator int(StandardizationFactor standardizationFactor)
         {
             return standardizationFactor.Value;
-        }
-
-        /// <summary>
-        /// Implicit converts the <see cref="int"/> value to <see cref="StandardizationFactor"/>.
-        /// </summary>
-        public static implicit operator StandardizationFactor(int standardizationFactorValue)
-        {
-            return CreateFromInteger(standardizationFactorValue);
         }
     }
 }
