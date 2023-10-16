@@ -14,7 +14,7 @@ namespace Cifra.TestUtilities.Domain
 
         public Assignment Build()
         {
-            return new Assignment(1234, _numberOfQuestions);
+            return Assignment.TryCreate(_numberOfQuestions).Value;
         }
     }
 }

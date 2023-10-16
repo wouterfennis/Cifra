@@ -28,7 +28,7 @@ namespace Cifra.TestUtilities.Domain
 
         public TestBuilder WithValidMinimumGrade()
         {
-            _minimumGrade = Grade.CreateFromInteger(1);
+            _minimumGrade = Grade.CreateFromInteger(1).Value;
             return this;
         }
 

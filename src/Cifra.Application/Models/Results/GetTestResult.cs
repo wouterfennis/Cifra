@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models.Test.Results
+﻿namespace Cifra.Application.Models.Results
 {
     /// <summary>
     /// The result of the Get Test operation

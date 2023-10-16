@@ -1,11 +1,11 @@
-﻿using Cifra.Application.Models.Spreadsheet.Commands;
-using Cifra.Application.Models.Spreadsheet.Results;
-using Cifra.Domain.Validation;
+﻿using Cifra.Domain.Validation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Domain;
+using Cifra.Application.Models.Results;
+using Cifra.Application.Models.Commands;
 
 namespace Cifra.Application
 {

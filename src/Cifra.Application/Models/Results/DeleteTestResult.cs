@@ -1,20 +1,14 @@
 ﻿using Cifra.Domain.Validation;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
-namespace Cifra.Application.Models.Spreadsheet.Results
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
-    /// Result of the Create Class operation
+    /// The result of the Delete Test operation
     /// </summary>
-    public sealed class CreateTestResultsSpreadsheetResult
+    public sealed class DeleteTestResult
     {
-        /// <summary>
-        /// The path to the spreadsheet.
-        /// </summary>
-        public FileInfo FileInfo { get; }
-
         /// <summary>
         /// The validation messages
         /// </summary>
@@ -23,18 +17,29 @@ namespace Cifra.Application.Models.Spreadsheet.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        internal CreateTestResultsSpreadsheetResult(FileInfo fileInfo)
+        public DeleteTestResult()
         {
-            FileInfo = fileInfo;
             ValidationMessages = new List<ValidationMessage>();
         }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        internal CreateTestResultsSpreadsheetResult(IEnumerable<ValidationMessage> validationMessages)
+        public DeleteTestResult(IEnumerable<ValidationMessage> validationMessages)
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
+        }
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        public DeleteTestResult(ValidationMessage validationMessage)
+        {
+            if (validationMessage == null)
+            {
+                throw new ArgumentNullException(nameof(validationMessage));
+            }
+            ValidationMessages = new List<ValidationMessage> { validationMessage };
         }
     }
 }

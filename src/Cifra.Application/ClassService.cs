@@ -1,8 +1,8 @@
-﻿using Cifra.Application.Models.Class.Commands;
-using Cifra.Application.Models.Class.Results;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Commands;
+using Cifra.Application.Models.Results;
 using Cifra.Domain;
 
 namespace Cifra.Application
@@ -61,7 +61,7 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
         {
-            var updatedClassResult = Class.TryCreate(model.Name);
+            var updatedClassResult = Class.TryCreate(model.Class.Name);
 
             if (updatedClassResult.IsSuccess!)
             {

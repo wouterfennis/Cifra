@@ -1,5 +1,4 @@
-﻿
-namespace Cifra.Application.Models.Class.Commands
+﻿namespace Cifra.Application.Models.Commands
 {
     /// <summary>
     /// The request to create an Class
@@ -9,6 +8,6 @@ namespace Cifra.Application.Models.Class.Commands
         /// <summary>
         /// The name of the class
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; init; }
     }
 }

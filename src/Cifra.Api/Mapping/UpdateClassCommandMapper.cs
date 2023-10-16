@@ -1,5 +1,6 @@
 ﻿using Cifra.Api.V1.Models.Class.Requests;
-using Cifra.Application.Models.Class.Commands;
+using Cifra.Application.Models;
+using Cifra.Application.Models.Commands;
 using System.Linq;
 
 namespace Cifra.Api.Mapping
@@ -9,11 +10,11 @@ namespace Cifra.Api.Mapping
         public static UpdateClassCommand Map(this UpdateClassRequest input)
         {
             var students = input.UpdatedClass.Students
-                .Select(x => new Domain.Student(x.Id, x.FirstName, x.Infix, x.LastName))
+                .Select(x => new Student { Id = x.Id, FirstName = x.FirstName, Infix = x.Infix, LastName = x.LastName })
                 .ToList();
             return new UpdateClassCommand
             {
-                UpdatedClass = new Domain.Class(input.UpdatedClass.Id, input.UpdatedClass.Name, students),
+                 Class = new Class { Id = input.UpdatedClass.Id, Name = input.UpdatedClass.Name, Students = students },
             };
         }
     }

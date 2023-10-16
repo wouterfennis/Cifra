@@ -2,17 +2,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cifra.Application.Models.Class.Results
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
-    /// Result of the Create Class operation
+    /// The result of the Update Test operation
     /// </summary>
-    public sealed class CreateClassResult
+    public sealed class UpdateTestResult
     {
         /// <summary>
-        /// The Class Id
+        /// The Test Id
         /// </summary>
-        public int ClassId { get; }
+        public int TestId { get; }
 
         /// <summary>
         /// The validation messages
@@ -22,16 +22,16 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public CreateClassResult(int classId)
+        public UpdateTestResult(int testId)
         {
-            ClassId = classId;
+            TestId = testId;
             ValidationMessages = new List<ValidationMessage>();
         }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public CreateClassResult(IEnumerable<ValidationMessage> validationMessages)
+        public UpdateTestResult(IEnumerable<ValidationMessage> validationMessages)
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
@@ -39,8 +39,12 @@ namespace Cifra.Application.Models.Class.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public CreateClassResult(ValidationMessage validationMessage)
+        public UpdateTestResult(ValidationMessage validationMessage)
         {
+            if (validationMessage == null)
+            {
+                throw new ArgumentNullException(nameof(validationMessage));
+            }
             ValidationMessages = new List<ValidationMessage> { validationMessage };
         }
     }

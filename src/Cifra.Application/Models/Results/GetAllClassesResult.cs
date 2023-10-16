@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Cifra.Application.Models.Class.Results
-{
+namespace Cifra.Application.Models.Results { 
     /// <summary>
     /// The result of the Get All Classes operation
     /// </summary>

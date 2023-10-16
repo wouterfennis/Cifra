@@ -20,7 +20,7 @@ namespace Cifra.TestUtilities.Domain
             string firstName = _fixture.Create<string>();
             string infix = _fixture.Create<string>();
             string lastName = _fixture.Create<string>();
-            return new Student(Name.CreateFromString(firstName), infix, Name.CreateFromString(lastName));
+            return Student.TryCreate(firstName, infix, lastName).Value;
         }
     }
 }

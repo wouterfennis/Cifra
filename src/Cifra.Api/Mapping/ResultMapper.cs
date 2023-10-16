@@ -1,8 +1,7 @@
 ﻿using Cifra.Api.V1.Models.Class.Responses;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Results;
 using Mapster;
 
 namespace Cifra.Api.Mapping

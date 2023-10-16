@@ -1,9 +1,7 @@
 ﻿using Cifra.Api.V1.Models.Class.Requests;
 using Cifra.Api.V1.Models.Spreadsheet.Requests;
 using Cifra.Api.V1.Models.Test.Requests;
-using Cifra.Application.Models.Class.Commands;
-using Cifra.Application.Models.Spreadsheet.Commands;
-using Cifra.Application.Models.Test.Commands;
+using Cifra.Application.Models.Commands;
 using Mapster;
 
 namespace Cifra.Api.Mapping

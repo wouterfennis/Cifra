@@ -48,19 +48,9 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void ImplicitFromString_WithValidValue_ConvertsToName()
-        {
-            string input = _fixture.Create<string>();
-
-            Name result = input;
-
-            result.Value.Should().Be(input);
-        }
-
-        [TestMethod]
         public void ImplicitFromNameToString_WithValidValue_ConvertsToString()
         {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input;
 
@@ -70,7 +60,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         [TestMethod]
         public void ToString_WithValidValue_ReturnsString()
         {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input.ToString();
 

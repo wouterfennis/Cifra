@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Cifra.Application.Models.Test.Results
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
     /// The result of the Get All Tests operation

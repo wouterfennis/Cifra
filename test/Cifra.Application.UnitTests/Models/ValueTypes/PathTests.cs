@@ -48,19 +48,9 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void ImplicitFromString_WithValidValue_ConvertsToPath()
-        {
-            string input = _fixture.Create<string>();
-
-            Path result = input;
-
-            result.Value.Should().Be(input);
-        }
-
-        [TestMethod]
         public void ImplicitFromPathToString_WithValidValue_ConvertsToString()
         {
-            Path input = Path.CreateFromString(_fixture.Create<string>());
+            Path input = Path.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input;
 

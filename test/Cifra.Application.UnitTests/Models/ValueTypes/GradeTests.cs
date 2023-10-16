@@ -40,23 +40,10 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void ImplicitFromInt_WithValidValue_ConvertsToGrade()
-        {
-            // Arrange
-            int input = 10;
-
-            // Act
-            Grade grade = input;
-
-            // Assert
-            grade.Value.Should().Be(input);
-        }
-
-        [TestMethod]
         public void ImplicitFromGradeToInt_WithValidValue_ConvertsToInt()
         {
             // Arrange
-            Grade input = Grade.CreateFromInteger(10);
+            Grade input = Grade.CreateFromInteger(10).Value;
 
             // Act
             int value = input;

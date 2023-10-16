@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cifra.Application.Models.Test.Results
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
-    /// The result of the Update Test operation
+    /// The result of the Create Test operation
     /// </summary>
-    public sealed class UpdateTestResult
+    public sealed class CreateTestResult
     {
         /// <summary>
         /// The Test Id
@@ -22,7 +22,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public UpdateTestResult(int testId)
+        public CreateTestResult(int testId)
         {
             TestId = testId;
             ValidationMessages = new List<ValidationMessage>();
@@ -31,7 +31,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public UpdateTestResult(IEnumerable<ValidationMessage> validationMessages)
+        public CreateTestResult(IEnumerable<ValidationMessage> validationMessages)
         {
             ValidationMessages = validationMessages ?? throw new ArgumentNullException(nameof(validationMessages));
         }
@@ -39,7 +39,7 @@ namespace Cifra.Application.Models.Test.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public UpdateTestResult(ValidationMessage validationMessage)
+        public CreateTestResult(ValidationMessage validationMessage)
         {
             if (validationMessage == null)
             {

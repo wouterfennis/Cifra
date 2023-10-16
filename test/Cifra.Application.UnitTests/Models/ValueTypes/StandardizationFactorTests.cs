@@ -18,23 +18,10 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void ImplicitFromInt_WithValidValue_ConvertsToStandardizationFactor()
-        {
-            // Arrange
-            int input = 10;
-
-            // Act
-            StandardizationFactor StandardizationFactor = input;
-
-            // Assert
-            StandardizationFactor.Value.Should().Be(input);
-        }
-
-        [TestMethod]
         public void ImplicitFromStandardizationFactorToInt_WithValidValue_ConvertsToInt()
         {
             // Arrange
-            StandardizationFactor input = StandardizationFactor.CreateFromInteger(10);
+            StandardizationFactor input = StandardizationFactor.CreateFromInteger(10).Value;
 
             // Act
             int value = input;

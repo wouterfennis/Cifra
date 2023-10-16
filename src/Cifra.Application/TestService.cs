@@ -1,11 +1,10 @@
-﻿using Cifra.Application.Models.Test.Commands;
-using Cifra.Application.Models.Test.Results;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Domain;
-using System.Reflection;
 using Cifra.Domain.ValueTypes;
+using Cifra.Application.Models.Results;
+using Cifra.Application.Models.Commands;
 
 namespace Cifra.Application
 {
@@ -40,7 +39,7 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model)
         {
-            var test = Test.TryCreate(model.Name, model.StandardizationFactor, model.MinimumGrade, model.NumberOfVersions);
+            var test = Test.TryCreate(model.Test.Name, model.Test.StandardizationFactor, model.Test.MinimumGrade, model.Test.NumberOfVersions);
 
             if (!test.IsSuccess)
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cifra.Application.Models.Class.Results
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
     /// The result of the Get Class operation

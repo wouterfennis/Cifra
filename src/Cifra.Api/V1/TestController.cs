@@ -3,7 +3,7 @@ using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application;
-using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
