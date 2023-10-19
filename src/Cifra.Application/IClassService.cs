@@ -9,6 +9,6 @@ namespace Cifra.Application
         Task<CreateClassResult> CreateClassAsync(CreateClassCommand model);
         Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model);
         Task<GetAllClassesResult> GetClassesAsync();
-        Task<GetClassResult> GetClassAsync(int id);
+        Task<GetClassResult> GetClassAsync(uint id);
     }
 }

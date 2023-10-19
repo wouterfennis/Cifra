@@ -14,11 +14,11 @@ namespace Cifra.Database.Schema.Configuration
 
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
-                .IsRequired()
-                .HasConversion(
-                    x => x.Value,
-                    x => Name.CreateFromString(x).Value
-                );
+                .IsRequired();
+                //.HasConversion(
+                //    x => x.Value,
+                //    x => Name.CreateFromString(x).Value
+                //);
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();

@@ -11,6 +11,6 @@ namespace Cifra.Api.V1.Models.Test.Results
         /// <summary>
         /// The validation messages
         /// </summary>
-        public List<ValidationMessage> ValidationMessages { get; set; }
+        public List<ValidationMessage> ValidationMessages { get; init; }
     }
 }

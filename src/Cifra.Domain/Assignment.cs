@@ -10,17 +10,22 @@ namespace Cifra.Domain
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public int Id { get; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
         /// </summary>
-        public int NumberOfQuestions { get; }
+        public int NumberOfQuestions { get; private set; }
+
+        private Assignment()
+        {
+            // Only exists for Entity Framework
+        }
 
         /// <summary>
         /// Constructor for new assignment.
         /// </summary>
-        public Assignment(int numberOfQuestions)
+        private Assignment(int numberOfQuestions)
         {
             NumberOfQuestions = numberOfQuestions;
         }

@@ -11,16 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cifra.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230701135310_InitialCreate")]
+    [Migration("20231019174729_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
 
-            modelBuilder.Entity("Cifra.Database.Schema.Assignment", b =>
+            modelBuilder.Entity("Cifra.Domain.Assignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,7 +29,7 @@ namespace Cifra.Database.Migrations
                     b.Property<int>("NumberOfQuestions")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TestId")
+                    b.Property<uint?>("TestId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -39,92 +39,92 @@ namespace Cifra.Database.Migrations
                     b.ToTable("Assignments");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Class", b =>
+            modelBuilder.Entity("Cifra.Domain.Class", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("string");
 
                     b.HasKey("Id");
 
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Student", b =>
+            modelBuilder.Entity("Cifra.Domain.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ClassId")
+                    b.Property<uint?>("ClassId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("string");
 
                     b.Property<string>("Infix")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("string");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Test", b =>
+            modelBuilder.Entity("Cifra.Domain.Test", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<uint>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MinimumGrade")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("string");
 
                     b.Property<int>("NumberOfVersions")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("StandardizationFactor")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Tests");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Assignment", b =>
+            modelBuilder.Entity("Cifra.Domain.Assignment", b =>
                 {
-                    b.HasOne("Cifra.Database.Schema.Test", null)
+                    b.HasOne("Cifra.Domain.Test", null)
                         .WithMany("Assignments")
                         .HasForeignKey("TestId");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Student", b =>
+            modelBuilder.Entity("Cifra.Domain.Student", b =>
                 {
-                    b.HasOne("Cifra.Database.Schema.Class", null)
+                    b.HasOne("Cifra.Domain.Class", null)
                         .WithMany("Students")
                         .HasForeignKey("ClassId");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Class", b =>
+            modelBuilder.Entity("Cifra.Domain.Class", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("Cifra.Database.Schema.Test", b =>
+            modelBuilder.Entity("Cifra.Domain.Test", b =>
                 {
                     b.Navigation("Assignments");
                 });

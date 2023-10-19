@@ -59,7 +59,7 @@ namespace Cifra.Api.V1
         [HttpGet("{classId}")]
         [ProducesResponseType(typeof(GetClassResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetClassResponse> GetClassAsync(int classId)
+        public async Task<GetClassResponse> GetClassAsync(uint classId)
         {
             GetClassResult getClassResult = await _classService.GetClassAsync(classId);
 

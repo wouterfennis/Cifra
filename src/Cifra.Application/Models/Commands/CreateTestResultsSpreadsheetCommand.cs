@@ -11,12 +11,12 @@ namespace Cifra.Application.Models.Commands
         /// <summary>
         /// The id of the class.
         /// </summary>
-        public int ClassId { get; init; }
+        public uint ClassId { get; init; }
 
         /// <summary>
         /// The id of the test.
         /// </summary>
-        public int TestId { get; init; }
+        public uint TestId { get; init; }
 
         /// <summary>
         /// The metadata of the spreadsheet.

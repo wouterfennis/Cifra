@@ -22,7 +22,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             var input = _fixture.Create<string>();
 
-            Name result = Name.CreateFromString(input);
+            Name result = Name.CreateFromString(input).Value;
 
             result.Value.Should().Be(input);
         }

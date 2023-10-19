@@ -27,7 +27,7 @@ namespace Cifra.Application
         /// <summary>
         /// Retrieves test.
         /// </summary>
-        Task<GetTestResult> GetTestAsync(int id);
+        Task<GetTestResult> GetTestAsync(uint id);
 
         /// <summary>
         /// Deletes a test.

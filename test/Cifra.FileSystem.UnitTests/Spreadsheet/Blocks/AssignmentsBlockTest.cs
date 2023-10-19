@@ -49,7 +49,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             int questionNamesColumns = 2;
             int numberOfQuestions = 3;
             var assignments = new List<Assignment> {
-                new Assignment(numberOfQuestions)
+                Assignment.TryCreate(numberOfQuestions).Value
             };
             var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 
@@ -68,8 +68,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             int questionNamesColumns = 2;
             var assignments = new List<Assignment> {
-                new Assignment(3),
-                new Assignment(1)
+                Assignment.TryCreate(3).Value,
+                Assignment.TryCreate(1).Value
             };
             var sut = new AssignmentsBlock(_startpoint, assignments, questionNamesColumns);
 

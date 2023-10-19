@@ -18,7 +18,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<int> CreateAsync(Domain.Class newClass)
+        public async Task<uint> CreateAsync(Domain.Class newClass)
         {
             _ = newClass ?? throw new ArgumentNullException(nameof(newClass));
 
@@ -38,7 +38,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Domain.Class> GetAsync(int id)
+        public async Task<Domain.Class> GetAsync(uint id)
         {
             return await _dbContext.Classes
                 .AsNoTracking()
@@ -47,7 +47,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<int> UpdateAsync(Domain.Class updatedClass)
+        public async Task<uint> UpdateAsync(Domain.Class updatedClass)
         {
             var existingEntity = await _dbContext.Classes
                 .AsNoTracking()

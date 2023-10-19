@@ -31,7 +31,7 @@ namespace Cifra.Application
                 return new CreateTestResult(test.ValidationMessage);
             }
 
-            int id = await _testRepository.CreateAsync(test.Value);
+            uint id = await _testRepository.CreateAsync(test.Value);
 
             return new CreateTestResult(id);
         }
@@ -46,7 +46,7 @@ namespace Cifra.Application
                 return new UpdateTestResult(test.ValidationMessage);
             }
 
-            int id = await _testRepository.UpdateAsync(test.Value);
+            uint id = await _testRepository.UpdateAsync(test.Value);
 
             return new UpdateTestResult(id);
         }
@@ -59,7 +59,7 @@ namespace Cifra.Application
         }
 
         /// <inheritdoc/>
-        public async Task<GetTestResult> GetTestAsync(int id)
+        public async Task<GetTestResult> GetTestAsync(uint id)
         {
             Test test = await _testRepository.GetAsync(id);
             return new GetTestResult(test);

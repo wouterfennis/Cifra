@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cifra.Api.Client" Version="0.0.1-5562401479" />
+    <!--<PackageReference Include="Cifra.Api.Client" Version="0.0.1-5562401479" />-->
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
   </ItemGroup>
 
@@ -17,5 +17,9 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>$(AssemblyName).Tests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cifra.Api.Client\Cifra.Api.Client.csproj" />
   </ItemGroup>
 </Project>

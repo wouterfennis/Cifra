@@ -14,9 +14,9 @@ namespace Cifra.Database.Migrations
                 name: "Classes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<uint>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "string", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,12 +27,12 @@ namespace Cifra.Database.Migrations
                 name: "Tests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<uint>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "string", nullable: false),
                     NumberOfVersions = table.Column<int>(type: "INTEGER", nullable: false),
-                    StandardizationFactor = table.Column<int>(type: "INTEGER", nullable: false),
-                    MinimumGrade = table.Column<int>(type: "INTEGER", nullable: false)
+                    StandardizationFactor = table.Column<int>(type: "int", nullable: false),
+                    MinimumGrade = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,21 +40,21 @@ namespace Cifra.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Student",
+                name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "string", nullable: false),
                     Infix = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    ClassId = table.Column<int>(type: "INTEGER", nullable: true)
+                    LastName = table.Column<string>(type: "string", nullable: false),
+                    ClassId = table.Column<uint>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => x.Id);
+                    table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Student_Classes_ClassId",
+                        name: "FK_Students_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id");
@@ -67,7 +67,7 @@ namespace Cifra.Database.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NumberOfQuestions = table.Column<int>(type: "INTEGER", nullable: false),
-                    TestId = table.Column<int>(type: "INTEGER", nullable: true)
+                    TestId = table.Column<uint>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,8 +85,8 @@ namespace Cifra.Database.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Student_ClassId",
-                table: "Student",
+                name: "IX_Students_ClassId",
+                table: "Students",
                 column: "ClassId");
         }
 
@@ -97,7 +97,7 @@ namespace Cifra.Database.Migrations
                 name: "Assignments");
 
             migrationBuilder.DropTable(
-                name: "Student");
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Tests");

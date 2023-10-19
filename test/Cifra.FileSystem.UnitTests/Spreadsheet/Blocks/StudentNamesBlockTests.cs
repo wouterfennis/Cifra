@@ -53,8 +53,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var students = new List<Student> {
-                new Student(Name.CreateFromString("-"), null, Name.CreateFromString("Z")),
-                new Student(Name.CreateFromString("-"), null, Name.CreateFromString("A"))
+                Student.TryCreate("-", null, "Z").Value,
+                Student.TryCreate("-", null, "A").Value
             };
             var sut = new StudentNamesBlock(_startpoint, students, 2);
 

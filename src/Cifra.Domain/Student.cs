@@ -28,6 +28,11 @@ namespace Cifra.Domain
         /// </summary>
         public Name LastName { get; private set; }
 
+        private Student()
+        {
+            // Only exists for Entity Framework
+        }
+
         /// <summary>
         /// Constructor without id
         /// </summary>

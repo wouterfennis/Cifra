@@ -7,31 +7,31 @@ namespace Cifra.Api.V1.Models.Spreadsheet.Requests
         /// <summary>
         /// The author of the spreadsheet
         /// </summary>
-        public string Author { get; set; } = string.Empty;
+        public string Author { get; init; }
 
         /// <summary>
         /// The title of the spreadsheet
         /// </summary>
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; init; }
 
         /// <summary>
         /// The subject of the spreadsheet
         /// </summary>
-        public string Subject { get; set; } = string.Empty;
+        public string Subject { get; init; }
 
         /// <summary>
         /// The created date of the spreadsheet
         /// </summary>
-        public DateTime Created { get; set; }
+        public DateTime Created { get; init; }
 
         /// <summary>
         /// The filename of the spreadsheet
         /// </summary>
-        public string FileName { get; set; } = string.Empty;
+        public string FileName { get; init; }
 
         /// <summary>
         /// The version of the application.
         /// </summary>
-        public string ApplicationVersion { get; set; } = string.Empty;
+        public string ApplicationVersion { get; init; }
     }
 }

@@ -35,7 +35,7 @@ namespace Cifra.Application
                 return new CreateClassResult(newClassResult.ValidationMessage);
             }
 
-            int id = await _classRepository.CreateAsync(newClassResult.Value);
+            uint id = await _classRepository.CreateAsync(newClassResult.Value);
 
             return new CreateClassResult(id);
         }
@@ -52,7 +52,7 @@ namespace Cifra.Application
         /// <summary>
         /// Retrieve a specific class.
         /// </summary>
-        public async Task<GetClassResult> GetClassAsync(int id)
+        public async Task<GetClassResult> GetClassAsync(uint id)
         {
             Class retrievedClass = await _classRepository.GetAsync(id);
             return new GetClassResult(retrievedClass);
@@ -68,7 +68,7 @@ namespace Cifra.Application
                 return new UpdateClassResult(updatedClassResult.ValidationMessage);
             }
 
-            int id = await _classRepository.UpdateAsync(updatedClassResult.Value);
+            uint id = await _classRepository.UpdateAsync(updatedClassResult.Value);
 
             return new UpdateClassResult(id);
         }

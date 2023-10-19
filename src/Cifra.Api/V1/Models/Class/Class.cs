@@ -10,7 +10,7 @@ namespace Cifra.Api.V1.Models.Class
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         /// <summary>
         /// The Name of the Class

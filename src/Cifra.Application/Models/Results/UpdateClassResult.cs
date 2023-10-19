@@ -12,7 +12,7 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// The Class Id
         /// </summary>
-        public int ClassId { get; }
+        public uint ClassId { get; }
 
         /// <summary>
         /// The validation messages
@@ -22,7 +22,7 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// Ctor
         /// </summary>
-        public UpdateClassResult(int classId)
+        public UpdateClassResult(uint classId)
         {
             ClassId = classId;
             ValidationMessages = new List<ValidationMessage>();

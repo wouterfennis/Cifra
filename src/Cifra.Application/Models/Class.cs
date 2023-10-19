@@ -10,7 +10,7 @@ namespace Cifra.Application.Models
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public int Id { get; init; }
+        public uint Id { get; init; }
 
         /// <summary>
         /// The Name of the Class

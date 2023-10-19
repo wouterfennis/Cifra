@@ -30,7 +30,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromInteger(1);
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act
@@ -45,7 +45,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var expectedStandardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromInteger(1);
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, expectedStandardizationFactor, minimumGrade);
 
             // Act
@@ -61,7 +61,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromInteger(1);
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act
@@ -77,7 +77,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var expectedMinimumGrade = Grade.CreateFromInteger(1);
+            var expectedMinimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, expectedMinimumGrade);
 
             // Act
@@ -93,7 +93,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             // Arrange
             var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromInteger(1);
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act

@@ -19,7 +19,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<int> CreateAsync(Domain.Test newTest)
+        public async Task<uint> CreateAsync(Domain.Test newTest)
         {
             _ = newTest ?? throw new ArgumentNullException(nameof(newTest));
 
@@ -39,7 +39,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Domain.Test> GetAsync(int id)
+        public async Task<Domain.Test> GetAsync(uint id)
         {
             return await _dbContext.Tests
                 .AsNoTracking()
@@ -58,7 +58,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<int> UpdateAsync(Domain.Test updatedTest)
+        public async Task<uint> UpdateAsync(Domain.Test updatedTest)
         {
             var updatedAssignmentsIds = updatedTest.Assignments.Select(x => x.Id).ToList();
 

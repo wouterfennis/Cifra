@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using Cifra.Api.Mapping;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Results;
 using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,7 +18,7 @@ namespace Cifra.Api.UnitTests.Mapping
         public void Initialize()
         {
             _fixture = new Fixture();
-            _fixture.Customize<Grade>(c => c.FromFactory(() => Grade.CreateFromInteger(1)));
+            _fixture.Customize<Grade>(c => c.FromFactory(() => Grade.CreateFromInteger(1).Value!));
         }
 
         [TestMethod]
