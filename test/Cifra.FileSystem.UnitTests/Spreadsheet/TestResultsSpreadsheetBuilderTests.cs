@@ -12,6 +12,7 @@ using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
+using System;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
@@ -56,11 +57,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         public async Task CreateTestResultsSpreadsheetAsync_WithValidInput_CreatesSpreadsheet()
         {
             // Arrange
-            var metadata = _fixture.Create<Domain.Spreadsheet.Metadata>();
+            var metadata = Domain.Spreadsheet.Metadata.TryCreate(_fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<DateTime>(), _fixture.Create<string>(), _fixture.Create<string>()).Value;
             SetupSpreadsheetFileBuilder();
             FormulaBuilderTestUtilities.SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
 
-            Class @class = _fixture.Create<Class>();
+            Class @class = Class.TryCreate(_fixture.Create<string>()).Value;
             Test test = new TestBuilder()
                 .WithNumberOfVersions(2)
                 .WithMinimumGrade(1)
@@ -82,7 +83,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
         private void SetupSpreadsheetFileBuilder()
         {
-            var path = _fixture.Create<Path>();
+            var path = Path.CreateFromString(_fixture.Create<string>());
             _spreadsheetOptionsValues.TestResultsDirectory = path.Value;
 
             var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);

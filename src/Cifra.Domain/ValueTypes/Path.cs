@@ -27,10 +27,10 @@ namespace Cifra.Domain.ValueTypes
         {
             if (string.IsNullOrEmpty(value))
             {
-                return Result<Path>.Ok<Path>(new Path(value));
+                return Result<Path>.Fail<Path>(ValidationMessage.Create(nameof(value), "Path cannot be null or empty"));
             }
 
-            return Result<Path>.Fail<Path>(ValidationMessage.Create(nameof(value), "Path cannot be null or empty"));
+            return Result<Path>.Ok<Path>(new Path(value));
         }
 
         /// <summary>

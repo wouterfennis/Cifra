@@ -52,8 +52,8 @@ namespace Cifra.TestUtilities.Domain
 
         public Test BuildRandomTest()
         {
-            Name testName = _fixture.Create<Name>();
-            StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
+            Name testName = Name.CreateFromString(_fixture.Create<string>()).Value;
+            StandardizationFactor standardizationFactor = StandardizationFactor.CreateFromInteger(_fixture.Create<int>()).Value;
             WithRandomAssignments();
             return Test.TryCreate(
                 _fixture.Create<uint>(),
@@ -66,8 +66,8 @@ namespace Cifra.TestUtilities.Domain
 
         public Test Build()
         {
-            Name testName = _fixture.Create<Name>();
-            StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
+            Name testName = Name.CreateFromString(_fixture.Create<string>()).Value;
+            StandardizationFactor standardizationFactor = StandardizationFactor.CreateFromInteger(_fixture.Create<int>()).Value;
             return Test.TryCreate(
                 _fixture.Create<uint>(),
                 testName,

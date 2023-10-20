@@ -10,12 +10,12 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// The class
         /// </summary>
-        public Domain.Class RetrievedClass { get; }
+        public Class RetrievedClass { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public GetClassResult(Domain.Class retrievedClass)
+        public GetClassResult(Class retrievedClass)
         {
             RetrievedClass = retrievedClass ?? throw new ArgumentNullException(nameof(retrievedClass));
         }

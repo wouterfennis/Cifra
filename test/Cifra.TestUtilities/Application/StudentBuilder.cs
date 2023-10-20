@@ -1,11 +1,10 @@
 ﻿using AutoFixture;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.TestUtilities.Domain
 {
-    [ExcludeFromCodeCoverage] // Part of test project.
+    [ExcludeFromCodeCoverage(Justification = "Part of test project.")] 
     public class StudentBuilder
     {
         private readonly Fixture _fixture;

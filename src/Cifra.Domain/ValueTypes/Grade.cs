@@ -27,10 +27,10 @@ namespace Cifra.Domain.ValueTypes
         {
             if (value < _minimalValue || value > _maximalValue)
             {
-                return Result<Grade>.Ok<Grade>(new Grade(value));
+                return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Value must lie between {_minimalValue} and {_maximalValue}"));
             }
 
-            return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Value must lie between {_minimalValue} and {_maximalValue}"));
+            return Result<Grade>.Ok<Grade>(new Grade(value));
         }
 
         /// <summary>

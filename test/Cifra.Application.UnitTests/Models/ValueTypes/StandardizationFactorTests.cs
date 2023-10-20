@@ -14,7 +14,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
 
             var result = StandardizationFactor.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]

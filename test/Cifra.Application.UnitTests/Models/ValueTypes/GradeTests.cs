@@ -15,7 +15,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
 
             var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
@@ -25,18 +25,19 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
 
             var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromInteger_WithTooHighGrade_ThrowsException()
+        public void CreateFromInteger_WithTooHighGrade_ResultFails()
         {
             int input = 11;
 
-            Action action = () => Grade.CreateFromInteger(input);
+            var result = Grade.CreateFromInteger(input);
 
-            action.Should().Throw<ArgumentException>()
-                .WithMessage($"The value: {input} is not within 0 and 10");
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Value must lie between 0 and 10");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]

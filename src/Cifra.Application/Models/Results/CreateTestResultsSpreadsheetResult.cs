@@ -1,4 +1,4 @@
-﻿using Cifra.Domain.Validation;
+﻿using Cifra.Application.Models.Validation;
 using System;
 using System.Collections.Generic;
 using System.IO;

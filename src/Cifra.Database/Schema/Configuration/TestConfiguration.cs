@@ -15,25 +15,9 @@ namespace Cifra.Database.Schema.Configuration
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-                //.HasConversion(a
-                //    x => x.Value,
-                //    x => Name.CreateFromString(x).Value
-                //);
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();
-
-            //builder.Property(x => x.StandardizationFactor)
-            //    .HasConversion(
-            //        x => x.Value,
-            //        x => StandardizationFactor.CreateFromInteger(x).Value
-            //    );
-
-            //builder.Property(x => x.MinimumGrade)
-            //    .HasConversion(
-            //        x => x.Value,
-            //        x => Grade.CreateFromInteger(x).Value
-            //    );
 
             builder
                 .HasMany(x => x.Assignments);

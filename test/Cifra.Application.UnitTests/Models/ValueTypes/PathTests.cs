@@ -32,9 +32,11 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             string input = null;
 
-            Action action = () => Path.CreateFromString(input);
+            var result = Path.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Path cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
@@ -42,9 +44,11 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             string input = string.Empty;
 
-            Action action = () => Path.CreateFromString(input);
+            var result = Path.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Path cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]

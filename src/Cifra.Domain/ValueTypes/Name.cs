@@ -24,10 +24,10 @@ namespace Cifra.Domain.ValueTypes
         {
             if (string.IsNullOrEmpty(value))
             {
-                return Result<Name>.Ok<Name>(new Name(value));
+                return Result<Name>.Fail<Name>(ValidationMessage.Create(nameof(value), "Name cannot be null or empty"));
             }
 
-            return Result<Name>.Fail<Name>(ValidationMessage.Create(nameof(value), "Name cannot be null or empty"));
+            return Result<Name>.Ok<Name>(new Name(value));
         }
 
         /// <summary>

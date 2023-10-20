@@ -34,7 +34,7 @@ namespace Cifra.Api.UnitTests.Mapping
             foreach (var actualClass in result.Classes)
             {
                 var expectedClass = input.Classes.Single(x => x.Name == actualClass.Name);
-                expectedClass.Name.Value.Should().Be(actualClass.Name);
+                expectedClass.Name.Should().Be(actualClass.Name);
                 expectedClass.Id.Should().Be(actualClass.Id);
                 AssertStudents(actualClass.Students, expectedClass.Students);
             }
@@ -98,12 +98,12 @@ namespace Cifra.Api.UnitTests.Mapping
 
             foreach (var test in result.Tests)
             {
-                var expectedTest = input.Tests.Single(x => x.Name.Value == test.Name);
+                var expectedTest = input.Tests.Single(x => x.Name == test.Name);
                 expectedTest.Id.Should().Be(test.Id);
-                expectedTest.Name.Value.Should().Be(test.Name);
-                expectedTest.MinimumGrade.Value.Should().Be(test.MinimumGrade);
+                expectedTest.Name.Should().Be(test.Name);
+                expectedTest.MinimumGrade.Should().Be(test.MinimumGrade);
                 expectedTest.NumberOfVersions.Should().Be(test.NumberOfVersions);
-                expectedTest.StandardizationFactor.Value.Should().Be(test.StandardizationFactor);
+                expectedTest.StandardizationFactor.Should().Be(test.StandardizationFactor);
                 AssertAssignments(test.Assignments, expectedTest.Assignments);
             }
         }
@@ -155,7 +155,7 @@ namespace Cifra.Api.UnitTests.Mapping
             result.ValidationMessages.Should().BeEquivalentTo(input.ValidationMessages);
         }
 
-        private void AssertStudents(IEnumerable<V1.Models.Class.Student> students, IEnumerable<Domain.Student> expectedStudents)
+        private void AssertStudents(IEnumerable<V1.Models.Class.Student> students, IEnumerable<Application.Models.Student> expectedStudents)
         {
             foreach (var student in students)
             {
@@ -167,7 +167,7 @@ namespace Cifra.Api.UnitTests.Mapping
             }
         }
 
-        private void AssertAssignments(IEnumerable<V1.Models.Test.Assignment> assignments, IEnumerable<Domain.Assignment> expectedAssignments)
+        private void AssertAssignments(IEnumerable<V1.Models.Test.Assignment> assignments, IEnumerable<Application.Models.Assignment> expectedAssignments)
         {
             foreach (var assignment in assignments)
             {

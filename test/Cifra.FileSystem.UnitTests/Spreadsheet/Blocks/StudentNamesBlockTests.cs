@@ -5,6 +5,7 @@ using AutoFixture;
 using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
+using Cifra.TestUtilities.Domain;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
@@ -32,8 +33,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithStudents_PutsStudentNamesInRow()
         {
             // Arrange
-            var students = _fixture.CreateMany<Student>()
-                .OrderBy(x => x.LastName.Value);
+            var students = new List<Student>{
+                new StudentBuilder().BuildRandomStudent(),
+                new StudentBuilder().BuildRandomStudent(),
+                new StudentBuilder().BuildRandomStudent()
+            }.OrderBy(x => x.LastName.Value);
             var sut = new StudentNamesBlock(_startpoint, students, 2);
 
             // Act

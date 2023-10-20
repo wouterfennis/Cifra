@@ -8,12 +8,12 @@
         /// <summary>
         /// The test
         /// </summary>
-        public Domain.Test Test { get; }
+        public Test Test { get; }
         
         /// <summary>
         /// Ctor
         /// </summary>
-        public GetTestResult(Domain.Test test)
+        public GetTestResult(Test test)
         {
             Test = test;
         }
