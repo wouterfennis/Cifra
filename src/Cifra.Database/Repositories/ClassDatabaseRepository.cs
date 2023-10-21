@@ -38,7 +38,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Domain.Class> GetAsync(uint id)
+        public async Task<Domain.Class?> GetAsync(uint id)
         {
             return await _dbContext.Classes
                 .AsNoTracking()

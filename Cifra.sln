@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.IntegrationTests", "test\Cifra.Api.IntegrationTests\Cifra.Api.IntegrationTests.csproj", "{27470399-4D74-4180-B571-C4C0C03432E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Commands", "src\Cifra.Commands\Cifra.Commands.csproj", "{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{27470399-4D74-4180-B571-C4C0C03432E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27470399-4D74-4180-B571-C4C0C03432E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27470399-4D74-4180-B571-C4C0C03432E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{B0B5BA7C-54B4-40DB-ACED-103AA157B95B} = {624EFF20-05ED-4C9D-BF4C-62E0E9B22C73}
 		{94645A24-48DD-4C9A-8372-0D9A42E6AA30} = {624EFF20-05ED-4C9D-BF4C-62E0E9B22C73}
 		{27470399-4D74-4180-B571-C4C0C03432E2} = {624EFF20-05ED-4C9D-BF4C-62E0E9B22C73}
+		{236F3CB5-940C-4C36-8D45-E7C4C6B507DB} = {F2B774D1-B7AD-49C0-85F9-130B5EAA5712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34CB8F11-C2C8-4D51-A811-D7A2FAC394BA}

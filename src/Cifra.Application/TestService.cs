@@ -4,7 +4,7 @@ using Cifra.Application.Interfaces;
 using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 using Cifra.Application.Models.Results;
-using Cifra.Application.Models.Commands;
+using Cifra.Commands;
 
 namespace Cifra.Application
 {

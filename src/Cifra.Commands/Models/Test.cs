@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Cifra.Application.Models
+﻿namespace Cifra.Commands.Models
 {
     /// <summary>
     /// The Test entity.

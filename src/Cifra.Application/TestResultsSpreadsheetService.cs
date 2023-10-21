@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Domain;
 using Cifra.Application.Models.Results;
-using Cifra.Application.Models.Commands;
+using Cifra.Commands;
+using Cifra.Domain.Spreadsheet;
 
 namespace Cifra.Application
 {
@@ -32,6 +33,12 @@ namespace Cifra.Application
         {
             var validationMessages = new List<ValidationMessage>();
             Class pickedClass = await _classRepository.GetAsync(command.ClassId);
+            Result<Metadata> metadata = Metadata.TryCreate(command.Metadata.Author, command.Metadata.Title, command.Metadata.Subject, command.Metadata.Created, command.Metadata.FileName, command.Metadata.ApplicationVersion);
+
+            if (!metadata.IsSuccess)
+            {
+                validationMessages.Add(metadata.ValidationMessage);
+            }
 
             if (pickedClass == null)
             {
@@ -50,7 +57,7 @@ namespace Cifra.Application
                 return new CreateTestResultsSpreadsheetResult(validationMessages);
             }
 
-            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(pickedClass, pickedTest, command.Metadata);
+            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(pickedClass, pickedTest, metadata.Value);
 
             return new CreateTestResultsSpreadsheetResult(fileInfo);
         }

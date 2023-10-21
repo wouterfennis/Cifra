@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cifra.Domain;
+using System.Collections.Generic;
 
 namespace Cifra.Application.Models.Results
 {

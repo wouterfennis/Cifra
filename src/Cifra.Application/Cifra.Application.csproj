@@ -29,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Cifra.Commands\Cifra.Commands.csproj" />
 	  <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
 	  <ProjectReference Include="..\Cifra.Domain\Cifra.Domain.csproj" />
 	</ItemGroup>

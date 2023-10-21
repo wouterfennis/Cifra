@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cifra.Application\Cifra.Application.csproj" />
+    <ProjectReference Include="..\Cifra.Commands\Cifra.Commands.csproj" />
     <ProjectReference Include="..\Cifra.Database\Cifra.Database.csproj" />
     <ProjectReference Include="..\Cifra.FileSystem\Cifra.FileSystem.csproj" />
   </ItemGroup>

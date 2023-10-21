@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.Application.Models
+﻿namespace Cifra.Commands.Models
 {
     /// <summary>
     /// The Assignment entity.
@@ -10,7 +8,7 @@ namespace Cifra.Application.Models
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public int Id { get; init; }
+        public uint Id { get; init; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.

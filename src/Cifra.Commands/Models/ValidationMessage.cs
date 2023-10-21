@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models.Validation
+﻿namespace Cifra.Commands.Models
 {
     /// <summary>
     /// A validation message

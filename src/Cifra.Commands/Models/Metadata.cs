@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.Application.Models.Spreadsheet
+﻿namespace Cifra.Commands.Models
 {
     public sealed class Metadata
     {

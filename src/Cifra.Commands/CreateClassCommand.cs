@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models.Commands
+﻿namespace Cifra.Commands
 {
     /// <summary>
     /// The request to create an Class

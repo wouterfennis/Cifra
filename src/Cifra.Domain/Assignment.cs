@@ -10,7 +10,7 @@ namespace Cifra.Domain
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public int Id { get; private set; }
+        public uint Id { get; private set; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
@@ -30,6 +30,15 @@ namespace Cifra.Domain
             NumberOfQuestions = numberOfQuestions;
         }
 
+        /// <summary>
+        /// Constructor for existing assignment.
+        /// </summary>
+        private Assignment(uint id, int numberOfQuestions)
+        {
+            Id = id;
+            NumberOfQuestions = numberOfQuestions;
+        }
+
         public static Result<Assignment> TryCreate(int numberOfQuestions)
         {
             if (numberOfQuestions <= 0)
@@ -39,6 +48,17 @@ namespace Cifra.Domain
             }
 
             return Result<Assignment>.Ok<Assignment>(new Assignment(numberOfQuestions));
+        }
+
+        public static Result<Assignment> TryCreate(uint id, int numberOfQuestions)
+        {
+            if (numberOfQuestions <= 0)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfQuestions), "There should be at least one question on a assignment");
+                return Result<Assignment>.Fail<Assignment>(validationMessage);
+            }
+
+            return Result<Assignment>.Ok<Assignment>(new Assignment(id, numberOfQuestions));
         }
     }
 }

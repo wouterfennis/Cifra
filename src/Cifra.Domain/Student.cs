@@ -11,7 +11,7 @@ namespace Cifra.Domain
         /// <summary>
         /// The id of the student
         /// </summary>
-        public int Id { get; private set; }
+        public uint Id { get; private set; }
 
         /// <summary>
         /// The first name of the student
@@ -34,10 +34,21 @@ namespace Cifra.Domain
         }
 
         /// <summary>
-        /// Constructor without id
+        /// Constructor for new student
         /// </summary>
         private Student(Name firstName, string? infix, Name lastName)
         {
+            FirstName = firstName;
+            Infix = infix;
+            LastName = lastName;
+        }
+
+        /// <summary>
+        /// Constructor for existing student
+        /// </summary>
+        private Student(uint id, Name firstName, string? infix, Name lastName)
+        {
+            Id = id;
             FirstName = firstName;
             Infix = infix;
             LastName = lastName;
@@ -61,6 +72,26 @@ namespace Cifra.Domain
             }
 
             return Result<Student>.Ok<Student>(new Student(firstNameResult.Value!, infix, lastNameResult.Value!));
+        }
+
+        public static Result<Student> TryCreate(uint id, string firstName, string? infix, string lastName)
+        {
+            Result<Name> firstNameResult = Name.CreateFromString(firstName);
+            Result<Name> lastNameResult = Name.CreateFromString(lastName);
+
+            if (!firstNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), "Firstname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            if (!lastNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), "Lastname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            return Result<Student>.Ok<Student>(new Student(id, firstNameResult.Value!, infix, lastNameResult.Value!));
         }
     }
 }

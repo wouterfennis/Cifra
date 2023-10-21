@@ -1,4 +1,6 @@
-﻿namespace Cifra.Application.Models.Commands
+﻿using Cifra.Commands.Models;
+
+namespace Cifra.Commands
 {
     /// <summary>
     /// The request to update a test

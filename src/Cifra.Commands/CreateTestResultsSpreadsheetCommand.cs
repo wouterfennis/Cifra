@@ -1,7 +1,7 @@
 ﻿
-using Cifra.Domain.Spreadsheet;
+using Cifra.Commands.Models;
 
-namespace Cifra.Application.Models.Commands
+namespace Cifra.Commands
 {
     /// <summary>
     /// The command to create an test results spreadsheet.

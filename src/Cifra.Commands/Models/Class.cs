@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Cifra.Commands.Models;
 
-namespace Cifra.Application.Models
+namespace Cifra.Commands.Models
 {
     /// <summary>
     /// The Class entity.

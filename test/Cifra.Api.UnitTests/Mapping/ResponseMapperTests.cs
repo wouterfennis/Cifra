@@ -2,6 +2,7 @@
 using Cifra.Api.Mapping;
 using Cifra.Application.Models.Results;
 using Cifra.Domain.ValueTypes;
+using Cifra.TestUtilities.Domain;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -25,7 +26,12 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetAllClassesResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetAllClassesResult>();
+            var tests = new List<Domain.Class>
+                {
+                    new ClassBuilder().BuildRandomClass()
+                };
+
+            var input = new GetAllClassesResult(tests);
 
             // Act
             var result = input.MapToResponse();
@@ -34,7 +40,7 @@ namespace Cifra.Api.UnitTests.Mapping
             foreach (var actualClass in result.Classes)
             {
                 var expectedClass = input.Classes.Single(x => x.Name == actualClass.Name);
-                expectedClass.Name.Should().Be(actualClass.Name);
+                expectedClass.Name.Value.Should().Be(actualClass.Name);
                 expectedClass.Id.Should().Be(actualClass.Id);
                 AssertStudents(actualClass.Students, expectedClass.Students);
             }
@@ -44,14 +50,16 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetClassResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetClassResult>();
+            var @class = new ClassBuilder().BuildRandomClass();
+
+            var input = new GetClassResult(@class);
 
             // Act
             var result = input.MapToResponse();
 
             // Assert
             result.RetrievedClass.Should().NotBeNull();
-            result.RetrievedClass.Name.Should().Be(input.RetrievedClass.Name);  
+            result.RetrievedClass.Name.Should().Be(input.RetrievedClass.Name);
             result.RetrievedClass.Id.Should().Be(input.RetrievedClass.Id);
             AssertStudents(result.RetrievedClass.Students, input.RetrievedClass.Students);
         }
@@ -88,7 +96,12 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetAllTestsResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetAllTestsResult>();
+            var tests = new List<Domain.Test>
+                {
+                    new TestBuilder().BuildRandomTest()
+                };
+
+            var input = new GetAllTestsResult(tests);
 
             // Act
             var result = input.MapToResponse();
@@ -100,10 +113,10 @@ namespace Cifra.Api.UnitTests.Mapping
             {
                 var expectedTest = input.Tests.Single(x => x.Name == test.Name);
                 expectedTest.Id.Should().Be(test.Id);
-                expectedTest.Name.Should().Be(test.Name);
-                expectedTest.MinimumGrade.Should().Be(test.MinimumGrade);
+                expectedTest.Name.Value.Should().Be(test.Name);
+                expectedTest.MinimumGrade.Value.Should().Be(test.MinimumGrade);
                 expectedTest.NumberOfVersions.Should().Be(test.NumberOfVersions);
-                expectedTest.StandardizationFactor.Should().Be(test.StandardizationFactor);
+                expectedTest.StandardizationFactor.Value.Should().Be(test.StandardizationFactor);
                 AssertAssignments(test.Assignments, expectedTest.Assignments);
             }
         }
@@ -112,7 +125,9 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetTestResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetTestResult>();
+            var test = new TestBuilder().BuildRandomTest();
+
+            var input = new GetTestResult(test);
 
             // Act
             var result = input.MapToResponse();
@@ -155,19 +170,19 @@ namespace Cifra.Api.UnitTests.Mapping
             result.ValidationMessages.Should().BeEquivalentTo(input.ValidationMessages);
         }
 
-        private void AssertStudents(IEnumerable<V1.Models.Class.Student> students, IEnumerable<Application.Models.Student> expectedStudents)
+        private void AssertStudents(IEnumerable<V1.Models.Class.Student> students, IEnumerable<Domain.Student> expectedStudents)
         {
             foreach (var student in students)
             {
                 var expectedStudent = expectedStudents.Single(x => x.FirstName == student.FirstName);
-                student.FirstName.Should().Be(expectedStudent.FirstName);
+                student.FirstName.Should().Be(expectedStudent.FirstName.Value);
                 student.Infix.Should().Be(expectedStudent.Infix);
-                student.LastName.Should().Be(expectedStudent.LastName);
+                student.LastName.Should().Be(expectedStudent.LastName.Value);
                 student.Id.Should().Be(expectedStudent.Id);
             }
         }
 
-        private void AssertAssignments(IEnumerable<V1.Models.Test.Assignment> assignments, IEnumerable<Application.Models.Assignment> expectedAssignments)
+        private void AssertAssignments(IEnumerable<V1.Models.Test.Assignment> assignments, IEnumerable<Domain.Assignment> expectedAssignments)
         {
             foreach (var assignment in assignments)
             {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Commands;
 using Cifra.Application.Models.Results;
+using Cifra.Commands;
 using Cifra.Domain;
 
 namespace Cifra.Application

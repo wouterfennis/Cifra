@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 
-namespace Cifra.Database.Schema.Configuration
+namespace Cifra.Database.Configuration
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
@@ -23,10 +23,10 @@ namespace Cifra.Database.Schema.Configuration
             builder.Property(x => x.LastName)
                 .HasMaxLength(100)
                 .IsRequired();
-                //.HasConversion(
-                //    x => x.Value,
-                //    x => Name.CreateFromString(x).Value
-                //);
+            //.HasConversion(
+            //    x => x.Value,
+            //    x => Name.CreateFromString(x).Value
+            //);
         }
     }
 }

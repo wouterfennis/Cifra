@@ -1,5 +1,5 @@
-﻿using Cifra.Application.Models.Commands;
-using Cifra.Application.Models.Results;
+﻿using Cifra.Application.Models.Results;
+using Cifra.Commands;
 using System.Threading.Tasks;
 
 namespace Cifra.Application

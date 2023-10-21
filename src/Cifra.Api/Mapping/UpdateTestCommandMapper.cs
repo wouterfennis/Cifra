@@ -1,6 +1,6 @@
 ﻿using Cifra.Api.V1.Models.Test.Requests;
-using Cifra.Application.Models;
-using Cifra.Application.Models.Commands;
+using Cifra.Commands;
+using Cifra.Commands.Models;
 using System.Linq;
 
 namespace Cifra.Api.Mapping

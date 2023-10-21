@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 
-namespace Cifra.Database.Schema.Configuration
+namespace Cifra.Database.Configuration
 {
     public class ClassConfiguration : IEntityTypeConfiguration<Class>
     {
@@ -15,10 +15,10 @@ namespace Cifra.Database.Schema.Configuration
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-                //.HasConversion(
-                //    x => x.Value,
-                //    x => Name.CreateFromString(x).Value
-                //);
+            //.HasConversion(
+            //    x => x.Value,
+            //    x => Name.CreateFromString(x).Value
+            //);
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();

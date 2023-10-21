@@ -1,4 +1,4 @@
-﻿namespace Cifra.Application.Models
+﻿namespace Cifra.Commands.Models
 {
     /// <summary>
     /// The Student entity.
@@ -8,7 +8,7 @@
         /// <summary>
         /// The id of the student
         /// </summary>
-        public int Id { get; init; }
+        public uint Id { get; init; }
 
         /// <summary>
         /// The first name of the student

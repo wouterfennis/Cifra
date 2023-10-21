@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cifra.Domain;
+using System;
 
 namespace Cifra.Application.Models.Results
 {

@@ -1,4 +1,6 @@
-﻿namespace Cifra.Application.Models.Results
+﻿using Cifra.Domain;
+
+namespace Cifra.Application.Models.Results
 {
     /// <summary>
     /// The result of the Get Test operation
