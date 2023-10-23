@@ -7,6 +7,8 @@ namespace Cifra.Domain.ValueTypes
     /// </summary>
     public sealed class StandardizationFactor
     {
+        private const int _minimalValue = 1;
+
         private StandardizationFactor(int value)
         {
             Value = value;
@@ -22,6 +24,11 @@ namespace Cifra.Domain.ValueTypes
         /// </summary>
         public static Result<StandardizationFactor> CreateFromInteger(int value)
         {
+            if (value < _minimalValue)
+            {
+                return Result<StandardizationFactor>.Fail<StandardizationFactor>(ValidationMessage.Create(nameof(value), $"Standardization factor must be higher than {_minimalValue}"));
+            }
+
             return Result<StandardizationFactor>.Ok<StandardizationFactor>(new StandardizationFactor(value));
         }
 

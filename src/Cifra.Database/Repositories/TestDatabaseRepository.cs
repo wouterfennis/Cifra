@@ -60,10 +60,7 @@ namespace Cifra.Database.Repositories
         /// <inheritdoc/>
         public async Task<uint> UpdateAsync(Domain.Test updatedTest)
         {
-            var updatedAssignmentsIds = updatedTest.Assignments.Select(x => x.Id).ToList();
-
             _dbContext.Tests.Update(updatedTest);
-            _dbContext.Assignments.RemoveRange(_dbContext.Assignments.Where(x => !updatedAssignmentsIds.Contains(x.Id)));
 
             await _dbContext.SaveChangesAsync();
 

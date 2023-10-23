@@ -2,6 +2,7 @@
 using Cifra.Domain.ValueTypes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cifra.Domain
 {
@@ -76,15 +77,19 @@ namespace Cifra.Domain
         }
 
         /// <summary>
-        /// Adds a student to the class
+        /// Update this instance of the test with properties from other test.
         /// </summary>
-        public void AddStudent(Student student)
+        public void UpdateFromOtherClass(Class otherClass)
         {
-            if (student == null)
+            Name = otherClass.Name;
+
+            var updatedAssignmentsIds = otherClass.Students.Select(x => x.Id).ToList();
+            var studentsToRemove = Students.Except(otherClass.Students);
+
+            foreach (var studentoRemove in studentsToRemove)
             {
-                throw new ArgumentNullException(nameof(student));
+                Students.Remove(studentoRemove);
             }
-            Students.Add(student);
         }
     }
 }

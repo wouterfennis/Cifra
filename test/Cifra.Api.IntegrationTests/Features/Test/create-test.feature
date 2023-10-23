@@ -34,8 +34,8 @@ Scenario: No name is supplied
 		| Name | Number of versions | Standardization factor | Minimum grade |
 		|      | 1                  | 9                      | 1             |
 	Then a create test validation message is displayed containing the following message
-		| Failure reason   |
-		| Name is required |
+		| Failure reason         |
+		| Test name is not valid |
 
 Scenario: No number of versions supplied
 	Given no tests are previously created
@@ -43,8 +43,8 @@ Scenario: No number of versions supplied
 		| Name           | Number of versions | Standardization factor | Minimum grade |
 		| Math chapter 1 | 0                  | 9                      | 1             |
 	Then a create test validation message is displayed containing the following message
-		| Failure reason                              |
-		| Number of versions must be higher than zero |
+		| Failure reason                                   |
+		| There should be at least one version of the test |
 
 Scenario: Standardization factor is too low
 	Given no tests are previously created
@@ -52,8 +52,8 @@ Scenario: Standardization factor is too low
 		| Name           | Number of versions | Standardization factor | Minimum grade |
 		| Math chapter 1 | 1                  | 0                      | 1             |
 	Then a create test validation message is displayed containing the following message
-		| Failure reason                              |
-		| Standardization factor must be higher than zero |
+		| Failure reason                               |
+		| Standardization factor must be higher than 1 |
 
 Scenario: Minimum grade is too low
 	Given no tests are previously created

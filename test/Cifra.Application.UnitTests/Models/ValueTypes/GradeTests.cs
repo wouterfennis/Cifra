@@ -36,7 +36,19 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
             var result = Grade.CreateFromInteger(input);
 
             result.IsSuccess.Should().BeFalse();
-            result.ValidationMessage.Message.Should().Be($"Value must lie between 0 and 10");
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void CreateFromInteger_WithTooLowGrade_ResultFails()
+        {
+            int input = 0;
+
+            var result = Grade.CreateFromInteger(input);
+
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
             result.Value.Should().BeNull();
         }
 

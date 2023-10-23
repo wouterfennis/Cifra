@@ -80,7 +80,7 @@ namespace Cifra.Domain
 
             if (!testNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), "Testname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), "Test name is not valid");
                 return Result<Test>.Fail<Test>(validationMessage);
             }
 
@@ -113,7 +113,7 @@ namespace Cifra.Domain
 
             if (!testNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), "Testname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(testName), "Test name is not valid");
                 return Result<Test>.Fail<Test>(validationMessage);
             }
 
@@ -139,23 +139,22 @@ namespace Cifra.Domain
         }
 
         /// <summary>
-        /// Adds a assignment to the test.
+        /// Update this instance of the test with properties from other test.
         /// </summary>
-        public void AddAssignment(Assignment assignment)
+        public void UpdateFromOtherTest(Test otherTest)
         {
-            if (assignment == null)
-            {
-                throw new ArgumentNullException(nameof(assignment));
-            }
-            Assignments.Add(assignment);
-        }
+            Name = otherTest.Name;
+            StandardizationFactor = otherTest.StandardizationFactor;
+            MinimumGrade = otherTest.MinimumGrade;
+            NumberOfVersions = otherTest.NumberOfVersions;
 
-        /// <summary>
-        /// Gets the assignment.
-        /// </summary>
-        public Assignment? GetAssignment(int assignmentId)
-        {
-            return Assignments.SingleOrDefault(x => x.Id == assignmentId);
+            var updatedAssignmentsIds = otherTest.Assignments.Select(x => x.Id).ToList();
+            var assignmentsToRemove = Assignments.Except(otherTest.Assignments);
+
+            foreach(var assignmentToRemove in assignmentsToRemove)
+            {
+                Assignments.Remove(assignmentToRemove);
+            }
         }
     }
 }

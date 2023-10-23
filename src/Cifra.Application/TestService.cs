@@ -5,6 +5,7 @@ using Cifra.Domain;
 using Cifra.Domain.ValueTypes;
 using Cifra.Application.Models.Results;
 using Cifra.Commands;
+using Cifra.Domain.Validation;
 
 namespace Cifra.Application
 {
@@ -39,14 +40,22 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model)
         {
-            var test = Test.TryCreate(model.Test.Name, model.Test.StandardizationFactor, model.Test.MinimumGrade, model.Test.NumberOfVersions);
+            var updatedTestResult = Test.TryCreate(model.Test.Name, model.Test.StandardizationFactor, model.Test.MinimumGrade, model.Test.NumberOfVersions);
+            var originalTest = await _testRepository.GetAsync(model.Test.Id);
 
-            if (!test.IsSuccess)
+            if (!updatedTestResult.IsSuccess)
             {
-                return new UpdateTestResult(test.ValidationMessage);
+                return new UpdateTestResult(updatedTestResult.ValidationMessage);
             }
 
-            uint id = await _testRepository.UpdateAsync(test.Value);
+            if (originalTest is null)
+            {
+                return new UpdateTestResult(ValidationMessage.Create(nameof(model.Test.Id), "Test to update cannot be found"));
+            }
+
+            originalTest.UpdateFromOtherTest(updatedTestResult.Value);
+
+            uint id = await _testRepository.UpdateAsync(originalTest);
 
             return new UpdateTestResult(id);
         }

@@ -7,7 +7,7 @@ namespace Cifra.Domain.ValueTypes
     /// </summary>
     public sealed class Grade
     {
-        private const int _minimalValue = 0;
+        private const int _minimalValue = 1;
         private const int _maximalValue = 10;
 
         private Grade(int value)
@@ -27,7 +27,7 @@ namespace Cifra.Domain.ValueTypes
         {
             if (value < _minimalValue || value > _maximalValue)
             {
-                return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Value must lie between {_minimalValue} and {_maximalValue}"));
+                return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Minimum grade must be from {_minimalValue} to {_maximalValue}"));
             }
 
             return Result<Grade>.Ok<Grade>(new Grade(value));

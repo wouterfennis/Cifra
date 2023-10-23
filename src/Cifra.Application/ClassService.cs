@@ -4,6 +4,7 @@ using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Results;
 using Cifra.Commands;
 using Cifra.Domain;
+using Cifra.Domain.Validation;
 
 namespace Cifra.Application
 {
@@ -30,7 +31,7 @@ namespace Cifra.Application
         {
             var newClassResult = Class.TryCreate(model.Name);
 
-            if (newClassResult.IsSuccess!)
+            if (!newClassResult.IsSuccess)
             {
                 return new CreateClassResult(newClassResult.ValidationMessage);
             }
@@ -63,12 +64,34 @@ namespace Cifra.Application
         {
             var updatedClassResult = Class.TryCreate(model.Class.Name);
 
-            if (updatedClassResult.IsSuccess!)
+            if (!updatedClassResult.IsSuccess)
             {
                 return new UpdateClassResult(updatedClassResult.ValidationMessage);
             }
 
             uint id = await _classRepository.UpdateAsync(updatedClassResult.Value);
+
+            return new UpdateClassResult(id);
+        }
+
+        public async Task<UpdateClassResult> UpdateTestAsync(UpdateClassCommand model)
+        {
+            var updatedClassResult = Class.TryCreate(model.Class.Name);
+            var originalClass = await _classRepository.GetAsync(model.Class.Id);
+
+            if (!updatedClassResult.IsSuccess)
+            {
+                return new UpdateClassResult(updatedClassResult.ValidationMessage);
+            }
+
+            if (originalClass is null)
+            {
+                return new UpdateClassResult(ValidationMessage.Create(nameof(model.Class.Id), "Class to update cannot be found"));
+            }
+
+            originalClass.UpdateFromOtherClass(updatedClassResult.Value);
+
+            uint id = await _classRepository.UpdateAsync(originalClass);
 
             return new UpdateClassResult(id);
         }
