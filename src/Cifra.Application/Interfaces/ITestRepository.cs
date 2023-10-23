@@ -1,4 +1,5 @@
 ﻿using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,17 +13,17 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a test
         /// </summary>
-        Task<Test> GetAsync(int id);
+        Task<Test> GetAsync(uint id);
 
         /// <summary>
         /// Create a test 
         /// </summary>
-        Task<int> CreateAsync(Test newTest);
+        Task<uint> CreateAsync(Test newTest);
 
         /// <summary>
         /// Updates a test
         /// </summary>
-        Task<int> UpdateAsync(Test test);
+        Task<uint> UpdateAsync(Test test);
 
         /// <summary>
         /// Get all tests
@@ -32,6 +33,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Get all tests
         /// </summary>
-        Task DeleteAsync(int id);
+        Task DeleteAsync(uint id);
     }
 }

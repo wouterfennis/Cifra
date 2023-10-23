@@ -1,4 +1,6 @@
-﻿namespace Cifra.Domain
+﻿using Cifra.Domain.Validation;
+
+namespace Cifra.Domain
 {
     /// <summary>
     /// The Assignment entity.
@@ -8,28 +10,55 @@
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public int Id { get; }
+        public uint Id { get; private set; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
         /// </summary>
-        public int NumberOfQuestions { get; }
+        public int NumberOfQuestions { get; private set; }
 
-        /// <summary>
-        /// Constructor for existing assignment.
-        /// </summary>
-        public Assignment(int id, int numberOfQuestions)
+        private Assignment()
         {
-            Id = id;
-            NumberOfQuestions = numberOfQuestions;
+            // Only exists for Entity Framework
         }
 
         /// <summary>
         /// Constructor for new assignment.
         /// </summary>
-        public Assignment(int numberOfQuestions)
+        private Assignment(int numberOfQuestions)
         {
             NumberOfQuestions = numberOfQuestions;
+        }
+
+        /// <summary>
+        /// Constructor for existing assignment.
+        /// </summary>
+        private Assignment(uint id, int numberOfQuestions)
+        {
+            Id = id;
+            NumberOfQuestions = numberOfQuestions;
+        }
+
+        public static Result<Assignment> TryCreate(int numberOfQuestions)
+        {
+            if (numberOfQuestions <= 0)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfQuestions), "There should be at least one question on a assignment");
+                return Result<Assignment>.Fail<Assignment>(validationMessage);
+            }
+
+            return Result<Assignment>.Ok<Assignment>(new Assignment(numberOfQuestions));
+        }
+
+        public static Result<Assignment> TryCreate(uint id, int numberOfQuestions)
+        {
+            if (numberOfQuestions <= 0)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfQuestions), "There should be at least one question on a assignment");
+                return Result<Assignment>.Fail<Assignment>(validationMessage);
+            }
+
+            return Result<Assignment>.Ok<Assignment>(new Assignment(id, numberOfQuestions));
         }
     }
 }

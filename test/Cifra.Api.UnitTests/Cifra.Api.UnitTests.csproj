@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cifra.Api\Cifra.Api.csproj" />
+    <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

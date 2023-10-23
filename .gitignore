@@ -355,3 +355,4 @@ Cifra.Api.xml
 *.db-*
 *.sqlite
 *.sqlite-*
+swagger.json

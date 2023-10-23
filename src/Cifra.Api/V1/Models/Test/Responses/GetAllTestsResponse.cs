@@ -10,6 +10,6 @@ namespace Cifra.Api.V1.Models.Test.Results
         /// <summary>
         /// The tests
         /// </summary>
-        public List<Test> Tests { get; set; }
+        public List<Test> Tests { get; init; }
     }
 }

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="..\Cifra.Api\bin\$(Configuration)\net6.0\swagger.json" CodeGenerator="NSwagCSharp" Namespace="Cifra.Api.Client" ClassName="CifraApiClient">
+    <OpenApiReference Include="..\Cifra.Api\swagger.json" CodeGenerator="NSwagCSharp" Namespace="Cifra.Api.Client" ClassName="CifraApiClient">
       <Options>/UseBaseUrl:false /GenerateClientInterfaces:true</Options>
     </OpenApiReference>
   </ItemGroup>

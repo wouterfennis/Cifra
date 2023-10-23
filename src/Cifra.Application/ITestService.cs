@@ -1,5 +1,5 @@
-﻿using Cifra.Application.Models.Test.Commands;
-using Cifra.Application.Models.Test.Results;
+﻿using Cifra.Application.Models.Results;
+using Cifra.Commands;
 using System.Threading.Tasks;
 
 namespace Cifra.Application
@@ -27,7 +27,7 @@ namespace Cifra.Application
         /// <summary>
         /// Retrieves test.
         /// </summary>
-        Task<GetTestResult> GetTestAsync(int id);
+        Task<GetTestResult> GetTestAsync(uint id);
 
         /// <summary>
         /// Deletes a test.

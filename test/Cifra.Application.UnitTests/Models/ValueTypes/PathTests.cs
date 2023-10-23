@@ -22,7 +22,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             var input = _fixture.Create<string>();
 
-            Path result = Path.CreateFromString(input);
+            Path result = Path.CreateFromString(input).Value;
 
             result.Value.Should().Be(input);
         }
@@ -32,9 +32,11 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             string input = null;
 
-            Action action = () => Path.CreateFromString(input);
+            var result = Path.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Path cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
@@ -42,25 +44,17 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             string input = string.Empty;
 
-            Action action = () => Path.CreateFromString(input);
+            var result = Path.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
-        }
-
-        [TestMethod]
-        public void ImplicitFromString_WithValidValue_ConvertsToPath()
-        {
-            string input = _fixture.Create<string>();
-
-            Path result = input;
-
-            result.Value.Should().Be(input);
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Path cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
         public void ImplicitFromPathToString_WithValidValue_ConvertsToString()
         {
-            Path input = Path.CreateFromString(_fixture.Create<string>());
+            Path input = Path.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input;
 

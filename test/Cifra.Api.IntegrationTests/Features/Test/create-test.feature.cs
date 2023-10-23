@@ -195,7 +195,7 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table4.AddRow(new string[] {
-                            "Name is required"});
+                            "Test name is not valid"});
 #line 36
  testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
 #line hidden
@@ -240,7 +240,7 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table6.AddRow(new string[] {
-                            "Number of versions must be higher than zero"});
+                            "There should be at least one version of the test"});
 #line 45
  testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table6, "Then ");
 #line hidden
@@ -285,7 +285,7 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table8.AddRow(new string[] {
-                            "Standardization factor must be higher than zero"});
+                            "Standardization factor must be higher than 1"});
 #line 54
  testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table8, "Then ");
 #line hidden

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cifra.Api.V1.Models.Test
+﻿namespace Cifra.Api.V1.Models.Test
 {
     /// <summary>
     /// The Assignment entity.
@@ -10,7 +8,7 @@ namespace Cifra.Api.V1.Models.Test
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.

@@ -1,13 +1,10 @@
-﻿using Cifra.Application.Models.Class.Commands;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Domain.Validation;
-using Cifra.Application.Validation;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
+using Cifra.Application.Models.Results;
+using Cifra.Commands;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
+using Cifra.Domain.Validation;
 
 namespace Cifra.Application
 {
@@ -17,20 +14,14 @@ namespace Cifra.Application
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
-        private readonly IValidator<UpdateClassCommand> _updateClassValidator;
-        private readonly IValidator<CreateClassCommand> _classValidator;
 
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public ClassService(IClassRepository classRepository,
-            IValidator<CreateClassCommand> classValidator,
-            IValidator<UpdateClassCommand> updateClassValidator)
+        public ClassService(IClassRepository classRepository)
         {
             _classRepository = classRepository;
-            _classValidator = classValidator;
-            _updateClassValidator = updateClassValidator;
         }
 
         /// <summary>
@@ -38,14 +29,14 @@ namespace Cifra.Application
         /// </summary>
         public async Task<CreateClassResult> CreateClassAsync(CreateClassCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var newClassResult = Class.TryCreate(model.Name);
+
+            if (!newClassResult.IsSuccess)
             {
-                return new CreateClassResult(validationMessages);
+                return new CreateClassResult(newClassResult.ValidationMessage);
             }
 
-            var newClass = new Class(Name.CreateFromString(model.Name));
-            int id = await _classRepository.CreateAsync(newClass);
+            uint id = await _classRepository.CreateAsync(newClassResult.Value);
 
             return new CreateClassResult(id);
         }
@@ -62,7 +53,7 @@ namespace Cifra.Application
         /// <summary>
         /// Retrieve a specific class.
         /// </summary>
-        public async Task<GetClassResult> GetClassAsync(int id)
+        public async Task<GetClassResult> GetClassAsync(uint id)
         {
             Class retrievedClass = await _classRepository.GetAsync(id);
             return new GetClassResult(retrievedClass);
@@ -71,13 +62,36 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _updateClassValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var updatedClassResult = Class.TryCreate(model.Class.Name);
+
+            if (!updatedClassResult.IsSuccess)
             {
-                return new UpdateClassResult(validationMessages);
+                return new UpdateClassResult(updatedClassResult.ValidationMessage);
             }
 
-            int id = await _classRepository.UpdateAsync(model.UpdatedClass);
+            uint id = await _classRepository.UpdateAsync(updatedClassResult.Value);
+
+            return new UpdateClassResult(id);
+        }
+
+        public async Task<UpdateClassResult> UpdateTestAsync(UpdateClassCommand model)
+        {
+            var updatedClassResult = Class.TryCreate(model.Class.Name);
+            var originalClass = await _classRepository.GetAsync(model.Class.Id);
+
+            if (!updatedClassResult.IsSuccess)
+            {
+                return new UpdateClassResult(updatedClassResult.ValidationMessage);
+            }
+
+            if (originalClass is null)
+            {
+                return new UpdateClassResult(ValidationMessage.Create(nameof(model.Class.Id), "Class to update cannot be found"));
+            }
+
+            originalClass.UpdateFromOtherClass(updatedClassResult.Value);
+
+            uint id = await _classRepository.UpdateAsync(originalClass);
 
             return new UpdateClassResult(id);
         }

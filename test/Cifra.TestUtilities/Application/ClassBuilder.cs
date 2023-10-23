@@ -5,7 +5,7 @@ using Cifra.Domain;
 
 namespace Cifra.TestUtilities.Domain
 {
-    [ExcludeFromCodeCoverage] // Part of test project.
+    [ExcludeFromCodeCoverage(Justification = " Part of test project.")]
     public class ClassBuilder
     {
         private readonly Fixture _fixture;
@@ -17,10 +17,10 @@ namespace Cifra.TestUtilities.Domain
 
         public Class BuildRandomClass()
         {
-            int id = _fixture.Create<int>();
+            uint id = _fixture.Create<uint>();
             string className = _fixture.Create<string>();
             List<Student> students = WithRandomStudents();
-            return new Class(id, className, students);
+            return Class.TryCreate(id, className, students).Value!;
         }
 
         private List<Student> WithRandomStudents()

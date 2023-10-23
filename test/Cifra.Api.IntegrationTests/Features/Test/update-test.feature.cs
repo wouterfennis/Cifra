@@ -316,11 +316,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "-1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid standardization factor", "-1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than zero")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than 1")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_1()
         {
 #line 53
-this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "Standardization factor must be higher than zero", ((string[])(null)));
+this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "Standardization factor must be higher than 1", ((string[])(null)));
 #line hidden
         }
         
@@ -329,11 +329,11 @@ this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "Standardiz
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid standardization factor", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than zero")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than 1")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_0()
         {
 #line 53
-this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "Standardization factor must be higher than zero", ((string[])(null)));
+this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "Standardization factor must be higher than 1", ((string[])(null)));
 #line hidden
         }
         
@@ -395,11 +395,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "-1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid number of versions", "-1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Number of versions must be higher than zero")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "There should be at least one version of the test")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_1()
         {
 #line 67
-this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "Number of versions must be higher than zero", ((string[])(null)));
+this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "There should be at least one version of the test", ((string[])(null)));
 #line hidden
         }
         
@@ -408,11 +408,11 @@ this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "Number of versi
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid number of versions", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Number of versions must be higher than zero")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "There should be at least one version of the test")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_0()
         {
 #line 67
-this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "Number of versions must be higher than zero", ((string[])(null)));
+this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "There should be at least one version of the test", ((string[])(null)));
 #line hidden
         }
         
@@ -474,11 +474,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Invalid minimum grade", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade must be between 1 and 10")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade must be from 1 to 10")]
         public void UpdatingTheMinimumGradeOfATestWithAInvalidNumber_0()
         {
 #line 81
-this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("0", "Minimum grade must be between 1 and 10", ((string[])(null)));
+this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("0", "Minimum grade must be from 1 to 10", ((string[])(null)));
 #line hidden
         }
     }

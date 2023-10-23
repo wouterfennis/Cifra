@@ -1,4 +1,5 @@
-﻿using Cifra.Domain.ValueTypes;
+﻿using Cifra.Domain.Validation;
+using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Domain
 {
@@ -10,27 +11,32 @@ namespace Cifra.Domain
         /// <summary>
         /// The id of the student
         /// </summary>
-        public int Id { get; }
+        public uint Id { get; private set; }
 
         /// <summary>
         /// The first name of the student
         /// </summary>
-        public Name FirstName { get; }
+        public Name FirstName { get; private set; }
 
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string? Infix { get; }
+        public string? Infix { get; private set; }
 
         /// <summary>
         /// The last name of the student
         /// </summary>
-        public Name LastName { get; }
+        public Name LastName { get; private set; }
+
+        private Student()
+        {
+            // Only exists for Entity Framework
+        }
 
         /// <summary>
-        /// Constructor without id
+        /// Constructor for new student
         /// </summary>
-        public Student(Name firstName, string? infix, Name lastName)
+        private Student(Name firstName, string? infix, Name lastName)
         {
             FirstName = firstName;
             Infix = infix;
@@ -38,14 +44,54 @@ namespace Cifra.Domain
         }
 
         /// <summary>
-        /// Constructor with id
+        /// Constructor for existing student
         /// </summary>
-        public Student(int id, Name firstName, string? infix, Name lastName)
+        private Student(uint id, Name firstName, string? infix, Name lastName)
         {
             Id = id;
             FirstName = firstName;
             Infix = infix;
             LastName = lastName;
+        }
+
+        public static Result<Student> TryCreate(string firstName, string? infix, string lastName)
+        {
+            Result<Name> firstNameResult = Name.CreateFromString(firstName);
+            Result<Name> lastNameResult = Name.CreateFromString(lastName);
+
+            if (!firstNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), "Firstname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            if (!lastNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), "Lastname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            return Result<Student>.Ok<Student>(new Student(firstNameResult.Value!, infix, lastNameResult.Value!));
+        }
+
+        public static Result<Student> TryCreate(uint id, string firstName, string? infix, string lastName)
+        {
+            Result<Name> firstNameResult = Name.CreateFromString(firstName);
+            Result<Name> lastNameResult = Name.CreateFromString(lastName);
+
+            if (!firstNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), "Firstname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            if (!lastNameResult.IsSuccess)
+            {
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), "Lastname is not valid");
+                return Result<Student>.Fail<Student>(validationMessage);
+            }
+
+            return Result<Student>.Ok<Student>(new Student(id, firstNameResult.Value!, infix, lastNameResult.Value!));
         }
     }
 }

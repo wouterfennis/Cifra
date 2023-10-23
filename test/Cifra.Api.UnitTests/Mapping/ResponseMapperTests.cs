@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
 using Cifra.Api.Mapping;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Results;
 using Cifra.Domain.ValueTypes;
+using Cifra.TestUtilities.Domain;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -19,14 +19,19 @@ namespace Cifra.Api.UnitTests.Mapping
         public void Initialize()
         {
             _fixture = new Fixture();
-            _fixture.Customize<Grade>(c => c.FromFactory(() => Grade.CreateFromInteger(1)));
+            _fixture.Customize<Grade>(c => c.FromFactory(() => Grade.CreateFromInteger(1).Value!));
         }
 
         [TestMethod]
         public void MapToResponse_WithGetAllClassesResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetAllClassesResult>();
+            var tests = new List<Domain.Class>
+                {
+                    new ClassBuilder().BuildRandomClass()
+                };
+
+            var input = new GetAllClassesResult(tests);
 
             // Act
             var result = input.MapToResponse();
@@ -45,14 +50,16 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetClassResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetClassResult>();
+            var @class = new ClassBuilder().BuildRandomClass();
+
+            var input = new GetClassResult(@class);
 
             // Act
             var result = input.MapToResponse();
 
             // Assert
             result.RetrievedClass.Should().NotBeNull();
-            result.RetrievedClass.Name.Should().Be(input.RetrievedClass.Name);  
+            result.RetrievedClass.Name.Should().Be(input.RetrievedClass.Name);
             result.RetrievedClass.Id.Should().Be(input.RetrievedClass.Id);
             AssertStudents(result.RetrievedClass.Students, input.RetrievedClass.Students);
         }
@@ -89,7 +96,12 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetAllTestsResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetAllTestsResult>();
+            var tests = new List<Domain.Test>
+                {
+                    new TestBuilder().BuildRandomTest()
+                };
+
+            var input = new GetAllTestsResult(tests);
 
             // Act
             var result = input.MapToResponse();
@@ -99,7 +111,7 @@ namespace Cifra.Api.UnitTests.Mapping
 
             foreach (var test in result.Tests)
             {
-                var expectedTest = input.Tests.Single(x => x.Name.Value == test.Name);
+                var expectedTest = input.Tests.Single(x => x.Name == test.Name);
                 expectedTest.Id.Should().Be(test.Id);
                 expectedTest.Name.Value.Should().Be(test.Name);
                 expectedTest.MinimumGrade.Value.Should().Be(test.MinimumGrade);
@@ -113,7 +125,9 @@ namespace Cifra.Api.UnitTests.Mapping
         public void MapToResponse_WithGetTestResult_MapsToOutput()
         {
             // Arrange
-            var input = _fixture.Create<GetTestResult>();
+            var test = new TestBuilder().BuildRandomTest();
+
+            var input = new GetTestResult(test);
 
             // Act
             var result = input.MapToResponse();
@@ -161,9 +175,9 @@ namespace Cifra.Api.UnitTests.Mapping
             foreach (var student in students)
             {
                 var expectedStudent = expectedStudents.Single(x => x.FirstName == student.FirstName);
-                student.FirstName.Should().Be(expectedStudent.FirstName);
+                student.FirstName.Should().Be(expectedStudent.FirstName.Value);
                 student.Infix.Should().Be(expectedStudent.Infix);
-                student.LastName.Should().Be(expectedStudent.LastName);
+                student.LastName.Should().Be(expectedStudent.LastName.Value);
                 student.Id.Should().Be(expectedStudent.Id);
             }
         }

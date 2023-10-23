@@ -8,7 +8,7 @@
         /// <summary>
         /// The id of the student
         /// </summary>
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         /// <summary>
         /// The first name of the student

@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoFixture;
+using Cifra.Domain.Validation;
 using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,45 +23,39 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             var input = _fixture.Create<string>();
 
-            Name result = Name.CreateFromString(input);
+            Name result = Name.CreateFromString(input).Value;
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsNull_ThrowsException()
+        public void CreateFromString_NameIsNull_ResultFails()
         {
             string input = null;
 
-            Action action = () => Name.CreateFromString(input);
+            var result = Name.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Name cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsEmpty_ThrowsException()
+        public void CreateFromString_NameIsEmpty_ResultFails()
         {
             string input = string.Empty;
 
-            Action action = () => Name.CreateFromString(input);
+            var result = Name.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
-        }
-
-        [TestMethod]
-        public void ImplicitFromString_WithValidValue_ConvertsToName()
-        {
-            string input = _fixture.Create<string>();
-
-            Name result = input;
-
-            result.Value.Should().Be(input);
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Name cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
         public void ImplicitFromNameToString_WithValidValue_ConvertsToString()
         {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input;
 
@@ -70,7 +65,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         [TestMethod]
         public void ToString_WithValidValue_ReturnsString()
         {
-            Name input = Name.CreateFromString(_fixture.Create<string>());
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
 
             string result = input.ToString();
 

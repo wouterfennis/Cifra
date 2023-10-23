@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cifra.Domain.Validation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,16 +12,7 @@ namespace Cifra.Domain.ValueTypes
     {
         private Path(string value)
         {
-            Validate(value);
             Value = value;
-        }
-
-        private void Validate(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException(nameof(value));
-            }
         }
 
         /// <summary>
@@ -31,7 +23,15 @@ namespace Cifra.Domain.ValueTypes
         /// <summary>
         /// Creates a Path from a string
         /// </summary>
-        public static Path CreateFromString(string value) => new Path(value);
+        public static Result<Path> CreateFromString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return Result<Path>.Fail<Path>(ValidationMessage.Create(nameof(value), "Path cannot be null or empty"));
+            }
+
+            return Result<Path>.Ok<Path>(new Path(value));
+        }
 
         /// <summary>
         /// Implicit converts the <see cref="Path"/> value to <see cref="string"/>.
@@ -39,14 +39,6 @@ namespace Cifra.Domain.ValueTypes
         public static implicit operator string(Path path)
         {
             return path.Value;
-        }
-
-        /// <summary>
-        /// Implicit converts the <see cref="string"/> value to <see cref="Path"/>.
-        /// </summary>
-        public static implicit operator Path(string pathValue)
-        {
-            return CreateFromString(pathValue);
         }
     }
 }

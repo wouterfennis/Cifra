@@ -6,11 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.TestUtilities.Domain
 {
-    [ExcludeFromCodeCoverage] // Part of test project.
+    [ExcludeFromCodeCoverage(Justification = "Part of test project")]
     public class TestBuilder
     {
         private readonly Fixture _fixture;
-        private Grade _minimumGrade;
+        private int _minimumGrade;
         private readonly List<Assignment> _assignments;
         private int _numberOfVersions;
 
@@ -20,7 +20,7 @@ namespace Cifra.TestUtilities.Domain
             _fixture = new Fixture();
         }
 
-        public TestBuilder WithMinimumGrade(Grade grade)
+        public TestBuilder WithMinimumGrade(int grade)
         {
             _minimumGrade = grade;
             return this;
@@ -28,7 +28,7 @@ namespace Cifra.TestUtilities.Domain
 
         public TestBuilder WithValidMinimumGrade()
         {
-            _minimumGrade = Grade.CreateFromInteger(1);
+            _minimumGrade = 1;
             return this;
         }
 
@@ -52,29 +52,30 @@ namespace Cifra.TestUtilities.Domain
 
         public Test BuildRandomTest()
         {
-            Name testName = _fixture.Create<Name>();
-            StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
+            Name testName = Name.CreateFromString(_fixture.Create<string>()).Value;
+            StandardizationFactor standardizationFactor = StandardizationFactor.CreateFromInteger(_fixture.Create<int>()).Value;
             WithRandomAssignments();
-            return new Test(
-                _fixture.Create<int>(),
+            return Test.TryCreate(
+                _fixture.Create<uint>(),
                 testName,
                 standardizationFactor,
-                Grade.CreateFromInteger(1),
-                _assignments,
-                _fixture.Create<int>());
+                1,
+                _fixture.Create<int>(),
+                _assignments).Value;
         }
 
         public Test Build()
         {
-            Name testName = _fixture.Create<Name>();
-            StandardizationFactor standardizationFactor = _fixture.Create<StandardizationFactor>();
-            return new Test(
-                _fixture.Create<int>(),
+            Name testName = Name.CreateFromString(_fixture.Create<string>()).Value;
+            StandardizationFactor standardizationFactor = StandardizationFactor.CreateFromInteger(_fixture.Create<int>()).Value;
+            return Test.TryCreate(
+                _fixture.Create<uint>(),
                 testName,
                 standardizationFactor,
                 _minimumGrade,
-                _assignments,
-                _numberOfVersions);
+                _numberOfVersions,
+                _assignments
+                ).Value;
         }
     }
 }

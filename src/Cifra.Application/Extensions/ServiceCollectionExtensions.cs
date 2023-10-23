@@ -1,7 +1,4 @@
-﻿using Cifra.Application.Models.Class.Commands;
-using Cifra.Application.Models.Test.Commands;
-using Cifra.Application.Validation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
@@ -21,20 +18,6 @@ namespace Cifra.Application.Extensions
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<ITestResultsSpreadsheetService, TestResultsSpreadsheetService>();
-            services.AddScoped<IValidator<CreateClassCommand>, Validator<CreateClassCommand>>();
-            services.AddScoped<IValidator<CreateTestCommand>, Validator<CreateTestCommand>>();
-            services.AddScoped<IValidator<UpdateTestCommand>, Validator<UpdateTestCommand>>();
-            services.AddScoped<IValidator<UpdateClassCommand>, Validator<UpdateClassCommand>>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NameMustBeFilled>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.NumberOfVersionsMustBeValid>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.MinimumGradeMustBeValid>();
-            services.AddScoped<IValidationRule<CreateTestCommand>, Validation.CreateTestModelValidationRules.StandardizationFactorMustBeValid>();
-            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NameMustBeFilled>();
-            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.NumberOfVersionsMustBeValid>();
-            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.MinimumGradeMustBeValid>();
-            services.AddScoped<IValidationRule<UpdateTestCommand>, Validation.UpdateTestModelValidationRules.StandardizationFactorMustBeValid>();
-            services.AddScoped<IValidationRule<CreateClassCommand>, Validation.CreateClassModelValidationRules.NameMustBeFilled>();
-            services.AddScoped<IValidationRule<UpdateClassCommand>, Validation.UpdateClassModelValidationRules.NameMustBeFilled>();
         }
     }
 }

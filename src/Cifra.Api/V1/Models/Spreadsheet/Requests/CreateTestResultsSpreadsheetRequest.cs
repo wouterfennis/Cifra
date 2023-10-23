@@ -8,16 +8,16 @@
         /// <summary>
         /// The id of the class.
         /// </summary>
-        public int ClassId { get; set; }
+        public uint ClassId { get; init; }
 
         /// <summary>
         /// The id of the test.
         /// </summary>
-        public int TestId { get; set; }
+        public uint TestId { get; init; }
 
         /// <summary>
         /// The metadata of the spreadsheet.
         /// </summary>
-        public Metadata Metadata { get; set; }
+        public Metadata Metadata { get; init; }
     }
 }

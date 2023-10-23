@@ -1,11 +1,10 @@
 ﻿using AutoFixture;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.TestUtilities.Domain
 {
-    [ExcludeFromCodeCoverage] // Part of test project.
+    [ExcludeFromCodeCoverage(Justification = "Part of test project.")]
     public class StudentBuilder
     {
         private readonly Fixture _fixture;
@@ -17,10 +16,11 @@ namespace Cifra.TestUtilities.Domain
 
         public Student BuildRandomStudent()
         {
+            uint id = _fixture.Create<uint>();
             string firstName = _fixture.Create<string>();
             string infix = _fixture.Create<string>();
             string lastName = _fixture.Create<string>();
-            return new Student(Name.CreateFromString(firstName), infix, Name.CreateFromString(lastName));
+            return Student.TryCreate(id, firstName, infix, lastName).Value;
         }
     }
 }

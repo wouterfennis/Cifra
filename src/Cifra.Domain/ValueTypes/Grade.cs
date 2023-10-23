@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cifra.Domain.Validation;
 
 namespace Cifra.Domain.ValueTypes
 {
@@ -8,21 +7,12 @@ namespace Cifra.Domain.ValueTypes
     /// </summary>
     public sealed class Grade
     {
-        private readonly int _minimalValue = 0;
-        private readonly int _maximalValue = 10;
+        private const int _minimalValue = 1;
+        private const int _maximalValue = 10;
 
         private Grade(int value)
         {
-            Validate(value);
             Value = value;
-        }
-
-        private void Validate(int value)
-        {
-            if (value < _minimalValue || value > _maximalValue)
-            {
-                throw new ArgumentException($"The value: {value} is not within {_minimalValue} and {_maximalValue}");
-            }
         }
 
         /// <summary>
@@ -31,9 +21,17 @@ namespace Cifra.Domain.ValueTypes
         public int Value { get; }
 
         /// <summary>
-        /// Creates a Grade from a integer.
+        /// Creates a Grade from a integer
         /// </summary>
-        public static Grade CreateFromInteger(int value) => new Grade(value);
+        public static Result<Grade> CreateFromInteger(int value)
+        {
+            if (value < _minimalValue || value > _maximalValue)
+            {
+                return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Minimum grade must be from {_minimalValue} to {_maximalValue}"));
+            }
+
+            return Result<Grade>.Ok<Grade>(new Grade(value));
+        }
 
         /// <summary>
         /// Implicit converts the <see cref="Grade"/> value to <see cref="int"/>.
@@ -41,14 +39,6 @@ namespace Cifra.Domain.ValueTypes
         public static implicit operator int(Grade grade)
         {
             return grade.Value;
-        }
-
-        /// <summary>
-        /// Implicit converts the <see cref="int"/> value to <see cref="Grade"/>.
-        /// </summary>
-        public static implicit operator Grade(int gradeValue)
-        {
-            return CreateFromInteger(gradeValue);
         }
     }
 }

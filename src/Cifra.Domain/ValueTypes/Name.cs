@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cifra.Domain.Validation;
 
 namespace Cifra.Domain.ValueTypes
 {
@@ -10,16 +9,7 @@ namespace Cifra.Domain.ValueTypes
     {
         private Name(string value)
         {
-            Validate(value);
             Value = value;
-        }
-
-        private void Validate(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException(nameof(name));
-            }
         }
 
         /// <summary>
@@ -30,7 +20,15 @@ namespace Cifra.Domain.ValueTypes
         /// <summary>
         /// Creates a Name from a string
         /// </summary>
-        public static Name CreateFromString(string value) => new Name(value);
+        public static Result<Name> CreateFromString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return Result<Name>.Fail<Name>(ValidationMessage.Create(nameof(value), "Name cannot be null or empty"));
+            }
+
+            return Result<Name>.Ok<Name>(new Name(value));
+        }
 
         /// <summary>
         /// Implicit converts the <see cref="Name"/> value to <see cref="string"/>.
@@ -38,14 +36,6 @@ namespace Cifra.Domain.ValueTypes
         public static implicit operator string(Name name)
         {
             return name.Value;
-        }
-
-        /// <summary>
-        /// Implicit converts the <see cref="string"/> value to <see cref="Name"/>.
-        /// </summary>
-        public static implicit operator Name(string nameValue)
-        {
-            return CreateFromString(nameValue);
         }
 
         public override string ToString()

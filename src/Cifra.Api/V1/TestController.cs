@@ -3,7 +3,7 @@ using Cifra.Api.V1.Models.Test.Requests;
 using Cifra.Api.V1.Models.Test.Responses;
 using Cifra.Api.V1.Models.Test.Results;
 using Cifra.Application;
-using Cifra.Application.Models.Test.Results;
+using Cifra.Application.Models.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -60,7 +60,7 @@ namespace Cifra.Api.V1
         [HttpGet("{testId}")]
         [ProducesResponseType(typeof(GetTestResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetTestResponse> GetTestAsync(int testId)
+        public async Task<GetTestResponse> GetTestAsync(uint testId)
         {
             GetTestResult getTestResult = await _testService.GetTestAsync(testId);
 
@@ -128,7 +128,7 @@ namespace Cifra.Api.V1
         /// <param name="request">The request containing details of the test.</param>
         /// <response code="201">Reference to updated test.</response> 
         /// <response code="400">Supplied test data was invalid.</response> 
-        /// <response code="500">The test could not be updated.</response> 
+        /// <response code="500">The test could not be deleted.</response> 
         [HttpDelete]
         [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status400BadRequest)]

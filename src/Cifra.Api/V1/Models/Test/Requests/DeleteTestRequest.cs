@@ -9,6 +9,6 @@ namespace Cifra.Api.V1.Models.Test.Requests
         /// <summary>
         /// The Id of the test that should be deleted.
         /// </summary>
-        public int TestId { get; set; }
+        public int TestId { get; init; }
     }
 }

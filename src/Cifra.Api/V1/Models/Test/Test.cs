@@ -10,7 +10,7 @@ namespace Cifra.Api.V1.Models.Test
         /// <summary>
         /// The Id.
         /// </summary>
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
         /// <summary>
         /// The Name.

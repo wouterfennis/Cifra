@@ -15,7 +15,7 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
 
             var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
@@ -25,38 +25,38 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
 
             var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromInteger_WithTooHighGrade_ThrowsException()
+        public void CreateFromInteger_WithTooHighGrade_ResultFails()
         {
             int input = 11;
 
-            Action action = () => Grade.CreateFromInteger(input);
+            var result = Grade.CreateFromInteger(input);
 
-            action.Should().Throw<ArgumentException>()
-                .WithMessage($"The value: {input} is not within 0 and 10");
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
-        public void ImplicitFromInt_WithValidValue_ConvertsToGrade()
+        public void CreateFromInteger_WithTooLowGrade_ResultFails()
         {
-            // Arrange
-            int input = 10;
+            int input = 0;
 
-            // Act
-            Grade grade = input;
+            var result = Grade.CreateFromInteger(input);
 
-            // Assert
-            grade.Value.Should().Be(input);
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
         public void ImplicitFromGradeToInt_WithValidValue_ConvertsToInt()
         {
             // Arrange
-            Grade input = Grade.CreateFromInteger(10);
+            Grade input = Grade.CreateFromInteger(10).Value;
 
             // Act
             int value = input;

@@ -60,9 +60,9 @@ Scenario: Updating the standardization factor of a test with a invalid number
 		| Name           | Number of versions | Standardization factor | Minimum grade |
 		| Math chapter 1 | 1                  | 9                      | 1             |
 Examples:
-	| Invalid standardization factor | Failure reason                                  |
-	| -1                             | Standardization factor must be higher than zero |
-	| 0                              | Standardization factor must be higher than zero |
+	| Invalid standardization factor | Failure reason                               |
+	| -1                             | Standardization factor must be higher than 1 |
+	| 0                              | Standardization factor must be higher than 1 |
 
 Scenario: Updating the number of versions of a test with a invalid number
 	Given a request is made to create a new test with the following values:
@@ -74,9 +74,9 @@ Scenario: Updating the number of versions of a test with a invalid number
 		| Name           | Number of versions | Standardization factor | Minimum grade |
 		| Math chapter 1 | 1                  | 9                      | 1             |
 Examples:
-	| Invalid number of versions | Failure reason                              |
-	| -1                         | Number of versions must be higher than zero |
-	| 0                          | Number of versions must be higher than zero |
+	| Invalid number of versions | Failure reason                                   |
+	| -1                         | There should be at least one version of the test |
+	| 0                          | There should be at least one version of the test |
 
 Scenario: Updating the minimum grade of a test with a invalid number
 	Given a request is made to create a new test with the following values:
@@ -88,5 +88,5 @@ Scenario: Updating the minimum grade of a test with a invalid number
 		| Name           | Number of versions | Standardization factor | Minimum grade |
 		| Math chapter 1 | 1                  | 9                      | 1             |
 Examples:
-	| Invalid minimum grade | Failure reason                         |
-	| 0                     | Minimum grade must be between 1 and 10 |
+	| Invalid minimum grade | Failure reason                     |
+	| 0                     | Minimum grade must be from 1 to 10 |

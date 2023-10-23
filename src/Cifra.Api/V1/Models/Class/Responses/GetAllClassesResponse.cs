@@ -7,6 +7,6 @@ namespace Cifra.Api.V1.Models.Class.Responses
         /// <summary>
         /// The classes
         /// </summary>
-        public IEnumerable<Class> Classes { get; set; }
+        public IEnumerable<Class> Classes { get; init; }
     }
 }

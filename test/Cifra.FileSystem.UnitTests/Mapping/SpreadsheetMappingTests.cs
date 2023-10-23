@@ -34,7 +34,7 @@ namespace Cifra.FileSystem.UnitTests.Mapping
         public void MapToLibraryModel_WithValidMetadataModel_MapsToLibraryModel()
         {
             // Arrange
-            Domain.Spreadsheet.Metadata model = _fixture.Create<Domain.Spreadsheet.Metadata>();
+            Domain.Spreadsheet.Metadata model = Domain.Spreadsheet.Metadata.TryCreate(_fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<DateTime>(), _fixture.Create<string>(), _fixture.Create<string>()).Value;
 
             // Act
             SpreadsheetWriter.Abstractions.Metadata result = model.MapToLibraryModel();

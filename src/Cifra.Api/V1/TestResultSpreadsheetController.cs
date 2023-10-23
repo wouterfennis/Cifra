@@ -1,7 +1,7 @@
 ﻿using Cifra.Api.Mapping;
 using Cifra.Api.V1.Models.Spreadsheet.Requests;
 using Cifra.Application;
-using Cifra.Application.Models.Spreadsheet.Results;
+using Cifra.Application.Models.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
