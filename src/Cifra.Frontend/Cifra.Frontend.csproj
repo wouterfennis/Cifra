@@ -19,7 +19,4 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cifra.Api.Client\Cifra.Api.Client.csproj" />
-  </ItemGroup>
 </Project>

@@ -33,6 +33,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Get all tests
         /// </summary>
-        Task DeleteAsync(Name Name);
+        Task DeleteAsync(uint id);
     }
 }

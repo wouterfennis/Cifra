@@ -6,8 +6,8 @@
     public sealed class DeleteTestCommand
     {
         /// <summary>
-        /// The name of the test that should be deleted.
+        /// The id of the test that should be deleted.
         /// </summary>
-        public string Name { get; init; }
+        public uint TestId { get; init; }
     }
 }

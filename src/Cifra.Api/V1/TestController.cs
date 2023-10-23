@@ -128,7 +128,7 @@ namespace Cifra.Api.V1
         /// <param name="request">The request containing details of the test.</param>
         /// <response code="201">Reference to updated test.</response> 
         /// <response code="400">Supplied test data was invalid.</response> 
-        /// <response code="500">The test could not be updated.</response> 
+        /// <response code="500">The test could not be deleted.</response> 
         [HttpDelete]
         [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(DeleteTestResponse), StatusCodes.Status400BadRequest)]

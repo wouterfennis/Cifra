@@ -355,4 +355,4 @@ Cifra.Api.xml
 *.db-*
 *.sqlite
 *.sqlite-*
-/src/Cifra.Api/swagger.json
+swagger.json

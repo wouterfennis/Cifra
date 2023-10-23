@@ -49,9 +49,9 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(Name name)
+        public async Task DeleteAsync(uint id)
         {
-            var test = await _dbContext.Tests.SingleAsync(x => x.Name == name);
+            var test = await _dbContext.Tests.SingleAsync(x => x.Id == id);
             _dbContext.Tests.Remove(test);
 
             await _dbContext.SaveChangesAsync();

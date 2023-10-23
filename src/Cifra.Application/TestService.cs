@@ -6,6 +6,7 @@ using Cifra.Domain.ValueTypes;
 using Cifra.Application.Models.Results;
 using Cifra.Commands;
 using Cifra.Domain.Validation;
+using System.Xml.Linq;
 
 namespace Cifra.Application
 {
@@ -77,14 +78,8 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<DeleteTestResult> DeleteTestAsync(DeleteTestCommand command)
         {
-            var name = Name.CreateFromString(command.Name);
+            await _testRepository.DeleteAsync(command.TestId);
 
-            if (!name.IsSuccess)
-            {
-                return new DeleteTestResult(name.ValidationMessage);
-            }
-
-            await _testRepository.DeleteAsync(name.Value);
             return new DeleteTestResult();
         }
     }
