@@ -1,6 +1,5 @@
 ﻿using Cifra.Domain.Validation;
 using Cifra.Domain.ValueTypes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,7 +42,7 @@ namespace Cifra.Domain
 
         private Test()
         {
-            // Only exists for Entity Framework
+            // Only exists for Entity Framework.
         }
 
         /// <summary>

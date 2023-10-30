@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace Cifra.Api.Mapping
 {
+    /// <summary>
+    /// Maps a <see cref="UpdateTestRequest"/> to a <see cref="UpdateTestCommand"/>.
+    /// </summary>
     public static class UpdateTestCommandMapper
     {
+        /// <summary>
+        /// Maps a <see cref="UpdateTestRequest"/> to a <see cref="UpdateTestCommand"/>.
+        /// </summary>
         public static UpdateTestCommand MapToCommand(this UpdateTestRequest input)
         {
             var assignments = input.Test.Assignments

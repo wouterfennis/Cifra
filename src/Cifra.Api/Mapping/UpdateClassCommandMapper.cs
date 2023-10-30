@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace Cifra.Api.Mapping
 {
+    /// <summary>
+    /// Maps a <see cref="CreateClassRequest"/> to a <see cref="CreateClassCommand"/>.
+    /// </summary>
     public static class UpdateClassCommandMapper
     {
+        /// <summary>
+        /// Maps a <see cref="CreateClassRequest"/> to a <see cref="CreateClassCommand"/>.
+        /// </summary>
         public static UpdateClassCommand Map(this UpdateClassRequest input)
         {
             var students = input.UpdatedClass.Students
