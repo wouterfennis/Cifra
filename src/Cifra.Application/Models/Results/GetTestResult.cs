@@ -10,14 +10,6 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// The test
         /// </summary>
-        public Test Test { get; }
-        
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        public GetTestResult(Test test)
-        {
-            Test = test;
-        }
+        public required Test? Test { get; init; }
     }
 }

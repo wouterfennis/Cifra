@@ -4,16 +4,19 @@ using System.IO;
 
 namespace Cifra.Api.V1.Models.Spreadsheet.Responses
 {
+    /// <summary>
+    /// The response to create a test results spreadsheet.
+    /// </summary>
     public class CreateTestResultsSpreadsheetResponse
     {
         /// <summary>
         /// The path to the spreadsheet.
         /// </summary>
-        public FileInfo FileInfo { get; set; }
+        public required FileInfo FileInfo { get; init; }
 
         /// <summary>
         /// The validation messages
         /// </summary>
-        public IEnumerable<ValidationMessage> ValidationMessages { get; set; }
+        public required IEnumerable<ValidationMessage> ValidationMessages { get; init; }
     }
 }

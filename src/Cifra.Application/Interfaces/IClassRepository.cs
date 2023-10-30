@@ -12,7 +12,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a <see cref="Class"/>.
         /// </summary>
-        Task<Class> GetAsync(uint id);
+        Task<Class?> GetAsync(uint id);
 
         /// <summary>
         /// Create a <see cref="Class"/>.

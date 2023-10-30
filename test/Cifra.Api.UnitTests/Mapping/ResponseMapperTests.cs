@@ -52,7 +52,7 @@ namespace Cifra.Api.UnitTests.Mapping
             // Arrange
             var @class = new ClassBuilder().BuildRandomClass();
 
-            var input = new GetClassResult(@class);
+            var input = new GetClassResult { RetrievedClass = @class };
 
             // Act
             var result = input.MapToResponse();
@@ -127,7 +127,7 @@ namespace Cifra.Api.UnitTests.Mapping
             // Arrange
             var test = new TestBuilder().BuildRandomTest();
 
-            var input = new GetTestResult(test);
+            var input = new GetTestResult { Test = test };
 
             // Act
             var result = input.MapToResponse();

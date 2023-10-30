@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
-using System.Linq;
-using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Database.Repositories
 {

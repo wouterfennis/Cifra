@@ -9,6 +9,6 @@ namespace Cifra.Api.V1.Models.Test.Requests
         /// <summary>
         /// The test.
         /// </summary>
-        public Test Test { get; init; }
+        public required Test Test { get; init; }
     }
 }

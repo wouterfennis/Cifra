@@ -13,7 +13,7 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Retrieves a test
         /// </summary>
-        Task<Test> GetAsync(uint id);
+        Task<Test?> GetAsync(uint id);
 
         /// <summary>
         /// Create a test 

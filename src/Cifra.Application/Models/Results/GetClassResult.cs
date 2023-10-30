@@ -1,5 +1,4 @@
 ﻿using Cifra.Domain;
-using System;
 
 namespace Cifra.Application.Models.Results
 {
@@ -11,14 +10,6 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// The class
         /// </summary>
-        public Class RetrievedClass { get; }
-
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        public GetClassResult(Class retrievedClass)
-        {
-            RetrievedClass = retrievedClass ?? throw new ArgumentNullException(nameof(retrievedClass));
-        }
+        public required Class? RetrievedClass { get; init; }
     }
 }

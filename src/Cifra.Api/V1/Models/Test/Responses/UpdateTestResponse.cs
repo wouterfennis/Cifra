@@ -11,11 +11,11 @@ namespace Cifra.Api.V1.Models.Test.Responses
         /// <summary>
         /// The Test Id
         /// </summary>
-        public uint TestId { get; init; }
+        public required uint TestId { get; init; }
 
         /// <summary>
         /// The validation messages
         /// </summary>
-        public List<ValidationMessage> ValidationMessages { get; init; }
+        public required List<ValidationMessage> ValidationMessages { get; init; }
     }
 }

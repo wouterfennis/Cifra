@@ -4,7 +4,7 @@ namespace Cifra.Api.IntegrationTests.Steps
 {
     internal class ClassDetails
     {
-        public CreateClassRequest CreateClassRequest { get; set; }
-        public CreateClassResponse CreateClassResponse { get; set; }
+        public required CreateClassRequest CreateClassRequest { get; init; }
+        public required CreateClassResponse CreateClassResponse { get; init; }
     }
 }

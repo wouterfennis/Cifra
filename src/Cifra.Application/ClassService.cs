@@ -33,10 +33,10 @@ namespace Cifra.Application
 
             if (!newClassResult.IsSuccess)
             {
-                return new CreateClassResult(newClassResult.ValidationMessage);
+                return new CreateClassResult(newClassResult.ValidationMessage!);
             }
 
-            uint id = await _classRepository.CreateAsync(newClassResult.Value);
+            uint id = await _classRepository.CreateAsync(newClassResult.Value!);
 
             return new CreateClassResult(id);
         }
@@ -55,8 +55,8 @@ namespace Cifra.Application
         /// </summary>
         public async Task<GetClassResult> GetClassAsync(uint id)
         {
-            Class retrievedClass = await _classRepository.GetAsync(id);
-            return new GetClassResult(retrievedClass);
+            Class? retrievedClass = await _classRepository.GetAsync(id);
+            return new GetClassResult { RetrievedClass = retrievedClass };
         }
 
         /// <inheritdoc/>
@@ -66,10 +66,10 @@ namespace Cifra.Application
 
             if (!updatedClassResult.IsSuccess)
             {
-                return new UpdateClassResult(updatedClassResult.ValidationMessage);
+                return new UpdateClassResult(updatedClassResult.ValidationMessage!);
             }
 
-            uint id = await _classRepository.UpdateAsync(updatedClassResult.Value);
+            uint id = await _classRepository.UpdateAsync(updatedClassResult.Value!);
 
             return new UpdateClassResult(id);
         }
@@ -81,7 +81,7 @@ namespace Cifra.Application
 
             if (!updatedClassResult.IsSuccess)
             {
-                return new UpdateClassResult(updatedClassResult.ValidationMessage);
+                return new UpdateClassResult(updatedClassResult.ValidationMessage!);
             }
 
             if (originalClass is null)
@@ -89,7 +89,7 @@ namespace Cifra.Application
                 return new UpdateClassResult(ValidationMessage.Create(nameof(model.Class.Id), "Class to update cannot be found"));
             }
 
-            originalClass.UpdateFromOtherClass(updatedClassResult.Value);
+            originalClass.UpdateFromOtherClass(updatedClassResult.Value!);
 
             uint id = await _classRepository.UpdateAsync(originalClass);
 

@@ -10,6 +10,6 @@ namespace Cifra.Commands
         /// <summary>
         /// The name of the class
         /// </summary>
-        public Class Class { get; init; }
+        public required Class Class { get; init; }
     }
 }

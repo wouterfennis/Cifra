@@ -4,6 +4,6 @@
     {
         public const string Section = "Spreadsheet";
 
-        public string TestResultsDirectory { get; set; }
+        public required string TestResultsDirectory { get; init; }
     }
 }

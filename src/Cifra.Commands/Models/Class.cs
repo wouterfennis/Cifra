@@ -10,16 +10,16 @@ namespace Cifra.Commands.Models
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public uint Id { get; init; }
+        public required uint Id { get; init; }
 
         /// <summary>
         /// The Name of the Class
         /// </summary>
-        public string Name { get; init; }
+        public required string Name { get; init; }
 
         /// <summary>
         /// The Students of the Class
         /// </summary>
-        public IEnumerable<Student> Students { get; init; }
+        public required IEnumerable<Student> Students { get; init; }
     }
 }

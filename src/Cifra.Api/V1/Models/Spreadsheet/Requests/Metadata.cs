@@ -2,36 +2,39 @@
 
 namespace Cifra.Api.V1.Models.Spreadsheet.Requests
 {
+    /// <summary>
+    /// The metadata of the spreadsheet.
+    /// </summary>
     public sealed class Metadata
     {
         /// <summary>
         /// The author of the spreadsheet
         /// </summary>
-        public string Author { get; init; }
+        public required string Author { get; init; }
 
         /// <summary>
         /// The title of the spreadsheet
         /// </summary>
-        public string Title { get; init; }
+        public required string Title { get; init; }
 
         /// <summary>
         /// The subject of the spreadsheet
         /// </summary>
-        public string Subject { get; init; }
+        public required string Subject { get; init; }
 
         /// <summary>
         /// The created date of the spreadsheet
         /// </summary>
-        public DateTime Created { get; init; }
+        public required DateTime Created { get; init; }
 
         /// <summary>
         /// The filename of the spreadsheet
         /// </summary>
-        public string FileName { get; init; }
+        public required string FileName { get; init; }
 
         /// <summary>
         /// The version of the application.
         /// </summary>
-        public string ApplicationVersion { get; init; }
+        public required string ApplicationVersion { get; init; }
     }
 }

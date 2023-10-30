@@ -8,21 +8,21 @@
         /// <summary>
         /// The id of the student
         /// </summary>
-        public uint Id { get; set; }
+        public required uint Id { get; init; }
 
         /// <summary>
         /// The first name of the student
         /// </summary>
-        public string FirstName { get; set; }
+        public required string FirstName { get; init; }
 
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string? Infix { get; set; }
+        public required string? Infix { get; init; }
 
         /// <summary>
         /// The last name of the student
         /// </summary>
-        public string LastName { get; set; }
+        public required string LastName { get; init; }
     }
 }

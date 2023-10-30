@@ -10,32 +10,32 @@ namespace Cifra.Api.V1.Models.Test
         /// <summary>
         /// The Id.
         /// </summary>
-        public uint Id { get; set; }
+        public required uint Id { get; init; }
 
         /// <summary>
         /// The Name.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; init; }
 
         /// <summary>
         /// The number of versions of the test that where made.
         /// </summary>
-        public int NumberOfVersions { get; set; }
+        public required int NumberOfVersions { get; init; }
 
         /// <summary>
         /// The Assignments.
         /// </summary>
-        public List<Assignment> Assignments { get; set; }
+        public required List<Assignment> Assignments { get; init; }
 
         /// <summary>
         /// The Standardization Factor.
         /// </summary>
-        public int StandardizationFactor { get; set; }
+        public required int StandardizationFactor { get; init; }
 
         /// <summary>
         /// The Minimum Grade.
         /// </summary>
-        public int MinimumGrade { get; set; }
+        public required int MinimumGrade { get; init; }
 
     }
 }

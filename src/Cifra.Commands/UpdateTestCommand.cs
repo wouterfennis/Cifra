@@ -10,6 +10,6 @@ namespace Cifra.Commands
         /// <summary>
         /// The updated test
         /// </summary>
-        public Test Test { get; init; }
+        public required Test Test { get; init; }
     }
 }

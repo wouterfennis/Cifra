@@ -55,10 +55,10 @@ namespace Cifra.Api.V1
                 _logger.LogInformation(result.ValidationMessages.Select( x=> x.Message).First());
                 return BadRequest(result);
             }
-            return base.File(CreateOneTimeStream(result), "application/octet-stream", result.FileInfo.Name);
+            return base.File(CreateOneTimeStream(result.FileInfo!), "application/octet-stream", result.FileInfo!.Name);
         }
 
-        private static FileStream CreateOneTimeStream(CreateTestResultsSpreadsheetResult result)
+        private static FileStream CreateOneTimeStream(FileInfo fileInfo)
         {
             var fileStreamOptions = new FileStreamOptions
             {
@@ -66,7 +66,7 @@ namespace Cifra.Api.V1
                 Mode = FileMode.Open,
                 Options = FileOptions.DeleteOnClose,
             };
-            return result.FileInfo.Open(fileStreamOptions);
+            return fileInfo.Open(fileStreamOptions);
         }
     }
 }

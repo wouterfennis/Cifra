@@ -32,12 +32,12 @@ namespace Cifra.Application
         public async Task<CreateTestResultsSpreadsheetResult> CreateTestResultsSpreadsheetAsync(CreateTestResultsSpreadsheetCommand command)
         {
             var validationMessages = new List<ValidationMessage>();
-            Class pickedClass = await _classRepository.GetAsync(command.ClassId);
+            Class? pickedClass = await _classRepository.GetAsync(command.ClassId);
             Result<Metadata> metadata = Metadata.TryCreate(command.Metadata.Author, command.Metadata.Title, command.Metadata.Subject, command.Metadata.Created, command.Metadata.FileName, command.Metadata.ApplicationVersion);
 
             if (!metadata.IsSuccess)
             {
-                validationMessages.Add(metadata.ValidationMessage);
+                validationMessages.Add(metadata.ValidationMessage!);
             }
 
             if (pickedClass == null)
@@ -45,7 +45,7 @@ namespace Cifra.Application
                 validationMessages.Add(ValidationMessage.Create("Class", "Not found"));
             }
 
-            Test pickedTest = await _testRepository.GetAsync(command.TestId);
+            Test? pickedTest = await _testRepository.GetAsync(command.TestId);
 
             if (pickedTest == null)
             {
@@ -57,7 +57,7 @@ namespace Cifra.Application
                 return new CreateTestResultsSpreadsheetResult(validationMessages);
             }
 
-            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(pickedClass, pickedTest, metadata.Value);
+            var fileInfo = await _testResultsSpreadsheetBuilder.CreateTestResultsSpreadsheetAsync(pickedClass!, pickedTest!, metadata.Value!);
 
             return new CreateTestResultsSpreadsheetResult(fileInfo);
         }

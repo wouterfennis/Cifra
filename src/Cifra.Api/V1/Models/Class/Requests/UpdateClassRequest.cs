@@ -8,6 +8,6 @@
         /// <summary>
         /// The updated class.
         /// </summary>
-        public Class UpdatedClass { get; set; }
+        public required Class UpdatedClass { get; init; }
     }
 }

@@ -13,7 +13,7 @@ namespace Cifra.Application.Models.Results
         /// <summary>
         /// The path to the spreadsheet.
         /// </summary>
-        public FileInfo FileInfo { get; }
+        public FileInfo? FileInfo { get; }
 
         /// <summary>
         /// The validation messages

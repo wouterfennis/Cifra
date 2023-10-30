@@ -3,16 +3,19 @@ using System.Collections.Generic;
 
 namespace Cifra.Api.V1.Models.Class.Responses
 {
+    /// <summary>
+    /// The response to update a Class.
+    /// </summary>
     public class UpdateClassResponse
     {
         /// <summary>
         /// The Class Id
         /// </summary>
-        public uint ClassId { get; init; }
+        public required uint ClassId { get; init; }
 
         /// <summary>
         /// The validation messages
         /// </summary>
-        public IEnumerable<ValidationMessage> ValidationMessages { get; init; }
+        public required IEnumerable<ValidationMessage> ValidationMessages { get; init; }
     }
 }

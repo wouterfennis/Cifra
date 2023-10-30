@@ -8,32 +8,32 @@
         /// <summary>
         /// The Id.
         /// </summary>
-        public uint Id { get; init; }
+        public required uint Id { get; init; }
 
         /// <summary>
         /// The Name.
         /// </summary>
-        public string Name { get; init; }
+        public required string Name { get; init; }
 
         /// <summary>
         /// The number of versions of the test that where made.
         /// </summary>
-        public int NumberOfVersions { get; init; }
+        public required int NumberOfVersions { get; init; }
 
         /// <summary>
         /// The Assignments.
         /// </summary>
-        public List<Assignment> Assignments { get; init; }
+        public required List<Assignment> Assignments { get; init; }
 
         /// <summary>
         /// The Standardization Factor.
         /// </summary>
-        public int StandardizationFactor { get; init; }
+        public required int StandardizationFactor { get; init; }
 
         /// <summary>
         /// The Minimum Grade.
         /// </summary>
-        public int MinimumGrade { get; init; }
+        public required int MinimumGrade { get; init; }
 
     }
 }

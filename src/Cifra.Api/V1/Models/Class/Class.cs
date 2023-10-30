@@ -10,16 +10,16 @@ namespace Cifra.Api.V1.Models.Class
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public uint Id { get; set; }
+        public required uint Id { get; init; }
 
         /// <summary>
         /// The Name of the Class
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; init; }
 
         /// <summary>
         /// The Students of the Class
         /// </summary>
-        public IEnumerable<Student> Students { get; set; }
+        public required IEnumerable<Student> Students { get; init; }
     }
 }

@@ -30,10 +30,10 @@ namespace Cifra.Application
 
             if (!test.IsSuccess)
             {
-                return new CreateTestResult(test.ValidationMessage);
+                return new CreateTestResult(test.ValidationMessage!);
             }
 
-            uint id = await _testRepository.CreateAsync(test.Value);
+            uint id = await _testRepository.CreateAsync(test.Value!);
 
             return new CreateTestResult(id);
         }
@@ -46,7 +46,7 @@ namespace Cifra.Application
 
             if (!updatedTestResult.IsSuccess)
             {
-                return new UpdateTestResult(updatedTestResult.ValidationMessage);
+                return new UpdateTestResult(updatedTestResult.ValidationMessage!);
             }
 
             if (originalTest is null)
@@ -54,7 +54,7 @@ namespace Cifra.Application
                 return new UpdateTestResult(ValidationMessage.Create(nameof(model.Test.Id), "Test to update cannot be found"));
             }
 
-            originalTest.UpdateFromOtherTest(updatedTestResult.Value);
+            originalTest.UpdateFromOtherTest(updatedTestResult.Value!);
 
             uint id = await _testRepository.UpdateAsync(originalTest);
 
@@ -71,8 +71,8 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<GetTestResult> GetTestAsync(uint id)
         {
-            Test test = await _testRepository.GetAsync(id);
-            return new GetTestResult(test);
+            Test? test = await _testRepository.GetAsync(id);
+            return new GetTestResult { Test = test };
         }
 
         /// <inheritdoc/>

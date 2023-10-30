@@ -34,7 +34,7 @@ namespace Cifra.FileSystem.FileSystemInfo
         {
             return ToDirectoryInfo()
                 .GetFiles()
-                .Select(x => _fileInfoWrapperFactory.Create(Domain.ValueTypes.Path.CreateFromString(x.FullName).Value))
+                .Select(x => _fileInfoWrapperFactory.Create(Domain.ValueTypes.Path.CreateFromString(x.FullName).Value!))
                 .ToArray();
         }
     }

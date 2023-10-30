@@ -34,7 +34,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         {
             _fixture = new Fixture();
             _spreadsheetOptions = new Mock<IOptions<SpreadsheetOptions>>();
-            _spreadsheetOptionsValues = new SpreadsheetOptions();
+            _spreadsheetOptionsValues = new SpreadsheetOptions{ TestResultsDirectory = Path.CreateFromString(_fixture.Create<string>()).Value };
 
             _spreadsheetOptions
                 .SetupGet(x => x.Value)
@@ -83,9 +83,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
         private void SetupSpreadsheetFileBuilder()
         {
-            var path = Path.CreateFromString(_fixture.Create<string>());
-            _spreadsheetOptionsValues.TestResultsDirectory = path.Value;
-
             var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile
@@ -97,7 +94,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
                 .ReturnsAsync(new SaveResult());
 
             _spreadsheetFileFactory
-                .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))
+                .Setup(x => x.Create(_spreadsheetOptionsValues.TestResultsDirectory, It.IsAny<Metadata>()))
                 .Returns(spreadsheetFile.Object);
         }
     }

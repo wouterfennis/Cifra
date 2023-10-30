@@ -8,6 +8,6 @@
         /// <summary>
         /// The name of the class.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; init; }
     }
 }

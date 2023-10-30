@@ -8,11 +8,11 @@
         /// <summary>
         /// The field where the validation took place
         /// </summary>
-        public string Field { get; init; }
+        public required string Field { get; init; }
 
         /// <summary>
         /// The message of the validation result
         /// </summary>
-        public string Message { get; init; }
+        public required string Message { get; init; }
     }
 }
