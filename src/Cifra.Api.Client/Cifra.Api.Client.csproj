@@ -27,8 +27,4 @@
     </OpenApiReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cifra.Api\Cifra.Api.csproj" />
-  </ItemGroup>
-
 </Project>
