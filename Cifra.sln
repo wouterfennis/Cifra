@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api", "src\Cifra.Api\Cifra.Api.csproj", "{0767168B-AE62-4634-9E3C-ECCB68866B28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.Client", "src\Cifra.Api.Client\Cifra.Api.Client.csproj", "{57419457-A982-430E-B360-A5BE4E8FB4E9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0767168B-AE62-4634-9E3C-ECCB68866B28} = {0767168B-AE62-4634-9E3C-ECCB68866B28}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Application", "src\Cifra.Application\Cifra.Application.csproj", "{FDD170AD-F5F8-4E66-9231-7E80AAE7A324}"
 EndProject
@@ -35,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.TestUtilities", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.IntegrationTests", "test\Cifra.Api.IntegrationTests\Cifra.Api.IntegrationTests.csproj", "{27470399-4D74-4180-B571-C4C0C03432E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cifra.Commands", "src\Cifra.Commands\Cifra.Commands.csproj", "{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Commands", "src\Cifra.Commands\Cifra.Commands.csproj", "{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
