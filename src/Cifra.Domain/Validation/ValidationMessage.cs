@@ -19,7 +19,7 @@ namespace Cifra.Domain.Validation
         /// <summary>
         /// Ctor
         /// </summary>
-        public ValidationMessage(string field, string message) // TODO make private
+        private ValidationMessage(string field, string message)
         {
             Field = field;
             Message = message;

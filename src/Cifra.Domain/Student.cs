@@ -61,13 +61,13 @@ namespace Cifra.Domain
 
             if (!firstNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), "Firstname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), $"Firstname: '{firstName}' is not valid");
                 return Result<Student>.Fail<Student>(validationMessage);
             }
 
             if (!lastNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), "Lastname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), $"Lastname: '{lastName}' is not valid");
                 return Result<Student>.Fail<Student>(validationMessage);
             }
 
@@ -81,17 +81,27 @@ namespace Cifra.Domain
 
             if (!firstNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), "Firstname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(firstName), $"Firstname: '{firstName}' is not valid");
                 return Result<Student>.Fail<Student>(validationMessage);
             }
 
             if (!lastNameResult.IsSuccess)
             {
-                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), "Lastname is not valid");
+                ValidationMessage validationMessage = ValidationMessage.Create(nameof(lastName), $"Lastname: '{lastName}' is not valid");
                 return Result<Student>.Fail<Student>(validationMessage);
             }
 
             return Result<Student>.Ok<Student>(new Student(id, firstNameResult.Value!, infix, lastNameResult.Value!));
+        }
+
+        /// <summary>
+        /// Update this instance of the student with properties from other student.
+        /// </summary>
+        public void UpdateFromOtherStudent(Student otherStudent)
+        {
+            FirstName = otherStudent.FirstName;
+            Infix = otherStudent.Infix;
+            LastName = otherStudent.LastName;
         }
     }
 }

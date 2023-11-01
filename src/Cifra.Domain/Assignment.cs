@@ -60,5 +60,13 @@ namespace Cifra.Domain
 
             return Result<Assignment>.Ok<Assignment>(new Assignment(id, numberOfQuestions));
         }
+
+        /// <summary>
+        /// Update this instance of the assignment with properties from other assignment.
+        /// </summary>
+        public void UpdateFromOtherAssignment(Assignment otherAssignment)
+        {
+            NumberOfQuestions = otherAssignment.NumberOfQuestions;
+        }
     }
 }

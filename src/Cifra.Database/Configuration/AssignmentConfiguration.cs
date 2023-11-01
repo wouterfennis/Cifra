@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Database.Configuration
 {

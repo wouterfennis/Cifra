@@ -1,6 +1,7 @@
 ﻿using Cifra.Api.Client;
 using Cifra.Api.IntegrationTests.Builders;
 using Cifra.Api.IntegrationTests.Models;
+using Cifra.TestUtilities;
 using FluentAssertions;
 using Mapster;
 using System.Collections.Generic;
@@ -94,12 +95,24 @@ namespace Cifra.Api.IntegrationTests.Steps
             }
         }
 
+        [Given(@"the following assignments are present")]
+        [When(@"the following assignments are added")]
+        [When(@"the following assignments are updated")]
+        public async Task WhenTheFollowingAssignmentsAreAddedAsync(Table table)
+        {
+            var assignments = table.CreateSet<AssignmentModel>();
+
+            GetTestResponse result = await GetCurrentTest();
+            var request = result.Adapt<UpdateTestRequest>();
+            request.Test.Assignments = assignments.Adapt<ICollection<Assignment>>();
+
+            await UpdateTest(request);
+        }
+
         [When(@"the test name is changed to '([^']*)'")]
         public async Task WhenTheNameIsChangedToAsync(string newName)
         {
-            var id = _scenarioContext.Get<int>(_createTestResponseKey);
-
-            var result = await _apiClient.TestGET2Async(id, "1");
+            GetTestResponse result = await GetCurrentTest();
             result.Test.Name = newName;
             var request = result.Adapt<UpdateTestRequest>();
 
@@ -212,6 +225,15 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             List<Test> retrievedTests = _scenarioContext.Get<List<Test>>(_getTestResponseKey);
             retrievedTests.Should().BeEmpty();
+        }
+
+        [Then(@"the test is persisted with the following assignments:")]
+        public async Task ThenTheTestIsPersistedWithTheFollowingAssignmentsAsync(Table table)
+        {
+            var expectedAssignments = table.CreateSet<AssignmentModel>();
+            GetTestResponse result = await GetCurrentTest();
+
+            result.Test.Assignments.Should().BeEquivalentTo(expectedAssignments);
         }
 
         private async Task<GetTestResponse> GetCurrentTest()

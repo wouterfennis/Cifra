@@ -50,6 +50,37 @@ Scenario: Updating the minimum grade of a test
 		| Minimum grade |
 		| 2             |
 
+Scenario: Add assignment to test
+	Given a request is made to create a new test with the following values:
+		| Name           |
+		| Math chapter 1 |
+	When the following assignments are added
+		| Id | Number of questions |
+		| 0  | 1                   |
+		| 0  | 2                   |
+	Then the test is persisted with the following assignments:
+		| Id | Number of questions |
+		| 1  | 1                   |
+		| 2  | 2                   |
+
+Scenario: Update existing assignments to test
+	Given a request is made to create a new test with the following values:
+		| Name           |
+		| Math chapter 1 |
+	And the following assignments are present
+		| Number of questions |
+		| 1                   |
+		| 2                   |
+		| 3                   |
+	When the following assignments are updated
+		| Id | Number of questions |
+		| 1  | 3                   |
+		| 0  | 4                   |
+	Then the test is persisted with the following assignments:
+		| Id | Number of questions |
+		| 1  | 3                   |
+		| 4  | 4                   |
+
 Scenario: Updating the standardization factor of a test with a invalid number
 	Given a request is made to create a new test with the following values:
 		| Name           | Number of versions | Standardization factor | Minimum grade |

@@ -104,7 +104,7 @@ namespace Cifra.Domain
             return Result<Test>.Ok<Test>(new Test(testNameResult.Value!, standardizationFactorResult.Value!, minimumGradeResult.Value!, numberOfVerions));
         }
 
-        public static Result<Test> TryCreate(uint id, string testName, int standardizationFactor, int minimumGrade, int numberOfVerions, List<Assignment> assignments)
+        public static Result<Test> TryCreate(uint id, string testName, int standardizationFactor, int minimumGrade, int numberOfVerions, IEnumerable<Assignment> assignments)
         {
             Result<Name> testNameResult = Name.CreateFromString(testName);
             Result<StandardizationFactor> standardizationFactorResult = StandardizationFactor.CreateFromInteger(standardizationFactor);
@@ -134,7 +134,7 @@ namespace Cifra.Domain
                 return Result<Test>.Fail<Test>(validationMessage);
             }
 
-            return Result<Test>.Ok<Test>(new Test(id, testNameResult.Value!, standardizationFactorResult.Value!, minimumGradeResult.Value!, numberOfVerions, assignments));
+            return Result<Test>.Ok<Test>(new Test(id, testNameResult.Value!, standardizationFactorResult.Value!, minimumGradeResult.Value!, numberOfVerions, assignments.ToList()));
         }
 
         /// <summary>
@@ -147,13 +147,28 @@ namespace Cifra.Domain
             MinimumGrade = otherTest.MinimumGrade;
             NumberOfVersions = otherTest.NumberOfVersions;
 
-            var updatedAssignmentsIds = otherTest.Assignments.Select(x => x.Id).ToList();
-            var assignmentsToRemove = Assignments.Except(otherTest.Assignments);
+            var originalAssignmentIds = Assignments.Select(x => x.Id);
+            var updatedAssignmentIds = otherTest.Assignments.Select(x => x.Id);
 
-            foreach(var assignmentToRemove in assignmentsToRemove)
+            var assignmentIdsToRemove = originalAssignmentIds.Except(updatedAssignmentIds);
+            var assignmentsIdsToUpdate = originalAssignmentIds.Where(x => updatedAssignmentIds.Contains(x));
+            var assignmentsToAdd = otherTest.Assignments.Where(x => !originalAssignmentIds.Contains(x.Id));
+
+            Assignments.RemoveAll(x => assignmentIdsToRemove.Contains(x.Id));
+
+            foreach(var assignmentIdToUpdate in assignmentsIdsToUpdate)
             {
-                Assignments.Remove(assignmentToRemove);
+                var originalAssignment = GetAssignment(assignmentIdToUpdate)!;
+                var updatedAssignment =  otherTest.GetAssignment(assignmentIdToUpdate)!;
+                originalAssignment.UpdateFromOtherAssignment(updatedAssignment!);
             }
+
+            Assignments.AddRange(assignmentsToAdd);
+        }
+
+        private Assignment? GetAssignment(uint id)
+        {
+            return Assignments.SingleOrDefault(x => x.Id == id);
         }
     }
 }

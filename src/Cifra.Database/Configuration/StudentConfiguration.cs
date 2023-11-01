@@ -15,18 +15,10 @@ namespace Cifra.Database.Configuration
             builder.Property(x => x.FirstName)
                 .HasMaxLength(100)
                 .IsRequired();
-            //.HasConversion(
-            //    x => x.Value,
-            //    x => Name.CreateFromString(x).Value
-            //);
 
             builder.Property(x => x.LastName)
                 .HasMaxLength(100)
                 .IsRequired();
-            //.HasConversion(
-            //    x => x.Value,
-            //    x => Name.CreateFromString(x).Value
-            //);
         }
     }
 }

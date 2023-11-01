@@ -7,6 +7,8 @@ using Cifra.Application.Models.Results;
 using Cifra.Commands;
 using Cifra.Domain.Validation;
 using System.Xml.Linq;
+using System.Linq;
+using System;
 
 namespace Cifra.Application
 {
@@ -41,7 +43,14 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateTestResult> UpdateTestAsync(UpdateTestCommand model)
         {
-            var updatedTestResult = Test.TryCreate(model.Test.Name, model.Test.StandardizationFactor, model.Test.MinimumGrade, model.Test.NumberOfVersions);
+            var updatedAssignmentsResult = TryCreateAssignments(model.Test.Assignments);
+
+            if (!updatedAssignmentsResult.IsSuccess)
+            {
+                return new UpdateTestResult(updatedAssignmentsResult.ValidationMessage!);
+            }
+
+            var updatedTestResult = Test.TryCreate(model.Test.Id, model.Test.Name, model.Test.StandardizationFactor, model.Test.MinimumGrade, model.Test.NumberOfVersions, updatedAssignmentsResult.Value!);
             var originalTest = await _testRepository.GetAsync(model.Test.Id);
 
             if (!updatedTestResult.IsSuccess)
@@ -81,6 +90,24 @@ namespace Cifra.Application
             await _testRepository.DeleteAsync(command.TestId);
 
             return new DeleteTestResult();
+        }
+
+        private Result<IEnumerable<Assignment>> TryCreateAssignments(IEnumerable<Commands.Models.Assignment> assignments)
+        {
+            var assignmentsResults = assignments.Select(a => Assignment.TryCreate(a.Id, a.NumberOfQuestions));
+
+            var failedAssignments = assignmentsResults.Where(s => !s.IsSuccess);
+            if (failedAssignments.Any(s => !s.IsSuccess))
+            {
+                var combinedValidationMessages = failedAssignments
+                    .Select(s => s.ValidationMessage!.Message)
+                    .Aggregate((originalString, newEntry) => $"{originalString},{Environment.NewLine} {newEntry}");
+
+                var validationMessage = ValidationMessage.Create(nameof(assignments), combinedValidationMessages);
+                return Result<IEnumerable<Assignment>>.Fail<IEnumerable<Assignment>>(validationMessage);
+            }
+
+            return Result<IEnumerable<Assignment>>.Ok<IEnumerable<Assignment>>(assignmentsResults.Select(s => s.Value!));
         }
     }
 }

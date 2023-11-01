@@ -258,13 +258,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        public virtual void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber(string invalidStandardizationFactor, string failureReason, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add assignment to test")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
+        public void AddAssignmentToTest()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Invalid standardization factor", invalidStandardizationFactor);
-            argumentsOfScenario.Add("Failure reason", failureReason);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the standardization factor of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add assignment to test", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 53
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -276,36 +277,152 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Name",
-                            "Number of versions",
-                            "Standardization factor",
-                            "Minimum grade"});
+                            "Name"});
                 table21.AddRow(new string[] {
-                            "Math chapter 1",
-                            "1",
-                            "9",
-                            "1"});
+                            "Math chapter 1"});
 #line 54
  testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table21, "Given ");
 #line hidden
-#line 57
- testRunner.When(string.Format("the standardization factor is changed to \'{0}\'", invalidStandardizationFactor), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 58
- testRunner.Then(string.Format("a update test validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
                 TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Number of questions"});
+                table22.AddRow(new string[] {
+                            "0",
+                            "1"});
+                table22.AddRow(new string[] {
+                            "0",
+                            "2"});
+#line 57
+ testRunner.When("the following assignments are added", ((string)(null)), table22, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Number of questions"});
+                table23.AddRow(new string[] {
+                            "1",
+                            "1"});
+                table23.AddRow(new string[] {
+                            "2",
+                            "2"});
+#line 61
+ testRunner.Then("the test is persisted with the following assignments:", ((string)(null)), table23, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Update existing assignments to test")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Update test")]
+        public void UpdateExistingAssignmentsToTest()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update existing assignments to test", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 66
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table24.AddRow(new string[] {
+                            "Math chapter 1"});
+#line 67
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table24, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Number of questions"});
+                table25.AddRow(new string[] {
+                            "1"});
+                table25.AddRow(new string[] {
+                            "2"});
+                table25.AddRow(new string[] {
+                            "3"});
+#line 70
+ testRunner.And("the following assignments are present", ((string)(null)), table25, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Number of questions"});
+                table26.AddRow(new string[] {
+                            "1",
+                            "3"});
+                table26.AddRow(new string[] {
+                            "0",
+                            "4"});
+#line 75
+ testRunner.When("the following assignments are updated", ((string)(null)), table26, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Number of questions"});
+                table27.AddRow(new string[] {
+                            "1",
+                            "3"});
+                table27.AddRow(new string[] {
+                            "4",
+                            "4"});
+#line 79
+ testRunner.Then("the test is persisted with the following assignments:", ((string)(null)), table27, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        public virtual void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber(string invalidStandardizationFactor, string failureReason, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Invalid standardization factor", invalidStandardizationFactor);
+            argumentsOfScenario.Add("Failure reason", failureReason);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the standardization factor of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 84
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table22.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
-#line 59
- testRunner.Then("the test is persisted with the following values:", ((string)(null)), table22, "Then ");
+#line 85
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table28, "Given ");
+#line hidden
+#line 88
+ testRunner.When(string.Format("the standardization factor is changed to \'{0}\'", invalidStandardizationFactor), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 89
+ testRunner.Then(string.Format("a update test validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Number of versions",
+                            "Standardization factor",
+                            "Minimum grade"});
+                table29.AddRow(new string[] {
+                            "Math chapter 1",
+                            "1",
+                            "9",
+                            "1"});
+#line 90
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table29, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -319,7 +436,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than 1")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_1()
         {
-#line 53
+#line 84
 this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "Standardization factor must be higher than 1", ((string[])(null)));
 #line hidden
         }
@@ -332,7 +449,7 @@ this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("-1", "Standardiz
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Standardization factor must be higher than 1")]
         public void UpdatingTheStandardizationFactorOfATestWithAInvalidNumber_0()
         {
-#line 53
+#line 84
 this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "Standardization factor must be higher than 1", ((string[])(null)));
 #line hidden
         }
@@ -344,7 +461,7 @@ this.UpdatingTheStandardizationFactorOfATestWithAInvalidNumber("0", "Standardiza
             argumentsOfScenario.Add("Invalid number of versions", invalidNumberOfVersions);
             argumentsOfScenario.Add("Failure reason", failureReason);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the number of versions of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 67
+#line 98
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -354,37 +471,37 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table23.AddRow(new string[] {
+                table30.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
-#line 68
- testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table23, "Given ");
+#line 99
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table30, "Given ");
 #line hidden
-#line 71
+#line 102
  testRunner.When(string.Format("the number of versions is changed to \'{0}\'", invalidNumberOfVersions), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 72
+#line 103
  testRunner.Then(string.Format("a update test validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table24.AddRow(new string[] {
+                table31.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
-#line 73
- testRunner.Then("the test is persisted with the following values:", ((string)(null)), table24, "Then ");
+#line 104
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table31, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -398,7 +515,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "There should be at least one version of the test")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_1()
         {
-#line 67
+#line 98
 this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "There should be at least one version of the test", ((string[])(null)));
 #line hidden
         }
@@ -411,7 +528,7 @@ this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("-1", "There should be
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "There should be at least one version of the test")]
         public void UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber_0()
         {
-#line 67
+#line 98
 this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "There should be at least one version of the test", ((string[])(null)));
 #line hidden
         }
@@ -423,7 +540,7 @@ this.UpdatingTheNumberOfVersionsOfATestWithAInvalidNumber("0", "There should be 
             argumentsOfScenario.Add("Invalid minimum grade", invalidMinimumGrade);
             argumentsOfScenario.Add("Failure reason", failureReason);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Updating the minimum grade of a test with a invalid number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 81
+#line 112
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -433,37 +550,37 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table25.AddRow(new string[] {
+                table32.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
-#line 82
- testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table25, "Given ");
+#line 113
+ testRunner.Given("a request is made to create a new test with the following values:", ((string)(null)), table32, "Given ");
 #line hidden
-#line 85
+#line 116
  testRunner.When(string.Format("the minimum grade is changed to \'{0}\'", invalidMinimumGrade), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 86
+#line 117
  testRunner.Then(string.Format("a update test validation message is returned containing \'{0}\'", failureReason), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table26.AddRow(new string[] {
+                table33.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
-#line 87
- testRunner.Then("the test is persisted with the following values:", ((string)(null)), table26, "Then ");
+#line 118
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table33, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -477,7 +594,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Failure reason", "Minimum grade must be from 1 to 10")]
         public void UpdatingTheMinimumGradeOfATestWithAInvalidNumber_0()
         {
-#line 81
+#line 112
 this.UpdatingTheMinimumGradeOfATestWithAInvalidNumber("0", "Minimum grade must be from 1 to 10", ((string[])(null)));
 #line hidden
         }

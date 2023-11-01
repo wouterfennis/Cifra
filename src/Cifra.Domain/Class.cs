@@ -63,7 +63,7 @@ namespace Cifra.Domain
             return Result<Class>.Ok<Class>(new Class(nameResult.Value!));
         }
 
-        public static Result<Class> TryCreate(uint id, string className, List<Student> students)
+        public static Result<Class> TryCreate(uint id, string className, IEnumerable<Student> students)
         {
             var nameResult = Name.CreateFromString(className);
 
@@ -73,23 +73,39 @@ namespace Cifra.Domain
                 return Result<Class>.Fail<Class>(validationMessage);
             }
 
-            return Result<Class>.Ok<Class>(new Class(id, nameResult.Value!, students));
+            return Result<Class>.Ok<Class>(new Class(id, nameResult.Value!, students.ToList()));
         }
 
         /// <summary>
-        /// Update this instance of the test with properties from other test.
+        /// Update this instance of the class with properties from other class.
         /// </summary>
         public void UpdateFromOtherClass(Class otherClass)
         {
             Name = otherClass.Name;
 
-            var updatedAssignmentsIds = otherClass.Students.Select(x => x.Id).ToList();
-            var studentsToRemove = Students.Except(otherClass.Students);
+            var originalStudentIds = Students.Select(x => x.Id);
+            var updatedStudentIds = otherClass.Students.Select(x => x.Id);
 
-            foreach (var studentoRemove in studentsToRemove)
+            var studentIdsToRemove = originalStudentIds.Except(updatedStudentIds);
+            var studentsToUpdate = originalStudentIds.Where(x => updatedStudentIds.Contains(x));
+            var studentsIdsToAdd = updatedStudentIds.Except(originalStudentIds);
+            var studentsToAdd = otherClass.Students.Where(x => studentsIdsToAdd.Contains(x.Id));
+
+            Students.RemoveAll(x => studentIdsToRemove.Contains(x.Id));
+
+            foreach (var studentdToUpdate in studentsToUpdate)
             {
-                Students.Remove(studentoRemove);
+                var originalStudent = GetStudent(studentdToUpdate)!;
+                var updatedStudent = otherClass.GetStudent(studentdToUpdate)!;
+                originalStudent.UpdateFromOtherStudent(updatedStudent!);
             }
+
+            Students.AddRange(studentsToAdd);
+        }
+
+        private Student? GetStudent(uint id)
+        {
+            return Students.SingleOrDefault(x => x.Id == id);
         }
     }
 }

@@ -47,5 +47,6 @@
     <ProjectReference Include="..\..\src\Cifra.Api.Client\Cifra.Api.Client.csproj" />
     <ProjectReference Include="..\..\src\Cifra.Api\Cifra.Api.csproj" />
     <ProjectReference Include="..\..\src\Cifra.Database\Cifra.Database.csproj" />
+    <ProjectReference Include="..\Cifra.TestUtilities\Cifra.TestUtilities.csproj" />
   </ItemGroup>
 </Project>

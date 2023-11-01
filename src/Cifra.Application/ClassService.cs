@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using Cifra.Application.Models.Results;
@@ -76,7 +79,14 @@ namespace Cifra.Application
 
         public async Task<UpdateClassResult> UpdateTestAsync(UpdateClassCommand model)
         {
-            var updatedClassResult = Class.TryCreate(model.Class.Name);
+            var updatedStudentsResult = TryCreateStudents(model.Class.Students);
+
+            if(!updatedStudentsResult.IsSuccess)
+            {
+                return new UpdateClassResult(updatedStudentsResult.ValidationMessage!);
+            }
+
+            var updatedClassResult = Class.TryCreate(model.Class.Id, model.Class.Name, updatedStudentsResult.Value!);
             var originalClass = await _classRepository.GetAsync(model.Class.Id);
 
             if (!updatedClassResult.IsSuccess)
@@ -94,6 +104,24 @@ namespace Cifra.Application
             uint id = await _classRepository.UpdateAsync(originalClass);
 
             return new UpdateClassResult(id);
+        }
+
+        private Result<IEnumerable<Student>> TryCreateStudents(IEnumerable<Commands.Models.Student> students)
+        {
+            var studentsResults = students.Select(s => Student.TryCreate(s.Id, s.FirstName, s.Infix, s.LastName));
+
+            var failedStudents = studentsResults.Where(s => !s.IsSuccess);
+            if (failedStudents.Any(s => !s.IsSuccess))
+            {
+                var combinedValidationMessages = failedStudents
+                    .Select(s => s.ValidationMessage!.Message)
+                    .Aggregate((originalString, newEntry) => $"{originalString},{Environment.NewLine} {newEntry}");
+
+                var validationMessage = ValidationMessage.Create(nameof(students), combinedValidationMessages);
+                return Result<IEnumerable<Student>>.Fail<IEnumerable<Student>>(validationMessage);
+            }
+
+            return Result<IEnumerable<Student>>.Ok<IEnumerable<Student>>(studentsResults.Select(s => s.Value!));
         }
     }
 }

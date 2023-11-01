@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Cifra.Domain;
-using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Database.Configuration
 {
@@ -15,16 +14,13 @@ namespace Cifra.Database.Configuration
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-            //.HasConversion(
-            //    x => x.Value,
-            //    x => Name.CreateFromString(x).Value
-            //);
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();
 
             builder
-                .HasMany(x => x.Students);
+                .HasMany(x => x.Students)
+                .WithOne();
         }
     }
 }

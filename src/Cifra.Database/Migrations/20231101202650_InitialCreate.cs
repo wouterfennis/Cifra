@@ -43,7 +43,7 @@ namespace Cifra.Database.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<uint>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "string", nullable: false),
                     Infix = table.Column<string>(type: "TEXT", nullable: true),
@@ -64,7 +64,7 @@ namespace Cifra.Database.Migrations
                 name: "Assignments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<uint>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NumberOfQuestions = table.Column<int>(type: "INTEGER", nullable: false),
                     TestId = table.Column<uint>(type: "INTEGER", nullable: true)

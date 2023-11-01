@@ -40,9 +40,7 @@ namespace Cifra.Database.Repositories
         public async Task<Domain.Test?> GetAsync(uint id)
         {
             return await _dbContext.Tests
-                .AsNoTracking()
                 .Include(x => x.Assignments)
-                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
