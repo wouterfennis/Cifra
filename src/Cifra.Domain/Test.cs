@@ -152,14 +152,14 @@ namespace Cifra.Domain
 
             var assignmentIdsToRemove = originalAssignmentIds.Except(updatedAssignmentIds);
             var assignmentsIdsToUpdate = originalAssignmentIds.Where(x => updatedAssignmentIds.Contains(x));
-            var assignmentsToAdd = otherTest.Assignments.Where(x => !originalAssignmentIds.Contains(x.Id));
+            var assignmentsToAdd = otherTest.Assignments.Where(x => !originalAssignmentIds.Contains(x.Id)).ToList();
 
             Assignments.RemoveAll(x => assignmentIdsToRemove.Contains(x.Id));
 
-            foreach(var assignmentIdToUpdate in assignmentsIdsToUpdate)
+            foreach (var assignmentIdToUpdate in assignmentsIdsToUpdate)
             {
                 var originalAssignment = GetAssignment(assignmentIdToUpdate)!;
-                var updatedAssignment =  otherTest.GetAssignment(assignmentIdToUpdate)!;
+                var updatedAssignment = otherTest.GetAssignment(assignmentIdToUpdate)!;
                 originalAssignment.UpdateFromOtherAssignment(updatedAssignment!);
             }
 

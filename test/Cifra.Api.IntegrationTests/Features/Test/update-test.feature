@@ -13,6 +13,7 @@ Acceptance Criteria:
 - I can change the number of verions that a test has
 - I can change the standardization factor a test has 
 - I can change the minimum grade a test has
+- I can change the assignments of a test
 
 Scenario: Updating the name of a test
 	Given a request is made to create a new test with the following values:
@@ -55,9 +56,9 @@ Scenario: Add assignment to test
 		| Name           |
 		| Math chapter 1 |
 	When the following assignments are added
-		| Id | Number of questions |
-		| 0  | 1                   |
-		| 0  | 2                   |
+		| Number of questions |
+		| 1                   |
+		| 2                   |
 	Then the test is persisted with the following assignments:
 		| Id | Number of questions |
 		| 1  | 1                   |

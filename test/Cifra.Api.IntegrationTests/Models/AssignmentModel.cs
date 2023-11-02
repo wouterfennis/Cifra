@@ -4,7 +4,7 @@ namespace Cifra.Api.IntegrationTests.Models
     internal class AssignmentModel
     {
         /// <summary>
-        /// The number of questions of the assignment.
+        /// The id of the assignment.
         /// </summary>
         public int Id { get; set; }
 

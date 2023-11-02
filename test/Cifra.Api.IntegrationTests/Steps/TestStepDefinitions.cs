@@ -1,7 +1,6 @@
 ﻿using Cifra.Api.Client;
 using Cifra.Api.IntegrationTests.Builders;
 using Cifra.Api.IntegrationTests.Models;
-using Cifra.TestUtilities;
 using FluentAssertions;
 using Mapster;
 using System.Collections.Generic;
@@ -248,6 +247,7 @@ namespace Cifra.Api.IntegrationTests.Steps
             try
             {
                 var response = await _apiClient.TestPUTAsync("1", request);
+                _scenarioContext.Remove(_updateTestResponseKey);
                 _scenarioContext.Add(_updateTestResponseKey, response);
             }
             catch (ApiException<UpdateTestResponse> exception)

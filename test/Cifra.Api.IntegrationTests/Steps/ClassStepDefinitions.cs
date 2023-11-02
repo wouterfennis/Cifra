@@ -99,7 +99,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             var id = _scenarioContext.Get<int>(_createClassResponseKey);
 
-            var result = await _apiClient.ClassGET2Async(id, "1");
+            var result = await GetCurrentClass();
             result.RetrievedClass.Name = newName;
             var request = result.Adapt<UpdateClassRequest>();
 
@@ -120,14 +120,28 @@ namespace Cifra.Api.IntegrationTests.Steps
             }
         }
 
+        [Given(@"the following students are present")]
+        [When(@"the following students are added")]
+        [When(@"the following students are updated")]
+        public async Task WhenTheFollowingStudentsAreAddedAsync(Table table)
+        {
+            var students = table.CreateSet<StudentModel>();
+
+            GetClassResponse result = await GetCurrentClass();
+            var request = result.Adapt<UpdateClassRequest>();
+            request.UpdatedClass.Students = students.Adapt<ICollection<Student>>();
+
+            await UpdateClass(request);
+        }
+
         [Then(@"the class is persisted with the following values:")]
         public async Task ThenTheClassIsPersistedWithTheFollowingValuesAsync(Table table)
         {
             var classes = table.CreateSet<ClassModel>();
 
-            var result = await _apiClient.ClassGETAsync("1");
+            var result = await GetCurrentClass();
 
-            var actualClasses = result.Classes.Adapt<IEnumerable<ClassModel>>();
+            var actualClasses = result.RetrievedClass.Adapt<IEnumerable<ClassModel>>();
             actualClasses.Should().BeEquivalentTo(classes);
         }
 
@@ -179,10 +193,19 @@ namespace Cifra.Api.IntegrationTests.Steps
             retrievedClasses.Should().BeEmpty();
         }
 
-        private async Task<GetTestResponse> GetCurrentTest()
+        [Then(@"the class is persisted with the following students:")]
+        public async Task ThenTheTestIsPersistedWithTheFollowingStudentsAsync(Table table)
+        {
+            var expectedStudents = table.CreateSet<StudentModel>();
+            GetClassResponse result = await GetCurrentClass();
+
+            result.RetrievedClass.Students.Should().BeEquivalentTo(expectedStudents);
+        }
+
+        private async Task<GetClassResponse> GetCurrentClass()
         {
             var id = _scenarioContext.Get<int>(_createClassResponseKey);
-            var result = await _apiClient.TestGET2Async(id, "1");
+            var result = await _apiClient.ClassGET2Async(id, "1");
             return result;
         }
 

@@ -56,7 +56,7 @@ namespace Cifra.Domain
 
             if (!nameResult.IsSuccess)
             {
-                var validationMessage = ValidationMessage.Create(nameof(className), "Class name cannot be null");
+                var validationMessage = ValidationMessage.Create(nameof(className), "Class name cannot be empty");
                 return Result<Class>.Fail<Class>(validationMessage);
             }
 
@@ -69,7 +69,7 @@ namespace Cifra.Domain
 
             if (!nameResult.IsSuccess)
             {
-                var validationMessage = ValidationMessage.Create(nameof(className), "Class name cannot be null");
+                var validationMessage = ValidationMessage.Create(nameof(className), "Class name cannot be empty");
                 return Result<Class>.Fail<Class>(validationMessage);
             }
 
@@ -88,8 +88,7 @@ namespace Cifra.Domain
 
             var studentIdsToRemove = originalStudentIds.Except(updatedStudentIds);
             var studentsToUpdate = originalStudentIds.Where(x => updatedStudentIds.Contains(x));
-            var studentsIdsToAdd = updatedStudentIds.Except(originalStudentIds);
-            var studentsToAdd = otherClass.Students.Where(x => studentsIdsToAdd.Contains(x.Id));
+            var studentsToAdd = otherClass.Students.Where(x => !originalStudentIds.Contains(x.Id)).ToList();
 
             Students.RemoveAll(x => studentIdsToRemove.Contains(x.Id));
 

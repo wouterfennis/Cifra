@@ -128,31 +128,31 @@ this.ScenarioInitialize(scenarioInfo);
 #line 23
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table1.AddRow(new string[] {
+                table14.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
 #line 24
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table1, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table14, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table2.AddRow(new string[] {
+                table15.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "9",
                             "1"});
 #line 27
- testRunner.Then("the test is persisted with the following values:", ((string)(null)), table2, "Then ");
+ testRunner.Then("the test is persisted with the following values:", ((string)(null)), table15, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -179,25 +179,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 32
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table3.AddRow(new string[] {
+                table16.AddRow(new string[] {
                             "",
                             "1",
                             "9",
                             "1"});
 #line 33
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table3, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table16, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
-                table4.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Test name is not valid"});
 #line 36
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table17, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -224,25 +224,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 41
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table5.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Math chapter 1",
                             "0",
                             "9",
                             "1"});
 #line 42
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table5, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table18, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
-                table6.AddRow(new string[] {
+                table19.AddRow(new string[] {
                             "There should be at least one version of the test"});
 #line 45
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table6, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table19, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -269,25 +269,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 50
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table7.AddRow(new string[] {
+                table20.AddRow(new string[] {
                             "Math chapter 1",
                             "1",
                             "0",
                             "1"});
 #line 51
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table7, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table20, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
-                table8.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "Standardization factor must be higher than 1"});
 #line 54
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table8, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table21, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -314,25 +314,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 59
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table9.AddRow(new string[] {
+                table22.AddRow(new string[] {
                             "Math chapter 2",
                             "1",
                             "9",
                             "0"});
 #line 60
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table9, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table22, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
-                table10.AddRow(new string[] {
+                table23.AddRow(new string[] {
                             "Minimum grade must be from 1 to 10"});
 #line 63
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table10, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table23, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -359,25 +359,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 68
  testRunner.Given("no tests are previously created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Number of versions",
                             "Standardization factor",
                             "Minimum grade"});
-                table11.AddRow(new string[] {
+                table24.AddRow(new string[] {
                             "Math chapter 3",
                             "1",
                             "9",
                             "11"});
 #line 69
- testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table11, "When ");
+ testRunner.When("a request is made to create a new test with the following values:", ((string)(null)), table24, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
-                table12.AddRow(new string[] {
+                table25.AddRow(new string[] {
                             "Minimum grade must be from 1 to 10"});
 #line 72
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table12, "Then ");
+ testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table25, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
