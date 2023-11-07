@@ -97,11 +97,12 @@ namespace Cifra.Api.IntegrationTests.Steps
         [When(@"the class name is changed to '([^']*)'")]
         public async Task WhenTheNameIsChangedToAsync(string newName)
         {
-            var id = _scenarioContext.Get<int>(_createClassResponseKey);
-
             var result = await GetCurrentClass();
-            result.RetrievedClass.Name = newName;
-            var request = result.Adapt<UpdateClassRequest>();
+            var request = new UpdateClassRequest
+            {
+                UpdatedClass = result.RetrievedClass
+            };
+            request.UpdatedClass.Name = newName;
 
             await UpdateClass(request);
         }
@@ -128,7 +129,10 @@ namespace Cifra.Api.IntegrationTests.Steps
             var students = table.CreateSet<StudentModel>();
 
             GetClassResponse result = await GetCurrentClass();
-            var request = result.Adapt<UpdateClassRequest>();
+            var request = new UpdateClassRequest
+            {
+                UpdatedClass = result.RetrievedClass
+            };
             request.UpdatedClass.Students = students.Adapt<ICollection<Student>>();
 
             await UpdateClass(request);
@@ -137,12 +141,12 @@ namespace Cifra.Api.IntegrationTests.Steps
         [Then(@"the class is persisted with the following values:")]
         public async Task ThenTheClassIsPersistedWithTheFollowingValuesAsync(Table table)
         {
-            var classes = table.CreateSet<ClassModel>();
+            var classes = table.CreateInstance<ClassModel>();
 
             var result = await GetCurrentClass();
 
-            var actualClasses = result.RetrievedClass.Adapt<IEnumerable<ClassModel>>();
-            actualClasses.Should().BeEquivalentTo(classes);
+            var actualClass = result.RetrievedClass.Adapt<ClassModel>();
+            actualClass.Should().BeEquivalentTo(classes);
         }
 
         [Then(@"a create class validation message is displayed containing the following message")]
@@ -214,6 +218,7 @@ namespace Cifra.Api.IntegrationTests.Steps
             try
             {
                 var response = await _apiClient.ClassPUTAsync("1", request);
+                _scenarioContext.Remove(_updateClassResponseKey);
                 _scenarioContext.Add(_updateClassResponseKey, response);
             }
             catch (ApiException<UpdateClassResponse> exception)

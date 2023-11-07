@@ -65,20 +65,6 @@ namespace Cifra.Application
         /// <inheritdoc/>
         public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
         {
-            var updatedClassResult = Class.TryCreate(model.Class.Name);
-
-            if (!updatedClassResult.IsSuccess)
-            {
-                return new UpdateClassResult(updatedClassResult.ValidationMessage!);
-            }
-
-            uint id = await _classRepository.UpdateAsync(updatedClassResult.Value!);
-
-            return new UpdateClassResult(id);
-        }
-
-        public async Task<UpdateClassResult> UpdateTestAsync(UpdateClassCommand model)
-        {
             var updatedStudentsResult = TryCreateStudents(model.Class.Students);
 
             if(!updatedStudentsResult.IsSuccess)

@@ -41,7 +41,6 @@ namespace Cifra.Database.Repositories
         public async Task<Domain.Class?> GetAsync(uint id)
         {
             return await _dbContext.Classes
-                .AsNoTracking()
                 .Include(x => x.Students)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }

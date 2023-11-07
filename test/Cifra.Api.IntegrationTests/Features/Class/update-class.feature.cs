@@ -169,10 +169,12 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("the following students are added", ((string)(null)), table8, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
                             "Firstname",
                             "Infix",
                             "Lastname"});
                 table9.AddRow(new string[] {
+                            "1",
                             "John",
                             "the",
                             "Doe"});
@@ -243,13 +245,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
                 TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                             "Id",
-                            "Number of questions"});
+                            "Firstname",
+                            "Infix",
+                            "Lastname"});
                 table13.AddRow(new string[] {
                             "1",
-                            "3"});
+                            "John",
+                            "the",
+                            "Doep"});
                 table13.AddRow(new string[] {
-                            "4",
-                            "4"});
+                            "3",
+                            "Sam",
+                            "of",
+                            "Land"});
 #line 47
  testRunner.Then("the class is persisted with the following students:", ((string)(null)), table13, "Then ");
 #line hidden

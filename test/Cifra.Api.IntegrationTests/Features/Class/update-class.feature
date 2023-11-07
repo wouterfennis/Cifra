@@ -29,8 +29,8 @@ Scenario: Add student to class
 		| Firstname | Infix | Lastname |
 		| John      | the   | Doe      |
 	Then the class is persisted with the following students:
-		| Firstname | Infix | Lastname |
-		| John      | the   | Doe      |
+		| Id | Firstname | Infix | Lastname |
+		| 1  | John      | the   | Doe      |
 
 Scenario: Update existing students to class
 	Given a request is made to create a new class with the following values:
@@ -45,6 +45,6 @@ Scenario: Update existing students to class
 		| 1  | John      | the   | Doep     |
 		| 0  | Sam       | of    | Land     |
 	Then the class is persisted with the following students:
-		| Id | Number of questions |
-		| 1  | 3                   |
-		| 4  | 4                   |
+		| Id | Firstname | Infix | Lastname |
+		| 1  | John      | the   | Doep     |
+		| 3  | Sam       | of    | Land     |

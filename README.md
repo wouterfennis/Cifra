@@ -131,5 +131,5 @@ dotnet dev-certs https --trust
 ### Generate migration
 
 ```powershell
-dotnet ef migrations add InitialCreate --project src/Cifra.Database/Cifra.Database.csproj --output-dir Migrations --context Context --startup-project src/Cifra.Api/Cifra.Api.csproj
+dotnet ef migrations add "InitialCreate" --project src/Cifra.Database/Cifra.Database.csproj --output-dir Migrations --context Context --startup-project src/Cifra.Api/Cifra.Api.csproj
 ```

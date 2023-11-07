@@ -87,12 +87,12 @@ namespace Cifra.Domain
             var updatedStudentIds = otherClass.Students.Select(x => x.Id);
 
             var studentIdsToRemove = originalStudentIds.Except(updatedStudentIds);
-            var studentsToUpdate = originalStudentIds.Where(x => updatedStudentIds.Contains(x));
+            var studentsIdsToUpdate = originalStudentIds.Where(x => updatedStudentIds.Contains(x));
             var studentsToAdd = otherClass.Students.Where(x => !originalStudentIds.Contains(x.Id)).ToList();
 
             Students.RemoveAll(x => studentIdsToRemove.Contains(x.Id));
 
-            foreach (var studentdToUpdate in studentsToUpdate)
+            foreach (var studentdToUpdate in studentsIdsToUpdate)
             {
                 var originalStudent = GetStudent(studentdToUpdate)!;
                 var updatedStudent = otherClass.GetStudent(studentdToUpdate)!;
