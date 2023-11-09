@@ -3,26 +3,26 @@
     /// <summary>
     /// The command to create an test
     /// </summary>
-    public sealed class CreateTestCommand
+    public sealed record CreateTestCommand
     {
         /// <summary>
         /// The name of the test
         /// </summary>
-        public string Name { get; init; }
-
+        public required string Name { get; init; }
+        
         /// <summary>
         /// The number of versions of this test that exist.
         /// </summary>
-        public int NumberOfVersions { get; init; }
+        public required int NumberOfVersions { get; init; }
 
         /// <summary>
         /// The standardization factor
         /// </summary>
-        public int StandardizationFactor { get; init; }
+        public required int StandardizationFactor { get; init; }
 
         /// <summary>
         /// The minimum grade
         /// </summary>
-        public int MinimumGrade { get; init; }
+        public required int MinimumGrade { get; init; }
     }
 }

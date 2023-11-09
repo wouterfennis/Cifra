@@ -3,7 +3,7 @@
     /// <summary>
     /// The metadata of the spreadsheet.
     /// </summary>
-    public sealed class Metadata
+    public sealed record Metadata
     {
         /// <summary>
         /// The author of the spreadsheet

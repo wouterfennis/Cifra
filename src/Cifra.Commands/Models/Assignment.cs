@@ -3,16 +3,16 @@
     /// <summary>
     /// The Assignment entity.
     /// </summary>
-    public sealed class Assignment
+    public sealed record Assignment
     {
         /// <summary>
         /// The id of the <see cref="Assignment"/>.
         /// </summary>
-        public uint Id { get; init; }
+        public required uint? Id { get; init; }
 
         /// <summary>
         /// The number of questions the <see cref="Assignment"/> has.
         /// </summary>
-        public int NumberOfQuestions { get; init; }
+        public required int NumberOfQuestions { get; init; }
     }
 }

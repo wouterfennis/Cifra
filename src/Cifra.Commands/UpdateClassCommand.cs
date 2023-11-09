@@ -5,7 +5,7 @@ namespace Cifra.Commands
     /// <summary>
     /// The command to update an Class
     /// </summary>
-    public sealed class UpdateClassCommand
+    public sealed record UpdateClassCommand
     {
         /// <summary>
         /// The name of the class

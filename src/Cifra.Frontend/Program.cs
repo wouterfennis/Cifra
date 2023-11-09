@@ -2,12 +2,17 @@ using Cifra.Api.Client.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var cifraApiBaseUrl = new Uri(builder.Configuration["CifraApiBaseUrl"]);
+var isUrlValid = Uri.TryCreate(builder.Configuration["CifraApiBaseUrl"], UriKind.Absolute, out Uri? cifraApiBaseUrl);
+
+if (!isUrlValid)
+{
+    throw new InvalidOperationException("The Cifra API base URL is invalid.");
+}
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddCifraApiClient(cifraApiBaseUrl);
+builder.Services.AddCifraApiClient(cifraApiBaseUrl!);
 
 var app = builder.Build();
 

@@ -53,15 +53,17 @@ namespace Cifra.Domain
             return Result<Assignment>.Ok<Assignment>(new Assignment(numberOfQuestions));
         }
 
-        public static Result<Assignment> TryCreate(uint id, int numberOfQuestions)
+        public static Result<Assignment> TryCreate(uint? id, int numberOfQuestions)
         {
+            uint validId = id ?? 0;
+
             if (numberOfQuestions <= 0)
             {
                 ValidationMessage validationMessage = ValidationMessage.Create(nameof(numberOfQuestions), "There should be at least one question on a assignment");
                 return Result<Assignment>.Fail<Assignment>(validationMessage);
             }
 
-            return Result<Assignment>.Ok<Assignment>(new Assignment(id, numberOfQuestions));
+            return Result<Assignment>.Ok<Assignment>(new Assignment(validId, numberOfQuestions));
         }
 
         /// <summary>

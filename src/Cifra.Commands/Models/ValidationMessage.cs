@@ -3,7 +3,7 @@
     /// <summary>
     /// A validation message
     /// </summary>
-    public class ValidationMessage
+    public record ValidationMessage
     {
         /// <summary>
         /// The field where the validation took place

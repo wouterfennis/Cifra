@@ -3,7 +3,7 @@
     /// <summary>
     /// The Test entity.
     /// </summary>
-    public sealed class Test
+    public sealed record Test
     {
         /// <summary>
         /// The Id.

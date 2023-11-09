@@ -3,12 +3,12 @@
     /// <summary>
     /// The Student entity.
     /// </summary>
-    public class Student
+    public record Student
     {
         /// <summary>
         /// The id of the student
         /// </summary>
-        public required uint Id { get; init; }
+        public required uint? Id { get; init; }
 
         /// <summary>
         /// The first name of the student

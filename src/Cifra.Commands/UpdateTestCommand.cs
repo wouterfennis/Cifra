@@ -5,7 +5,7 @@ namespace Cifra.Commands
     /// <summary>
     /// The request to update a test
     /// </summary>
-    public sealed class UpdateTestCommand
+    public sealed record UpdateTestCommand
     {
         /// <summary>
         /// The updated test

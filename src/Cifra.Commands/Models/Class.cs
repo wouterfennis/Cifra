@@ -5,7 +5,7 @@ namespace Cifra.Commands.Models
     /// <summary>
     /// The Class entity.
     /// </summary>
-    public class Class
+    public record Class
     {
         /// <summary>
         /// The Id of the Class

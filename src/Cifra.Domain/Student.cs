@@ -79,8 +79,9 @@ namespace Cifra.Domain
             return Result<Student>.Ok<Student>(new Student(firstNameResult.Value!, infix, lastNameResult.Value!));
         }
 
-        public static Result<Student> TryCreate(uint id, string firstName, string? infix, string lastName)
+        public static Result<Student> TryCreate(uint? id, string firstName, string? infix, string lastName)
         {
+            uint validId = id ?? 0;
             Result<Name> firstNameResult = Name.CreateFromString(firstName);
             Result<Name> lastNameResult = Name.CreateFromString(lastName);
 
@@ -96,7 +97,7 @@ namespace Cifra.Domain
                 return Result<Student>.Fail<Student>(validationMessage);
             }
 
-            return Result<Student>.Ok<Student>(new Student(id, firstNameResult.Value!, infix, lastNameResult.Value!));
+            return Result<Student>.Ok<Student>(new Student(validId, firstNameResult.Value!, infix, lastNameResult.Value!));
         }
 
         /// <summary>
