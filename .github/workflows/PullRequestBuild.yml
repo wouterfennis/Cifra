@@ -10,7 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Determine version number
+      uses: paulhatch/semantic-version@v5.3.0
+      id: version
+      with:
+        # The prefix to use to identify tags
+        tag_prefix: "v"
+        # A string which, if present in a git commit, indicates that a change represents a
+        # major (breaking) change, supports regular expressions wrapped with '/'
+        major_pattern: "(MAJOR)"
+        # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
+        minor_pattern: "(MINOR)"
+        # A string to determine the format of the version output
+        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+        # If this is set to true, *every* commit will be treated as a new version.
+        bump_each_commit: false
+        # If true, the body of commits will also be searched for major/minor patterns to determine the version type.
+        search_commit_body: false
+        # The output method used to generate list of users, 'csv' or 'json'.
+        user_format_type: "csv"
+        # Prevents pre-v1.0.0 version from automatically incrementing the major version.
+        # If enabled, when the major version is 0, major releases will be treated as minor and minor as patch. Note that the version_type output is unchanged.
+        enable_prerelease_mode: true
+        # If enabled, diagnostic information will be added to the action output.
+        debug: false
+        # If true, the branch will be used to select the maximum version.
+        version_from_branch: false
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -25,7 +54,7 @@ jobs:
     - name: Test project
       run: dotnet test
     - name: Pack
-      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{GITHUB.RUN_ID}}
+      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{steps.version.version}}
     - name: Publish
       run: dotnet nuget push "./src/Cifra.Api.Client/bin/Release/Cifra.Api.Client.*.nupkg" --source https://nuget.pkg.github.com/wouterfennis/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     - name: Login to Docker Hub
