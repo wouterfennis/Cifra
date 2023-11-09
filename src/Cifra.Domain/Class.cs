@@ -26,7 +26,12 @@ namespace Cifra.Domain
         /// </summary>
         public List<Student> Students { get; private set; }
 
+        /// <summary>
+        /// // Only exists for Entity Framework.
+        /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private Class()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             // Only exists for Entity Framework
         }

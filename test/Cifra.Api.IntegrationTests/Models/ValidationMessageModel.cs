@@ -2,6 +2,6 @@
 {
     internal class ValidationMessageModel
     {
-        public required string FailureReason { get; init; }
+        public string? FailureReason { get; init; }
     }
 }

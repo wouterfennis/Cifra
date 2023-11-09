@@ -6,21 +6,21 @@ namespace Cifra.Api.IntegrationTests.Models
         /// <summary>
         /// The number of questions of the assignment.
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; init; }
 
         /// <summary>
         /// The first name of the student
         /// </summary>
-        public string FirstName { get; set; }
+        public string? FirstName { get; init; }
 
         /// <summary>
         /// The infix of the student
         /// </summary>
-        public string? Infix { get; set; }
+        public string? Infix { get; init; }
 
         /// <summary>
         /// The last name of the student
         /// </summary>
-        public string LastName { get; set; }
+        public string? LastName { get; init; }
     }
 }

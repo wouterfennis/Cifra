@@ -6,6 +6,6 @@ namespace Cifra.Api.IntegrationTests.Models
         /// <summary>
         /// The Name.
         /// </summary>
-        public string Name { get; init; } = DefaultValues.DefaultClassName;
+        public string? Name { get; init; } = DefaultValues.DefaultClassName;
     }
 }

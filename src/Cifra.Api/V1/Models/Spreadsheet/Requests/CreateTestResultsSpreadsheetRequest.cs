@@ -18,6 +18,6 @@
         /// <summary>
         /// The metadata of the spreadsheet.
         /// </summary>
-        public Metadata Metadata { get; init; }
+        public required Metadata Metadata { get; init; }
     }
 }

@@ -6,11 +6,11 @@ namespace Cifra.Api.IntegrationTests.Models
         /// <summary>
         /// The id of the assignment.
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// The number of questions of the assignment.
         /// </summary>
-        public int NumberOfQuestions { get; init; } = DefaultValues.NumberOfQuestions;
+        public int? NumberOfQuestions { get; init; } = DefaultValues.NumberOfQuestions;
     }
 }

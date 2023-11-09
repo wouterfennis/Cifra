@@ -17,6 +17,9 @@ namespace Cifra.Domain
         /// </summary>
         public int NumberOfQuestions { get; private set; }
 
+        /// <summary>
+        /// // Only exists for Entity Framework.
+        /// </summary>
         private Assignment()
         {
             // Only exists for Entity Framework
