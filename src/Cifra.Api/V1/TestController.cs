@@ -43,13 +43,13 @@ namespace Cifra.Api.V1
         [HttpGet]
         [ProducesResponseType(typeof(GetAllTestsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetAllTestsResponse> GetAllTestsAsync()
+        public async Task<IActionResult> GetAllTestsAsync()
         {
             GetAllTestsResult getAllTestsResult = await _testService.GetTestsAsync();
 
             var response = getAllTestsResult.MapToResponse();
 
-            return response;
+            return Ok(response);
         }
 
         /// <summary>
@@ -61,13 +61,13 @@ namespace Cifra.Api.V1
         [HttpGet("{testId}")]
         [ProducesResponseType(typeof(GetTestResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetTestResponse> GetTestAsync(uint testId)
+        public async Task<IActionResult> GetTestAsync(uint testId)
         {
             GetTestResult getTestResult = await _testService.GetTestAsync(testId);
 
             var response = getTestResult.MapToResponse();
 
-            return response;
+            return Ok(response);
         }
 
         /// <summary>

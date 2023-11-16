@@ -42,13 +42,13 @@ namespace Cifra.Api.V1
         [HttpGet]
         [ProducesResponseType(typeof(GetAllClassesResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetAllClassesResponse> GetAllClassesAsync()
+        public async Task<IActionResult> GetAllClassesAsync()
         {
             GetAllClassesResult getAllClassesResult = await _classService.GetClassesAsync();
 
             var response = getAllClassesResult.MapToResponse();
 
-            return response;
+            return Ok(response);
         }
 
         /// <summary>
@@ -60,13 +60,13 @@ namespace Cifra.Api.V1
         [HttpGet("{classId}")]
         [ProducesResponseType(typeof(GetClassResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<GetClassResponse> GetClassAsync(uint classId)
+        public async Task<IActionResult> GetClassAsync(uint classId)
         {
             GetClassResult getClassResult = await _classService.GetClassAsync(classId);
 
             var response = getClassResult.MapToResponse();
 
-            return response;
+            return Ok(response);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Cifra.Api.V1
         [ProducesResponseType(typeof(UpdateClassResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UpdateClassResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> UpdateClassAsync(UpdateClassRequest request)
+        public async Task<IActionResult> UpdateClassAsync(UpdateClassRequest request)
         {
             var command = request.Map();
             UpdateClassResult result = await _classService.UpdateClassAsync(command);
