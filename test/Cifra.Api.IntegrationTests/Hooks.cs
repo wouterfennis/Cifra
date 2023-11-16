@@ -1,8 +1,10 @@
 ﻿using BoDi;
 using Cifra.Api.Client;
+using Cifra.Api.IntegrationTests.Converters;
 using Cifra.Database;
 using Microsoft.Extensions.DependencyInjection;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace Cifra.Api.IntegrationTests
 {
@@ -16,8 +18,14 @@ namespace Cifra.Api.IntegrationTests
             _objectContainer = objectContainer;
         }
 
+        [BeforeTestRun]
+        public static void BeforeTestRun()
+        {
+            Service.Instance.ValueRetrievers.Register(new NameValueConverter());
+        }
+
         [BeforeScenario]
-        public void Initialize()
+        public void BeforeScenario()
         {
             var httpClient = _objectContainer.Resolve<CifraApiWebApplicationFactory>().CreateClient();
             var cifraApiClient = new CifraApiClient(httpClient);

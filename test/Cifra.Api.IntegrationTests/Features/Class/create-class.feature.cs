@@ -172,9 +172,9 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table4.AddRow(new string[] {
-                            "Class name cannot be empty"});
+                            "Supplied class data was invalid"});
 #line 31
- testRunner.Then("a create class validation message is displayed containing the following message", ((string)(null)), table4, "Then ");
+ testRunner.Then("a create class server message is displayed containing the following message", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

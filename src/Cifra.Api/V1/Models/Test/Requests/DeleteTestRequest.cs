@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace Cifra.Api.V1.Models.Test.Requests
 {
     /// <summary>
@@ -9,6 +11,7 @@ namespace Cifra.Api.V1.Models.Test.Requests
         /// <summary>
         /// The Id of the test that should be deleted.
         /// </summary>
-        public int TestId { get; init; }
+        [Required]
+        public uint TestId { get; init; }
     }
 }

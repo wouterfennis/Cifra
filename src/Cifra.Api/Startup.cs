@@ -34,7 +34,7 @@ namespace Cifra.Api
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cifra API", Version = "v1", Description = "API to interact with the Cifra backend" });

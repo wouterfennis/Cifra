@@ -178,6 +178,14 @@ namespace Cifra.Api.IntegrationTests.Steps
             actualTests.Should().BeEquivalentTo(tests);
         }
 
+        [Then(@"a create test server message is displayed containing the following message")]
+        public void ThenAServerMessageIsDisplayedContainingTheFollowingMessage(Table table)
+        {
+            var expectedValidationMessage = table.CreateInstance<ValidationMessageModel>();
+            var exception = _scenarioContext.Get<ApiException<CreateTestResponse>>(_responseException);
+            exception.Message.Should().Contain(expectedValidationMessage.FailureReason);
+        }
+
         [Then(@"a create test validation message is displayed containing the following message")]
         public void ThenAValidationMessageIsDisplayedContainingTheFollowingMessage(Table table)
         {

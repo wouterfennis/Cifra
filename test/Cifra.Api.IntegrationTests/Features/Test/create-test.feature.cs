@@ -195,9 +195,9 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                             "Failure reason"});
                 table17.AddRow(new string[] {
-                            "Test name is not valid"});
+                            "Supplied test data was invalid"});
 #line 36
- testRunner.Then("a create test validation message is displayed containing the following message", ((string)(null)), table17, "Then ");
+ testRunner.Then("a create test server message is displayed containing the following message", ((string)(null)), table17, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

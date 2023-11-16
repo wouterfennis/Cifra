@@ -149,19 +149,12 @@ namespace Cifra.Api.IntegrationTests.Steps
             actualClass.Should().BeEquivalentTo(classes);
         }
 
-        [Then(@"a create class validation message is displayed containing the following message")]
-        public void ThenAValidationMessageIsDisplayedContainingTheFollowingMessage(Table table)
+        [Then(@"a create class server message is displayed containing the following message")]
+        public void ThenAServerMessageIsDisplayedContainingTheFollowingMessage(Table table)
         {
             var expectedValidationMessage = table.CreateInstance<ValidationMessageModel>();
             var exception = _scenarioContext.Get<ApiException<CreateClassResponse>>(_responseException);
-            exception.Result.ValidationMessages.Single().Message.Should().Be(expectedValidationMessage.FailureReason);
-        }
-
-        [Then(@"a create class validation message is returned containing '([^']*)'")]
-        public void ThenACreateClassValidationMessageIsReturnedContaining(string message)
-        {
-            var exception = _scenarioContext.Get<ApiException<CreateClassResponse>>(_responseException);
-            exception.Result.ValidationMessages.Single().Message.Should().Be(message);
+            exception.Message.Should().Contain(expectedValidationMessage.FailureReason);
         }
 
         [Then(@"a update class validation message is returned containing '([^']*)'")]

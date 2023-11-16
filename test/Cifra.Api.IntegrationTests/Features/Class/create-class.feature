@@ -28,6 +28,6 @@ Scenario: No name is supplied
 	When a request is made to create a new class with the following values:
 		| Name |
 		|      |
-	Then a create class validation message is displayed containing the following message
-		| Failure reason             |
-		| Class name cannot be empty |
+	Then a create class server message is displayed containing the following message
+		| Failure reason                  |
+		| Supplied class data was invalid |

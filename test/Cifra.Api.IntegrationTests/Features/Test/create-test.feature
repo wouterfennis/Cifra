@@ -33,9 +33,9 @@ Scenario: No name is supplied
 	When a request is made to create a new test with the following values:
 		| Name | Number of versions | Standardization factor | Minimum grade |
 		|      | 1                  | 9                      | 1             |
-	Then a create test validation message is displayed containing the following message
-		| Failure reason         |
-		| Test name is not valid |
+	Then a create test server message is displayed containing the following message
+		| Failure reason                  |
+		| Supplied test data was invalid |
 
 Scenario: No number of versions supplied
 	Given no tests are previously created
