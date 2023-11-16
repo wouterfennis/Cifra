@@ -24,7 +24,6 @@ jobs:
         version_format: "${major}.${minor}.${patch}-prerelease${increment}"
         bump_each_commit: false
         search_commit_body: false
-        user_format_type: "csv"
         # Prevents pre-v1.0.0 version from automatically incrementing the major version.
         # If enabled, when the major version is 0, major releases will be treated as minor and minor as patch. Note that the version_type output is unchanged.
         enable_prerelease_mode: true
@@ -68,7 +67,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:dev
-            ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-frontend:latest
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
@@ -81,4 +79,3 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:${{GITHUB.RUN_ID}}
             ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:dev
-            ${{ secrets.DOCKER_HUB_USERNAME }}/cifra-api:latest
