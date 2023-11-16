@@ -18,6 +18,7 @@ namespace Cifra.Api.V1
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
+    [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class TestController : ControllerBase
     {

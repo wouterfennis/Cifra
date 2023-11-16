@@ -37,7 +37,7 @@ namespace Cifra.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cifra API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cifra API", Version = "v1", Description = "API to interact with the Cifra backend" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
