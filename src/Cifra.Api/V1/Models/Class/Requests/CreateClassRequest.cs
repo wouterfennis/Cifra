@@ -1,4 +1,6 @@
-﻿namespace Cifra.Api.V1.Models.Class.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cifra.Api.V1.Models.Class.Requests
 {
     /// <summary>
     /// The request to create a Class.
@@ -8,6 +10,7 @@
         /// <summary>
         /// The name of the class.
         /// </summary>
-        public required string Name { get; init; }
+        [Required]
+        public required string? Name { get; init; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cifra.Api.V1.Models.Class
 {
@@ -10,12 +11,13 @@ namespace Cifra.Api.V1.Models.Class
         /// <summary>
         /// The Id of the Class
         /// </summary>
-        public required uint Id { get; init; }
+        public required uint? Id { get; init; }
 
         /// <summary>
         /// The Name of the Class
         /// </summary>
-        public required string Name { get; init; }
+        [Required]
+        public required string? Name { get; init; }
 
         /// <summary>
         /// The Students of the Class

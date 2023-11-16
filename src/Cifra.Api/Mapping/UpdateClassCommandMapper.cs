@@ -16,11 +16,23 @@ namespace Cifra.Api.Mapping
         public static UpdateClassCommand Map(this UpdateClassRequest input)
         {
             var students = input.UpdatedClass.Students
-                .Select(x => new Student { Id = x.Id, FirstName = x.FirstName, Infix = x.Infix, LastName = x.LastName })
+                .Select(x => new Student
+                {
+                    Id = x.Id ?? 0,
+                    FirstName = x.FirstName!,
+                    Infix = x.Infix,
+                    LastName = x.LastName!
+                })
                 .ToList();
+
             return new UpdateClassCommand
             {
-                 Class = new Class { Id = input.UpdatedClass.Id, Name = input.UpdatedClass.Name, Students = students },
+                Class = new Class
+                {
+                    Id = input.UpdatedClass.Id ?? 0,
+                    Name = input.UpdatedClass.Name!,
+                    Students = students
+                }
             };
         }
     }

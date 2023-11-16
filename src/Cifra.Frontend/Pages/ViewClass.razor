@@ -209,10 +209,12 @@
         _retrievedClass!.Students.Add(new Student
             {
                 FirstName = _firstName,
+                Infix = _infix,
                 LastName = _lastName
             });
 
         _firstName = null;
+        _infix = null;
         _lastName = null;
         _counter = 0;
     }

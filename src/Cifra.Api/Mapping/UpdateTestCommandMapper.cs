@@ -16,17 +16,17 @@ namespace Cifra.Api.Mapping
         public static UpdateTestCommand MapToCommand(this UpdateTestRequest input)
         {
             var assignments = input.Test.Assignments
-                .Select(x => new Assignment { Id = x.Id, NumberOfQuestions = x.NumberOfQuestions })
+                .Select(x => new Assignment { Id = x.Id, NumberOfQuestions = x.NumberOfQuestions!.Value })
                 .ToList();
             return new UpdateTestCommand
             {
                 Test = new Test
                 {
-                    Id = input.Test.Id,
-                    MinimumGrade = input.Test.MinimumGrade,
-                    Name = input.Test.Name,
-                    NumberOfVersions = input.Test.NumberOfVersions,
-                    StandardizationFactor = input.Test.StandardizationFactor,
+                    Id = input.Test.Id ?? 0,
+                    MinimumGrade = input.Test.MinimumGrade!.Value,
+                    Name = input.Test.Name!,
+                    NumberOfVersions = input.Test.NumberOfVersions!.Value,
+                    StandardizationFactor = input.Test.StandardizationFactor!.Value,
                     Assignments = assignments
                 }
             };
