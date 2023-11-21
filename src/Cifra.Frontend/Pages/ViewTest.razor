@@ -1,0 +1,135 @@
+﻿@page "/test/{testId:int}"
+@using Cifra.Api.Client
+@using System.Text.RegularExpressions
+@using Cifra.Frontend.Extensions;
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+@inject IWebHostEnvironment Environment
+
+<div class="container">
+    @if (retrievedTest != null)
+    {
+        <PageTitle>Test: @retrievedTest.Name</PageTitle>
+        <div class="row">
+            <div class="col-4">
+                <h1>Test: @retrievedTest.Name</h1>
+            </div>
+        </div>
+
+        @if (_validationMessage != null)
+        {
+            <div class="alert alert-warning" role="alert">
+                @_validationMessage
+            </div>
+        }
+
+        <EditForm Model="@retrievedTest" OnValidSubmit="@HandleUpdateTest">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="row">
+                <table class="table col">
+                    <thead>
+                        <tr>
+                            <th class="col-3">Assignment</th>
+                            <th class="col-3">@nameof(Assignment.NumberOfQuestions).ToDisplayFormat()</th>
+                            <th class="col-3">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Assignment assignment in retrievedTest.Assignments)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                                        _counter++;
+                                    }
+                                    @_counter
+                                </td>
+                                <td>
+                                    <InputNumber id="@assignment.Id" class="form-control" @bind-Value="assignment.NumberOfQuestions" />
+                                </td>
+                                <td>
+                                    <div class="btn btn-outline-danger" @onclick="(() => RemoveAssignment(assignment))">Delete</div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+                                @{
+                                    _counter++;
+                                }
+                                @_counter
+                            </td>
+                            @{
+                                _counter = 0;
+                            }
+                            <td>
+                                <input id="newAssignment" class="form-control" type="number" @bind="_numberOfQuestions" />
+                            </td>
+                            <td>
+                                <div class="btn btn-outline-success" @onclick="(() => AddAssignment())">Add</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Update test</button>
+                </div>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int TestId { get; set; }
+
+    private Api.Client.Test? retrievedTest;
+    private int _counter = 0;
+    private int _numberOfQuestions = 0;
+    private string? _validationMessage = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.TestGET2Async(TestId, "1");
+        retrievedTest = response.Test;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleUpdateTest()
+    {
+        var request = new UpdateTestRequest
+        {
+            Test = retrievedTest
+        };
+
+        var response = await Client.TestPUTAsync("1", request);
+
+        if (response.ValidationMessages.Any())
+        {
+            string message = "Updating class failed because of:";
+            _validationMessage = message += response.ValidationMessages.Select(x => $"Field: {x.Field} Message: {x.Message}{System.Environment.NewLine}");
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/test/{TestId}", forceLoad: true);
+    }
+
+    private void RemoveAssignment(Assignment assignment)
+    {
+        retrievedTest!.Assignments.Remove(assignment);
+    }
+
+    private void AddAssignment()
+    {
+        if(_numberOfQuestions <= 0)
+        {
+            _validationMessage = "An assignment should have at least one question";
+        }
+        retrievedTest!.Assignments.Add(new Assignment { NumberOfQuestions = _numberOfQuestions });
+        _numberOfQuestions = 0;
+    }
+}
+

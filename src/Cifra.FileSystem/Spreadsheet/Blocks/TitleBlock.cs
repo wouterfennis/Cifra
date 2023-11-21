@@ -1,4 +1,4 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Domain.ValueTypes;
 using SpreadsheetWriter.Abstractions;
 using System;
 using System.Drawing;
@@ -13,14 +13,14 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         private const int TitleSize = 16;
         private const string DateFormat = "dd-MM-yyyy";
         public Point StartPoint { get; }
-        public Name TestName { get; }
+        public Name SpreadsheetName { get; }
         public DateTime CreatedOn { get; }
         public string ApplicationVersion { get; }
 
-        public TitleBlock(Point startPoint, Name testName, DateTime createdOn, string applicationVersion)
+        public TitleBlock(Point startPoint, Name spreadsheetName, DateTime createdOn, string applicationVersion)
         {
             StartPoint = startPoint;
-            TestName = testName;
+            SpreadsheetName = spreadsheetName;
             CreatedOn = createdOn;
             ApplicationVersion = applicationVersion;
         }
@@ -30,7 +30,8 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
             spreadsheetWriter.CurrentPosition = StartPoint;
             spreadsheetWriter
                 .SetFontSize(TitleSize)
-                .Write(TestName.Value)
+                .SetBackgroundColor(Color.White)
+                .Write(SpreadsheetName.Value)
                 .ResetStyling()
                 .NewLine()
                 .SetFontBold(true)

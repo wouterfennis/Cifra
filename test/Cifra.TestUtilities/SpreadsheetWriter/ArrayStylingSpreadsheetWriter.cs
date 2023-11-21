@@ -1,6 +1,7 @@
 ﻿using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
 namespace SpreadsheetWriter.Test
@@ -8,6 +9,7 @@ namespace SpreadsheetWriter.Test
     /// <summary>
     /// Test implementation of the spreadsheet writer in order to assert certain contents in the spreadsheet.
     /// </summary>
+    [ExcludeFromCodeCoverage] // Part of test project.
     public class ArrayStylingSpreadsheetWriter : SpreadsheetWriterBase
     {
         public string[,] Spreadsheet { get; }

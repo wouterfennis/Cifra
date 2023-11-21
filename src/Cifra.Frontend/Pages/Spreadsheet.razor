@@ -1,0 +1,122 @@
+﻿@page "/spreadsheet"
+@using Cifra.Api.Client
+@using System.Reflection
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+
+<PageTitle>Create spreadsheet</PageTitle>
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <h1>Create spreadsheet</h1>
+        </div>
+    </div>
+    <div class="row">
+        <EditForm Model="@createTestResultsSpreadsheetRequest" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label for="class">Class</label>
+                    <InputSelect class="form-select" @bind-Value="chosenClass" @onchange="(() => UpdateName())" DisplayName="class" name="class" id="class">
+                        <option value="">Choose a class</option>
+                        @foreach (var retrievedClass in classes)
+                        {
+                            <option value="@retrievedClass.Id" >@retrievedClass.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="test">Test</label>
+                    <InputSelect class="form-select" @bind-Value="chosenTest" @onchange="(() => UpdateName())" DisplayName="test" name="test" id="test">
+                        <option value="">Choose a test</option>
+                        @foreach (var retrievedTest in tests)
+                        {
+                            <option value="@retrievedTest.Id">@retrievedTest.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="title">Title</label>
+                    <InputText id="title" class="form-control" @bind-Value="createTestResultsSpreadsheetRequest.Metadata.Title" />
+                </div>
+
+                <div class="col-3 mt-4">
+                    <div class="btn btn-primary" @onclick="(() => UpdateName())">Auto-fill</div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="filename">FileName</label>
+                    <InputText id="filename" class="form-control" @bind-Value="createTestResultsSpreadsheetRequest.Metadata.FileName" />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Api.Client.CreateTestResultsSpreadsheetRequest createTestResultsSpreadsheetRequest = new Api.Client.CreateTestResultsSpreadsheetRequest();
+    private IEnumerable<Api.Client.Class> classes = new List<Class>();
+    private IEnumerable<Api.Client.Test> tests = new List<Test>();
+    private string chosenClass = string.Empty;
+    private string chosenTest = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        createTestResultsSpreadsheetRequest.Metadata = new Metadata{
+            Author = "Blazor",
+            ApplicationVersion = "1.0",
+            Created = DateTime.Now,
+            Subject = "spreadsheet"
+        };
+        var getClassesResponse = await Client.ClassGETAsync("1");
+        classes = getClassesResponse.Classes;
+        var getTestsResponse = await Client.TestGETAsync("1");
+        tests = getTestsResponse.Tests;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        Console.WriteLine(chosenClass);
+        Console.WriteLine(chosenTest);
+        createTestResultsSpreadsheetRequest.ClassId = int.Parse(chosenClass);
+        createTestResultsSpreadsheetRequest.TestId = int.Parse(chosenTest);
+        var response = await Client.TestResultSpreadsheetAsync("1", createTestResultsSpreadsheetRequest);
+        string fileName = $"{createTestResultsSpreadsheetRequest.Metadata.FileName}.xlsx";
+        using var streamRef = new DotNetStreamReference(stream: response.Stream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    }
+
+    private void UpdateName()
+    {
+        if(string.IsNullOrEmpty(chosenTest) || string.IsNullOrEmpty(chosenClass))
+        {
+            return;
+        }
+        var testName = tests.Single(x => x.Id == int.Parse(chosenTest)).Name;
+        var className = classes.Single(x => x.Id == int.Parse(chosenClass)).Name;
+
+        string name = $"{className}-{testName}";
+
+        createTestResultsSpreadsheetRequest.Metadata.Title = name;
+        createTestResultsSpreadsheetRequest.Metadata.FileName = name;
+    }
+}

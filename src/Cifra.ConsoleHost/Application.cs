@@ -1,9 +1,9 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using Cifra.ConsoleHost.Areas.Class;
+﻿using Cifra.ConsoleHost.Areas.Class;
 using Cifra.ConsoleHost.Areas.Spreadsheet;
 using Cifra.ConsoleHost.Areas.Test;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Cifra.ConsoleHost
 {
@@ -57,7 +57,7 @@ Created by: Wouter Fennis";
 
         private async Task RedirectToArea(string option)
         {
-            if (!byte.TryParse(option, out byte result))
+            if (!int.TryParse(option, out int result))
             {
                 await RetryMenuAsync();
                 return;

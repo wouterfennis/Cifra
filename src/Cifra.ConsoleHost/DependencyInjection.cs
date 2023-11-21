@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Cifra.Application;
 using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Test.Requests;
+using Cifra.Application.Models.Class.Commands;
+using Cifra.Application.Models.Test.Commands;
 using Cifra.Application.Models.ValueTypes;
 using Cifra.Application.Validation;
 using Cifra.Application.Validation.AssignmentModelValidationRules;
@@ -33,18 +33,18 @@ namespace Cifra.ConsoleHost
             containerBuilder.RegisterType<Application>();
             containerBuilder.RegisterType<ClassService>().As<IClassService>();
             containerBuilder.RegisterType<TestService>().As<ITestService>();
-            containerBuilder.RegisterType<Validator<CreateClassRequest>>().As<IValidator<CreateClassRequest>>();
-            containerBuilder.RegisterType<Validator<CreateMagisterClassRequest>>().As<IValidator<CreateMagisterClassRequest>>();
-            containerBuilder.RegisterType<Validator<AddStudentRequest>>().As<IValidator<AddStudentRequest>>();
-            containerBuilder.RegisterType<Validator<CreateTestRequest>>().As<IValidator<CreateTestRequest>>();
-            containerBuilder.RegisterType<Validator<AddAssignmentRequest>>().As<IValidator<AddAssignmentRequest>>();
-            containerBuilder.RegisterType<NumberOfQuestionsMustBeValid>().As<IValidationRule<AddAssignmentRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.FirstNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.LastNameMustBeFilled>().As<IValidationRule<AddStudentRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NumberOfVersionsMustBeValid>().As<IValidationRule<CreateTestRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassRequest>>();
-            containerBuilder.RegisterType<Cifra.Application.Validation.MagisterClassModelValidationRules.FileLocationMustBeFilled>().As<IValidationRule<CreateMagisterClassRequest>>();
+            containerBuilder.RegisterType<Validator<CreateClassCommand>>().As<IValidator<CreateClassCommand>>();
+            containerBuilder.RegisterType<Validator<CreateMagisterClassCommand>>().As<IValidator<CreateMagisterClassCommand>>();
+            containerBuilder.RegisterType<Validator<AddStudentCommand>>().As<IValidator<AddStudentCommand>>();
+            containerBuilder.RegisterType<Validator<CreateTestCommand>>().As<IValidator<CreateTestCommand>>();
+            containerBuilder.RegisterType<Validator<AddAssignmentCommand>>().As<IValidator<AddAssignmentCommand>>();
+            containerBuilder.RegisterType<NumberOfQuestionsMustBeValid>().As<IValidationRule<AddAssignmentCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.FirstNameMustBeFilled>().As<IValidationRule<AddStudentCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.StudentModelValidationRules.LastNameMustBeFilled>().As<IValidationRule<AddStudentCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateTestCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.TestModelValidationRules.NumberOfVersionsMustBeValid>().As<IValidationRule<CreateTestCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.ClassModelValidationRules.NameMustBeFilled>().As<IValidationRule<CreateClassCommand>>();
+            containerBuilder.RegisterType<Cifra.Application.Validation.MagisterClassModelValidationRules.FileLocationMustBeFilled>().As<IValidationRule<CreateMagisterClassCommand>>();
             var fileLocationProvider = new FileLocationProvider(
                 Path.CreateFromString(classRepositoryPath),
                 Path.CreateFromString(testRepositoryPath),

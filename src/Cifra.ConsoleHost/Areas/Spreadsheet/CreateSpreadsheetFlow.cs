@@ -59,7 +59,7 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
                 index++;
             }
             Console.WriteLine();
-            var chosenIndex = SharedConsoleFlows.AskForByte("Select one of the following classes, type a number");
+            var chosenIndex = SharedConsoleFlows.AskForInteger("Select one of the following classes, type a number");
             var chosenClass = result.Classes.ElementAtOrDefault(chosenIndex - 1);
             if (chosenClass == null)
             {
@@ -80,7 +80,7 @@ namespace Cifra.ConsoleHost.Areas.Spreadsheet
                 Console.WriteLine($"[{index}] {test.Name.Value}");
                 index++;
             }
-            var chosenIndex = SharedConsoleFlows.AskForByte("Select one of the following tests, type a number");
+            var chosenIndex = SharedConsoleFlows.AskForInteger("Select one of the following tests, type a number");
             var chosenTest = result.Tests.ElementAtOrDefault(chosenIndex - 1);
             if (chosenTest == null)
             {

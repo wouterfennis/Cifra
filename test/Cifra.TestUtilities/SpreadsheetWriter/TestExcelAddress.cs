@@ -17,5 +17,10 @@ namespace SpreadsheetWriter.Test
         public ColumnLetter ColumnLetter => ColumnLetter.Create(_columnLetter);
 
         public RowNumber RowNumber => RowNumber.Create(_rowNumber);
+
+        public override string ToString()
+        {
+            return $"{_columnLetter}{_rowNumber}";
+        }
     }
 }

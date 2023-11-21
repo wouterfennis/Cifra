@@ -1,0 +1,69 @@
+﻿@page "/test"
+@using Cifra.Api.Client
+@using Cifra.Frontend.Extensions;
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+
+<PageTitle>Create test</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h1>Create test</h1>
+        </div>
+    </div>
+    <div class="row">
+        <EditForm Model="@CreateTestRequest" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="form-group col-3">
+                    <label for="name">Name</label>
+                    <InputText id="name" class="form-control" @bind-Value="CreateTestRequest.Name" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="name">@nameof(Test.NumberOfVersions).ToDisplayFormat()</label>
+                    <InputNumber id="numberOfVersions" class="form-control" placeholder="2" @bind-Value="CreateTestRequest.NumberOfVersions" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="name">@nameof(Test.StandardizationFactor).ToDisplayFormat()</label>
+                    <InputNumber id="standardizationFactor" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.StandardizationFactor" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="form-group col-3">
+                    <label for="name">@nameof(Test.MinimumGrade).ToDisplayFormat()</label>
+                    <InputNumber id="minimumGrade" class="form-control" placeholder="9" @bind-Value="CreateTestRequest.MinimumGrade" />
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Api.Client.CreateTestRequest CreateTestRequest = new Api.Client.CreateTestRequest();
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await Client.TestPOSTAsync("1", CreateTestRequest);
+
+        if (response.ValidationMessages.Any())
+        {
+            // Show validation messages
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/test/{response.TestId}");
+    }
+}

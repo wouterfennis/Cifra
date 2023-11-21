@@ -2,11 +2,12 @@
 using Autofac.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 
 namespace Cifra.TestUtilities.Autofac
 {
+    [ExcludeFromCodeCoverage] // Part of test project.
     public static class ContainerExtensions
     {
         public static IList<object> ResolveAll(this ILifetimeScope scope)

@@ -1,0 +1,61 @@
+﻿@page "/"
+@using Cifra.Api.Client
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+
+<PageTitle>Classes</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h1>Classes</h1>
+        </div>
+    </div>
+    <div class="row">
+        @if (RetrievedClasses != null)
+        {
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var classDto in RetrievedClasses)
+                        {
+                            <tr>
+                                <td>@classDto.Name</td>
+                                <td><a href="class/@classDto.Id" class="btn btn-outline-primary">Edit</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <button class="btn btn-primary" @onclick="NavigateToCreateClass">Create new class</button>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private IEnumerable<Api.Client.Class>? RetrievedClasses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.ClassGETAsync("1");
+        RetrievedClasses = response.Classes;
+        await base.OnInitializedAsync();
+    }
+
+    private void NavigateToCreateClass()
+    {
+        NavManager.NavigateTo("/class");
+    }
+}

@@ -1,16 +1,18 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Test;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
+using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet;
-using Cifra.TestUtilities.Application;
+using Cifra.TestUtilities.Domain;
 using Cifra.TestUtilities.SpreadsheetWriter;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
 using SpreadsheetWriter.Test;
+using System;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.UnitTests.Spreadsheet
@@ -19,7 +21,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
     public class TestResultsSpreadsheetBuilderTests
     {
         private Fixture _fixture;
-        private Mock<IFileLocationProvider> _fileLocationProvider;
+        private Mock<IOptions<SpreadsheetOptions>> _spreadsheetOptions;
+        private SpreadsheetOptions _spreadsheetOptionsValues;
         private Mock<ISpreadsheetFileFactory> _spreadsheetFileFactory;
         private Mock<IFormulaBuilderFactory> _formulaBuilderFactory;
         private Mock<IFormulaBuilder> _formulaBuilder;
@@ -30,7 +33,13 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         public void Initialize()
         {
             _fixture = new Fixture();
-            _fileLocationProvider = new Mock<IFileLocationProvider>();
+            _spreadsheetOptions = new Mock<IOptions<SpreadsheetOptions>>();
+            _spreadsheetOptionsValues = new SpreadsheetOptions{ TestResultsDirectory = Path.CreateFromString(_fixture.Create<string>()).Value };
+
+            _spreadsheetOptions
+                .SetupGet(x => x.Value)
+                .Returns(_spreadsheetOptionsValues);
+
             _spreadsheetFileFactory = new Mock<ISpreadsheetFileFactory>();
             _formulaBuilderFactory = new Mock<IFormulaBuilderFactory>();
             _formulaBuilder = new Mock<IFormulaBuilder>();
@@ -39,7 +48,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
             SetupFormulaBuilderFactory();
 
             _sut = new TestResultsSpreadsheetBuilder(
-                _fileLocationProvider.Object,
+                _spreadsheetOptions.Object,
                 _spreadsheetFileFactory.Object,
                 _formulaBuilderFactory.Object);
         }
@@ -48,14 +57,14 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
         public async Task CreateTestResultsSpreadsheetAsync_WithValidInput_CreatesSpreadsheet()
         {
             // Arrange
-            var metadata = _fixture.Create<Application.Models.Spreadsheet.Metadata>();
+            var metadata = Domain.Spreadsheet.Metadata.TryCreate(_fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<DateTime>(), _fixture.Create<string>(), _fixture.Create<string>()).Value;
             SetupSpreadsheetFileBuilder();
             FormulaBuilderTestUtilities.SetupFormulaBuilder(_formulaBuilder, _fixture.Create<string>());
 
-            Class @class = _fixture.Create<Class>();
+            Class @class = Class.TryCreate(_fixture.Create<string>()).Value;
             Test test = new TestBuilder()
                 .WithNumberOfVersions(2)
-                .WithMinimumGrade(Grade.CreateFromByte(1))
+                .WithMinimumGrade(1)
                 .WithRandomAssignments()
                 .Build();
 
@@ -74,13 +83,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
         private void SetupSpreadsheetFileBuilder()
         {
-            var path = _fixture.Create<Path>();
-            _fileLocationProvider
-                .Setup(x => x.GetSpreadsheetDirectoryPath())
-                .Returns(path);
-
             var testSpreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
-
             var spreadsheetFile = new Mock<ISpreadsheetFile>();
             spreadsheetFile
                 .Setup(x => x.GetSpreadsheetWriter())
@@ -88,10 +91,10 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet
 
             spreadsheetFile
                 .Setup(x => x.SaveAsync())
-                .ReturnsAsync(_fixture.Create<SaveResult>());
+                .ReturnsAsync(new SaveResult());
 
             _spreadsheetFileFactory
-                .Setup(x => x.Create(path.Value, It.IsAny<Metadata>()))
+                .Setup(x => x.Create(_spreadsheetOptionsValues.TestResultsDirectory, It.IsAny<Metadata>()))
                 .Returns(spreadsheetFile.Object);
         }
     }

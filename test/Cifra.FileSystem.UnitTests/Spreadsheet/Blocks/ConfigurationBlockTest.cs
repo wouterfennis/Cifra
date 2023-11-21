@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
-using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,7 +12,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     {
         private string[,] spreadsheet;
         private Point _startpoint;
-        private Fixture _fixture;
         private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
@@ -21,7 +19,6 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 0);
-            _fixture = new Fixture();
             _spreadsheetWriter = new ArrayContentSpreadsheetWriter(spreadsheet);
         }
 
@@ -29,8 +26,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithConfiguration_PutsTitleOnRightPosition()
         {
             // Arrange
-            var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromByte(1);
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act
@@ -44,8 +41,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithStandardizationFactor_PutsDataOnRightPosition()
         {
             // Arrange
-            var expectedStandardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromByte(1);
+            var expectedStandardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, expectedStandardizationFactor, minimumGrade);
 
             // Act
@@ -60,8 +57,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithStandardizationFactor_SavesPositionOfStandardizationFactor()
         {
             // Arrange
-            var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromByte(1);
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act
@@ -76,8 +73,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithMinimumGrade_PutsDataOnRightPosition()
         {
             // Arrange
-            var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var expectedMinimumGrade = Grade.CreateFromByte(1);
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var expectedMinimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, expectedMinimumGrade);
 
             // Act
@@ -92,8 +89,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithMinimumGrade_SavesPositionOfMinimumGrade()
         {
             // Arrange
-            var standardizationFactor = _fixture.Create<StandardizationFactor>();
-            var minimumGrade = Grade.CreateFromByte(1);
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
             var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
 
             // Act

@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Domain.Validation;
+using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,40 +23,53 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         {
             var input = _fixture.Create<string>();
 
-            Name result = Name.CreateFromString(input);
+            Name result = Name.CreateFromString(input).Value;
 
             result.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsNull_ThrowsException()
+        public void CreateFromString_NameIsNull_ResultFails()
         {
             string input = null;
 
-            Action action = () => Name.CreateFromString(input);
+            var result = Name.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Name cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
-        public void CreateFromString_NameIsEmpty_ThrowsException()
+        public void CreateFromString_NameIsEmpty_ResultFails()
         {
             string input = string.Empty;
 
-            Action action = () => Name.CreateFromString(input);
+            var result = Name.CreateFromString(input);
 
-            action.Should().Throw<ArgumentException>();
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be("Name cannot be null or empty");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
-        public void Equals_TwoSeperateNamesWithSameValue_AreEqual()
+        public void ImplicitFromNameToString_WithValidValue_ConvertsToString()
         {
-            string input = _fixture.Create<string>();
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
 
-            var name1 = Name.CreateFromString(input);
-            var name2 = Name.CreateFromString(input);
+            string result = input;
 
-            name1.Should().Equals(name2);
+            result.Should().Be(input.Value);
+        }
+
+        [TestMethod]
+        public void ToString_WithValidValue_ReturnsString()
+        {
+            Name input = Name.CreateFromString(_fixture.Create<string>()).Value;
+
+            string result = input.ToString();
+
+            result.Should().Be(input.Value);
         }
     }
 }

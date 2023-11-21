@@ -1,8 +1,10 @@
-﻿using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Domain.ValueTypes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cifra.FileSystem.FileSystemInfo
 {
     /// <inheritdoc/>
+    [ExcludeFromCodeCoverage] // wrapper around filesystem.
     public class FileInfoWrapperFactory : IFileInfoWrapperFactory
     {
         /// <inheritdoc/>

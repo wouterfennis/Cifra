@@ -9,7 +9,7 @@ namespace Cifra.FileSystem.Mapping
         /// <summary>
         /// Maps to library metadata model.
         /// </summary>
-        public static Metadata MapToLibraryModel(this Application.Models.Spreadsheet.Metadata input)
+        public static Metadata MapToLibraryModel(this Domain.Spreadsheet.Metadata input)
         {
             ValidateNullInput(input);
 
@@ -21,20 +21,6 @@ namespace Cifra.FileSystem.Mapping
                 Created = input.Created,
                 FileName = input.FileName,
                 ApplicationVersion = input.ApplicationVersion
-            };
-        }
-
-        /// <summary>
-        /// Maps to save result model.
-        /// </summary>
-        public static Application.Models.Spreadsheet.SaveResult MapToModel(this  SaveResult input)
-        {
-            ValidateNullInput(input);
-
-            return new Application.Models.Spreadsheet.SaveResult
-            {
-                IsSuccess = input.IsSuccess,
-                Exception = input.Exception,
             };
         }
 

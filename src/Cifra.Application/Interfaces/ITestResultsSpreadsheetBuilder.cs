@@ -1,6 +1,6 @@
-﻿using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Spreadsheet;
-using Cifra.Application.Models.Test;
+﻿using Cifra.Domain;
+using Cifra.Domain.Spreadsheet;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Cifra.Application.Interfaces
@@ -13,6 +13,6 @@ namespace Cifra.Application.Interfaces
         /// <summary>
         /// Creates a test results spreadsheet
         /// </summary>
-        Task<SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
+        Task<FileInfo> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Metadata metadata);
     }
 }

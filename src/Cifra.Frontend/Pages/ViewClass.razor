@@ -1,0 +1,222 @@
+﻿@page "/class/{classId:int}"
+@using Cifra.Api.Client
+@using System.Text.RegularExpressions
+@using Cifra.Frontend.Extensions;
+@using Cifra.Frontend.Models;
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+@inject IWebHostEnvironment Environment
+
+<div class="container">
+    @if (_retrievedClass != null)
+    {
+        <PageTitle>Class: @_retrievedClass.Name</PageTitle>
+        <div class="row">
+            <div class="col-4">
+                <h1>Class: @_retrievedClass.Name</h1>
+            </div>
+        </div>
+
+        @if (_validationMessage != null)
+        {
+            <div class="alert alert-warning" role="alert">
+                @_validationMessage
+            </div>
+        }
+
+        <EditForm Model="@_retrievedClass" OnValidSubmit="@HandleUpdateClass">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="row">
+                <table class="table col">
+                    <thead>
+                        <tr>
+                            <th class="col-3">@nameof(Student).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.FirstName).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.Infix).ToDisplayFormat()</th>
+                            <th class="col-3">@nameof(Student.LastName).ToDisplayFormat()</th>
+                            <th class="col-3">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Student student in _retrievedClass.Students)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                                        _counter++;
+                                    }
+                                    @_counter
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.FirstName
+ }" class="form-control" @bind-Value="student.FirstName" />
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.Infix
+ }" class="form-control" @bind-Value="student.Infix" />
+                                </td>
+                                <td>
+                                    <InputText id="@{
+                                student.Id + student.LastName
+ }" class="form-control" @bind-Value="student.LastName" />
+                                </td>
+                                <td>
+                                    <div class="btn btn-outline-danger" @onclick="(() => RemoveStudent(student))">Delete</div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+                                @{
+                                    _counter++;
+                                }
+                                @_counter
+                                @{
+                                    _counter = 0;
+                                }
+                            </td>
+                            <td>
+                                <input id="newFirstName" type="text" class="form-control" @bind="_firstName" />
+                            </td>
+                            <td>
+                                <input id="newInfix" type="text" class="form-control" @bind="_infix" />
+                            </td>
+                            <td>
+                                <input id="newLastName" type="text" class="form-control" @bind="_lastName" />
+                            </td>
+                            <td>
+                                <div class="btn btn-outline-success" @onclick="(() => AddStudent())">Add</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <InputFile OnChange="@LoadFiles" />
+
+            <div class="row mt-2">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Update class</button>
+                </div>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int ClassId { get; set; }
+
+    private Api.Client.Class? _retrievedClass;
+    private string? _validationMessage = null;
+    private int _counter = 0;
+    private string? _firstName = null;
+    private string? _infix = null;
+    private string? _lastName = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.ClassGET2Async(ClassId, "1");
+        _retrievedClass = response.RetrievedClass;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleUpdateClass()
+    {
+        var request = new UpdateClassRequest
+            {
+                UpdatedClass = _retrievedClass
+            };
+
+        var response = await Client.ClassPUTAsync("1", request);
+
+        if (response.ValidationMessages.Any())
+        {
+            string message = "Updating class failed because of:";
+            _validationMessage = message += response.ValidationMessages.Select(x => $"Field: {x.Field} Message: {x.Message}{System.Environment.NewLine}");
+        }
+
+        // Redirect to class view
+        NavManager.NavigateTo($"/class/{ClassId}", forceLoad: true);
+    }
+
+    private async Task LoadFiles(InputFileChangeEventArgs eventArguments)
+    {
+        _retrievedClass!.Students.Clear();
+        var newStudents = new List<Student>();
+
+        string filePath = await UploadFileToTemporaryStorageAsync(eventArguments);
+
+        using var sr = new StreamReader(File.OpenRead(filePath));
+        await sr.ReadLineAsync();
+        while (!sr.EndOfStream)
+        {
+            string? line = await sr.ReadLineAsync();
+            if (line == null)
+            {
+                break;
+            }
+
+            string content = line.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)[0];
+            bool isValidName = NameParts.TryCreate(content, out NameParts? nameParts);
+
+            if (!isValidName || nameParts == null)
+            {
+                _validationMessage = $"CSV contains invalid student: {content}";
+                break;
+            }
+
+            var student = new Student
+                {
+                    FirstName = nameParts.FirstName,
+                    Infix = nameParts.Infix,
+                    LastName = nameParts.LastName
+                };
+            newStudents.Add(student);
+        }
+        _retrievedClass.Students = newStudents;
+
+        sr.Close();
+
+        File.Delete(filePath);
+    }
+
+    private async Task<string> UploadFileToTemporaryStorageAsync(InputFileChangeEventArgs eventArguments)
+    {
+        var temporaryFileLocation = Path.GetTempFileName();
+
+        await using FileStream fs = new(temporaryFileLocation, FileMode.Create);
+        await eventArguments.File.OpenReadStream().CopyToAsync(fs);
+
+        return temporaryFileLocation;
+    }
+
+    private void RemoveStudent(Student student)
+    {
+        _retrievedClass!.Students.Remove(student);
+    }
+
+    private void AddStudent()
+    {
+        if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrEmpty(_lastName))
+        {
+            _validationMessage = "First name and last name are required";
+        }
+
+        _retrievedClass!.Students.Add(new Student
+            {
+                FirstName = _firstName,
+                Infix = _infix,
+                LastName = _lastName
+            });
+
+        _firstName = null;
+        _infix = null;
+        _lastName = null;
+        _counter = 0;
+    }
+}
+

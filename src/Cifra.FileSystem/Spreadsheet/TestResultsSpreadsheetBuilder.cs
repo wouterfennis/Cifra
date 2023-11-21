@@ -1,38 +1,42 @@
 ﻿using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Test;
+using Cifra.Domain;
 using Cifra.FileSystem.Mapping;
+using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet.Blocks;
+using Microsoft.Extensions.Options;
 using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.File;
 using SpreadsheetWriter.Abstractions.Formula;
+using System;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Cifra.FileSystem.Spreadsheet
 {
     public class TestResultsSpreadsheetBuilder : ITestResultsSpreadsheetBuilder
     {
-        private readonly IFileLocationProvider _locationProvider;
+        private readonly SpreadsheetOptions _spreadsheetOptions;
         private readonly ISpreadsheetFileFactory _spreadsheetFileFactory;
         private readonly IFormulaBuilderFactory _formulaBuilderFactory;
 
-        public TestResultsSpreadsheetBuilder(IFileLocationProvider locationProvider,
+        public TestResultsSpreadsheetBuilder(IOptions<SpreadsheetOptions> spreadsheetOptions,
             ISpreadsheetFileFactory spreadsheetFileFactory,
             IFormulaBuilderFactory formulaBuilderFactory)
         {
-            _locationProvider = locationProvider;
-            _spreadsheetFileFactory = spreadsheetFileFactory;
-            _formulaBuilderFactory = formulaBuilderFactory;
+            _spreadsheetOptions = spreadsheetOptions?.Value ?? throw new ArgumentNullException(nameof(spreadsheetOptions));
+            _spreadsheetFileFactory = spreadsheetFileFactory ?? throw new ArgumentNullException(nameof(spreadsheetFileFactory));
+            _formulaBuilderFactory = formulaBuilderFactory ?? throw new ArgumentNullException(nameof(formulaBuilderFactory));
         }
 
-        public async Task<Application.Models.Spreadsheet.SaveResult> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Application.Models.Spreadsheet.Metadata metadata)
+        public async Task<FileInfo> CreateTestResultsSpreadsheetAsync(Class @class, Test test, Domain.Spreadsheet.Metadata metadata)
         {
             var libraryMetadata = metadata.MapToLibraryModel();
-            ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_locationProvider.GetSpreadsheetDirectoryPath().Value, libraryMetadata);
+            Directory.CreateDirectory(_spreadsheetOptions.TestResultsDirectory);
+            ISpreadsheetFile spreadsheetFile = _spreadsheetFileFactory.Create(_spreadsheetOptions.TestResultsDirectory, libraryMetadata);
             ISpreadsheetWriter spreadsheetWriter = spreadsheetFile.GetSpreadsheetWriter();
 
-            AddTitle(test, metadata, spreadsheetWriter);
+            AddTitle(metadata, spreadsheetWriter);
             spreadsheetWriter.NewLine();
 
             var configurationBlock = AddConfiguration(test, spreadsheetWriter);
@@ -43,14 +47,15 @@ namespace Cifra.FileSystem.Spreadsheet
                 spreadsheetWriter,
                 configurationBlock);
 
-            SaveResult saveResult = await spreadsheetFile.SaveAsync();
-            return saveResult.MapToModel();
+            var result = await spreadsheetFile.SaveAsync();
+
+            return result.FileInfo;
         }
 
-        private static void AddTitle(Test test, Application.Models.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
+        private static void AddTitle(Domain.Spreadsheet.Metadata metadata, ISpreadsheetWriter spreadsheetWriter)
         {
             var titleBlock = new TitleBlock(spreadsheetWriter.CurrentPosition,
-                test.Name,
+                metadata.FileName,
                 metadata.Created,
                 metadata.ApplicationVersion);
             titleBlock

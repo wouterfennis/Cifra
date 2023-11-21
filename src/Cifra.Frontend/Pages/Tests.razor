@@ -1,0 +1,60 @@
+﻿@page "/tests"
+@using Cifra.Api.Client
+@inject ICifraApiClient Client
+@inject NavigationManager NavManager
+
+<PageTitle>Tests</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h1>Tests</h1>
+        </div>
+    </div>
+    <div class="row">
+        @if (retrievedTests != null)
+        {
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var testDto in retrievedTests)
+                        {
+                            <tr>
+                                <td>@testDto.Name</td>
+                                <td><a href="test/@testDto.Id" class="btn btn-outline-primary">Edit</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <button class="btn btn-primary" @onclick="NavigateToCreateClass">Create new test</button>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private IEnumerable<Api.Client.Test>? retrievedTests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Client.TestGETAsync("1");
+        retrievedTests = response.Tests;
+        await base.OnInitializedAsync();
+    }
+
+    private void NavigateToCreateClass()
+    {
+        NavManager.NavigateTo("/test");
+    }
+}

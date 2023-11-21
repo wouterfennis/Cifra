@@ -1,4 +1,4 @@
-﻿using Cifra.Application.Validation;
+﻿using Cifra.Application.Models.Validation;
 using System;
 using System.Collections.Generic;
 
@@ -42,7 +42,7 @@ namespace Cifra.ConsoleHost.Utilities
         /// Asks for a small number.
         /// </summary>
         /// <returns>The parsed number</returns>
-        public static byte AskForByte(string question)
+        public static int AskForInteger(string question)
         {
             if (question != null)
             {
@@ -50,10 +50,10 @@ namespace Cifra.ConsoleHost.Utilities
             }
             string input = Console.ReadLine();
 
-            if (!byte.TryParse(input, out byte result))
+            if (!int.TryParse(input, out int result))
             {
                 Console.WriteLine(InvalidInputMessage);
-                return AskForByte(question);
+                return AskForInteger(question);
             }
             return result;
         }

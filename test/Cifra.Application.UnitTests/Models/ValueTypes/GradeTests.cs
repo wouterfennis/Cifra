@@ -1,7 +1,7 @@
-﻿using System;
-using Cifra.Application.Models.ValueTypes;
+﻿using Cifra.Domain.ValueTypes;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Cifra.Application.UnitTests.Models.ValueTypes
 {
@@ -9,45 +9,60 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
     public class GradeTests
     {
         [TestMethod]
-        public void CreateFromByte_WithValidMinimumGrade_ReturnsGrade()
+        public void CreateFromInteger_WithValidMinimumGrade_ReturnsGrade()
         {
-            byte input = 1;
+            int input = 1;
 
-            var result = Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromByte_WithValidMaximumGrade_ReturnsGrade()
+        public void CreateFromInteger_WithValidMaximumGrade_ReturnsGrade()
         {
-            byte input = 10;
+            int input = 10;
 
-            var result = Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
-            result.Value.Should().Be(input);
+            result.Value.Value.Should().Be(input);
         }
 
         [TestMethod]
-        public void CreateFromByte_WithTooHighGrade_ThrowsException()
+        public void CreateFromInteger_WithTooHighGrade_ResultFails()
         {
-            byte input = 11;
+            int input = 11;
 
-            Action action = () => Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
-            action.Should().Throw<ArgumentException>()
-                .WithMessage($"The value: {input} is not within 0 and 10");
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
         }
 
         [TestMethod]
-        public void Equals_TwoSeperateGradesWithSameValue_AreEqual()
+        public void CreateFromInteger_WithTooLowGrade_ResultFails()
         {
-            byte input = 10;
+            int input = 0;
 
-            var grade1 = Grade.CreateFromByte(input);
-            var grade2 = Grade.CreateFromByte(input);
+            var result = Grade.CreateFromInteger(input);
 
-            grade1.Should().Equals(grade2);
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void ImplicitFromGradeToInt_WithValidValue_ConvertsToInt()
+        {
+            // Arrange
+            Grade input = Grade.CreateFromInteger(10).Value;
+
+            // Act
+            int value = input;
+
+            // Assert
+            value.Should().Be(input.Value);
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
-using Cifra.Application.Models.Class;
-using Cifra.Application.Models.Class.Magister;
-using Cifra.Application.Models.Class.Requests;
-using Cifra.Application.Models.Class.Results;
-using Cifra.Application.Models.ValueTypes;
-using Cifra.Application.Validation;
+using Cifra.Application.Models.Results;
+using Cifra.Commands;
+using Cifra.Domain;
+using Cifra.Domain.Validation;
 
 namespace Cifra.Application
 {
@@ -17,67 +17,31 @@ namespace Cifra.Application
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
-        private readonly IMagisterFileReader _magisterFileReader;
-        private readonly IValidator<CreateClassRequest> _classValidator;
-        private readonly IValidator<CreateMagisterClassRequest> _magisterClassValidator;
-        private readonly IValidator<AddStudentRequest> _studentValidator;
 
 
         /// <summary>
         /// Ctor
         /// </summary>
-        public ClassService(IClassRepository classRepository,
-            IMagisterFileReader magisterFileReader,
-            IValidator<CreateClassRequest> classValidator,
-            IValidator<CreateMagisterClassRequest> magisterClassValidator,
-            IValidator<AddStudentRequest> studentValidator)
+        public ClassService(IClassRepository classRepository)
         {
             _classRepository = classRepository;
-            _magisterFileReader = magisterFileReader;
-            _classValidator = classValidator;
-            _magisterClassValidator = magisterClassValidator;
-            _studentValidator = studentValidator;
         }
 
         /// <summary>
         /// Creates a class
         /// </summary>
-        public async Task<CreateClassResult> CreateClassAsync(CreateClassRequest model)
+        public async Task<CreateClassResult> CreateClassAsync(CreateClassCommand model)
         {
-            IEnumerable<ValidationMessage> validationMessages = _classValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            var newClassResult = Class.TryCreate(model.Name);
+
+            if (!newClassResult.IsSuccess)
             {
-                return new CreateClassResult(validationMessages);
+                return new CreateClassResult(newClassResult.ValidationMessage!);
             }
 
-            var @class = new Class(Name.CreateFromString(model.Name));
-            await _classRepository.CreateAsync(@class);
+            uint id = await _classRepository.CreateAsync(newClassResult.Value!);
 
-            return new CreateClassResult(@class.Id);
-        }
-
-        /// <summary>
-        /// Creates a magister class
-        /// </summary>
-        public async Task<CreateMagisterClassResult> CreateMagisterClassAsync(CreateMagisterClassRequest model)
-        {
-            IEnumerable<ValidationMessage> validationMessages = _magisterClassValidator.ValidateRules(model);
-            if (validationMessages.Any())
-            {
-                return new CreateMagisterClassResult(validationMessages);
-            }
-            MagisterClass magisterClass = _magisterFileReader.ReadClass(Path.CreateFromString(model.MagisterFileLocation));
-            var @class = new Class(Name.CreateFromString(magisterClass.Name));
-            foreach (var magisterStudent in magisterClass.Students)
-            {
-                var student = new Student(Name.CreateFromString(magisterStudent.FirstName),
-                    magisterStudent.Infix,
-                    Name.CreateFromString(magisterStudent.LastName));
-                @class.AddStudent(student);
-            }
-            await _classRepository.CreateAsync(@class);
-
-            return new CreateMagisterClassResult(@class.Id);
+            return new CreateClassResult(id);
         }
 
         /// <summary>
@@ -85,40 +49,65 @@ namespace Cifra.Application
         /// </summary>
         public async Task<GetAllClassesResult> GetClassesAsync()
         {
-            var classes = await _classRepository.GetAllAsync();
+            List<Class> classes = await _classRepository.GetAllAsync();
             return new GetAllClassesResult(classes);
         }
 
         /// <summary>
-        /// Adds a students to class
+        /// Retrieve a specific class.
         /// </summary>
-        public async Task<AddStudentResult> AddStudentAsync(AddStudentRequest model)
+        public async Task<GetClassResult> GetClassAsync(uint id)
         {
-            IEnumerable<ValidationMessage> validationMessages = _studentValidator.ValidateRules(model);
-            if (validationMessages.Any())
+            Class? retrievedClass = await _classRepository.GetAsync(id);
+            return new GetClassResult { RetrievedClass = retrievedClass };
+        }
+
+        /// <inheritdoc/>
+        public async Task<UpdateClassResult> UpdateClassAsync(UpdateClassCommand model)
+        {
+            var updatedStudentsResult = TryCreateStudents(model.Class.Students);
+
+            if(!updatedStudentsResult.IsSuccess)
             {
-                return new AddStudentResult(validationMessages);
+                return new UpdateClassResult(updatedStudentsResult.ValidationMessage!);
             }
 
-            var @class = await _classRepository.GetAsync(model.ClassId);
-            if (@class == null)
+            var updatedClassResult = Class.TryCreate(model.Class.Id, model.Class.Name, updatedStudentsResult.Value!);
+            var originalClass = await _classRepository.GetAsync(model.Class.Id);
+
+            if (!updatedClassResult.IsSuccess)
             {
-                return new AddStudentResult(new ValidationMessage(nameof(model.ClassId), "No class was found"));
+                return new UpdateClassResult(updatedClassResult.ValidationMessage!);
             }
 
-            var student = new Student(Name.CreateFromString(model.FirstName),
-                model.Infix,
-                Name.CreateFromString(model.LastName));
-
-            @class.AddStudent(student);
-            ValidationMessage result = await _classRepository.UpdateAsync(@class);
-
-            if (result != null)
+            if (originalClass is null)
             {
-                return new AddStudentResult(result);
+                return new UpdateClassResult(ValidationMessage.Create(nameof(model.Class.Id), "Class to update cannot be found"));
             }
 
-            return new AddStudentResult();
+            originalClass.UpdateFromOtherClass(updatedClassResult.Value!);
+
+            uint id = await _classRepository.UpdateAsync(originalClass);
+
+            return new UpdateClassResult(id);
+        }
+
+        private Result<IEnumerable<Student>> TryCreateStudents(IEnumerable<Commands.Models.Student> students)
+        {
+            var studentsResults = students.Select(s => Student.TryCreate(s.Id, s.FirstName, s.Infix, s.LastName));
+
+            var failedStudents = studentsResults.Where(s => !s.IsSuccess);
+            if (failedStudents.Any(s => !s.IsSuccess))
+            {
+                var combinedValidationMessages = failedStudents
+                    .Select(s => s.ValidationMessage!.Message)
+                    .Aggregate((originalString, newEntry) => $"{originalString},{Environment.NewLine} {newEntry}");
+
+                var validationMessage = ValidationMessage.Create(nameof(students), combinedValidationMessages);
+                return Result<IEnumerable<Student>>.Fail<IEnumerable<Student>>(validationMessage);
+            }
+
+            return Result<IEnumerable<Student>>.Ok<IEnumerable<Student>>(studentsResults.Select(s => s.Value!));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using Cifra.Application.Models.ValueTypes;
+using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,7 +30,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithTitle_PutsTitleOnRightPosition()
         {
             // Arrange
-            var expectedTitle = _fixture.Create<Name>();
+            var expectedTitle = Name.CreateFromString(_fixture.Create<string>()).Value;
             var expectedCreatedOn = _fixture.Create<DateTime>();
             var expectedApplicationVersion = _fixture.Create<string>();
             var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn, expectedApplicationVersion);
@@ -46,7 +46,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithCreatedOn_PutsCreatedOnOnRightPosition()
         {
             // Arrange
-            var expectedTitle = _fixture.Create<Name>();
+            var expectedTitle = Name.CreateFromString(_fixture.Create<string>()).Value;
             var expectedCreatedOn = _fixture.Create<DateTime>();
             var expectedApplicationVersion = _fixture.Create<string>();
             var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn, expectedApplicationVersion);
@@ -63,7 +63,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         public void Write_WithApplicationVersion_PutsApplicationVersionOnRightPosition()
         {
             // Arrange
-            var expectedTitle = _fixture.Create<Name>();
+            var expectedTitle = Name.CreateFromString(_fixture.Create<string>()).Value;
             var expectedCreatedOn = _fixture.Create<DateTime>();
             var expectedApplicationVersion = _fixture.Create<string>();
             var sut = new TitleBlock(_startpoint, expectedTitle, expectedCreatedOn, expectedApplicationVersion);
