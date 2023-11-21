@@ -40,6 +40,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Api.IntegrationTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cifra.Commands", "src\Cifra.Commands\Cifra.Commands.csproj", "{236F3CB5-940C-4C36-8D45-E7C4C6B507DB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{42E1B26D-2028-4F61-9384-7E35459B587B}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CONTRIBUTING.md = CONTRIBUTING.md
+		docker-compose.yml = docker-compose.yml
+		Dockerfile.Api = Dockerfile.Api
+		Dockerfile.Frontend = Dockerfile.Frontend
+		LICENSE = LICENSE
+		NuGet.Config.Template = NuGet.Config.Template
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
