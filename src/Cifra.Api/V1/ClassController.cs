@@ -93,6 +93,7 @@ namespace Cifra.Api.V1
                 _logger.LogInformation("Request is not valid");
                 return BadRequest(response);
             }
+
             return Created(new Uri($"{response.ClassId}", UriKind.Relative), response);
         }
 
@@ -101,7 +102,7 @@ namespace Cifra.Api.V1
         /// </summary>
         /// <param name="request">The request containing details of the class.</param>
         /// <returns>Reference to updated class</returns>
-        /// <response code="201">Reference to newly created class.</response> 
+        /// <response code="200">Reference to newly created class.</response> 
         /// <response code="400">Supplied class data was invalid.</response> 
         /// <response code="500">The class could not be updated.</response> 
         [HttpPut]
@@ -110,7 +111,7 @@ namespace Cifra.Api.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateClassAsync(UpdateClassRequest request)
         {
-            var command = request.Map();
+            var command = request.MapToCommand();
             UpdateClassResult result = await _classService.UpdateClassAsync(command);
 
             var response = result.MapToResponse();
@@ -120,6 +121,35 @@ namespace Cifra.Api.V1
                 _logger.LogInformation("Request is not valid");
                 return BadRequest(response);
             }
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Delete a class.
+        /// </summary>
+        /// <param name="request">The request containing details of the class.</param>
+        /// <returns>Success or failure of the request</returns>
+        /// <response code="200">The class is deleted.</response> 
+        /// <response code="400">Supplied class data was invalid.</response> 
+        /// <response code="500">The class could not be deleted.</response> 
+        [HttpDelete]
+        [ProducesResponseType(typeof(DeleteClassResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DeleteClassResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteClassAsync(DeleteClassRequest request)
+        {
+            var command = request.MapToCommand();
+            DeleteClassResult result = await _classService.DeleteClassAsync(command);
+
+            var response = result.MapToResponse();
+
+            if (response.ValidationMessages.Any())
+            {
+                _logger.LogInformation("Request is not valid");
+                return BadRequest(response);
+            }
+
             return Ok(response);
         }
     }

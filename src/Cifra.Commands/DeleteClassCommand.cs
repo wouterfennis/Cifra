@@ -5,11 +5,11 @@ namespace Cifra.Commands
     /// <summary>
     /// The command to update an Class
     /// </summary>
-    public sealed record UpdateClassCommand
+    public sealed record DeleteClassCommand
     {
         /// <summary>
-        /// The updated class
+        /// The name of the class that should be deleted
         /// </summary>
-        public required Class Class { get; init; }
+        public required string Name { get; init; }
     }
 }

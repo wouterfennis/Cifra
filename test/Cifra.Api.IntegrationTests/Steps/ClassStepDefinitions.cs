@@ -56,7 +56,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         }
 
         //[When(@"a request is made to delete the class")]
-        //public async Task WhenARequestIsMadeToDeleteTheClassAsync()
+        //public void WhenARequestIsMadeToDeleteTheClass()
         //{
         //    var @class = _scenarioContext.Get<ClassDetails>(_classDetailsKey);
 
