@@ -21,7 +21,7 @@ jobs:
         tag_prefix: "v"
         major_pattern: "(MAJOR)"
         minor_pattern: "(MINOR)"
-        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+        version_format: "-prerelease${increment}"
         bump_each_commit: false
         search_commit_body: false
         # Prevents pre-v1.0.0 version from automatically incrementing the major version.

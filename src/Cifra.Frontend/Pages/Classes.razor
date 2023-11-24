@@ -6,6 +6,13 @@
 <PageTitle>Classes</PageTitle>
 
 <div class="container">
+    @if (_validationMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @_validationMessage
+        </div>
+    }
+
     <div class="row">
         <div class="col-3">
             <h1>Classes</h1>
@@ -27,7 +34,10 @@
                         {
                             <tr>
                                 <td>@classDto.Name</td>
-                                <td><a href="class/@classDto.Id" class="btn btn-outline-primary">Edit</a></td>
+                                <td>
+                                    <a href="class/@classDto.Id" class="btn btn-outline-primary">Edit</a>
+                                    <button @onclick="(() => DeleteClass(classDto.Name))" class="btn btn-outline-danger">Delete</button>
+                                </td>
                             </tr>
                         }
 
@@ -46,12 +56,29 @@
 
 @code {
     private IEnumerable<Api.Client.Class>? RetrievedClasses;
+    private string? _validationMessage = null;
 
     protected override async Task OnInitializedAsync()
     {
         var response = await Client.ClassGETAsync("1");
         RetrievedClasses = response.Classes;
         await base.OnInitializedAsync();
+    }
+
+    private async Task DeleteClass(string className)
+    {
+        var request = new DeleteClassRequest { Name = className };
+        var response = await Client.ClassDELETEAsync("1", request);
+
+        if (response.ValidationMessages.Any())
+        {
+            string message = "Deleting class failed because of:";
+            _validationMessage = message += response.ValidationMessages.Select(x => $"Field: {x.Field} Message: {x.Message}{System.Environment.NewLine}");
+        }
+        else
+        {
+            NavManager.NavigateTo("/classes");
+        }
     }
 
     private void NavigateToCreateClass()

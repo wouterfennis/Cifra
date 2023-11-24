@@ -55,25 +55,25 @@ namespace Cifra.Api.IntegrationTests.Steps
             // No implementation needed.
         }
 
-        //[When(@"a request is made to delete the class")]
-        //public void WhenARequestIsMadeToDeleteTheClass()
-        //{
-        //    var @class = _scenarioContext.Get<ClassDetails>(_classDetailsKey);
+        [When(@"a request is made to delete the class")]
+        public async void WhenARequestIsMadeToDeleteTheClass()
+        {
+            var @class = await GetCurrentClassAsync();
 
-        //    var request = new DeleteClassRequest()
-        //    {
-        //        ClassId = @class.CreateClassResponse.ClassId
-        //    };
+            var request = new DeleteClassRequest()
+            {
+                Name = @class.RetrievedClass.Name
+            };
 
-        //    try
-        //    {
-        //        var result = await _apiClient.ClassDELETEAsync("1", request);
-        //    }
-        //    catch (ApiException<DeleteClassResponse> exception)
-        //    {
-        //        _scenarioContext.Add(_responseException, exception);
-        //    }
-        //}
+            try
+            {
+                var result = await _apiClient.ClassDELETEAsync("1", request);
+            }
+            catch (ApiException<DeleteClassResponse> exception)
+            {
+                _scenarioContext.Add(_responseException, exception);
+            }
+        }
 
         [Given(@"a request is made to create a new class with the following values:")]
         [When(@"a request is made to create a new class with the following values:")]
@@ -97,7 +97,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         [When(@"the class name is changed to '([^']*)'")]
         public async Task WhenTheNameIsChangedToAsync(string newName)
         {
-            var result = await GetCurrentClass();
+            var result = await GetCurrentClassAsync();
             var request = new UpdateClassRequest
             {
                 UpdatedClass = result.RetrievedClass
@@ -128,7 +128,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             var students = table.CreateSet<StudentModel>();
 
-            GetClassResponse result = await GetCurrentClass();
+            GetClassResponse result = await GetCurrentClassAsync();
             var request = new UpdateClassRequest
             {
                 UpdatedClass = result.RetrievedClass
@@ -143,7 +143,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         {
             var classes = table.CreateInstance<ClassModel>();
 
-            var result = await GetCurrentClass();
+            var result = await GetCurrentClassAsync();
 
             var actualClass = result.RetrievedClass.Adapt<ClassModel>();
             actualClass.Should().BeEquivalentTo(classes);
@@ -194,12 +194,12 @@ namespace Cifra.Api.IntegrationTests.Steps
         public async Task ThenTheTestIsPersistedWithTheFollowingStudentsAsync(Table table)
         {
             var expectedStudents = table.CreateSet<StudentModel>();
-            GetClassResponse result = await GetCurrentClass();
+            GetClassResponse result = await GetCurrentClassAsync();
 
             result.RetrievedClass.Students.Should().BeEquivalentTo(expectedStudents);
         }
 
-        private async Task<GetClassResponse> GetCurrentClass()
+        private async Task<GetClassResponse> GetCurrentClassAsync()
         {
             var id = _scenarioContext.Get<int>(_createClassResponseKey);
             var result = await _apiClient.ClassGET2Async(id, "1");
