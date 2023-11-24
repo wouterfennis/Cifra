@@ -42,7 +42,7 @@ jobs:
     - name: Test project
       run: dotnet test
     - name: Pack
-      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{steps.versioning.outputs.version}}
+      run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release
     - name: Publish
       run: dotnet nuget push "./src/Cifra.Api.Client/bin/Release/Cifra.Api.Client.*.nupkg" --source https://nuget.pkg.github.com/wouterfennis/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     - name: Login to Docker Hub
