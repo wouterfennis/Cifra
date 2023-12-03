@@ -109,6 +109,13 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .SetFontBold(false)
                 .MoveRight()
                 .PlaceCustomFormula(percentageOfTotalBadGradesFormula);
+
+            spreadsheetWriter
+                .NewLine()
+                .MoveRightTimes(2);
+
+            var view = spreadsheetWriter.GetView();
+            view.FreezePanes(spreadsheetWriter.CurrentPosition.Y, spreadsheetWriter.CurrentPosition.X);
         }
     }
 }
