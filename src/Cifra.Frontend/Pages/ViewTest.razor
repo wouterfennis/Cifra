@@ -10,11 +10,6 @@
     @if (retrievedTest != null)
     {
         <PageTitle>Test: @retrievedTest.Name</PageTitle>
-        <div class="row">
-            <div class="col-4">
-                <h1>Test: @retrievedTest.Name</h1>
-            </div>
-        </div>
 
         @if (_validationMessage != null)
         {
@@ -26,6 +21,19 @@
         <EditForm Model="@retrievedTest" OnValidSubmit="@HandleUpdateTest">
             <DataAnnotationsValidator />
             <ValidationSummary />
+            <div class="row">
+                <div class="col-4">
+                    @if (isEditingTestName)
+                    {
+                        <input @onblur="StopEditingTestName" @bind="retrievedTest.Name" class="h1"/>
+                    }
+                    else
+                    {
+                        <h1 @onclick="StartEditingTestName">@retrievedTest.Name</h1>
+                    }
+                </div>
+            </div>
+
             <div class="row">
                 <table class="table col">
                     <thead>
@@ -87,6 +95,7 @@
     public int TestId { get; set; }
 
     private Api.Client.Test? retrievedTest;
+    private bool isEditingTestName = false;
     private int _counter = 0;
     private int _numberOfQuestions = 0;
     private string? _validationMessage = null;
@@ -130,6 +139,16 @@
         }
         retrievedTest!.Assignments.Add(new Assignment { NumberOfQuestions = _numberOfQuestions });
         _numberOfQuestions = 0;
+    }
+
+    private void StartEditingTestName()
+    {
+        isEditingTestName = true;
+    }
+
+    private void StopEditingTestName()
+    {
+        isEditingTestName = false;
     }
 }
 

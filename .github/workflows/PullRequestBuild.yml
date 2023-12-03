@@ -21,7 +21,7 @@ jobs:
         tag_prefix: "v"
         major_pattern: "(MAJOR)"
         minor_pattern: "(MINOR)"
-        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+        version_format: "-prerelease${increment}"
         bump_each_commit: false
         search_commit_body: false
         # Prevents pre-v1.0.0 version from automatically incrementing the major version.
@@ -43,7 +43,7 @@ jobs:
     - name: Build project
       run: dotnet build --no-restore --configuration Release
     - name: Test project
-      run: dotnet test
+      run: dotnet test --no-build --configuration Release
     - name: Pack
       run: dotnet pack ./src/Cifra.Api.Client/Cifra.Api.Client.csproj --no-build --configuration Release --version-suffix ${{steps.versioning.outputs.version}}
     - name: Publish

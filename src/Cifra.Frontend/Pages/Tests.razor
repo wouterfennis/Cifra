@@ -6,6 +6,13 @@
 <PageTitle>Tests</PageTitle>
 
 <div class="container">
+    @if (_validationMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @_validationMessage
+        </div>
+    }
+
     <div class="row">
         <div class="col-3">
             <h1>Tests</h1>
@@ -27,7 +34,10 @@
                         {
                             <tr>
                                 <td>@testDto.Name</td>
-                                <td><a href="test/@testDto.Id" class="btn btn-outline-primary">Edit</a></td>
+                                <td>
+                                    <a href="test/@testDto.Id" class="btn btn-outline-primary">Edit</a>
+                                    <button @onclick="(() => DeleteTest(testDto.Id))" class="btn btn-outline-danger">Delete</button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -37,7 +47,7 @@
     </div>
     <div class="row">
         <div class="col-2">
-            <button class="btn btn-primary" @onclick="NavigateToCreateClass">Create new test</button>
+            <button class="btn btn-primary" @onclick="NavigateToCreateTest">Create new test</button>
         </div>
     </div>
 
@@ -45,6 +55,7 @@
 
 @code {
     private IEnumerable<Api.Client.Test>? retrievedTests;
+    private string? _validationMessage = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,7 +64,23 @@
         await base.OnInitializedAsync();
     }
 
-    private void NavigateToCreateClass()
+    private async Task DeleteTest(int? testId)
+    {
+        var request = new DeleteTestRequest { TestId = testId!.Value };
+        var response = await Client.TestDELETEAsync("1", request);
+
+        if (response.ValidationMessages.Any())
+        {
+            string message = "Deleting test failed because of:";
+            _validationMessage = message += response.ValidationMessages.Select(x => $"Field: {x.Field} Message: {x.Message}{System.Environment.NewLine}");
+        }
+        else
+        {
+            NavManager.NavigateTo("/tests", forceLoad: true);
+        }
+    }
+
+    private void NavigateToCreateTest()
     {
         NavManager.NavigateTo("/test");
     }

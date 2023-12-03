@@ -25,6 +25,11 @@ namespace Cifra.Application.Interfaces
         Task<uint> UpdateAsync(Class updatedClass);
 
         /// <summary>
+        /// Deletes a <see cref="Class"/>.
+        /// </summary>
+        Task DeleteAsync(Class classToBeDeleted);
+
+        /// <summary>
         /// Get all a <see cref="Class"/>es.
         /// </summary>
         Task<List<Class>> GetAllAsync();

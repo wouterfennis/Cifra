@@ -28,6 +28,11 @@ namespace Cifra.Api.Mapping
             return input.Adapt<UpdateClassResponse>();
         }
 
+        public static DeleteClassResponse MapToResponse(this DeleteClassResult input)
+        {
+            return input.Adapt<DeleteClassResponse>();
+        }
+
         public static GetAllTestsResponse MapToResponse(this GetAllTestsResult input)
         {
             return input.Adapt<GetAllTestsResponse>();

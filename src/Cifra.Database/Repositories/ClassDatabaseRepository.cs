@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cifra.Application.Interfaces;
 using System.Linq;
+using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 
 namespace Cifra.Database.Repositories
 {
@@ -18,7 +20,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<uint> CreateAsync(Domain.Class newClass)
+        public async Task<uint> CreateAsync(Class newClass)
         {
             _ = newClass ?? throw new ArgumentNullException(nameof(newClass));
 
@@ -28,8 +30,18 @@ namespace Cifra.Database.Repositories
             return newClass.Id;
         }
 
+        public async Task DeleteAsync(Class classToBeDeleted)
+        {
+            _ = classToBeDeleted ?? throw new ArgumentNullException(nameof(classToBeDeleted));
+
+            var foundClass = await GetAsync(classToBeDeleted.Name);
+
+            _dbContext.Classes.Remove(foundClass);
+            await _dbContext.SaveChangesAsync();
+        }
+
         /// <inheritdoc/>
-        public async Task<List<Domain.Class>> GetAllAsync()
+        public async Task<List<Class>> GetAllAsync()
         {
             return await _dbContext.Classes
                 .AsNoTracking()
@@ -38,7 +50,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Domain.Class?> GetAsync(uint id)
+        public async Task<Class?> GetAsync(uint id)
         {
             return await _dbContext.Classes
                 .Include(x => x.Students)
@@ -46,7 +58,15 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<uint> UpdateAsync(Domain.Class updatedClass)
+        private async Task<Class> GetAsync(Name name)
+        {
+            return await _dbContext.Classes
+                .Include(x => x.Students)
+                .SingleOrDefaultAsync(x => x.Name == name);
+        }
+
+        /// <inheritdoc/>
+        public async Task<uint> UpdateAsync(Class updatedClass)
         {
             _dbContext.Classes.Update(updatedClass);
 

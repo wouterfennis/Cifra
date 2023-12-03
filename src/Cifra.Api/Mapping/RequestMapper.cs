@@ -13,6 +13,11 @@ namespace Cifra.Api.Mapping
             return input.Adapt<CreateClassCommand>();
         }
 
+        public static DeleteClassCommand MapToCommand(this DeleteClassRequest input)
+        {
+            return input.Adapt<DeleteClassCommand>();
+        }
+
         public static CreateTestCommand MapToCommand(this CreateTestRequest input)
         {
             return input.Adapt<CreateTestCommand>();

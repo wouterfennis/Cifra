@@ -45,6 +45,23 @@ namespace Cifra.Application
         }
 
         /// <summary>
+        /// Deletes a class
+        /// </summary>
+        public async Task<DeleteClassResult> DeleteClassAsync(DeleteClassCommand model)
+        {
+            var classResult = Class.TryCreate(model.Name);
+
+            if (!classResult.IsSuccess)
+            {
+                return new DeleteClassResult(classResult.ValidationMessage!);
+            }
+
+            await _classRepository.DeleteAsync(classResult.Value!);
+
+            return new DeleteClassResult();
+        }
+
+        /// <summary>
         /// Retrieves classes currently available
         /// </summary>
         public async Task<GetAllClassesResult> GetClassesAsync()
