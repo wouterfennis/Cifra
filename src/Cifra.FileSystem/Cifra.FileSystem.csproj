@@ -13,7 +13,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.22" />
+		<PackageReference Include="SpreadsheetWriter.EPPlus" Version="1.0.24" />
 	</ItemGroup>
 
 	<ItemGroup>

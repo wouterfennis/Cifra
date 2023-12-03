@@ -1,6 +1,7 @@
 ﻿using SpreadsheetWriter.Abstractions;
 using SpreadsheetWriter.Abstractions.Cell;
 using SpreadsheetWriter.Abstractions.Formula;
+using SpreadsheetWriter.Abstractions.View;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
@@ -9,7 +10,7 @@ namespace SpreadsheetWriter.Test
     /// <summary>
     /// Test implementation of the spreadsheet writer in order to assert certain contents in the spreadsheet.
     /// </summary>
-    [ExcludeFromCodeCoverage] // Part of test project.
+    [ExcludeFromCodeCoverage(Justification = "Part of test project.")]
     public class ArrayStylingSpreadsheetWriter : SpreadsheetWriterBase
     {
         public string[,] Spreadsheet { get; }
@@ -64,6 +65,11 @@ namespace SpreadsheetWriter.Test
         }
 
         public override ISpreadsheetWriter PlaceCustomFormula(IFormulaBuilder formulaBuilder)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IView GetView()
         {
             throw new System.NotImplementedException();
         }

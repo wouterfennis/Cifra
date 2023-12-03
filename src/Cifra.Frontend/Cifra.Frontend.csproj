@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cifra.Api.Client" Version="0.0.1-0.0.24-prerelease178" />
+    <PackageReference Include="Cifra.Api.Client" Version="0.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
   </ItemGroup>
 
