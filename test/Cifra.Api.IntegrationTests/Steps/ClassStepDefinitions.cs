@@ -18,8 +18,8 @@ namespace Cifra.Api.IntegrationTests.Steps
         private readonly ScenarioContext _scenarioContext;
         private readonly ClassBuilder _classRequestBuilder;
         private const string _classDetailsKey = "classDetails";
-        private const string _getClassResponseKey = "getClassResponseKey";
-        private const string _getClassResponseMessage = "getClassResponseMessage";
+        private const string _getAllClassesResponseKey = "getAllClassesResponseKey";
+        private const string _getAllClassesResponseMessage = "getAllClassesResponseMessage";
         private const string _createClassResponseKey = "createClassResponseKey";
         private const string _responseException = "responseException";
         private const string _updateClassResponseKey = "updateClassResponseKey";
@@ -34,7 +34,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         [Given(@"a class is previously created")]
         public async Task GivenAClassIsPreviouslyCreatedAsync()
         {
-            Client.CreateClassRequest createClassRequest = _classRequestBuilder.BuildRandomCreateClassRequest();
+            CreateClassRequest createClassRequest = _classRequestBuilder.BuildRandomCreateClassRequest();
             CreateClassResponse createClassResponse = await _apiClient.ClassPOSTAsync("1", createClassRequest);
 
             createClassResponse.ClassId.Should().NotBe(0, "No Id was assigned to the class.");
@@ -46,6 +46,7 @@ namespace Cifra.Api.IntegrationTests.Steps
                 CreateClassResponse = createClassResponse
             };
 
+            _scenarioContext.Add(_createClassResponseKey, createClassResponse.ClassId);
             _scenarioContext.Add(_classDetailsKey, classDetails);
         }
 
@@ -56,7 +57,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         }
 
         [When(@"a request is made to delete the class")]
-        public async void WhenARequestIsMadeToDeleteTheClass()
+        public async Task WhenARequestIsMadeToDeleteTheClass()
         {
             var @class = await GetCurrentClassAsync();
 
@@ -113,11 +114,11 @@ namespace Cifra.Api.IntegrationTests.Steps
             try
             {
                 GetAllClassesResponse result = await _apiClient.ClassGETAsync("1");
-                _scenarioContext.Add(_getClassResponseKey, result.Classes);
+                _scenarioContext.Add(_getAllClassesResponseKey, result.Classes);
             }
             catch (ApiException exception)
             {
-                _scenarioContext.Add(_getClassResponseMessage, exception.Message);
+                _scenarioContext.Add(_getAllClassesResponseMessage, exception.Message);
             }
         }
 
@@ -168,7 +169,7 @@ namespace Cifra.Api.IntegrationTests.Steps
         public void ThenThePreviouslyCreatedClassIsReturned()
         {
             ClassDetails classDetails = _scenarioContext.Get<ClassDetails>(_classDetailsKey);
-            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getClassResponseKey);
+            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getAllClassesResponseKey);
 
             retrievedClasses.Should().ContainSingle();
             var retrievedClass = retrievedClasses.Single();
@@ -179,14 +180,14 @@ namespace Cifra.Api.IntegrationTests.Steps
         public async Task ThenTheClassNoLongerExistsAsync()
         {
             await WhenARequestIsMadeToRetrieveAllClassesAsync();
-            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getClassResponseKey);
+            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getAllClassesResponseKey);
             retrievedClasses.Should().BeEmpty();
         }
 
         [Then(@"a message is displayed explaining that no classes are present")]
         public void ThenAMessageIsDisplayedExplainingThatNoClassesArePresent()
         {
-            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getClassResponseKey);
+            List<Class> retrievedClasses = _scenarioContext.Get<List<Class>>(_getAllClassesResponseKey);
             retrievedClasses.Should().BeEmpty();
         }
 
