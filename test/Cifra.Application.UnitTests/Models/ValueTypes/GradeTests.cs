@@ -53,13 +53,70 @@ namespace Cifra.Application.UnitTests.Models.ValueTypes
         }
 
         [TestMethod]
-        public void ImplicitFromGradeToInt_WithValidValue_ConvertsToInt()
+        public void ImplicitFromGradeToDecimal_WithValidIntegerValue_ConvertsToDecimal()
         {
             // Arrange
             Grade input = Grade.CreateFromInteger(10).Value;
 
             // Act
-            int value = input;
+            decimal value = input;
+
+            // Assert
+            value.Should().Be(input.Value);
+        }
+
+        [TestMethod]
+        public void CreateFromDecimal_WithValidMinimumGrade_ReturnsGrade()
+        {
+            decimal input = 1.1m;
+
+            var result = Grade.CreateFromDecimal(input);
+
+            result.Value.Value.Should().Be(input);
+        }
+
+        [TestMethod]
+        public void CreateFromDecimal_WithValidMaximumGrade_ReturnsGrade()
+        {
+            decimal input = 9.9m;
+
+            var result = Grade.CreateFromDecimal(input);
+
+            result.Value.Value.Should().Be(input);
+        }
+
+        [TestMethod]
+        public void CreateFromDecimal_WithTooHighGrade_ResultFails()
+        {
+            decimal input = 10.1m;
+
+            var result = Grade.CreateFromDecimal(input);
+
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void CreateFromDecimal_WithTooLowGrade_ResultFails()
+        {
+            decimal input = 0.9m;
+
+            var result = Grade.CreateFromDecimal(input);
+
+            result.IsSuccess.Should().BeFalse();
+            result.ValidationMessage.Message.Should().Be($"Minimum grade must be from 1 to 10");
+            result.Value.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void ImplicitFromGradeToDecimal_WithValidDecimalValue_ConvertsToDecimal()
+        {
+            // Arrange
+            Grade input = Grade.CreateFromDecimal(8.5m).Value;
+
+            // Act
+            decimal value = input;
 
             // Assert
             value.Should().Be(input.Value);

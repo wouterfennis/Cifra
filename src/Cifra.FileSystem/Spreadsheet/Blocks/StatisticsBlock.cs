@@ -20,20 +20,22 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public int StartOfStudentsColumn { get; }
 
         public int NumberOfStudents { get; }
+        public Point SatisfactoryGradePosition { get; }
 
         public StatisticsBlock(
             Point startPosition,
             int achievedScoreRow,
             int gradesRow,
             int startOfStudents,
-            int numberOfStudents
-            )
+            int numberOfStudents,
+            Point satisfactoryGradePosition)
         {
             StartPosition = startPosition;
             AchievedScoresRow = achievedScoreRow;
             GradesRow = gradesRow;
             StartOfStudentsColumn = startOfStudents;
             NumberOfStudents = numberOfStudents;
+            SatisfactoryGradePosition = satisfactoryGradePosition;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
@@ -63,6 +65,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
 
             ICellRange gradeStartCell = spreadsheetWriter.GetCellRange(gradesStartPosition);
             ICellRange gradeEndCell = spreadsheetWriter.GetCellRange(gradesEndPosition);
+            ICellRange satisfactoryGradeCell = spreadsheetWriter.GetCellRange(SatisfactoryGradePosition);
 
             var numberOfBadGradesFormula = new FormulaBuilder()
                 .AddEqualsSign()
@@ -72,7 +75,8 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddColon()
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
-                .AddCriteria("<5.5")
+                .AddCriteria("<")
+                .AddCellAddress(satisfactoryGradeCell.Address)
                 .AddClosingParenthesis();
 
             spreadsheetWriter
@@ -91,7 +95,8 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddColon()
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
-                .AddCriteria("<5.5")
+                .AddCriteria("<")
+                .AddCellAddress(satisfactoryGradeCell.Address)
                 .AddClosingParenthesis()
                 .AddMultiplicationSign()
                 .AddValue(100.0)

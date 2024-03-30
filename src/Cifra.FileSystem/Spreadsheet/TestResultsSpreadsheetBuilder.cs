@@ -1,5 +1,6 @@
 ﻿using Cifra.Application.Interfaces;
 using Cifra.Domain;
+using Cifra.Domain.ValueTypes;
 using Cifra.FileSystem.Mapping;
 using Cifra.FileSystem.Options;
 using Cifra.FileSystem.Spreadsheet.Blocks;
@@ -66,7 +67,8 @@ namespace Cifra.FileSystem.Spreadsheet
         {
             var configurationBlock = new ConfigurationBlock(spreadsheetWriter.CurrentPosition,
                 test.StandardizationFactor,
-                test.MinimumGrade);
+                test.MinimumGrade,
+                Grade.CreateFromDecimal(5.5m).Value!);
             spreadsheetWriter
                 .NewLine()
                 .NewLine();
@@ -124,7 +126,8 @@ namespace Cifra.FileSystem.Spreadsheet
                 achievedScoresRow,
                 gradesRow,
                 studentNamesStartColumn,
-                numberOfStudents);
+                numberOfStudents,
+                configurationBlock.SatisfactoryGradePosition);
 
             var borderBlock = new BorderBlock(
                 assignmentsBlock.ScoresHeaderPosition.Y,
@@ -171,14 +174,17 @@ namespace Cifra.FileSystem.Spreadsheet
             int achievedScoresRow,
             int gradesRow,
             int scoresStartColumn,
-            int numberOfStudents)
+            int numberOfStudents,
+            Point satisfactoryGradePosition
+            )
         {
             var averagesBlock = new StatisticsBlock(
                 spreadsheetWriter.CurrentPosition,
                 achievedScoresRow,
                 gradesRow,
                 scoresStartColumn,
-                numberOfStudents);
+                numberOfStudents,
+                satisfactoryGradePosition);
             averagesBlock.Write(spreadsheetWriter);
         }
     }

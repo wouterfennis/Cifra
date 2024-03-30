@@ -28,7 +28,8 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
             var minimumGrade = Grade.CreateFromInteger(1).Value;
-            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade, satisfactoryGrade);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -43,7 +44,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var expectedStandardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
             var minimumGrade = Grade.CreateFromInteger(1).Value;
-            var sut = new ConfigurationBlock(_startpoint, expectedStandardizationFactor, minimumGrade);
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+
+            var sut = new ConfigurationBlock(_startpoint, expectedStandardizationFactor, minimumGrade, satisfactoryGrade);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -59,7 +62,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
             var minimumGrade = Grade.CreateFromInteger(1).Value;
-            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade, satisfactoryGrade);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -75,7 +80,9 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
             var expectedMinimumGrade = Grade.CreateFromInteger(1).Value;
-            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, expectedMinimumGrade);
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, expectedMinimumGrade, satisfactoryGrade);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -91,7 +98,44 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
             var minimumGrade = Grade.CreateFromInteger(1).Value;
-            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade);
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade, satisfactoryGrade);
+
+            // Act
+            sut.Write(_spreadsheetWriter);
+
+            // Assert
+            sut.MinimumGradePosition.X.Should().Be(1);
+            sut.MinimumGradePosition.Y.Should().Be(2);
+        }
+
+        [TestMethod]
+        public void Write_WithSatisfactoryGrade_PutsDataOnRightPosition()
+        {
+            // Arrange
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
+            var expectedSatisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade, expectedSatisfactoryGrade);
+
+            // Act
+            sut.Write(_spreadsheetWriter);
+
+            // Assert
+            spreadsheet[0, 3].Should().Be("Voldoende cijfer");
+            spreadsheet[1, 3].Should().Be(expectedSatisfactoryGrade.Value.ToString());
+        }
+
+        [TestMethod]
+        public void Write_WithSatisfactoryGrade_SavesPositionOfMinimumGrade()
+        {
+            // Arrange
+            var standardizationFactor = StandardizationFactor.CreateFromInteger(9).Value;
+            var minimumGrade = Grade.CreateFromInteger(1).Value;
+            var satisfactoryGrade = Grade.CreateFromDecimal(5.5m).Value;
+
+            var sut = new ConfigurationBlock(_startpoint, standardizationFactor, minimumGrade, satisfactoryGrade);
 
             // Act
             sut.Write(_spreadsheetWriter);

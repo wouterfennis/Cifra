@@ -40,7 +40,7 @@ namespace Cifra.Api.V1.Models.Test
         /// The Minimum Grade.
         /// </summary>
         [Required]
-        public required int? MinimumGrade { get; init; }
+        public required decimal? MinimumGrade { get; init; }
 
     }
 }

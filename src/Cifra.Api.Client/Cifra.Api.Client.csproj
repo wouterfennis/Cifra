@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <PackageId>Cifra.Api.Client</PackageId>
-    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionPrefix>0.0.2</VersionPrefix>
     <Authors>Wouter Fennis</Authors>
     <Description>Generated NSwag client to use the Cifra.Api</Description>
     <RepositoryUrl>https://github.com/wouterfennis/Cifra</RepositoryUrl>

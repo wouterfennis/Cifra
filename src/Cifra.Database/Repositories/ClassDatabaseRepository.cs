@@ -36,6 +36,11 @@ namespace Cifra.Database.Repositories
 
             var foundClass = await GetAsync(classToBeDeleted.Name);
 
+            if (foundClass == null)
+            {
+                return;
+            }
+
             _dbContext.Classes.Remove(foundClass);
             await _dbContext.SaveChangesAsync();
         }
@@ -58,7 +63,7 @@ namespace Cifra.Database.Repositories
         }
 
         /// <inheritdoc/>
-        private async Task<Class> GetAsync(Name name)
+        private async Task<Class?> GetAsync(Name name)
         {
             return await _dbContext.Classes
                 .Include(x => x.Students)

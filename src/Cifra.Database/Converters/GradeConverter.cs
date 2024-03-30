@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cifra.Database.Converters
 {
-    internal class GradeConverter : ValueConverter<Grade, int>
+    internal class GradeConverter : ValueConverter<Grade, decimal>
     {
-        public GradeConverter() : base((g) => g.Value, (g) => Grade.CreateFromInteger(g).Value!)
+        public GradeConverter() : base((g) => g.Value, (g) => Grade.CreateFromDecimal(g).Value!)
         {
         }
     }

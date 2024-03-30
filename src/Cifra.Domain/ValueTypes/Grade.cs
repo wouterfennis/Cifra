@@ -10,7 +10,7 @@ namespace Cifra.Domain.ValueTypes
         private const int _minimalValue = 1;
         private const int _maximalValue = 10;
 
-        private Grade(int value)
+        private Grade(decimal value)
         {
             Value = value;
         }
@@ -18,7 +18,7 @@ namespace Cifra.Domain.ValueTypes
         /// <summary>
         /// Gives raw value.
         /// </summary>
-        public int Value { get; }
+        public decimal Value { get; }
 
         /// <summary>
         /// Creates a Grade from a integer
@@ -34,9 +34,22 @@ namespace Cifra.Domain.ValueTypes
         }
 
         /// <summary>
+        /// Creates a Grade from a decimal
+        /// </summary>
+        public static Result<Grade> CreateFromDecimal(decimal value)
+        {
+            if (value < _minimalValue || value > _maximalValue)
+            {
+                return Result<Grade>.Fail<Grade>(ValidationMessage.Create(nameof(value), $"Minimum grade must be from {_minimalValue} to {_maximalValue}"));
+            }
+
+            return Result<Grade>.Ok<Grade>(new Grade(value));
+        }
+
+        /// <summary>
         /// Implicit converts the <see cref="Grade"/> value to <see cref="int"/>.
         /// </summary>
-        public static implicit operator int(Grade grade)
+        public static implicit operator decimal(Grade grade)
         {
             return grade.Value;
         }
