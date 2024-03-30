@@ -84,7 +84,7 @@ namespace Cifra.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MinimumGrade")
+                    b.Property<decimal>("MinimumGrade")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

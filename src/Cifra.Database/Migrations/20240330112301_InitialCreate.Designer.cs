@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cifra.Database.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231101202650_InitialCreate")]
+    [Migration("20240330112301_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace Cifra.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MinimumGrade")
+                    b.Property<decimal>("MinimumGrade")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

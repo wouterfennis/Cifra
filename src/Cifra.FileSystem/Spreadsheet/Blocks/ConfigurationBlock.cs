@@ -12,16 +12,20 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
         public Point StartPoint { get; set; }
         public StandardizationFactor StandardizationFactor { get; }
         public Grade MinimumGrade { get; }
+        public Grade SatisfactoryGrade { get; }
         public Point StandardizationfactorPosition { get; private set; }
         public Point MinimumGradePosition { get; private set; }
+        public Point SatisfactoryGradePosition { get; private set; }
 
         public ConfigurationBlock(Point startPoint,
                 StandardizationFactor standardizationFactor,
-                Grade minimumGrade)
+                Grade minimumGrade,
+                Grade satisfactoryGrade)
         {
             StartPoint = startPoint;
             StandardizationFactor = standardizationFactor;
             MinimumGrade = minimumGrade;
+            SatisfactoryGrade = satisfactoryGrade;
         }
 
         public void Write(ISpreadsheetWriter spreadsheetWriter)
@@ -47,6 +51,15 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .MoveRight()
                 .Write(MinimumGrade.Value);
             MinimumGradePosition = spreadsheetWriter.CurrentPosition;
+
+            spreadsheetWriter
+                .NewLine()
+                .SetFontBold(true)
+                .Write("Voldoende cijfer")
+                .SetFontBold(false)
+                .MoveRight()
+                .Write(SatisfactoryGrade.Value);
+            SatisfactoryGradePosition = spreadsheetWriter.CurrentPosition;
         }
     }
 }

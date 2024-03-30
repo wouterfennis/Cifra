@@ -33,7 +33,7 @@
         /// <summary>
         /// The Minimum Grade.
         /// </summary>
-        public required int MinimumGrade { get; init; }
+        public required decimal MinimumGrade { get; init; }
 
     }
 }

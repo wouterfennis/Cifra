@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using Cifra.FileSystem.Spreadsheet.Blocks;
+﻿using Cifra.FileSystem.Spreadsheet.Blocks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpreadsheetWriter.Test;
@@ -12,7 +11,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
     {
         private string[,] _spreadsheet;
         private Point _startpoint;
-        private Fixture _fixture;
+        private Point _satisfactoryGradePoint;
         private ArrayContentSpreadsheetWriter _spreadsheetWriter;
 
         [TestInitialize]
@@ -20,7 +19,7 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
         {
             _spreadsheet = new string[10, 10];
             _startpoint = new Point(0, 3);
-            _fixture = new Fixture();
+            _satisfactoryGradePoint = new Point(0, 2);
             _spreadsheetWriter = new ArrayContentSpreadsheetWriter(_spreadsheet);
         }
 
@@ -30,10 +29,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var sut = new StatisticsBlock(
                 _startpoint,
-                0,
-                1,
-                2,
-                3);
+                4,
+                5,
+                6,
+                3,
+                _satisfactoryGradePoint);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -49,10 +49,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var sut = new StatisticsBlock(
                 _startpoint,
-                0,
-                1,
-                2,
-                3);
+                4,
+                5,
+                6,
+                3,
+                _satisfactoryGradePoint);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -68,10 +69,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var sut = new StatisticsBlock(
                 _startpoint,
-                0,
-                1,
-                2,
-                3);
+                4,
+                5,
+                6,
+                3,
+                _satisfactoryGradePoint);
 
             // Act
             sut.Write(_spreadsheetWriter);
@@ -87,10 +89,11 @@ namespace Cifra.FileSystem.UnitTests.Spreadsheet.Blocks
             // Arrange
             var sut = new StatisticsBlock(
                 _startpoint,
-                0,
-                1,
-                2,
-                3);
+                4,
+                5,
+                6,
+                3,
+                _satisfactoryGradePoint);
 
             // Act
             sut.Write(_spreadsheetWriter);

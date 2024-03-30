@@ -76,11 +76,11 @@ namespace Cifra.Domain
             Assignments = assignments;
         }
 
-        public static Result<Test> TryCreate(string testName, int standardizationFactor, int minimumGrade, int numberOfVerions)
+        public static Result<Test> TryCreate(string testName, int standardizationFactor, decimal minimumGrade, int numberOfVerions)
         {
             Result<Name> testNameResult = Name.CreateFromString(testName);
             Result<StandardizationFactor> standardizationFactorResult = StandardizationFactor.CreateFromInteger(standardizationFactor);
-            Result<Grade> minimumGradeResult = Grade.CreateFromInteger(minimumGrade);
+            Result<Grade> minimumGradeResult = Grade.CreateFromDecimal(minimumGrade);
 
             if (!testNameResult.IsSuccess)
             {
@@ -109,11 +109,11 @@ namespace Cifra.Domain
             return Result<Test>.Ok<Test>(new Test(testNameResult.Value!, standardizationFactorResult.Value!, minimumGradeResult.Value!, numberOfVerions));
         }
 
-        public static Result<Test> TryCreate(uint id, string testName, int standardizationFactor, int minimumGrade, int numberOfVerions, IEnumerable<Assignment> assignments)
+        public static Result<Test> TryCreate(uint id, string testName, int standardizationFactor, decimal minimumGrade, int numberOfVerions, IEnumerable<Assignment> assignments)
         {
             Result<Name> testNameResult = Name.CreateFromString(testName);
             Result<StandardizationFactor> standardizationFactorResult = StandardizationFactor.CreateFromInteger(standardizationFactor);
-            Result<Grade> minimumGradeResult = Grade.CreateFromInteger(minimumGrade);
+            Result<Grade> minimumGradeResult = Grade.CreateFromDecimal(minimumGrade);
 
             if (!testNameResult.IsSuccess)
             {

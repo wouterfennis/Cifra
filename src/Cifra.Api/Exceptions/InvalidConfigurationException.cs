@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Cifra.Api.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cifra.Api.Exceptions
         }
 
         public InvalidConfigurationException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected InvalidConfigurationException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

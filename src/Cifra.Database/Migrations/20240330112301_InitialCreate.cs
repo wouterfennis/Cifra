@@ -32,7 +32,7 @@ namespace Cifra.Database.Migrations
                     Name = table.Column<string>(type: "string", nullable: false),
                     NumberOfVersions = table.Column<int>(type: "INTEGER", nullable: false),
                     StandardizationFactor = table.Column<int>(type: "int", nullable: false),
-                    MinimumGrade = table.Column<int>(type: "int", nullable: false)
+                    MinimumGrade = table.Column<decimal>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
