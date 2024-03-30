@@ -76,6 +76,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
                 .AddCriteria("<")
+                .AddAmpersandSign()
                 .AddCellAddress(satisfactoryGradeCell.Address)
                 .AddClosingParenthesis();
 
@@ -96,6 +97,7 @@ namespace Cifra.FileSystem.Spreadsheet.Blocks
                 .AddCellAddress(gradeEndCell.Address)
                 .AddComma()
                 .AddCriteria("<")
+                .AddAmpersandSign()
                 .AddCellAddress(satisfactoryGradeCell.Address)
                 .AddClosingParenthesis()
                 .AddMultiplicationSign()
